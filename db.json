@@ -1,0 +1,76 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "firstname": "Leanne",
+      "lastname": "Graham",
+      "email": "leanne.graham@gmail.com"
+    },
+    {
+      "id": 2,
+      "firstname": "Ervin",
+      "lastname": "Howell",
+      "email": "ervin.howell@gmail.com"
+    },
+    {
+      "id": 3,
+      "firstname": "Clementine",
+      "lastname": "Bauch",
+      "email": "clementine.bauch@gmail.com"
+    },
+    {
+      "id": 4,
+      "firstname": "Patricia",
+      "lastname": "Lebsack",
+      "email": "patricia.lebsack@gmail.com"
+    },
+    {
+      "id": 5,
+      "firstname": "Chelsey",
+      "lastname": "Dietrich",
+      "email": "chelsey.dietrich@gmail.com"
+    },
+    {
+      "id": 6,
+      "firstname": "Mrs. Dennis",
+      "lastname": "Russel",
+      "email": "dennis.russel@gmail.com"
+    },
+    {
+      "id": 7,
+      "firstname": "Kurtis",
+      "lastname": "Weissnat",
+      "email": "kurstis.weissnat@gmail.com"
+    },
+    {
+      "id": 8,
+      "firstname": "Nicholas",
+      "lastname": "Runolfsdottir",
+      "email": "nicholas.runolfsdottir@gmail.com"
+    },
+    {
+      "id": 9,
+      "firstname": "Glenna",
+      "lastname": "Reichert",
+      "email": "glenna.reichert@gmail.com"
+    },
+    {
+      "id": 10,
+      "firstname": "Clementina",
+      "lastname": "DuBuque",
+      "email": "clementine.dubuque@gmail.com"
+    },
+    {
+      "id": 11,
+      "firstname": "Nicholas",
+      "lastname": "Runolfsdottir",
+      "email": "nicholas.runolfsdottir@gmail.com"
+    },
+    {
+      "id": 12,
+      "firstname": "Glenna",
+      "lastname": "Reichert",
+      "email": "glenna.reichert@gmail.com"
+    }
+  ]
+}
