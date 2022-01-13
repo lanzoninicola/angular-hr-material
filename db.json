@@ -1,76 +1,135 @@
 {
+  "picklist": [
+    {
+      "id": 1,
+      "type": "platformRoles",
+      "values": ["admin", "manager", "operator", "user", "guest"]
+    },
+    {
+      "id": 2,
+      "type": "departments",
+      "values": [
+        "Human Resources",
+        "Front-end Developers",
+        "Back-end Developers",
+        "Database Developers",
+        "IT Infrastructure"
+      ]
+    },
+    {
+      "id": 3,
+      "type": "companyLevels",
+      "values": ["Manager", "Team Lead", "Operator"]
+    }
+  ],
   "users": [
     {
       "id": 1,
       "firstname": "Leanne",
       "lastname": "Graham",
-      "email": "leanne.graham@gmail.com"
+      "email": "leanne.graham@gmail.com",
+      "platformRole": "admin",
+      "department": "IT Infrastructure",
+      "companyRoleLevel": "Operator"
     },
     {
       "id": 2,
       "firstname": "Ervin",
       "lastname": "Howell",
-      "email": "ervin.howell@gmail.com"
+      "email": "ervin.howell@gmail.com",
+      "platformRole": "admin",
+      "department": "IT Infrastructure",
+      "companyRoleLevel": "Operator"
     },
     {
       "id": 3,
       "firstname": "Clementine",
       "lastname": "Bauch",
-      "email": "clementine.bauch@gmail.com"
+      "email": "clementine.bauch@gmail.com",
+      "platformRole": "hr-manager",
+      "department": "Human Resources",
+      "companyRoleLevel": "Operator"
     },
     {
       "id": 4,
       "firstname": "Patricia",
       "lastname": "Lebsack",
-      "email": "patricia.lebsack@gmail.com"
+      "email": "patricia.lebsack@gmail.com",
+      "platformRole": "hr-operator",
+      "department": "Human Resources",
+      "companyRoleLevel": "Operator"
     },
     {
       "id": 5,
       "firstname": "Chelsey",
       "lastname": "Dietrich",
-      "email": "chelsey.dietrich@gmail.com"
+      "email": "chelsey.dietrich@gmail.com",
+      "platformRole": "hr-operator",
+      "department": "Human Resources",
+      "companyRoleLevel": "Operator"
     },
     {
       "id": 6,
       "firstname": "Mrs. Dennis",
       "lastname": "Russel",
-      "email": "dennis.russel@gmail.com"
+      "email": "dennis.russel@gmail.com",
+      "platformRole": "hr-operator",
+      "department": "Human Resources",
+      "companyRoleLevel": "Operator"
     },
     {
       "id": 7,
       "firstname": "Kurtis",
       "lastname": "Weissnat",
-      "email": "kurstis.weissnat@gmail.com"
+      "email": "kurstis.weissnat@gmail.com",
+      "platformRole": "user",
+      "department": "Front-end Developers",
+      "companyRoleLevel": "Team Lead"
     },
     {
       "id": 8,
       "firstname": "Nicholas",
       "lastname": "Runolfsdottir",
-      "email": "nicholas.runolfsdottir@gmail.com"
+      "email": "nicholas.runolfsdottir@gmail.com",
+      "platformRole": "user",
+      "department": "Back-end Developers",
+      "companyRoleLevel": "Team Lead"
     },
     {
       "id": 9,
       "firstname": "Glenna",
       "lastname": "Reichert",
-      "email": "glenna.reichert@gmail.com"
+      "email": "glenna.reichert@gmail.com",
+      "platformRole": "user",
+      "department": "Database Developers",
+      "companyRoleLevel": "Team Lead"
     },
     {
       "id": 10,
       "firstname": "Clementina",
       "lastname": "DuBuque",
-      "email": "clementine.dubuque@gmail.com"
+      "email": "clementine.dubuque@gmail.com",
+      "platformRole": "user",
+      "department": "IT Infrastructure",
+      "companyRoleLevel": "Team Lead"
     },
     {
       "id": 11,
       "firstname": "Nicholas",
       "lastname": "Runolfsdottir",
-      "email": "nicholas.runolfsdottir@gmail.com"
+      "email": "nicholas.runolfsdottir@gmail.com",
+      "platformRole": "user",
+      "department": null,
+      "companyRoleLevel": null
     },
     {
       "id": 12,
       "firstname": "Glenna",
       "lastname": "Reichert",
-      "email": "glenna.reichert@gmail.com"
+      "email": "glenna.reichert@gmail.com",
+      "platformRole": "user",
+      "department": null,
+      "companyRoleLevel": null
     }
   ]
 }
