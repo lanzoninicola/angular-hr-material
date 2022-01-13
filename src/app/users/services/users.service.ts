@@ -22,4 +22,17 @@ export class UsersService {
       })
     );
   }
+
+  getUserById(id: number) {
+    return this.http
+      .get<UserHttpResponse>(`${environment.API}/users/${id}`)
+      .pipe(
+        map((userData) => {
+          return {
+            ...userData,
+            fullName: `${userData.lastname} ${userData.firstname}`,
+          } as UserModel;
+        })
+      );
+  }
 }
