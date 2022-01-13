@@ -1,16 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 
 import { UsersService } from '../../services/users.service';
 import { UserModel } from '../../types/user.type';
 
 @Component({
+  selector: 'ahr-user-list',
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit, OnDestroy {
-  readonly pageTitle: string = 'Users';
   private _usersSubscription: Subscription;
   tableDataSource$: BehaviorSubject<UserModel[]> = new BehaviorSubject<
     UserModel[]
@@ -24,7 +25,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   pageSize$ = new BehaviorSubject<number>(5);
   dataOnPage$ = new BehaviorSubject<any[]>([]);
 
-  constructor(private usersService: UsersService) {
+  constructor(private usersService: UsersService, private router: Router) {
     this._usersSubscription = this.usersService
       .getAllUsers()
       .subscribe(this.tableDataSource$);
@@ -49,5 +50,9 @@ export class UserListComponent implements OnInit, OnDestroy {
   changePage(pageEvent: PageEvent) {
     const { pageIndex } = pageEvent;
     this.currentPage$.next(pageIndex + 1);
+  }
+
+  handleTableRowClicked(userRow: UserModel) {
+    this.router.navigate(['users', userRow.id]);
   }
 }
