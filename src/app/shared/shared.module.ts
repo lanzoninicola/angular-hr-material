@@ -1,10 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
+import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
+
 import { HeaderComponent } from './components/header/header.component';
+import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
 
 @NgModule({
   declarations: [HeaderComponent, SectionToolbarComponent],

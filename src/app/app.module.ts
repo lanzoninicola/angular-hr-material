@@ -28,3 +28,5 @@ import { UsersModule } from './users/users.module';
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+
+// TODO: spinner loader in lists

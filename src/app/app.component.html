@@ -9,7 +9,9 @@
     [opened]="(isHandset$ | async) === false"
   >
     <mat-nav-list>
-      <a mat-list-item routerLink="users">Users</a>
+      <a mat-list-item routerLink="users/list" routerLinkActive="active"
+        >Users</a
+      >
       <a mat-list-item href="#">Candidates</a>
       <a mat-list-item href="#">Job Id</a>
     </mat-nav-list>

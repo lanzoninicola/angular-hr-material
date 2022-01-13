@@ -2,3 +2,7 @@
   margin-top: 64px;
   width: 200px;
 }
+
+mat-sidenav-container {
+  min-height: calc(100vh - 64px);
+}
