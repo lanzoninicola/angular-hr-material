@@ -1,0 +1,61 @@
+<div class="container">
+  <form [formGroup]="userEditForm">
+    <div formGroupName="personalInfo" class="form-group">
+      <h2 class="form-group-title">Personal Information</h2>
+
+      <div class="form-group-content">
+        <mat-form-field>
+          <mat-label>Firstname</mat-label>
+          <input matInput placeholder="Firstname" formControlName="firstname" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Lastname</mat-label>
+          <input matInput placeholder="Lastname" formControlName="lastname" />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>E-mail</mat-label>
+          <input matInput placeholder="E-mail" formControlName="email" />
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div formGroupName="companyRoleInfo" class="form-group">
+      <h2 class="form-group-title">Company Role Information</h2>
+      <div class="form-group-content">
+        <mat-form-field>
+          <mat-label>Department</mat-label>
+          <mat-select placeholder="Department" formControlName="department">
+            <mat-option *ngFor="let dpt of departmentsValues" value="#dpt">{{
+              dpt
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Company Role Level</mat-label>
+          <mat-select placeholder="Company Role Level" formControlName="level">
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-divider></mat-divider>
+
+    <div formGroupName="platformInfo" class="form-group">
+      <h2 class="form-group-title">Platform Related Information</h2>
+      <div class="form-group-content">
+        <mat-form-field>
+          <mat-label>Platform Role</mat-label>
+          <mat-select placeholder="Platform Role" formControlName="role">
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+  </form>
+</div>
