@@ -11,7 +11,7 @@ import { UserModel } from '../../types/user.type';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
-export class UserListComponent implements OnInit, OnDestroy {
+export class UserListComponent implements OnDestroy {
   private _usersSubscription: Subscription;
   tableDataSource$: BehaviorSubject<UserModel[]> = new BehaviorSubject<
     UserModel[]
@@ -23,35 +23,16 @@ export class UserListComponent implements OnInit, OnDestroy {
     'department',
     'companyRoleLevel',
   ]);
-  currentPage$ = new BehaviorSubject<number>(1);
-  pageSize$ = new BehaviorSubject<number>(5);
-  dataOnPage$ = new BehaviorSubject<any[]>([]);
+  dataOnPage: any[] = [];
 
   constructor(private usersService: UsersService, private router: Router) {
     this._usersSubscription = this.usersService
       .getAllUsers()
       .subscribe(this.tableDataSource$);
-
-    combineLatest([
-      this.tableDataSource$,
-      this.currentPage$,
-      this.pageSize$,
-    ]).subscribe(([allSources, currentPage, pageSize]) => {
-      const startingIndex = (currentPage - 1) * pageSize;
-      const onPage = allSources.slice(startingIndex, startingIndex + pageSize);
-      this.dataOnPage$.next(onPage);
-    });
   }
-
-  ngOnInit(): void {}
 
   ngOnDestroy(): void {
     this._usersSubscription.unsubscribe();
-  }
-
-  changePage(pageEvent: PageEvent) {
-    const { pageIndex } = pageEvent;
-    this.currentPage$.next(pageIndex + 1);
   }
 
   handleTableRowClicked(userRow: UserModel) {
