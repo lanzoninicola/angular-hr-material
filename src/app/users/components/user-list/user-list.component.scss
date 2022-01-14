@@ -1,3 +1,11 @@
+.container {
+  height: calc(100% - 64px);
+  margin-inline: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .data-table {
   width: 100%;
 }

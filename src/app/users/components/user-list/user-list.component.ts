@@ -20,6 +20,8 @@ export class UserListComponent implements OnInit, OnDestroy {
     'lastname',
     'firstname',
     'email',
+    'department',
+    'companyRoleLevel',
   ]);
   currentPage$ = new BehaviorSubject<number>(1);
   pageSize$ = new BehaviorSubject<number>(5);
@@ -56,3 +58,5 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.router.navigate(['users', userRow.id]);
   }
 }
+
+// TODO: separate table in a its own definition
