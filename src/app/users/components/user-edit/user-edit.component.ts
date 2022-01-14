@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { UserEditFormPicklist } from '../../types/user-edit-form.types';
 import { UserModel } from '../../types/user.type';
 
 @Component({
@@ -24,25 +25,18 @@ export class UserEditComponent implements OnInit {
     }),
   });
 
-  departmentsValues: string[] = [];
-  companyLevels: string[] = [];
-  platformRoleValues: string[] = [];
+  formPicklistData: UserEditFormPicklist = {};
 
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
+    this.formPicklistData = this.route.snapshot.data['userEditFormInit'];
+
     const user = this.route.snapshot.data['userEdit'];
-    const picklistData = this.route.snapshot.data['userEditFormInit'];
-    this.departmentsValues = picklistData.departmentsValues;
-    this.companyLevels = picklistData.companyLevels;
-    this.platformRoleValues = picklistData.platformRoleValues;
-
-    console.log(picklistData);
-
-    this.setFormDataFromData(user);
+    this.setFormWithUserData(user);
   }
 
-  setFormDataFromData(user: UserModel) {
+  setFormWithUserData(user: UserModel) {
     this.userEditForm
       .get(['personalInfo', 'firstname'])
       ?.setValue(user.firstname);
