@@ -1,0 +1,21 @@
+<table mat-table [dataSource]="dataPaginated" class="data-table">
+  <ng-container
+    *ngFor="let column of tableColumns$ | async; let i = index"
+    matColumnDef="{{ column.dsFieldName }}"
+  >
+    <th mat-header-cell *matHeaderCellDef>{{ column.title }}</th>
+    <td mat-cell *matCellDef="let row">{{ row[column.dsFieldName] }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns$.value"></tr>
+  <tr
+    mat-row
+    (click)="handleTableRowClicked(row)"
+    *matRowDef="let row; columns: displayedColumns$.value"
+  ></tr>
+</table>
+<ahr-table-paginator
+  [pageSize]="5"
+  [dataSource]="dataSource$"
+  (dataOnPage)="dataPaginated = $event"
+></ahr-table-paginator>

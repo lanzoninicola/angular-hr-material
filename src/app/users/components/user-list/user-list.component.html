@@ -1,5 +1,9 @@
 <div class="container">
   <div class="table-container">
+    <ahr-table-data [config]="userListTableConfig"></ahr-table-data>
+  </div>
+
+  <div class="table-container">
     <table mat-table [dataSource]="dataOnPage" class="data-table">
       <ng-container matColumnDef="lastname">
         <th mat-header-cell *matHeaderCellDef>Lastname</th>
@@ -36,10 +40,10 @@
   </div>
 
   <div class="pagination-container">
-    <ahr-table-paginator
+    <!-- <ahr-table-paginator
       [pageSize]="5"
       [dataSource]="tableDataSource$"
       (dataOnPage)="dataOnPage = $event"
-    ></ahr-table-paginator>
+    ></ahr-table-paginator> -->
   </div>
 </div>
