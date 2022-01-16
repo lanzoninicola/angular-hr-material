@@ -1,49 +1,8 @@
 <div class="container">
-  <div class="table-container">
-    <ahr-table-data [config]="userListTableConfig"></ahr-table-data>
-  </div>
-
-  <div class="table-container">
-    <table mat-table [dataSource]="dataOnPage" class="data-table">
-      <ng-container matColumnDef="lastname">
-        <th mat-header-cell *matHeaderCellDef>Lastname</th>
-        <td mat-cell *matCellDef="let row">{{ row.lastname }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="firstname">
-        <th mat-header-cell *matHeaderCellDef>Firstname</th>
-        <td mat-cell *matCellDef="let row">{{ row.firstname }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef>Email</th>
-        <td mat-cell *matCellDef="let row">{{ row.email }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="department">
-        <th mat-header-cell *matHeaderCellDef>Department</th>
-        <td mat-cell *matCellDef="let row">{{ row.department }}</td>
-      </ng-container>
-
-      <ng-container matColumnDef="companyRoleLevel">
-        <th mat-header-cell *matHeaderCellDef>Level</th>
-        <td mat-cell *matCellDef="let row">{{ row.companyRoleLevel }}</td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns$.value"></tr>
-      <tr
-        mat-row
-        (click)="handleTableRowClicked(row)"
-        *matRowDef="let row; columns: displayedColumns$.value"
-      ></tr>
-    </table>
-  </div>
-
-  <div class="pagination-container">
-    <!-- <ahr-table-paginator
-      [pageSize]="5"
-      [dataSource]="tableDataSource$"
-      (dataOnPage)="dataOnPage = $event"
-    ></ahr-table-paginator> -->
-  </div>
+  <ahr-table-data
+    [dataSource]="userList$"
+    [columns]="columns"
+    [pageSize]="pageSize"
+    (onRowClicked)="handleTableRowClicked($event)"
+  ></ahr-table-data>
 </div>
