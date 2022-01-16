@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 import { UsersService } from '../../services/users.service';
 import { UserModel } from '../../types/user.type';
@@ -11,28 +10,34 @@ import { UserModel } from '../../types/user.type';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
-export class UserListComponent implements OnDestroy {
-  private _usersSubscription: Subscription;
-  tableDataSource$: BehaviorSubject<UserModel[]> = new BehaviorSubject<
-    UserModel[]
-  >([]);
-  displayedColumns$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([
-    'lastname',
-    'firstname',
-    'email',
-    'department',
-    'companyRoleLevel',
-  ]);
-  dataOnPage: any[] = [];
+export class UserListComponent {
+  userList$: Observable<UserModel[]>;
+  columns = [
+    {
+      title: 'Lastname',
+      dsFieldName: 'lastname',
+    },
+    {
+      title: 'Firstname',
+      dsFieldName: 'firstname',
+    },
+    {
+      title: 'E-mail',
+      dsFieldName: 'email',
+    },
+    {
+      title: 'Department',
+      dsFieldName: 'department',
+    },
+    {
+      title: 'Level',
+      dsFieldName: 'companyRoleLevel',
+    },
+  ];
+  pageSize = 10;
 
   constructor(private usersService: UsersService, private router: Router) {
-    this._usersSubscription = this.usersService
-      .getAllUsers()
-      .subscribe(this.tableDataSource$);
-  }
-
-  ngOnDestroy(): void {
-    this._usersSubscription.unsubscribe();
+    this.userList$ = this.usersService.getAllUsers();
   }
 
   handleTableRowClicked(userRow: UserModel) {

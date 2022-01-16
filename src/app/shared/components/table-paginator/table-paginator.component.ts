@@ -22,6 +22,7 @@ export class TablePaginatorComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    this.pageSize$.next(this.pageSize);
     combineLatest([
       this.tableDataSource$,
       this.currentPage$,

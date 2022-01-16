@@ -1,21 +1,4 @@
 .container {
   height: calc(100% - 64px);
   margin-inline: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.data-table {
-  width: 100%;
-}
-
-.mat-row .mat-cell {
-  border-bottom: 1px solid transparent;
-  border-top: 1px solid transparent;
-  cursor: pointer;
-}
-
-.mat-row:hover .mat-cell {
-  background-color: rgba(103, 58, 183, 0.2);
 }

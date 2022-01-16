@@ -11,13 +11,13 @@ export class UsersService {
   constructor(private http: HttpClient) {}
 
   getAllUsers() {
-    return this.http.get<UserHttpResponse[]>(`${environment.API}/users`).pipe(
+    return this.http.get<UserModel[]>(`${environment.API}/users`).pipe(
       map((userData) => {
         return userData.map((user) => {
           return {
             ...user,
             fullName: `${user.lastname} ${user.firstname}`,
-          } as UserModel;
+          };
         });
       })
     );
