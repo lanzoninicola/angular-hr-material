@@ -1,4 +1,7 @@
 export interface TableColumn {
-  title: string;
-  dsFieldName: any;
+  title: TableColumnTitle;
+  dsFieldName: TableColumnDataSourceFieldName;
 }
+
+export type TableColumnTitle = string;
+export type TableColumnDataSourceFieldName = string;
