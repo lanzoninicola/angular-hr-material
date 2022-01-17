@@ -10,6 +10,39 @@ import { UserModel } from '../../types/user.type';
   styleUrls: ['./user-edit.component.scss'],
 })
 export class UserEditComponent implements OnInit {
+  userEditForm2 = [
+    {
+      group: 'personalInfo',
+      controlType: 'input',
+      label: 'Text Input',
+      key: 'some text',
+      value: 'This input is pre-populated',
+      syncValidators: [Validators.required],
+    },
+    {
+      group: 'personalInfo',
+      controlType: 'input',
+      label: 'Password Input',
+      key: 'password',
+      type: 'password',
+      syncValidators: [Validators.required, Validators.minLength(8)],
+    },
+    {
+      group: 'companyRoleInfo',
+      controlType: 'select',
+      label: 'Dropdown Menu',
+      key: 'dropdown',
+      syncValidators: [Validators.required],
+      whatToSelect: 'a topic',
+      selectOptions: [
+        { value: 'option1' },
+        { value: 'option2' },
+        { value: 'option3' },
+        { value: 'option4' },
+      ],
+    },
+  ];
+
   userEditForm = new FormGroup({
     personalInfo: new FormGroup({
       firstname: new FormControl('', Validators.required),
