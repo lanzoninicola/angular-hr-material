@@ -19,7 +19,125 @@
     {
       "id": 3,
       "type": "companyLevels",
-      "values": ["Manager", "Team Lead", "Operator"]
+      "values": ["Manager", "Team Lead", "Specialist"]
+    },
+    {
+      "id": 4,
+      "type": "businessUntis",
+      "values": ["Alpha Product", "Beta Product", "Delta Product"]
+    },
+    {
+      "id": 5,
+      "type": "roleLevels",
+      "values": ["Junior", "Middle", "Senior"]
+    },
+    {
+      "id": 6,
+      "type": "jobLocaltionTypes",
+      "values": ["Full Remote", "Presential", "Remote/Presential"]
+    },
+    {
+      "id": 7,
+      "type": "employmentStatus",
+      "values": ["Part-time", "Full-time employment"]
+    },
+    {
+      "id": 8,
+      "type": "rthWorkingStatus",
+      "values": ["new", "backlog", "in progress", "pending", "done"]
+    }
+  ],
+  "departments": [
+    {
+      "id": 1,
+      "name": "Human Resources",
+      "managerId": 1,
+      "teamLeads": []
+    },
+    {
+      "id": 2,
+      "name": "Front-end Developers",
+      "managerId": 1,
+      "teamLeads": [7, 71, 72]
+    },
+    {
+      "id": 3,
+      "name": "Back-end Developers",
+      "managerId": 1,
+      "teamLeads": []
+    },
+    {
+      "id": 4,
+      "name": "Database Developers",
+      "managerId": 1,
+      "teamLeads": []
+    },
+    {
+      "id": 5,
+      "name": "IT Infrastructure",
+      "managerId": 1,
+      "teamLeads": []
+    }
+  ],
+  "jobRoles": [
+    {
+      "id": 1,
+      "name": "Front-end Developer",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
+      "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
+    },
+    {
+      "id": 11,
+      "name": "Front-end Developer Team Lead",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
+      "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
+    },
+    {
+      "id": 2,
+      "name": "Back-end Developer",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
+      "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
+    },
+    {
+      "id": 21,
+      "name": "Back-end Developer Team Lead",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
+      "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
+    },
+    {
+      "id": 3,
+      "name": "Project Manager",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
+      "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
+    },
+    {
+      "id": 31,
+      "name": "Project Manager Team Lead",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
+      "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
+    }
+  ],
+  "requestsToHire": [
+    {
+      "id": "1",
+      "title": "New Front-end Developer",
+      "departmentId": "2",
+      "businessUnit": "Alpha Product",
+      "requesterId": "71",
+      "jobRoleId": "1",
+      "roleTaskDescription": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "roleLevel": "Junior",
+      "highPriority": true,
+      "jobLocationType": "Full Remote",
+      "jobLocation": null,
+      "employmentStatus": "Full-time employment",
+      "minimumQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "preferredQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "benefits": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "budget": "0-1.200",
+      "openSpecialCategories": false,
+      "additionalNotes": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "status": "new"
     }
   ],
   "users": [
@@ -30,7 +148,7 @@
       "email": "leanne.graham@gmail.com",
       "platformRole": "admin",
       "department": "IT Infrastructure",
-      "companyRoleLevel": "Operator"
+      "companyRoleLevel": "Specialist"
     },
     {
       "id": 2,
@@ -39,7 +157,7 @@
       "email": "ervin.howell@gmail.com",
       "platformRole": "admin",
       "department": "IT Infrastructure",
-      "companyRoleLevel": "Operator"
+      "companyRoleLevel": "Specialist"
     },
     {
       "id": 3,
@@ -48,34 +166,34 @@
       "email": "clementine.bauch@gmail.com",
       "platformRole": "hr-manager",
       "department": "Human Resources",
-      "companyRoleLevel": "Operator"
+      "companyRoleLevel": "Manager"
     },
     {
       "id": 4,
       "firstname": "Patricia",
       "lastname": "Lebsack",
       "email": "patricia.lebsack@gmail.com",
-      "platformRole": "hr-operator",
+      "platformRole": "hr-specialist",
       "department": "Human Resources",
-      "companyRoleLevel": "Operator"
+      "companyRoleLevel": "Specialist"
     },
     {
       "id": 5,
       "firstname": "Chelsey",
       "lastname": "Dietrich",
       "email": "chelsey.dietrich@gmail.com",
-      "platformRole": "hr-operator",
+      "platformRole": "hr-specialist",
       "department": "Human Resources",
-      "companyRoleLevel": "Operator"
+      "companyRoleLevel": "Specialist"
     },
     {
       "id": 6,
       "firstname": "Mrs. Dennis",
       "lastname": "Russel",
       "email": "dennis.russel@gmail.com",
-      "platformRole": "hr-operator",
+      "platformRole": "hr-specialist",
       "department": "Human Resources",
-      "companyRoleLevel": "Operator"
+      "companyRoleLevel": "Specialist"
     },
     {
       "id": 7,
@@ -84,7 +202,28 @@
       "email": "kurstis.weissnat@gmail.com",
       "platformRole": "user",
       "department": "Front-end Developers",
-      "companyRoleLevel": "Team Lead"
+      "companyRoleLevel": "Team Lead",
+      "businessUnit": "Alpha Product"
+    },
+    {
+      "id": 71,
+      "firstname": "Nicholas",
+      "lastname": "Runolfsdottir",
+      "email": "nicholas.runolfsdottir@gmail.com",
+      "platformRole": "user",
+      "department": "Front-end Developers",
+      "companyRoleLevel": "Team Lead",
+      "businessUnit": "Beta Product"
+    },
+    {
+      "id": 72,
+      "firstname": "Glenna",
+      "lastname": "Reichert",
+      "email": "glenna.reichert@gmail.com",
+      "platformRole": "user",
+      "department": "Front-end Developers",
+      "companyRoleLevel": "Team Lead",
+      "businessUnit": "Delta Product"
     },
     {
       "id": 8,
