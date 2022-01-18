@@ -12,7 +12,7 @@
     >
   </mat-form-field>
 
-  <mat-form-field>
+  <mat-form-field *ngIf="dataSource.controlType === 'select'">
     <mat-label>{{ dataSource.label }}</mat-label>
     <mat-select
       placeholder="{{ dataSource.label }}"

@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 
 import { CoreModule } from '../core/core.module';
+import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { SharedModule } from '../shared/shared.module';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserListComponent } from './components/user-list/user-list.component';
@@ -39,6 +40,7 @@ import { UsersRoutingModule } from './users-routing.module';
     MatDividerModule,
     MatOptionModule,
     UsersRoutingModule,
+    DynamicFormModule,
   ],
   providers: [
     {
