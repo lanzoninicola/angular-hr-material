@@ -10,9 +10,9 @@
         Please select {{ viewTemplateConfig["whatToSelect"] }}</mat-option
       >
       <mat-option
-        *ngFor="let selectOption of viewTemplateConfig['selectOptions']"
-        [value]="selectOption.value"
-        >{{ selectOption.value }}</mat-option
+        *ngFor="let selectOption of selectOptions$ | async"
+        [value]="selectOption"
+        >{{ selectOption }}</mat-option
       >
     </mat-select>
 
