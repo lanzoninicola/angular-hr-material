@@ -32,8 +32,6 @@ export class DynamicFieldsDirective implements OnInit {
 
   ngOnInit() {
     this.controlsConfig.forEach((config) => {
-      console.log(config);
-
       const componentToRender = components[config.controlType];
 
       this.component = this.container.createComponent(componentToRender);

@@ -21,7 +21,5 @@ export class DynamicFormGroupComponent implements OnInit {
   ngOnInit(): void {
     this.name = this.groupConfig['key'];
     this.controlsConfig = this.groupConfig['value'];
-
-    console.log(this.groupConfig);
   }
 }
