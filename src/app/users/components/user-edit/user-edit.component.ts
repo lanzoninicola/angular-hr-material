@@ -102,18 +102,16 @@ export class UserEditComponent implements OnInit {
 
     this.userEditForm.get(['personalInfo', 'email'])?.setValue(user.email);
 
-    console.log(user.department);
-
     this.userEditForm
-      .get(['companyRoleInfo', 'department'])
+      .get(['companyRoleInfo', 'departments'])
       ?.setValue(user.department);
 
     this.userEditForm
-      .get(['companyRoleInfo', 'level'])
+      .get(['companyRoleInfo', 'companyLevels'])
       ?.setValue(user.companyRoleLevel);
 
     this.userEditForm
-      .get(['platformInfo', 'role'])
+      .get(['platformInfo', 'platformRoles'])
       ?.setValue(user.platformRole);
   }
 
