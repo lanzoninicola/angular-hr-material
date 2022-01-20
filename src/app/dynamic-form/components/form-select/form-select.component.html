@@ -1,1 +1,23 @@
-<p>form-select works!</p>
+<div [formGroup]="parentFormGroup">
+  <mat-form-field>
+    <mat-label>{{ viewTemplateConfig["label"] }}</mat-label>
+
+    <mat-select
+      placeholder="{{ viewTemplateConfig['label'] }}"
+      [formControlName]="viewTemplateConfig['key']"
+    >
+      <mat-option selected="true">
+        Please select {{ viewTemplateConfig["whatToSelect"] }}</mat-option
+      >
+      <mat-option
+        *ngFor="let selectOption of viewTemplateConfig['selectOptions']"
+        [value]="selectOption.value"
+        >{{ selectOption.value }}</mat-option
+      >
+    </mat-select>
+
+    <!-- <mat-error *ngIf="!control.valid && control.touched"
+    >{{ dataSource.label }} is not valid!</mat-error
+  > -->
+  </mat-form-field>
+</div>
