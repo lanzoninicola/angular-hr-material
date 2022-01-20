@@ -15,11 +15,15 @@ const components: { [type: string]: Type<any> } = {
   select: FormSelectComponent,
 };
 
+/**
+ * Directive responsible to render the component of requested form
+ */
+
 @Directive({
-  selector: '[dynamicField]',
+  selector: '[dynamicFields]',
 })
-export class DynamicFieldDirective implements OnInit {
-  @Input('dynamicField')
+export class DynamicFieldsDirective implements OnInit {
+  @Input('dynamicFields')
   controlsConfig: any[];
 
   component: ComponentRef<any>;
