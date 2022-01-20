@@ -13,15 +13,16 @@ export class UserEditComponent implements OnInit {
   userEditForm2 = {
     personalInfo: [
       {
-        groupName: 'personalInfo',
+        parentGroupName: 'personalInfo',
         controlType: 'input',
+        placeholder: '',
         label: 'Text Input',
         key: 'username',
         value: 'This input is pre-populated',
         syncValidators: [Validators.required],
       },
       {
-        groupName: 'personalInfo',
+        parentGroupName: 'personalInfo',
         controlType: 'input',
         label: 'Password Input',
         key: 'password',
@@ -31,7 +32,7 @@ export class UserEditComponent implements OnInit {
     ],
     companyRoleInfo: [
       {
-        groupName: 'companyRoleInfo',
+        parentGroupName: 'companyRoleInfo',
         controlType: 'select',
         label: 'Dropdown Menu',
         key: 'dropdown',
@@ -96,4 +97,6 @@ export class UserEditComponent implements OnInit {
       .get(['platformInfo', 'role'])
       ?.setValue(user.platformRole);
   }
+
+  onSave() {}
 }
