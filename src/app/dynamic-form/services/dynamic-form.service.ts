@@ -1,6 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
+/**
+ *  Intial responsbility for this class: build the Reactive Form Model of fequested form
+ */
+// TODO: rename this class according to its responsbility
+
 @Injectable({
   providedIn: 'root',
 })
@@ -9,11 +14,11 @@ export class DynamicFormService {
 
   constructor() {}
 
-  buildModel(formTemplate: { [key: string]: any }) {
+  buildModel(viewTemplateConfig: { [key: string]: any }) {
     let formModel: { [key: string]: any } = {};
 
-    Object.keys(formTemplate).forEach((groupName: string) => {
-      const groupControlList = formTemplate[groupName];
+    Object.keys(viewTemplateConfig).forEach((groupName: string) => {
+      const groupControlList = viewTemplateConfig[groupName];
       const groupFormControls = this.buildGroupControls(groupControlList);
       formModel[groupName] = new FormGroup(groupFormControls);
     });
@@ -39,8 +44,8 @@ export class DynamicFormService {
   buildGroupControls(groupControls: any) {
     const groupFormControls: { [key: string]: any } = {};
 
-    groupControls.forEach((control: any) => {
-      const { key, value, syncValidators, asyncValidators } = control;
+    groupControls.forEach((controlConfig: any) => {
+      const { key, value, syncValidators, asyncValidators } = controlConfig;
       groupFormControls[key] = new FormControl(
         value,
         syncValidators,
