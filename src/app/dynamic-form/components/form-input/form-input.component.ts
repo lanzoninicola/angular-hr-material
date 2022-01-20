@@ -1,7 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
-import { DynamicFormService } from '../../services/dynamic-form.service';
 
 @Component({
   selector: 'ahr-form-input',
