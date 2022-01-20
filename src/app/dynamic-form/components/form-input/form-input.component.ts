@@ -3,16 +3,16 @@ import { FormGroup } from '@angular/forms';
 import { DynamicFormService } from '../../services/dynamic-form.service';
 
 @Component({
-  selector: 'app-form-input',
+  selector: 'ahr-form-input',
   template: `
     <div [formGroup]="parentFormGroup">
       <mat-form-field>
-        <mat-label>{{ config['label'] }}</mat-label>
+        <mat-label>{{ viewTemplateConfig['label'] }}</mat-label>
         <input
           matInput
-          placeholder="{{ config['label'] }}"
-          [formControlName]="config['key']"
-          [type]="config['type']"
+          placeholder="{{ viewTemplateConfig['label'] }}"
+          [formControlName]="viewTemplateConfig['key']"
+          [type]="viewTemplateConfig['type']"
         />
         <!-- <mat-error *ngIf="!control.valid && control.touched"
         >{{ config['label'] }} is not valid!</mat-error
@@ -23,14 +23,19 @@ import { DynamicFormService } from '../../services/dynamic-form.service';
   styleUrls: ['./form-input.component.scss'],
 })
 export class FormInputComponent implements OnInit {
-  @Input()
-  config: { [key: string]: any } = {};
+  // @Input()
+  viewTemplateConfig: { [key: string]: any } = {};
 
   parentFormGroup: FormGroup;
 
   constructor(private df: DynamicFormService) {}
 
   ngOnInit(): void {
-    this.parentFormGroup = this.df.getFormGroup(this.config['groupName']);
+    this.parentFormGroup = this.df.getFormGroup(
+      this.viewTemplateConfig['parentGroupName']
+    );
+
+    console.log(this.viewTemplateConfig);
   }
 }
+// TODO: build an interface for SELECT view config

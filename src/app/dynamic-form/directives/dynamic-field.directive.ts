@@ -33,7 +33,7 @@ export class DynamicFieldDirective implements OnInit {
       const componentToRender = components[config.controlType];
 
       this.component = this.container.createComponent(componentToRender);
-      this.component.instance.config = config;
+      this.component.instance.viewTemplateConfig = config;
       // this.component.instance.group = this.group;
     });
   }
