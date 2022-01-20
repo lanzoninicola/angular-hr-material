@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { DynamicFormBuilderService } from 'src/app/dynamic-form/services/dynamic-form-builder.service';
+
 import { UserEditFormPicklist } from '../../types/user-edit-form.types';
 import { UserModel } from '../../types/user.type';
 
@@ -10,66 +12,81 @@ import { UserModel } from '../../types/user.type';
   styleUrls: ['./user-edit.component.scss'],
 })
 export class UserEditComponent implements OnInit {
-  userEditForm2 = {
+  userEditForm: FormGroup;
+
+  formViewTemplate = {
     personalInfo: [
       {
         parentGroupName: 'personalInfo',
         controlType: 'input',
         placeholder: '',
-        label: 'Text Input',
-        key: 'username',
-        value: 'This input is pre-populated',
+        label: 'Lastname',
+        key: 'lastname',
+        value: '',
         syncValidators: [Validators.required],
       },
       {
         parentGroupName: 'personalInfo',
         controlType: 'input',
-        label: 'Password Input',
-        key: 'password',
-        type: 'password',
-        syncValidators: [Validators.required, Validators.minLength(8)],
+        placeholder: '',
+        label: 'Firstname',
+        key: 'firstname',
+        value: '',
+        syncValidators: [Validators.required],
+      },
+      {
+        parentGroupName: 'personalInfo',
+        controlType: 'input',
+        placeholder: '',
+        label: 'E-mail',
+        key: 'email',
+        value: '',
+        syncValidators: [Validators.required, Validators.email],
       },
     ],
     companyRoleInfo: [
       {
         parentGroupName: 'companyRoleInfo',
         controlType: 'select',
-        label: 'Dropdown Menu',
-        key: 'dropdown',
-        syncValidators: [Validators.required],
-        whatToSelect: 'a topic',
-        selectOptions: [
-          { value: 'option1' },
-          { value: 'option2' },
-          { value: 'option3' },
-          { value: 'option4' },
-        ],
+        label: 'Department',
+        key: 'departments',
+        syncValidators: [] as Validators,
+        whatToSelect: 'department',
+        selectOptions: [] as string[],
+      },
+      {
+        parentGroupName: 'companyRoleInfo',
+        controlType: 'select',
+        label: 'Level',
+        key: 'companyLevels',
+        syncValidators: [] as Validators,
+        whatToSelect: 'level',
+        selectOptions: [] as string[],
+      },
+    ],
+    platformInfo: [
+      {
+        parentGroupName: 'platformInfo',
+        controlType: 'select',
+        label: 'Role',
+        key: 'platformRoles',
+        syncValidators: [] as Validators,
+        whatToSelect: 'role',
+        selectOptions: [] as string[],
       },
     ],
   };
 
-  userEditForm = new FormGroup({
-    personalInfo: new FormGroup({
-      firstname: new FormControl('', Validators.required),
-      lastname: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.email),
-    }),
-    companyRoleInfo: new FormGroup({
-      department: new FormControl('', Validators.required),
-      level: new FormControl('', Validators.required),
-    }),
-    platformInfo: new FormGroup({
-      role: new FormControl('', Validators.required),
-    }),
-  });
-
-  formPicklistData: UserEditFormPicklist = {};
-
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private dynamicFormBuilder: DynamicFormBuilderService
+  ) {
+    this.userEditForm = this.dynamicFormBuilder.buildModel(
+      this.formViewTemplate
+    );
+  }
 
   ngOnInit(): void {
-    this.formPicklistData = this.route.snapshot.data['userEditFormInit'];
-
     const user = this.route.snapshot.data['userEdit'];
     this.setFormWithUserData(user);
   }
@@ -85,6 +102,8 @@ export class UserEditComponent implements OnInit {
 
     this.userEditForm.get(['personalInfo', 'email'])?.setValue(user.email);
 
+    console.log(user.department);
+
     this.userEditForm
       .get(['companyRoleInfo', 'department'])
       ?.setValue(user.department);
@@ -98,5 +117,12 @@ export class UserEditComponent implements OnInit {
       ?.setValue(user.platformRole);
   }
 
-  onSave() {}
+  onSave() {
+    console.log(this.userEditForm);
+    console.log(this.userEditForm.get(['personalInfo', 'username']).value);
+
+    this.userEditForm.valueChanges.subscribe((data) => {
+      console.log(data);
+    });
+  }
 }
