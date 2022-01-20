@@ -1,5 +1,10 @@
 <div class="container">
-  <ahr-dynamic-form [formTemplate]="userEditForm2"> </ahr-dynamic-form>
+  <ahr-dynamic-form
+    [formTemplate]="formViewTemplate"
+    [formModel]="userEditForm"
+  >
+  </ahr-dynamic-form>
+  <button type="button" (click)="onSave()">Save</button>
 
   <!-- <form [formGroup]="userEditForm">
     <div formGroupName="personalInfo" class="form-group">
