@@ -7,16 +7,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { DynamicFormGroupComponent } from './components/dynamic-form-group/dynamic-form-group.component';
 
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { FormSelectComponent } from './components/form-select/form-select.component';
-import { DynamicFieldDirective } from './directives/dynamic-field.directive';
+import { DynamicFieldsDirective } from './directives/dynamic-fields.directive';
 
 @NgModule({
   declarations: [
-    DynamicFieldDirective,
+    DynamicFieldsDirective,
     DynamicFormComponent,
+    DynamicFormGroupComponent,
     FormSelectComponent,
     FormInputComponent,
   ],

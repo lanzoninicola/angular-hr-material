@@ -8,7 +8,8 @@ import { DynamicFormService } from '../../services/dynamic-form.service';
   template: `
     <form [formGroup]="mainForm">
       <div *ngFor="let groupConfig of formTemplate | keyvalue">
-        <ng-content *dynamicField="groupConfig['value']"> </ng-content>
+        <ahr-dynamic-form-group [groupConfig]="groupConfig">
+        </ahr-dynamic-form-group>
       </div>
     </form>
   `,
