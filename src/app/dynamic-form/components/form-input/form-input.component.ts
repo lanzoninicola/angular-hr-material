@@ -23,7 +23,6 @@ import { DynamicFormService } from '../../services/dynamic-form.service';
   styleUrls: ['./form-input.component.scss'],
 })
 export class FormInputComponent implements OnInit {
-  // @Input()
   viewTemplateConfig: { [key: string]: any } = {};
 
   parentFormGroup: FormGroup;
