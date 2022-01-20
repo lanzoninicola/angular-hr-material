@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
 import { DynamicFormService } from '../../services/dynamic-form.service';
 
 @Component({
@@ -27,14 +28,12 @@ export class FormInputComponent implements OnInit {
 
   parentFormGroup: FormGroup;
 
-  constructor(private df: DynamicFormService) {}
+  constructor(private df: DynamicFormBuilderService) {}
 
   ngOnInit(): void {
     this.parentFormGroup = this.df.getFormGroup(
       this.viewTemplateConfig['parentGroupName']
     );
-
-    console.log(this.viewTemplateConfig);
   }
 }
 // TODO: build an interface for SELECT view config
