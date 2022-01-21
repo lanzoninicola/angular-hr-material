@@ -6,6 +6,8 @@ import {
 } from '../types/dynamic-form.types';
 import { TemplateMap, TemplateObjectLiteral } from '../types/template.types';
 
+// TODO: cache the template && invalidate cache
+
 @Injectable({
   providedIn: 'root',
 })
@@ -39,6 +41,12 @@ export class FormViewTemplateService {
     }
 
     return false;
+  }
+
+  destroy(): void {
+    for (const [key] of this.template) {
+      this.template.delete(key);
+    }
   }
 
   private _getTemplateAsMap(): TemplateMap {

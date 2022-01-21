@@ -1,8 +1,11 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 import { TemplateMap } from '../types/template.types';
 import { FormViewTemplateService } from './form-view-template.service';
+
+// TODO: cache the template && invalidate cache
 
 interface FormControlModelConfig {
   initState: string;
@@ -22,11 +25,8 @@ type FormGroupKey = string;
   providedIn: 'root',
 })
 export class DynamicFormBuilderService {
-  viewTemplateConfig: { [key: string]: any } = {};
-
   /**
    * @description Template for the Dynamic Form
-   *
    */
   viewTemplate: TemplateMap;
 
@@ -81,12 +81,15 @@ export class DynamicFormBuilderService {
    * @returns FormGroup object
    */
   getFormGroup(name: string): FormGroup {
-    console.log(name);
     if (this.formModel.contains(name)) {
       return this.formModel.controls[name] as FormGroup;
     }
 
     return new FormGroup({});
+  }
+
+  destroy(): void {
+    this.formModel = new FormGroup({});
   }
 
   /**
@@ -109,15 +112,6 @@ export class DynamicFormBuilderService {
 
     return childrenGroup;
   }
-
-  // /**
-  //  * @description
-  //  * Returns the array of controls config given a template
-  //  *
-  //  */
-  // private _constrolsConfig(groupName: string): { [key: string]: any }[] {
-  //   return this.viewTemplateConfig[groupName];
-  // }
 
   /**
    * @description
