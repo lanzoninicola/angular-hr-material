@@ -8,9 +8,12 @@ import {
   selector: 'ahr-dynamic-form-group',
   template: `
     <div class="form-group">
-      <h2 class="form-group-title">{{ title }}</h2>
-      <ng-content *dynamicFields="childrenControls; parentGroupName: name">
-      </ng-content>
+      <h3 class="form-group-title">{{ title }}</h3>
+      <div class="form-group-content">
+        <ng-content *dynamicFields="childrenControls; parentGroupName: name">
+        </ng-content>
+      </div>
+      <mat-divider></mat-divider>
     </div>
   `,
   styleUrls: ['./dynamic-form-group.component.scss'],
