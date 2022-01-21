@@ -1,13 +1,13 @@
-<div [formGroup]="parentFormGroup">
+<div [formGroup]="parentFormGroupModel">
   <mat-form-field>
-    <mat-label>{{ viewTemplateConfig["label"] }}</mat-label>
+    <mat-label>{{ controlConfig["label"] }}</mat-label>
 
     <mat-select
-      placeholder="{{ viewTemplateConfig['label'] }}"
-      [formControlName]="viewTemplateConfig['key']"
+      placeholder="{{ controlConfig['label'] }}"
+      [formControlName]="controlConfig['key']"
     >
       <mat-option selected="true">
-        Please select {{ viewTemplateConfig["whatToSelect"] }}</mat-option
+        Please select {{ controlConfig["whatToSelect"] }}</mat-option
       >
       <mat-option
         *ngFor="let selectOption of selectOptions$ | async"

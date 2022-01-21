@@ -1,9 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicFormBuilderService } from 'src/app/dynamic-form/services/dynamic-form-builder.service';
+import { FormViewTemplateService } from 'src/app/dynamic-form/services/form-view-template.service';
 
-import { UserEditFormPicklist } from '../../types/user-edit-form.types';
 import { UserModel } from '../../types/user.type';
 
 @Component({
@@ -11,79 +11,82 @@ import { UserModel } from '../../types/user.type';
   templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss'],
 })
-export class UserEditComponent implements OnInit {
+export class UserEditComponent implements OnInit, OnDestroy {
   userEditForm: FormGroup;
-
-  formViewTemplate = {
-    personalInfo: [
-      {
-        parentGroupName: 'personalInfo',
-        controlType: 'input',
-        placeholder: '',
-        label: 'Lastname',
-        key: 'lastname',
-        value: '',
-        syncValidators: [Validators.required],
-      },
-      {
-        parentGroupName: 'personalInfo',
-        controlType: 'input',
-        placeholder: '',
-        label: 'Firstname',
-        key: 'firstname',
-        value: '',
-        syncValidators: [Validators.required],
-      },
-      {
-        parentGroupName: 'personalInfo',
-        controlType: 'input',
-        placeholder: '',
-        label: 'E-mail',
-        key: 'email',
-        value: '',
-        syncValidators: [Validators.required, Validators.email],
-      },
-    ],
-    companyRoleInfo: [
-      {
-        parentGroupName: 'companyRoleInfo',
-        controlType: 'select',
-        label: 'Department',
-        key: 'departments',
-        syncValidators: [] as Validators,
-        whatToSelect: 'department',
-        selectOptions: [] as string[],
-      },
-      {
-        parentGroupName: 'companyRoleInfo',
-        controlType: 'select',
-        label: 'Level',
-        key: 'companyLevels',
-        syncValidators: [] as Validators,
-        whatToSelect: 'level',
-        selectOptions: [] as string[],
-      },
-    ],
-    platformInfo: [
-      {
-        parentGroupName: 'platformInfo',
-        controlType: 'select',
-        label: 'Role',
-        key: 'platformRoles',
-        syncValidators: [] as Validators,
-        whatToSelect: 'role',
-        selectOptions: [] as string[],
-      },
-    ],
-  };
 
   constructor(
     private route: ActivatedRoute,
+    private formViewTemplate: FormViewTemplateService,
     private dynamicFormBuilder: DynamicFormBuilderService
   ) {
-    this.userEditForm = this.dynamicFormBuilder.buildModel(
-      this.formViewTemplate
+    this.formViewTemplate.addGroup(
+      { key: 'personalInfo', title: 'Personal Information' },
+      [
+        {
+          type: 'input',
+          placeholder: '',
+          label: 'Lastname',
+          key: 'lastname',
+          value: '',
+          syncValidators: [],
+        },
+        {
+          type: 'input',
+          placeholder: '',
+          label: 'Firstname',
+          key: 'firstname',
+          value: '',
+          syncValidators: [],
+        },
+        {
+          parentGroupName: 'personalInfo',
+          type: 'input',
+          placeholder: '',
+          label: 'E-mail',
+          key: 'email',
+          value: '',
+          syncValidators: [],
+        },
+      ]
     );
+
+    this.formViewTemplate.addGroup(
+      { key: 'companyRoleInfo', title: 'Company Role Information' },
+      [
+        {
+          key: 'departments',
+          type: 'select',
+          label: 'Department',
+          placeholder: '',
+          whatToSelect: 'department',
+          selectOptions: [] as string[],
+        },
+        {
+          key: 'companyLevels',
+          type: 'select',
+          label: 'Level',
+          placeholder: '',
+          whatToSelect: 'level',
+          selectOptions: [] as string[],
+        },
+      ]
+    );
+
+    this.formViewTemplate.addGroup(
+      { key: 'platformInfo', title: 'Platform related information' },
+      [
+        {
+          key: 'platformRoles',
+          type: 'select',
+          label: 'Role',
+          placeholder: '',
+          whatToSelect: 'role',
+          selectOptions: [] as string[],
+        },
+      ]
+    );
+
+    this.userEditForm = this.dynamicFormBuilder.buildModel();
   }
 
   ngOnInit(): void {
@@ -95,32 +98,29 @@ export class UserEditComponent implements OnInit {
     this.userEditForm
       .get(['personalInfo', 'firstname'])
       ?.setValue(user.firstname);
-
     this.userEditForm
       .get(['personalInfo', 'lastname'])
       ?.setValue(user.lastname);
-
     this.userEditForm.get(['personalInfo', 'email'])?.setValue(user.email);
-
     this.userEditForm
       .get(['companyRoleInfo', 'departments'])
       ?.setValue(user.department);
-
     this.userEditForm
       .get(['companyRoleInfo', 'companyLevels'])
       ?.setValue(user.companyRoleLevel);
-
     this.userEditForm
       .get(['platformInfo', 'platformRoles'])
       ?.setValue(user.platformRole);
   }
 
   onSave() {
-    console.log(this.userEditForm);
-    console.log(this.userEditForm.get(['personalInfo', 'username']).value);
-
     this.userEditForm.valueChanges.subscribe((data) => {
       console.log(data);
     });
+  }
+
+  ngOnDestroy() {
+    this.dynamicFormBuilder.destroy();
+    this.formViewTemplate.destroy();
   }
 }

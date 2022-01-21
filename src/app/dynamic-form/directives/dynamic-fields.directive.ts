@@ -26,17 +26,25 @@ export class DynamicFieldsDirective implements OnInit {
   @Input('dynamicFields')
   controlsConfig: any[];
 
+  @Input()
+  dynamicFieldsParentGroupName: string;
+
   component: ComponentRef<any>;
 
   constructor(private container: ViewContainerRef) {}
 
   ngOnInit() {
     this.controlsConfig.forEach((config) => {
-      const componentToRender = components[config.controlType];
+      const componentToRender = components[config.type];
+
+      if (typeof componentToRender === undefined) {
+        throw 'DynamicFieldsDirective: Component template not found.';
+      }
 
       this.component = this.container.createComponent(componentToRender);
-      this.component.instance.viewTemplateConfig = config;
-      // this.component.instance.group = this.group;
+      this.component.instance.controlConfig = config;
+      this.component.instance.parentGroupName =
+        this.dynamicFieldsParentGroupName;
     });
   }
 }

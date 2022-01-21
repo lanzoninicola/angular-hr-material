@@ -1,5 +1,11 @@
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+
+import { TemplateMap } from '../types/template.types';
+import { FormViewTemplateService } from './form-view-template.service';
+
+// TODO: cache the template && invalidate cache
 
 interface FormControlModelConfig {
   initState: string;
@@ -9,6 +15,8 @@ interface FormControlModelConfig {
 
 type FormControlKey = string;
 
+type FormGroupKey = string;
+
 /**
  *  Responsible to build the Reactive Form Model starting by a template
  */
@@ -17,11 +25,18 @@ type FormControlKey = string;
   providedIn: 'root',
 })
 export class DynamicFormBuilderService {
-  viewTemplateConfig: { [key: string]: any } = {};
+  /**
+   * @description Template for the Dynamic Form
+   */
+  viewTemplate: TemplateMap;
 
   formModel: FormGroup;
 
-  constructor() {}
+  constructor(private formViewTemplate: FormViewTemplateService) {
+    this.viewTemplate = formViewTemplate.getTemplate({
+      format: 'map',
+    }) as TemplateMap;
+  }
 
   /**
    *
@@ -29,11 +44,52 @@ export class DynamicFormBuilderService {
    * Returns the model of Form given a template
    *
    */
-  buildModel(viewTemplateConfig: { [key: string]: any }): FormGroup {
-    this.viewTemplateConfig = viewTemplateConfig;
+  buildModel(): FormGroup {
+    if (this.formViewTemplate.shouldEmpty()) {
+      this.formModel = new FormGroup({});
+      return this.formModel;
+    }
 
-    this.formModel = new FormGroup(this._childrenGroup());
+    const childrenGroup = Array.from(this._childrenGroup()).reduce(
+      (obj: { [key: string]: any }, [key, value]) => {
+        obj[key] = value;
+        return obj;
+      },
+      {}
+    );
+
+    this.formModel = new FormGroup(childrenGroup);
     return this.formModel;
+  }
+
+  /**
+   * @description
+   * Returns the 'FormGroup' object of main form
+   *
+   * @returns FormGroup object
+   */
+  getMainFormGroupModel() {
+    return this.formModel;
+  }
+
+  /**
+   * @description
+   * Returns the 'FormGroup' object given a form group name
+   * Note: This method manages only one level of indentation
+   *
+   * @param name The key of FormGroup
+   * @returns FormGroup object
+   */
+  getFormGroup(name: string): FormGroup {
+    if (this.formModel.contains(name)) {
+      return this.formModel.controls[name] as FormGroup;
+    }
+
+    return new FormGroup({});
+  }
+
+  destroy(): void {
+    this.formModel = new FormGroup({});
   }
 
   /**
@@ -47,25 +103,14 @@ export class DynamicFormBuilderService {
    *
    */
   private _childrenGroup() {
-    let childrenGroup: { [key: string]: any } = {};
+    let childrenGroup: Map<FormGroupKey, FormGroup> = new Map();
 
-    Object.keys(this.viewTemplateConfig).forEach((groupName: string) => {
-      const childrenControlsModel = this._createControls(
-        this._constrolsConfig(groupName)
-      );
-      childrenGroup[groupName] = new FormGroup(childrenControlsModel);
-    });
+    for (const [group, controls] of this.viewTemplate) {
+      const childrenControlsModel = this._createControls(controls);
+      childrenGroup.set(group.key, new FormGroup(childrenControlsModel));
+    }
 
     return childrenGroup;
-  }
-
-  /**
-   * @description
-   * Returns the array of controls config given a template
-   *
-   */
-  private _constrolsConfig(groupName: string): { [key: string]: any }[] {
-    return this.viewTemplateConfig[groupName];
   }
 
   /**
@@ -104,20 +149,5 @@ export class DynamicFormBuilderService {
   private _createControl(controlConfig: FormControlModelConfig) {
     const { initState, syncValidators, asyncValidators } = controlConfig;
     return new FormControl(initState, syncValidators, asyncValidators);
-  }
-
-  /**
-   * @description
-   * This manages only one level of indentation of Form
-   *
-   * @param name The key of FormGroup
-   * @returns FormGroup object
-   */
-  getFormGroup(name: string): FormGroup | null {
-    if (this.formModel.contains(name)) {
-      return this.formModel.controls[name] as FormGroup;
-    }
-
-    return null;
   }
 }
