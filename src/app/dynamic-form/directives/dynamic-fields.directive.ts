@@ -41,8 +41,6 @@ export class DynamicFieldsDirective implements OnInit {
         throw 'DynamicFieldsDirective: Component template not found.';
       }
 
-      console.log(this.dynamicFieldsParentGroupName);
-
       this.component = this.container.createComponent(componentToRender);
       this.component.instance.controlConfig = config;
       this.component.instance.parentGroupName =
