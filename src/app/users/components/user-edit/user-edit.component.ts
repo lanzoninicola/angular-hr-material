@@ -20,7 +20,7 @@ export class UserEditComponent implements OnInit {
     private dynamicFormBuilder: DynamicFormBuilderService
   ) {
     this.formViewTemplate.addGroup(
-      { key: 'personalInfo', title: 'Persona Information' },
+      { key: 'personalInfo', title: 'Personal Information' },
       [
         {
           type: 'input',
@@ -72,19 +72,19 @@ export class UserEditComponent implements OnInit {
       ]
     );
 
-    // this.formViewTemplate.addGroup(
-    //   { key: 'platformInfo', title: 'Platform related information' },
-    //   [
-    //     {
-    //       key: 'platformRoles',
-    //       type: 'select',
-    //       label: 'Role',
-    //       placeholder: '',
-    //       whatToSelect: 'role',
-    //       selectOptions: [] as string[],
-    //     },
-    //   ]
-    // );
+    this.formViewTemplate.addGroup(
+      { key: 'platformInfo', title: 'Platform related information' },
+      [
+        {
+          key: 'platformRoles',
+          type: 'select',
+          label: 'Role',
+          placeholder: '',
+          whatToSelect: 'role',
+          selectOptions: [] as string[],
+        },
+      ]
+    );
 
     this.userEditForm = this.dynamicFormBuilder.buildModel();
   }

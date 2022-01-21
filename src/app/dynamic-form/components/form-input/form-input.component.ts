@@ -24,16 +24,19 @@ import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.s
   styleUrls: ['./form-input.component.scss'],
 })
 export class FormInputComponent implements OnInit {
+  /**
+   * Inputs from directive: DynamicFields
+   */
   controlConfig: { [key: string]: any } = {};
+  parentGroupName: string;
 
   parentFormGroupModel: FormGroup;
 
-  constructor(private dynamicformbuilder: DynamicFormBuilderService) {}
+  constructor(private dynamicFormBuilder: DynamicFormBuilderService) {}
 
   ngOnInit(): void {
-    this.parentFormGroupModel = this.dynamicformbuilder.getFormGroup(
-      this.controlConfig['parentGroupName']
+    this.parentFormGroupModel = this.dynamicFormBuilder.getFormGroup(
+      this.parentGroupName
     );
   }
 }
-// TODO: build an interface for SELECT view config

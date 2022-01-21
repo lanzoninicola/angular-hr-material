@@ -13,6 +13,7 @@ import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.s
 })
 export class FormSelectComponent implements OnInit, OnDestroy {
   controlConfig: { [key: string]: any } = {};
+  parentGroupName: string;
 
   parentFormGroupModel: FormGroup;
 
@@ -23,13 +24,13 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   >([]);
 
   constructor(
-    private dynamicformbuilder: DynamicFormBuilderService,
+    private dynamicFormBuilder: DynamicFormBuilderService,
     private picklist: PicklistService
   ) {}
 
   ngOnInit(): void {
-    this.parentFormGroupModel = this.dynamicformbuilder.getFormGroup(
-      this.controlConfig['parentGroupName']
+    this.parentFormGroupModel = this.dynamicFormBuilder.getFormGroup(
+      this.parentGroupName
     );
     this._options();
   }

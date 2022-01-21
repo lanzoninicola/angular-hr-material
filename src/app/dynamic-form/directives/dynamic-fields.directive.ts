@@ -26,6 +26,9 @@ export class DynamicFieldsDirective implements OnInit {
   @Input('dynamicFields')
   controlsConfig: any[];
 
+  @Input()
+  dynamicFieldsParentGroupName: string;
+
   component: ComponentRef<any>;
 
   constructor(private container: ViewContainerRef) {}
@@ -38,9 +41,12 @@ export class DynamicFieldsDirective implements OnInit {
         throw 'DynamicFieldsDirective: Component template not found.';
       }
 
+      console.log(this.dynamicFieldsParentGroupName);
+
       this.component = this.container.createComponent(componentToRender);
       this.component.instance.controlConfig = config;
-      // this.component.instance.group = this.group;
+      this.component.instance.parentGroupName =
+        this.dynamicFieldsParentGroupName;
     });
   }
 }
