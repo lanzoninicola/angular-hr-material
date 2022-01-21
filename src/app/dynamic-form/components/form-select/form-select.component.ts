@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { PicklistService } from 'src/app/core/services/picklist.service';
 import { PicklistValues } from 'src/app/core/types/picklist.type';
 
 import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
+import { FormControlConfiguration } from '../../types/dynamic-form.types';
 
 @Component({
   selector: 'ahr-form-select',
@@ -12,9 +13,10 @@ import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.s
   styleUrls: ['./form-select.component.scss'],
 })
 export class FormSelectComponent implements OnInit, OnDestroy {
-  controlConfig: { [key: string]: any } = {};
+  controlConfig: FormControlConfiguration;
   parentGroupName: string;
 
+  control: AbstractControl;
   parentFormGroupModel: FormGroup;
 
   private _picklistSubscription$: Subscription;
@@ -32,6 +34,9 @@ export class FormSelectComponent implements OnInit, OnDestroy {
     this.parentFormGroupModel = this.dynamicFormBuilder.getFormGroup(
       this.parentGroupName
     );
+    this.control =
+      this.parentFormGroupModel.controls[this.controlConfig['key']];
+
     this._options();
   }
 

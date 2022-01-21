@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
+import { FormControlConfiguration } from '../../types/dynamic-form.types';
+import { FormControlInputTextConfig } from '../../types/form-control.types';
 
 @Component({
   selector: 'ahr-form-input',
@@ -15,9 +17,9 @@ import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.s
           [formControlName]="controlConfig['key']"
           [type]="controlConfig['type']"
         />
-        <!-- <mat-error *ngIf="!control.valid && control.touched"
-        >{{ config['label'] }} is not valid!</mat-error
-      > -->
+        <mat-error *ngIf="!control.valid && control.touched"
+          >{{ controlConfig['label'] }} is not valid!</mat-error
+        >
       </mat-form-field>
     </div>
   `,
@@ -27,9 +29,10 @@ export class FormInputComponent implements OnInit {
   /**
    * Inputs from directive: DynamicFields
    */
-  controlConfig: { [key: string]: any } = {};
+  controlConfig: FormControlInputTextConfig;
   parentGroupName: string;
 
+  control: AbstractControl;
   parentFormGroupModel: FormGroup;
 
   constructor(private dynamicFormBuilder: DynamicFormBuilderService) {}
@@ -38,5 +41,8 @@ export class FormInputComponent implements OnInit {
     this.parentFormGroupModel = this.dynamicFormBuilder.getFormGroup(
       this.parentGroupName
     );
+
+    this.control =
+      this.parentFormGroupModel.controls[this.controlConfig['key']];
   }
 }
