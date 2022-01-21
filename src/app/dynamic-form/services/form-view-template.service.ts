@@ -20,6 +20,11 @@ export class FormViewTemplateService {
     return this.template;
   }
 
+  /**
+   * @description
+   * Let configures the template adding form groups
+   *
+   */
   addGroup(
     group: FormGroupConfiguration,
     controls: FormControlConfiguration[]
@@ -27,6 +32,11 @@ export class FormViewTemplateService {
     this.template.set(group, controls);
   }
 
+  /**
+   * @description
+   * This checks if the template is empty
+   *
+   */
   shouldEmpty(): boolean {
     if (this.template.size === 0) {
       return true;
@@ -35,6 +45,11 @@ export class FormViewTemplateService {
     return false;
   }
 
+  /**
+   * @description
+   * This remove the template when the component is destroyed
+   *
+   */
   destroy(): void {
     for (const [key] of this.template) {
       this.template.delete(key);

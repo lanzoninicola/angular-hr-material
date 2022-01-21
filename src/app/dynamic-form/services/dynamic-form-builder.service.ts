@@ -80,6 +80,11 @@ export class DynamicFormBuilderService {
     return new FormGroup({});
   }
 
+  /**
+   * @description
+   * This reset the FormGroup used when the component is destroyed
+   *
+   */
   destroy(): void {
     this.formModel = new FormGroup({});
   }
