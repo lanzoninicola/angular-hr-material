@@ -1,6 +1,6 @@
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import Helper from 'src/app/core/helpers/helpers';
 
 import { TemplateMap } from '../types/template.types';
 import { FormViewTemplateService } from './form-view-template.service';
@@ -48,13 +48,7 @@ export class DynamicFormBuilderService {
       return this.formModel;
     }
 
-    const childrenGroup = Array.from(this._childrenGroup()).reduce(
-      (obj: { [key: string]: any }, [key, value]) => {
-        obj[key] = value;
-        return obj;
-      },
-      {}
-    );
+    const childrenGroup = Helper.mapToObjectLiteral(this._childrenGroup());
 
     this.formModel = new FormGroup(childrenGroup);
     return this.formModel;
@@ -141,7 +135,7 @@ export class DynamicFormBuilderService {
 
   /**
    * @description
-   * Returns an instance of 'FormControl' give the config
+   * Returns an instance of 'FormControl' given the config
    *
    */
   private _createControl(controlConfig: FormControlModelConfig) {
