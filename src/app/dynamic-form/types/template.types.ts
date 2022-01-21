@@ -7,5 +7,3 @@ export type TemplateMap = Map<
   FormGroupConfiguration,
   FormControlConfiguration[]
 >;
-
-export type TemplateObjectLiteral = { [key: string]: any };
