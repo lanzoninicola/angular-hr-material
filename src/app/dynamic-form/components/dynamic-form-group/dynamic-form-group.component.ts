@@ -4,7 +4,7 @@ import { Component, Input, OnInit } from '@angular/core';
   selector: 'ahr-dynamic-form-group',
   template: `
     <div class="form-group">
-      <ng-content *dynamicFields="groupConfig['value']"> </ng-content>
+      <ng-content *dynamicFields="controlsConfig"> </ng-content>
     </div>
   `,
   styleUrls: ['./dynamic-form-group.component.scss'],

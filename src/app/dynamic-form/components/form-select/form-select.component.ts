@@ -12,9 +12,9 @@ import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.s
   styleUrls: ['./form-select.component.scss'],
 })
 export class FormSelectComponent implements OnInit, OnDestroy {
-  viewTemplateConfig: { [key: string]: any } = {};
+  controlConfig: { [key: string]: any } = {};
 
-  parentFormGroup: FormGroup;
+  parentFormGroupModel: FormGroup;
 
   private _picklistSubscription$: Subscription;
 
@@ -23,20 +23,19 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   >([]);
 
   constructor(
-    private dfb: DynamicFormBuilderService,
+    private dynamicformbuilder: DynamicFormBuilderService,
     private picklist: PicklistService
   ) {}
 
   ngOnInit(): void {
-    this.parentFormGroup = this.dfb.getFormGroup(
-      this.viewTemplateConfig['parentGroupName']
+    this.parentFormGroupModel = this.dynamicformbuilder.getFormGroup(
+      this.controlConfig['parentGroupName']
     );
-
     this._options();
   }
 
   private _options() {
-    const templateOptions: [] = this.viewTemplateConfig['selectOptions'];
+    const templateOptions: [] = this.controlConfig['selectOptions'];
     if (templateOptions?.length === 0) {
       this._getFromPicklist();
       return;
@@ -47,7 +46,7 @@ export class FormSelectComponent implements OnInit, OnDestroy {
 
   private _getFromPicklist() {
     this._picklistSubscription$ = this.picklist
-      .getValuesOf(this.viewTemplateConfig['key'])
+      .getValuesOf(this.controlConfig['key'])
       .subscribe((pv: PicklistValues) => this.selectOptions$.next(pv));
   }
 
@@ -56,7 +55,7 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   }
 }
 
-// viewTemplateConfig['key']
+// controlConfig['key']
 
-// TODO: build an interface DynamicFormControl (confg, parentFormGroup props)
+// TODO: build an interface DynamicFormControl (confg, parentFormGroupModel props)
 // TODO: build an interface for SELECT view config

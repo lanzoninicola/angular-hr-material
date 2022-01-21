@@ -6,14 +6,14 @@ import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.s
 @Component({
   selector: 'ahr-form-input',
   template: `
-    <div [formGroup]="parentFormGroup">
+    <div [formGroup]="parentFormGroupModel">
       <mat-form-field>
-        <mat-label>{{ viewTemplateConfig['label'] }}</mat-label>
+        <mat-label>{{ controlConfig['label'] }}</mat-label>
         <input
           matInput
-          placeholder="{{ viewTemplateConfig['label'] }}"
-          [formControlName]="viewTemplateConfig['key']"
-          [type]="viewTemplateConfig['type']"
+          placeholder="{{ controlConfig['label'] }}"
+          [formControlName]="controlConfig['key']"
+          [type]="controlConfig['type']"
         />
         <!-- <mat-error *ngIf="!control.valid && control.touched"
         >{{ config['label'] }} is not valid!</mat-error
@@ -24,15 +24,15 @@ import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.s
   styleUrls: ['./form-input.component.scss'],
 })
 export class FormInputComponent implements OnInit {
-  viewTemplateConfig: { [key: string]: any } = {};
+  controlConfig: { [key: string]: any } = {};
 
-  parentFormGroup: FormGroup;
+  parentFormGroupModel: FormGroup;
 
-  constructor(private df: DynamicFormBuilderService) {}
+  constructor(private dynamicformbuilder: DynamicFormBuilderService) {}
 
   ngOnInit(): void {
-    this.parentFormGroup = this.df.getFormGroup(
-      this.viewTemplateConfig['parentGroupName']
+    this.parentFormGroupModel = this.dynamicformbuilder.getFormGroup(
+      this.controlConfig['parentGroupName']
     );
   }
 }
