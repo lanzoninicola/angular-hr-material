@@ -1,0 +1,14 @@
+.form-group-content {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.form-group-title {
+  font-weight: 500;
+}
+
+mat-divider {
+  margin-bottom: 1.5rem;
+  opacity: 0.5;
+}
