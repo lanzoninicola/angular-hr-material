@@ -33,9 +33,7 @@ export class DynamicFormBuilderService {
   formModel: FormGroup;
 
   constructor(private formViewTemplate: FormViewTemplateService) {
-    this.viewTemplate = formViewTemplate.getTemplate({
-      format: 'map',
-    }) as TemplateMap;
+    this.viewTemplate = formViewTemplate.getTemplate();
   }
 
   /**

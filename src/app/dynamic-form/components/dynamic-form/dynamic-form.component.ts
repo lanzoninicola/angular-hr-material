@@ -1,8 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+
 import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
 import { FormViewTemplateService } from '../../services/form-view-template.service';
-import { TemplateMap, TemplateObjectLiteral } from '../../types/template.types';
+import { TemplateMap } from '../../types/template.types';
 
 @Component({
   selector: 'ahr-dynamic-form',
@@ -26,11 +27,7 @@ export class DynamicFormComponent implements OnInit {
     private dynamicFormBuilder: DynamicFormBuilderService
   ) {
     this.model = this.dynamicFormBuilder.getMainFormGroupModel();
-    this.viewConfig = this.formViewTemplate.getTemplate({
-      format: 'map',
-    }) as TemplateMap;
-
-    console.log(this.viewConfig);
+    this.viewConfig = this.formViewTemplate.getTemplate();
   }
 
   ngOnInit(): void {}

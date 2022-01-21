@@ -4,7 +4,7 @@ import {
   FormControlConfiguration,
   FormGroupConfiguration,
 } from '../types/dynamic-form.types';
-import { TemplateMap, TemplateObjectLiteral } from '../types/template.types';
+import { TemplateMap } from '../types/template.types';
 
 // TODO: cache the template && invalidate cache
 
@@ -16,16 +16,8 @@ export class FormViewTemplateService {
 
   constructor() {}
 
-  getTemplate({
-    format = 'map',
-  }: {
-    [key: string]: 'map' | 'literal';
-  }): TemplateMap | TemplateObjectLiteral {
-    if (format === 'literal') {
-      return this._getTemplateAsLiteralObject();
-    }
-
-    return this._getTemplateAsMap();
+  getTemplate(): TemplateMap {
+    return this.template;
   }
 
   addGroup(
@@ -47,29 +39,5 @@ export class FormViewTemplateService {
     for (const [key] of this.template) {
       this.template.delete(key);
     }
-  }
-
-  private _getTemplateAsMap(): TemplateMap {
-    return this.template;
-  }
-
-  private _getTemplateAsLiteralObject(): TemplateObjectLiteral {
-    let templateObject: { [key: string]: any } = {};
-
-    for (const [groupConfig, controlsConfig] of this.template) {
-      const { key: groupKey, title: groupTitle } = groupConfig;
-
-      const nextControlsConfig = controlsConfig.map((control) => {
-        return {
-          parentGroupName: groupKey,
-          parentGroupTitle: groupTitle,
-          ...control,
-        };
-      });
-
-      templateObject[groupKey] = nextControlsConfig;
-    }
-
-    return templateObject;
   }
 }
