@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, TemplateRef } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { DynamicFormBuilderService } from 'src/app/dynamic-form/services/dynamic-form-builder.service';
 import { FormViewTemplateService } from 'src/app/dynamic-form/services/form-view-template.service';
@@ -28,7 +28,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
           label: 'Lastname',
           key: 'lastname',
           value: '',
-          syncValidators: [],
+          syncValidators: [Validators.required],
         },
         {
           type: 'input',
@@ -36,16 +36,15 @@ export class UserEditComponent implements OnInit, OnDestroy {
           label: 'Firstname',
           key: 'firstname',
           value: '',
-          syncValidators: [],
+          syncValidators: [Validators.required],
         },
         {
-          parentGroupName: 'personalInfo',
           type: 'input',
           placeholder: '',
           label: 'E-mail',
           key: 'email',
           value: '',
-          syncValidators: [],
+          syncValidators: [Validators.required, Validators.email],
         },
       ]
     );
