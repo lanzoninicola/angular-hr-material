@@ -1,17 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'ahr-search-control',
   template: `
-    <div class="ahr-search-control">
+    <div class="ahr-search-control" [formGroup]="searchFormGroup">
       <input
         matInput
         type="text"
         placeholder="Search..."
-        [(ngModel)]="searchValue"
+        formControlName="searchFormControl"
       />
       <div class="ahr-search-input-icons">
         <mat-icon *ngIf="!searchValue">search</mat-icon>
@@ -38,10 +38,17 @@ export class SearchControlComponent implements OnInit {
   dataSetFilteredEvent: EventEmitter<any> = new EventEmitter();
 
   searchValue: string = '';
-  searchFormControl: FormControl = new FormControl();
+  searchFormGroup: FormGroup;
+  searchFormControl: FormControl = new FormControl('');
 
   constructor(private _searchService: SearchService) {
-    this._searchService.setupControl(this.searchFormControl);
+    this.searchFormGroup = new FormGroup({
+      searchFormControl: this.searchFormControl,
+    });
+
+    this._searchService.setupControl(
+      this.searchFormGroup.controls['searchFormControl']
+    );
   }
 
   ngOnInit(): void {

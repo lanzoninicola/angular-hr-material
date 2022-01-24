@@ -1,51 +1,56 @@
 import { Injectable, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { AbstractControl, FormControl } from '@angular/forms';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SearchService implements OnInit {
-  searchFormControl: FormControl;
-  dataSet$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  searchFormControl: AbstractControl;
+  dataSet$: BehaviorSubject<any[] | Observable<any[]>> = new BehaviorSubject<
+    any[] | Observable<any[]>
+  >([]);
 
   dataSetFiltered$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   constructor() {}
 
-  setupControl(formControl: FormControl) {
+  setupControl(formControl: AbstractControl) {
     this.searchFormControl = formControl;
   }
 
-  setupData(dataSet: any[]) {
+  setupData(dataSet: any[] | Observable<any[]>): void {
     this.dataSet$.next(dataSet);
   }
 
   ngOnInit(): void {
-    combineLatest([
-      this.dataSet$,
-      this.searchFormControl.valueChanges,
-    ]).subscribe(([dataSetRecords, searchTerm]) => {
-      const dataSetArray = Object.values(dataSetRecords);
-      let filteredRecords: any[];
+    console.log('son qua no service');
+    console.log(this.searchFormControl, this.dataSet$);
 
-      if (!searchTerm) {
-        filteredRecords = dataSetArray;
-      } else {
-        const filteredResults = dataSetArray.filter((item) => {
-          return Object.values(item).reduce((prev, curr) => {
-            return (
-              prev ||
-              curr.toString().toLowerCase().includes(searchTerm.toLowerCase())
-            );
-          }, false);
-        });
-        filteredRecords = filteredResults;
-      }
+    // combineLatest([
+    //   this.dataSet$,
+    //   this.searchFormControl.valueChanges,
+    // ]).subscribe(([dataSetRecords, searchTerm]) => {
+    //   const dataSetArray = Object.values(dataSetRecords);
+    //   let filteredRecords: any[];
 
-      this.dataSetFiltered$.next(filteredRecords);
-    });
+    //   if (!searchTerm) {
+    //     filteredRecords = dataSetArray;
+    //   } else {
+    //     const filteredResults = dataSetArray.filter((item) => {
+    //       return Object.values(item).reduce((prev, curr) => {
+    //         return (
+    //           prev ||
+    //           curr.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    //         );
+    //       }, false);
+    //     });
+    //     filteredRecords = filteredResults;
+    //   }
 
-    this.searchFormControl.setValue('');
+    //   this.dataSetFiltered$.next(filteredRecords);
+    // });
+
+    // this.searchFormControl.setValue('');
   }
 }

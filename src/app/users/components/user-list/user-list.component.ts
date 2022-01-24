@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { SearchService } from 'src/app/shared/services/search.service';
 
 import { UsersService } from '../../services/users.service';
 import { UserModel } from '../../types/user.type';
@@ -36,8 +37,13 @@ export class UserListComponent {
   ];
   pageSize = 10;
 
-  constructor(private usersService: UsersService, private router: Router) {
+  constructor(
+    private usersService: UsersService,
+    private router: Router,
+    private _searchService: SearchService
+  ) {
     this.userList$ = this.usersService.getAllUsers();
+    this._searchService.setupData(this.userList$);
   }
 
   handleTableRowClicked(userRow: UserModel) {
