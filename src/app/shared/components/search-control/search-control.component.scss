@@ -1,0 +1,28 @@
+.ahr-search-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+
+  input {
+    border: none;
+    padding: 0.75rem 1rem;
+    background: transparent;
+  }
+
+  input:focus {
+    outline: none;
+  }
+
+  .ahr-search-input-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+  }
+}
+
+.ahr-search-control:focus {
+  outline: 1px solid black;
+}

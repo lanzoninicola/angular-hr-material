@@ -11,6 +11,10 @@ import { LogoComponent } from './components/logo/logo.component';
 import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
 import { TableDataComponent } from './components/table-data/table-data.component';
 import { TablePaginatorComponent } from './components/table-paginator/table-paginator.component';
+import { SearchControlComponent } from './components/search-control/search-control.component';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -19,6 +23,7 @@ import { TablePaginatorComponent } from './components/table-paginator/table-pagi
     TablePaginatorComponent,
     TableDataComponent,
     LogoComponent,
+    SearchControlComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +33,9 @@ import { TablePaginatorComponent } from './components/table-paginator/table-pagi
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
   ],
   exports: [
     HeaderComponent,
