@@ -40,7 +40,9 @@ export class SearchControlComponent implements OnInit {
   searchValue: string = '';
   searchFormControl: FormControl = new FormControl();
 
-  constructor() {}
+  constructor(private _searchService: SearchService) {
+    this._searchService.setupControl(this.searchFormControl);
+  }
 
   ngOnInit(): void {
     // combineLatest([
