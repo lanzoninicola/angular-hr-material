@@ -1,5 +1,4 @@
 export interface FormControlInputTextConfig {
-  parentGroupName: string;
   key: string;
   type: FormControlTypeInput;
   label: string;
