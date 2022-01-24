@@ -13,3 +13,14 @@ body {
 body {
   margin: 0;
 }
+
+input,
+select,
+textarea {
+  font-family: Poppins, "sans-serif";
+  font-size: 1rem;
+}
+
+mat-form-field {
+  font-family: Poppins, "sans-serif";
+}
