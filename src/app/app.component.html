@@ -1,4 +1,3 @@
-<app-header></app-header>
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav
     #drawer
@@ -8,15 +7,14 @@
     [mode]="(isHandset$ | async) ? 'over' : 'side'"
     [opened]="(isHandset$ | async) === false"
   >
-    <mat-nav-list>
-      <a mat-list-item href="#">Jobs Board</a>
-      <a mat-list-item href="#">Requests to Hire</a>
-      <a mat-list-item href="#">Candidates</a>
-      <a mat-list-item routerLink="users/list" routerLinkActive="active"
-        >Users</a
-      >
-      <a mat-list-item href="#">Tables</a>
-    </mat-nav-list>
+    <div class="sidenav-content">
+      <ahr-logo></ahr-logo>
+      <div class="sidenav-menu">
+        <span>Menu</span>
+        <hr />
+        <ahr-nav-list></ahr-nav-list>
+      </div>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <router-outlet></router-outlet>

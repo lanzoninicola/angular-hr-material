@@ -1,8 +1,26 @@
 .sidenav {
-  margin-top: 64px;
-  width: 200px;
-}
+  width: 250px;
+  background-color: var(--primary-color);
+  border: none;
 
-mat-sidenav-container {
-  min-height: calc(100vh - 64px);
+  .sidenav-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-inline: 1rem;
+
+    .sidenav-menu {
+      margin-top: 2rem;
+
+      span {
+        color: var(--tertiary-color);
+        font-weight: 600;
+      }
+
+      hr {
+        color: var(--tertiary-color);
+        opacity: 0.2;
+      }
+    }
+  }
 }
