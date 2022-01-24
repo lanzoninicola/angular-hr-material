@@ -23,15 +23,26 @@
     [icon]="'supervised_user_circle'"
   ></ahr-nav-list-item>
 
-  <ahr-nav-list-item
-    [title]="'Users'"
-    [route]="'users/list'"
-    [icon]="'person'"
-  ></ahr-nav-list-item>
+  <mat-accordion class="example-headers-align" multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon aria-label="dashboard">dashboard</mat-icon>
+          <span>Administration</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
 
-  <ahr-nav-list-item
-    [title]="'Tables'"
-    [route]="'#'"
-    [icon]="'table_chart'"
-  ></ahr-nav-list-item>
+      <ahr-nav-list-item
+        [title]="'Users'"
+        [route]="'users/list'"
+        [icon]="'person'"
+      ></ahr-nav-list-item>
+
+      <ahr-nav-list-item
+        [title]="'Tables'"
+        [route]="'#'"
+        [icon]="'table_chart'"
+      ></ahr-nav-list-item>
+    </mat-expansion-panel>
+  </mat-accordion>
 </mat-nav-list>

@@ -9,3 +9,41 @@ mat-nav-list {
     font-size: 0.85rem;
   }
 }
+
+mat-expansion-panel {
+  background: transparent;
+  color: white;
+
+  &.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+    box-shadow: none;
+  }
+
+  .mat-expansion-panel-header {
+    background: transparent;
+    border-bottom: none;
+    padding-left: 16px;
+  }
+
+  .mat-expansion-panel-header-title {
+    color: white;
+    font-family: Poppins, sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+
+    span {
+      margin-left: 0.5rem;
+      line-height: 1;
+      margin-block: auto;
+    }
+  }
+
+  .mat-expansion-panel-body {
+    background: transparent;
+    padding: 0;
+    padding-left: 18px;
+  }
+}
+
+::ng-deep .mat-expansion-indicator::after {
+  color: white !important;
+}
