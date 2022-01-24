@@ -12,7 +12,8 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionToolbarComponent implements OnInit {
-  @Input() title: string = '';
+  @Input()
+  title: string = '';
 
   constructor() {}
 

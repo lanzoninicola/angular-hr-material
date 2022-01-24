@@ -1,0 +1,12 @@
+mat-toolbar {
+  display: flex;
+  justify-content: space-between;
+  height: 80px;
+  padding-inline: 32px;
+
+  h2 {
+    font-family: Poppins, "sans-serif";
+    font-size: 1rem;
+    font-weight: 600;
+  }
+}
