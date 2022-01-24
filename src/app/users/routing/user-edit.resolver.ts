@@ -19,7 +19,7 @@ export class UserEditResolver implements Resolve<UserModel> {
   resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
     const userId = route.params['id'];
 
-    if (isNaN(+userId)) {
+    if (Number.isNaN(+userId)) {
       this.router.navigate(['users']);
       return of({} as UserModel);
     }
