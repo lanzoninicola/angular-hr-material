@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { BehaviorSubject, map, switchMap } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { UserHttpResponse, UserModel } from '../types/user.type';
 
@@ -8,19 +8,30 @@ import { UserHttpResponse, UserModel } from '../types/user.type';
   providedIn: 'root',
 })
 export class UsersService {
+  usersDataSet$: BehaviorSubject<UserModel[]> = new BehaviorSubject<
+    UserModel[]
+  >([]);
+
   constructor(private http: HttpClient) {}
 
-  getAllUsers() {
-    return this.http.get<UserModel[]>(`${environment.API}/users`).pipe(
-      map((userData) => {
-        return userData.map((user) => {
-          return {
-            ...user,
-            fullName: `${user.lastname} ${user.firstname}`,
-          };
-        });
-      })
-    );
+  getAllUsers(): BehaviorSubject<UserModel[]> {
+    this.http
+      .get<UserModel[]>(`${environment.API}/users`)
+      .pipe(
+        map((userData) => {
+          return userData.map((user) => {
+            return {
+              ...user,
+              fullName: `${user.lastname} ${user.firstname}`,
+            };
+          });
+        })
+      )
+      .subscribe((usersData) => {
+        this.usersDataSet$.next(usersData);
+      });
+
+    return this.usersDataSet$;
   }
 
   getUserById(id: number) {

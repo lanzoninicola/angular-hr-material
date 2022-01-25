@@ -1,8 +1,7 @@
 <div class="container">
   <ahr-table-data
-    [dataSource]="userList$"
+    [dataSource]="tableDataSource$"
     [columns]="columns"
-    [pageSize]="pageSize"
     (onRowClicked)="handleTableRowClicked($event)"
   ></ahr-table-data>
 </div>

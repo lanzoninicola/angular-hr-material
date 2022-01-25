@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, take } from 'rxjs';
 import { SearchService } from 'src/app/shared/services/search.service';
 
 import { UsersService } from '../../services/users.service';
@@ -15,7 +15,11 @@ export class UserListComponent implements OnInit {
   userList$: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>(
     []
   );
+  tableDataSource$: BehaviorSubject<UserModel[]> = new BehaviorSubject<
+    UserModel[]
+  >([]);
   userListSubscription: Subscription;
+  tableDataSourceSubscription: Subscription;
   columns = [
     {
       title: 'Lastname',
@@ -38,18 +42,17 @@ export class UserListComponent implements OnInit {
       dsFieldName: 'companyRoleLevel',
     },
   ];
-  pageSize = 10;
 
   constructor(
-    private usersService: UsersService,
+    private _usersService: UsersService,
     private router: Router,
     private _searchService: SearchService
   ) {}
 
   ngOnInit() {
-    this.userListSubscription = this.usersService
-      .getAllUsers()
-      .subscribe(this.userList$);
+    this.userList$ = this._usersService.getAllUsers();
+
+    this._prepareTableDataSource();
 
     this._handleSearch();
   }
@@ -59,15 +62,20 @@ export class UserListComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.userListSubscription.unsubscribe();
+    this.tableDataSourceSubscription.unsubscribe();
+  }
+
+  private _prepareTableDataSource() {
+    this.tableDataSourceSubscription = this.userList$.subscribe((usersData) => {
+      this.tableDataSource$.next(usersData);
+    });
   }
 
   private _handleSearch(): void {
-    const foo = this._searchService.setupData(this.userList$);
-
-    foo.subscribe((data) => {
-      console.log(data);
-      this.userList$.next(data);
-    });
+    this.tableDataSourceSubscription = this._searchService
+      .setupData(this.userList$)
+      .subscribe((dataFiltered) => {
+        this.tableDataSource$.next(dataFiltered);
+      });
   }
 }
