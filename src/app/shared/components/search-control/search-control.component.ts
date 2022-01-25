@@ -1,6 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
 import { SearchService } from '../../services/search.service';
 
 @Component({
@@ -11,13 +18,13 @@ import { SearchService } from '../../services/search.service';
         matInput
         type="text"
         placeholder="Search..."
-        formControlName="searchFormControl"
+        formControlName="formControl"
       />
       <div class="ahr-search-input-icons">
-        <mat-icon *ngIf="!searchValue">search</mat-icon>
+        <mat-icon *ngIf="searchValue === ''">search</mat-icon>
 
         <button
-          *ngIf="searchValue"
+          *ngIf="searchValue !== ''"
           matSuffix
           mat-icon-button
           aria-label="Clear"
@@ -30,50 +37,47 @@ import { SearchService } from '../../services/search.service';
   `,
   styleUrls: ['./search-control.component.scss'],
 })
-export class SearchControlComponent implements OnInit {
+export class SearchControlComponent implements OnInit, OnDestroy {
   @Input()
   dataSet$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
-  @Output()
-  dataSetFilteredEvent: EventEmitter<any> = new EventEmitter();
+  formControlSubscription: Subscription;
 
-  searchValue: string = '';
+  searchValue: string;
   searchFormGroup: FormGroup;
-  searchFormControl: FormControl = new FormControl('');
+  formControl: FormControl = new FormControl('');
 
   constructor(private _searchService: SearchService) {}
 
   ngOnInit(): void {
+    this._buildFormModel();
+
+    this._setupSearchService();
+
+    this._onSearchInputChanged();
+  }
+
+  ngOnDestroy() {
+    this.formControlSubscription.unsubscribe();
+  }
+
+  private _setupSearchService(): void {
+    this._searchService.setupControl(this.formControl);
+
+    this._searchService.addListener();
+  }
+
+  private _buildFormModel() {
     this.searchFormGroup = new FormGroup({
-      searchFormControl: this.searchFormControl,
+      formControl: this.formControl,
     });
+  }
 
-    this._searchService.setupControl(this.searchFormControl);
-
-    this._searchService.controlOnChange();
-
-    this.searchFormControl.setValue('');
-    // combineLatest([
-    //   this.dataSet$,
-    //   this.searchFormControl.valueChanges,
-    // ]).subscribe(([dataSetRecords, searchTerm]) => {
-    //   const dataSetArray = Object.values(dataSetRecords);
-    //   let filteredRecords: any[];
-    //   if (!searchTerm) {
-    //     filteredRecords = dataSetArray;
-    //   } else {
-    //     const filteredResults = dataSetArray.filter((item) => {
-    //       return Object.values(item).reduce((prev, curr) => {
-    //         return (
-    //           prev ||
-    //           curr.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    //         );
-    //       }, false);
-    //     });
-    //     filteredRecords = filteredResults;
-    //   }
-    //   this.dataSetFilteredEvent.emit(filteredRecords);
-    // });
-    // this.searchFormControl.setValue('');
+  private _onSearchInputChanged() {
+    this.formControlSubscription = this.formControl.valueChanges.subscribe(
+      (value) => {
+        this.searchValue = value;
+      }
+    );
   }
 }
