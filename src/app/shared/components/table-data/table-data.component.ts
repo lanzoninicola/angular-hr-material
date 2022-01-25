@@ -8,6 +8,9 @@ import {
   TableColumnDataSourceFieldName,
 } from '../../types/table.types';
 
+// TODO: styling buttons in paginator. Maybe with a directive
+// https://stackoverflow.com/questions/53646259/how-to-customize-mat-paginator-in-angular-material
+
 @Component({
   selector: 'ahr-table-data',
   templateUrl: './table-data.component.html',
