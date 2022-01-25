@@ -45,7 +45,7 @@ export class SearchService {
    * @source
    * https://medium.com/angular-in-depth/angular-cdk-tables-1537774d7c99
    */
-  addListener() {
+  addListener(): void {
     if (this.searchFormControl === undefined) {
       throw 'SearchService: the formControl is undefined. \n\nMaybe you forgot to provide the FormControl instance through the .setupControl() method before performing a search with the .filter() method';
     }
@@ -56,8 +56,6 @@ export class SearchService {
     ]).subscribe(([dataSetRecords, searchTerm]) => {
       const dataSetArray = Object.values(dataSetRecords);
       let filteredRecords: any[];
-
-      console.log('inside combineLatest', searchTerm.length);
 
       if (!searchTerm || searchTerm.length === 0) {
         filteredRecords = dataSetArray;
@@ -81,7 +79,6 @@ export class SearchService {
       }
 
       this.dataSetFiltered$.next(filteredRecords);
-      console.log(this.dataSetFiltered$.value);
     });
 
     this.searchFormControl.setValue('');
