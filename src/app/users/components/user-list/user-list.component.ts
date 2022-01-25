@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { SearchService } from 'src/app/shared/services/search.service';
@@ -11,7 +11,7 @@ import { UserModel } from '../../types/user.type';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
-export class UserListComponent {
+export class UserListComponent implements OnInit {
   userList$: Observable<UserModel[]>;
   columns = [
     {
@@ -41,7 +41,9 @@ export class UserListComponent {
     private usersService: UsersService,
     private router: Router,
     private _searchService: SearchService
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.userList$ = this.usersService.getAllUsers();
     this._searchService.setupData(this.userList$);
   }
