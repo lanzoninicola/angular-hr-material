@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SearchService } from 'src/app/shared/services/search.service';
 
 import { UsersService } from '../../services/users.service';
@@ -12,7 +12,10 @@ import { UserModel } from '../../types/user.type';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  userList$: Observable<UserModel[]>;
+  userList$: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>(
+    []
+  );
+  userListSubscription: Subscription;
   columns = [
     {
       title: 'Lastname',
@@ -44,13 +47,27 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userList$ = this.usersService.getAllUsers();
-    this._searchService.setupData(this.userList$);
+    this.userListSubscription = this.usersService
+      .getAllUsers()
+      .subscribe(this.userList$);
+
+    this._handleSearch();
   }
 
   handleTableRowClicked(userRow: UserModel) {
     this.router.navigate(['users', userRow.id]);
   }
-}
 
-// TODO: separate table in a its own definition
+  ngOnDestroy() {
+    this.userListSubscription.unsubscribe();
+  }
+
+  private _handleSearch(): void {
+    const foo = this._searchService.setupData(this.userList$);
+
+    foo.subscribe((data) => {
+      console.log(data);
+      this.userList$.next(data);
+    });
+  }
+}
