@@ -49,7 +49,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
   constructor(private _searchService: SearchService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this._buildFormModel();
 
     this._setupSearchService();
@@ -67,13 +67,13 @@ export class SearchControlComponent implements OnInit, OnDestroy {
     this._searchService.addListener();
   }
 
-  private _buildFormModel() {
+  private _buildFormModel(): void {
     this.searchFormGroup = new FormGroup({
       formControl: this.formControl,
     });
   }
 
-  private _onSearchInputChanged() {
+  private _onSearchInputChanged(): void {
     this.formControlSubscription = this.formControl.valueChanges.subscribe(
       (value) => {
         this.searchValue = value;
