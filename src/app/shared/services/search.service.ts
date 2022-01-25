@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl } from '@angular/forms';
+import { AbstractControl, FormControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 
 @Injectable({
@@ -13,15 +13,33 @@ export class SearchService {
 
   constructor() {}
 
+  /**
+   * @description
+   * Provides the 'FormControl' instance responsible to handle the value to search.
+   * Required to setup the search service
+   *
+   * @param FormControl
+   */
   setupControl(formControl: AbstractControl) {
     this.searchFormControl = formControl;
   }
 
+  /**
+   * @description
+   * Provides the dataset where the search is performed.
+   * Required to setup the search service
+   *
+   * @param FormControl
+   */
   setupData(dataSet: BehaviorSubject<any[]>) {
     this.fullDataset$ = dataSet;
     return this.dataSetFiltered$;
   }
 
+  /**
+   * @source
+   * https://medium.com/angular-in-depth/angular-cdk-tables-1537774d7c99
+   */
   addListener() {
     if (this.searchFormControl === undefined) {
       throw 'SearchService: the formControl is undefined. \n\nMaybe you forgot to provide the FormControl instance through the .setupControl() method before performing a search with the .filter() method';
