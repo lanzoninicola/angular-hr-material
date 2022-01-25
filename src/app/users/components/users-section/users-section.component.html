@@ -1,4 +1,8 @@
 <div class="container-section">
-  <app-section-toolbar [title]="pageTitle"></app-section-toolbar>
+  <app-section-toolbar
+    [title]="pageTitle"
+    [entityButtonLabel]="'Add new'"
+    [entityButtonCallback]="addNewUser"
+  ></app-section-toolbar>
   <router-outlet></router-outlet>
 </div>
