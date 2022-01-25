@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, map, Subscription } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
+import { BehaviorSubject, combineLatest, map } from 'rxjs';
+import { SearchService } from '../../services/search.service';
 
 import {
   TableColumn,
@@ -16,10 +18,7 @@ export class TableDataComponent implements OnInit {
   columns: TableColumn[] = [];
 
   @Input('dataSource')
-  dataSource$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-
-  @Input()
-  pageSize: number = 5;
+  tableDataSource$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   @Output('onRowClicked')
   onRowClickedEvent: EventEmitter<any> = new EventEmitter();
@@ -30,25 +29,30 @@ export class TableDataComponent implements OnInit {
   columnsFieldName$: BehaviorSubject<TableColumnDataSourceFieldName[]> =
     new BehaviorSubject<TableColumnDataSourceFieldName[]>([]);
 
-  dataPaginated$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  pageEvent: PageEvent;
+  pageSize$ = new BehaviorSubject<number>(10);
+  currentPage$ = new BehaviorSubject<number>(1);
+  dataOnPage$ = new BehaviorSubject<any[]>([]);
 
-  constructor() {}
+  constructor(private _searchService: SearchService) {}
 
   ngOnInit(): void {
-    this.columnsSchema$.next(this.columns);
-    this._extractColumnsFieldNameFromSchema();
+    this._handleTableColumns();
+
+    this._handlePaginator();
   }
 
   onRowClicked(rowData: {}) {
     this.onRowClickedEvent.emit(rowData);
   }
 
-  dataOnPage(event: any[]) {
-    console.log(event);
-    this.dataPaginated$.next(event);
+  onPageChange(event: PageEvent) {
+    this.currentPage$.next(event.pageIndex + 1);
   }
 
-  private _extractColumnsFieldNameFromSchema() {
+  private _handleTableColumns() {
+    this.columnsSchema$.next(this.columns);
+
     this.columnsSchema$
       .pipe(
         map((cSchema: TableColumn[]) => {
@@ -58,5 +62,17 @@ export class TableDataComponent implements OnInit {
       .subscribe((data: TableColumnDataSourceFieldName[]) => {
         this.columnsFieldName$.next(data);
       });
+  }
+
+  private _handlePaginator() {
+    combineLatest([
+      this.tableDataSource$,
+      this.currentPage$,
+      this.pageSize$,
+    ]).subscribe(([allSources, currentPage, pageSize]) => {
+      const startingIndex = (currentPage - 1) * pageSize;
+      const onPage = allSources.slice(startingIndex, startingIndex + pageSize);
+      this.dataOnPage$.next(onPage);
+    });
   }
 }

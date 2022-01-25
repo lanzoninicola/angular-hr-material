@@ -1,5 +1,5 @@
 <div class="container">
-  <table mat-table [dataSource]="dataPaginated$" class="data-table">
+  <table mat-table [dataSource]="dataOnPage$" class="data-table">
     <ng-container
       *ngFor="let column of columnsSchema$ | async; let i = index"
       matColumnDef="{{ column.dsFieldName }}"
@@ -15,9 +15,11 @@
       *matRowDef="let row; columns: columnsFieldName$.value"
     ></tr>
   </table>
-  <ahr-table-paginator
-    [pageSize]="pageSize"
-    [dataSource]="dataSource$"
-    (dataOnPage)="dataOnPage($event)"
-  ></ahr-table-paginator>
+
+  <mat-paginator
+    [length]="tableDataSource$.value.length"
+    [pageSize]="pageSize$.value"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
 </div>
