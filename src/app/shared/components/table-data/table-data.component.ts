@@ -1,12 +1,5 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-} from '@angular/core';
-import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, map, Subscription } from 'rxjs';
 
 import {
   TableColumn,
@@ -18,12 +11,12 @@ import {
   templateUrl: './table-data.component.html',
   styleUrls: ['./table-data.component.scss'],
 })
-export class TableDataComponent implements OnInit, OnDestroy {
+export class TableDataComponent implements OnInit {
   @Input()
   columns: TableColumn[] = [];
 
   @Input('dataSource')
-  dataSource$: Observable<any[]>;
+  dataSource$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   @Input()
   pageSize: number = 5;
@@ -36,7 +29,6 @@ export class TableDataComponent implements OnInit, OnDestroy {
   columnsSchema$: BehaviorSubject<TableColumn[]> = new BehaviorSubject<
     TableColumn[]
   >([]);
-  tableData$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   columnsFieldName$: BehaviorSubject<TableColumnDataSourceFieldName[]> =
     new BehaviorSubject<TableColumnDataSourceFieldName[]>([]);
 
@@ -46,16 +38,7 @@ export class TableDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.columnsSchema$.next(this.columns);
-
-    this.setDataSource();
-
     this.extractColumnsFieldNameFromSchema();
-  }
-
-  setDataSource() {
-    this._dsSubscription = this.dataSource$.subscribe((dsData) =>
-      this.tableData$.next(dsData)
-    );
   }
 
   extractColumnsFieldNameFromSchema() {
@@ -72,9 +55,5 @@ export class TableDataComponent implements OnInit, OnDestroy {
 
   onRowClicked(rowData: {}) {
     this.onRowClickedEvent.emit(rowData);
-  }
-
-  ngOnDestroy(): void {
-    this._dsSubscription.unsubscribe();
   }
 }
