@@ -29,10 +29,15 @@ export class SearchService {
    * Provides the dataset where the search is performed.
    * Required to setup the search service
    *
-   * @param FormControl
+   * @param dataset
+   * @return A BehaviorSubject with the data filtered
+   *
+   *
    */
-  setupData(dataSet: BehaviorSubject<any[]>) {
-    this.fullDataset$ = dataSet;
+  setupData(dataset: BehaviorSubject<any[]>) {
+    // this.fullDataset$ = dataset;
+    dataset.subscribe((data) => this.fullDataset$.next(data));
+
     return this.dataSetFiltered$;
   }
 
@@ -52,26 +57,33 @@ export class SearchService {
       const dataSetArray = Object.values(dataSetRecords);
       let filteredRecords: any[];
 
-      if (!searchTerm) {
+      console.log('inside combineLatest', searchTerm.length);
+
+      if (!searchTerm || searchTerm.length === 0) {
         filteredRecords = dataSetArray;
-        return;
+      } else {
+        const filteredResults = dataSetArray.filter(
+          (item: { [key: string]: any }) => {
+            return Object.values(item).reduce((prev, curr) => {
+              if (typeof curr === 'string') {
+                return (
+                  prev ||
+                  curr
+                    .toString()
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+                );
+              }
+            }, false);
+          }
+        );
+        filteredRecords = filteredResults;
       }
 
-      const filteredResults = dataSetArray.filter(
-        (item: { [key: string]: any }) => {
-          return Object.values(item).reduce((prev, curr) => {
-            if (typeof curr === 'string') {
-              return (
-                prev ||
-                curr.toString().toLowerCase().includes(searchTerm.toLowerCase())
-              );
-            }
-          }, false);
-        }
-      );
-      filteredRecords = filteredResults;
-
       this.dataSetFiltered$.next(filteredRecords);
+      console.log(this.dataSetFiltered$.value);
     });
+
+    this.searchFormControl.setValue('');
   }
 }
