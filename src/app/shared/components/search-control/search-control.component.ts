@@ -28,7 +28,7 @@ import { SearchService } from '../../services/search.service';
           matSuffix
           mat-icon-button
           aria-label="Clear"
-          (click)="searchValue = ''"
+          (click)="onSearchClear()"
         >
           <mat-icon>close</mat-icon>
         </button>
@@ -59,6 +59,10 @@ export class SearchControlComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.formControlSubscription.unsubscribe();
+  }
+
+  onSearchClear() {
+    this.formControl.setValue('');
   }
 
   private _setupSearchService(): void {
