@@ -21,10 +21,10 @@ import { SearchService } from '../../services/search.service';
         formControlName="formControl"
       />
       <div class="ahr-search-input-icons">
-        <mat-icon *ngIf="searchValue === ''">search</mat-icon>
+        <mat-icon *ngIf="!searchValue || searchValue === ''">search</mat-icon>
 
         <button
-          *ngIf="searchValue !== ''"
+          *ngIf="searchValue || searchValue?.length > 0"
           matSuffix
           mat-icon-button
           aria-label="Clear"
