@@ -8,6 +8,8 @@ import {
   TableColumnDataSourceFieldName,
 } from '../../types/table.types';
 
+// TODO: change the column schema to MAP object
+
 // TODO: styling buttons in paginator. Maybe with a directive
 // https://stackoverflow.com/questions/53646259/how-to-customize-mat-paginator-in-angular-material
 
