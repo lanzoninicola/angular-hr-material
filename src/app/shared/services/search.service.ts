@@ -5,7 +5,7 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class SearchService implements OnInit {
+export class SearchService {
   searchFormControl: AbstractControl;
   dataSet$: BehaviorSubject<any[] | Observable<any[]>> = new BehaviorSubject<
     any[] | Observable<any[]>
@@ -23,34 +23,31 @@ export class SearchService implements OnInit {
     this.dataSet$.next(dataSet);
   }
 
-  ngOnInit(): void {
-    console.log('son qua no service');
-    console.log(this.searchFormControl, this.dataSet$);
+  controlOnChange() {
+    combineLatest([
+      this.dataSet$,
+      this.searchFormControl.valueChanges,
+    ]).subscribe(([dataSetRecords, searchTerm]) => {
+      const dataSetArray = Object.values(dataSetRecords);
+      let filteredRecords: any[];
 
-    // combineLatest([
-    //   this.dataSet$,
-    //   this.searchFormControl.valueChanges,
-    // ]).subscribe(([dataSetRecords, searchTerm]) => {
-    //   const dataSetArray = Object.values(dataSetRecords);
-    //   let filteredRecords: any[];
+      console.log(dataSetRecords);
 
-    //   if (!searchTerm) {
-    //     filteredRecords = dataSetArray;
-    //   } else {
-    //     const filteredResults = dataSetArray.filter((item) => {
-    //       return Object.values(item).reduce((prev, curr) => {
-    //         return (
-    //           prev ||
-    //           curr.toString().toLowerCase().includes(searchTerm.toLowerCase())
-    //         );
-    //       }, false);
-    //     });
-    //     filteredRecords = filteredResults;
-    //   }
+      if (!searchTerm) {
+        filteredRecords = dataSetArray;
+      } else {
+        const filteredResults = dataSetArray.filter((item) => {
+          return Object.values(item).reduce((prev, curr) => {
+            return (
+              prev ||
+              curr.toString().toLowerCase().includes(searchTerm.toLowerCase())
+            );
+          }, false);
+        });
+        filteredRecords = filteredResults;
+      }
 
-    //   this.dataSetFiltered$.next(filteredRecords);
-    // });
-
-    // this.searchFormControl.setValue('');
+      this.dataSetFiltered$.next(filteredRecords);
+    });
   }
 }

@@ -41,17 +41,18 @@ export class SearchControlComponent implements OnInit {
   searchFormGroup: FormGroup;
   searchFormControl: FormControl = new FormControl('');
 
-  constructor(private _searchService: SearchService) {
+  constructor(private _searchService: SearchService) {}
+
+  ngOnInit(): void {
     this.searchFormGroup = new FormGroup({
       searchFormControl: this.searchFormControl,
     });
 
-    this._searchService.setupControl(
-      this.searchFormGroup.controls['searchFormControl']
-    );
-  }
+    this._searchService.setupControl(this.searchFormControl);
 
-  ngOnInit(): void {
+    this._searchService.controlOnChange();
+
+    this.searchFormControl.setValue('');
     // combineLatest([
     //   this.dataSet$,
     //   this.searchFormControl.valueChanges,
