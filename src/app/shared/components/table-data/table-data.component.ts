@@ -24,24 +24,31 @@ export class TableDataComponent implements OnInit {
   @Output('onRowClicked')
   onRowClickedEvent: EventEmitter<any> = new EventEmitter();
 
-  _dsSubscription: Subscription;
-
   columnsSchema$: BehaviorSubject<TableColumn[]> = new BehaviorSubject<
     TableColumn[]
   >([]);
   columnsFieldName$: BehaviorSubject<TableColumnDataSourceFieldName[]> =
     new BehaviorSubject<TableColumnDataSourceFieldName[]>([]);
 
-  dataPaginated: any[] = [];
+  dataPaginated$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
 
   constructor() {}
 
   ngOnInit(): void {
     this.columnsSchema$.next(this.columns);
-    this.extractColumnsFieldNameFromSchema();
+    this._extractColumnsFieldNameFromSchema();
   }
 
-  extractColumnsFieldNameFromSchema() {
+  onRowClicked(rowData: {}) {
+    this.onRowClickedEvent.emit(rowData);
+  }
+
+  dataOnPage(event: any[]) {
+    console.log(event);
+    this.dataPaginated$.next(event);
+  }
+
+  private _extractColumnsFieldNameFromSchema() {
     this.columnsSchema$
       .pipe(
         map((cSchema: TableColumn[]) => {
@@ -51,9 +58,5 @@ export class TableDataComponent implements OnInit {
       .subscribe((data: TableColumnDataSourceFieldName[]) => {
         this.columnsFieldName$.next(data);
       });
-  }
-
-  onRowClicked(rowData: {}) {
-    this.onRowClickedEvent.emit(rowData);
   }
 }
