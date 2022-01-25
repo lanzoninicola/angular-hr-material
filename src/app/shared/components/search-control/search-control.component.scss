@@ -11,6 +11,10 @@
     background: transparent;
   }
 
+  input::placeholder {
+    font-size: 0.85rem;
+  }
+
   input:focus {
     outline: none;
   }
