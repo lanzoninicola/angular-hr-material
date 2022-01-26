@@ -17,10 +17,13 @@ const usersModuleRoutes: Routes = [
         component: UserListComponent,
       },
       {
+        path: 'new',
+        component: UserEditComponent,
+      },
+      {
         path: ':id',
         component: UserEditComponent,
         resolve: {
-          userEditFormInit: UserEditFormInitResolver,
           userEdit: UserEditResolver,
         },
       },

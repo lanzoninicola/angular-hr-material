@@ -24,7 +24,7 @@ export class UserEditResolver implements Resolve<UserModel> {
       return of({} as UserModel);
     }
 
-    return this._userService.getUserById(route.params['id']).pipe(
+    return this._userService.findById(route.params['id']).pipe(
       map((user) => user),
       catchError(() => {
         this.router.navigate(['users']);
