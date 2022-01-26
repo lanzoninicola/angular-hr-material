@@ -3,6 +3,7 @@ import { Resolve } from '@angular/router';
 import { combineLatest, map, Observable } from 'rxjs';
 import { PicklistService } from 'src/app/core/services/picklist.service';
 
+// TODO: maybe this resolver should be removed
 @Injectable({
   providedIn: 'root',
 })
