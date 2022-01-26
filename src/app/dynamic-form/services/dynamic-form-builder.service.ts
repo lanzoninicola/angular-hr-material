@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
 import Helper from 'src/app/core/helpers/helpers';
 
 import { TemplateMap } from '../types/template.types';
 import { FormViewTemplateService } from './form-view-template.service';
 
 // TODO: cache the template && invalidate cache
+// TODO: verify if all methods are return types
 
 interface FormControlModelConfig {
   initState: string;
@@ -16,6 +17,10 @@ interface FormControlModelConfig {
 type FormControlKey = string;
 
 type FormGroupKey = string;
+
+type FormGroupName = string;
+
+type FormControlName = string;
 
 /**
  *  Responsible to build the Reactive Form Model starting by a template
@@ -78,6 +83,37 @@ export class DynamicFormBuilderService {
     }
 
     return new FormGroup({});
+  }
+
+  /**
+   * @description
+   * Set the value of FormControl
+   *
+   *
+   * @param group - The FormGroup name
+   * @param controls - It is an object of all FormControls that belong to a FormGroup
+   *
+   * {
+   *  FormControlKey1: FormControlName1,
+   * FormControlKey2: FormControlName2
+   * }
+   *
+   */
+  setControlsValue(
+    group: FormGroupName,
+    controls: { [key: string]: FormControlName | undefined }
+  ) {
+    if (this.formModel && this.formModel !== null) {
+      Object.keys(controls).forEach((key) => {
+        let formControl = this.formModel!.get([group, key]);
+
+        if (formControl && formControl !== null) {
+          formControl.setValue(controls[key]);
+        } else {
+          throw `The FormControl '${key}' not found in the group '${group}'. Did you spell it wrong?`;
+        }
+      });
+    }
   }
 
   /**
