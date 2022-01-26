@@ -9,25 +9,20 @@ import {
 
 @Component({
   selector: 'app-section-toolbar',
-  templateUrl: './section-toolbar.component.html',
+  template: ` <mat-toolbar color="secondary">
+    <div class="col1">
+      <h2>{{ title }}</h2>
+    </div>
+    <div class="col2">
+      <ng-content></ng-content>
+    </div>
+  </mat-toolbar>`,
   styleUrls: ['./section-toolbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionToolbarComponent implements OnInit {
   @Input()
   title: string = '';
-
-  @Input()
-  hideSearchControl: boolean = false;
-
-  @Input()
-  hideEntityButton: boolean = false;
-
-  @Input()
-  entityButtonLabel: string = 'Primary';
-
-  @Input()
-  entityButtonCallback: () => void;
 
   constructor() {}
 
