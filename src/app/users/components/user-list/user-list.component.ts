@@ -12,13 +12,12 @@ import { UserModel } from '../../types/user.type';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
-  userList$: BehaviorSubject<UserModel[]> = new BehaviorSubject<UserModel[]>(
-    []
-  );
+  userList$: Observable<UserModel[]>;
+
   tableDataSource$: BehaviorSubject<UserModel[]> = new BehaviorSubject<
     UserModel[]
   >([]);
-  userListSubscription: Subscription;
+
   tableDataSourceSubscription: Subscription;
   columns = [
     {
@@ -50,7 +49,7 @@ export class UserListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.userList$ = this._usersService.getAllUsers();
+    this.userList$ = this._usersService.findAll();
 
     this._prepareTableDataSource();
 

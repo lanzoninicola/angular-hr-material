@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -34,8 +34,7 @@ export class SearchService {
    *
    *
    */
-  setupData(dataset: BehaviorSubject<any[]>) {
-    // this.fullDataset$ = dataset;
+  setupData(dataset: Observable<any[]>) {
     dataset.subscribe((data) => this.fullDataset$.next(data));
 
     return this.dataSetFiltered$;
