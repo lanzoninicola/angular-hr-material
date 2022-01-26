@@ -40,6 +40,7 @@ import { TableDataComponent } from './components/table-data/table-data.component
     SectionToolbarComponent,
     TableDataComponent,
     LogoComponent,
+    SearchControlComponent,
   ],
 })
 export class SharedModule {}
