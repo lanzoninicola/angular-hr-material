@@ -5,7 +5,8 @@ import {
   Router,
   RouterStateSnapshot,
 } from '@angular/router';
-import { catchError, map, Observable, of } from 'rxjs';
+import { BehaviorSubject, catchError, EMPTY, map, Observable, of } from 'rxjs';
+import { UsersStoreService } from '../services/user-store.service';
 
 import { UsersService } from '../services/users.service';
 import { UserModel } from '../types/user.type';
@@ -14,21 +15,40 @@ import { UserModel } from '../types/user.type';
   providedIn: 'root',
 })
 export class UserEditResolver implements Resolve<UserModel> {
-  constructor(private _userService: UsersService, private router: Router) {}
+  constructor(
+    private _store: UsersStoreService,
+    private _userService: UsersService,
+    private router: Router
+  ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
-    const userId = parseInt(route.params['id'], 10);
+    const userIdParam = parseInt(route.params['id'], 10);
 
-    if (Number.isNaN(+userId)) {
+    if (Number.isNaN(+userIdParam)) {
       this.router.navigate(['users']);
-      return of({} as UserModel);
+      return EMPTY;
+    }
+
+    const currentUserInStore: UserModel = this._store.get(
+      'userEdit-currentUser'
+    ).value;
+
+    if (currentUserInStore) {
+      if (currentUserInStore.id === userIdParam) {
+        this._store.set('userEdit-formState', 'update');
+        return of(currentUserInStore);
+      }
     }
 
     return this._userService.findById(route.params['id']).pipe(
-      map((user) => user),
       catchError(() => {
         this.router.navigate(['users']);
         return of({} as UserModel);
+      }),
+      map((user) => {
+        this._store.set('userEdit-currentUser', user);
+        this._store.set('userEdit-formState', 'update');
+        return user;
       })
     );
   }
