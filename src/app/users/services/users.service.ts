@@ -60,15 +60,22 @@ export class UsersService {
 
   save(userData: UserModel): Observable<UserModel> {
     //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
-
+    console.log('save service');
     return this.http
       .post<UserModel>(`${environment.API}/users`, userData, this.httpOptions)
       .pipe(catchError(this._handleError<any>('saveUser')));
   }
 
   update(userData: UserModel): Observable<UserModel> {
+    console.log('update service');
+    const { id } = userData;
+
     return this.http
-      .patch<UserModel>(`${environment.API}/users`, userData, this.httpOptions)
+      .patch<UserModel>(
+        `${environment.API}/users/${id}`,
+        userData,
+        this.httpOptions
+      )
       .pipe(catchError(this._handleError<any>('saveUser')));
   }
 

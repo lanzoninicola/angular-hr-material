@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, map, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
+
+import { UsersStoreService } from '../../services/user-store.service';
 import { UsersService } from '../../services/users.service';
 import { UserFormData } from '../../types/user-edit-form.types';
-
 import { UserModel } from '../../types/user.type';
 
 type EntityState = 'create' | 'update';
@@ -24,37 +24,35 @@ export class UserEditComponent implements OnInit {
   currentUser$: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(
     {} as UserModel
   );
-  userFormData$: BehaviorSubject<UserFormData> =
-    new BehaviorSubject<UserFormData>({} as UserFormData);
-  entityState: EntityState = 'create';
+  formState$: BehaviorSubject<EntityState> = new BehaviorSubject<EntityState>(
+    'create'
+  );
 
   constructor(
-    private route: ActivatedRoute,
+    private _store: UsersStoreService,
     private _usersService: UsersService,
     private _messageService: MessageService
   ) {}
 
   ngOnInit(): void {
-    console.log('userEdit init');
-    const userResolved = this.route.snapshot.data['userEdit'];
-
-    userResolved
-      ? (this.entityState = 'update')
-      : (this.entityState = 'create');
-
-    if ((this.entityState = 'update')) {
-      this._loadUser(userResolved);
-    }
-  }
-
-  private _loadUser(user: any) {
-    this.currentUser$.next(user);
+    this.formState$.next(this._store.get('userEdit-formState').value);
+    this.currentUser$.next(this._store.get('userEdit-currentUser').value);
   }
 
   onSave(userFormData: UserFormData) {
-    // this.userFormData$.next(userFormData);
+    const userModel: UserModel = this._transformFormData(userFormData);
 
-    const userModel: UserModel = {
+    if (this.formState$.value === 'create') {
+      this._save(userModel);
+    }
+
+    if (this.formState$.value === 'update') {
+      this._update(userModel);
+    }
+  }
+
+  private _transformFormData(userFormData: UserFormData): UserModel {
+    return {
       firstname: userFormData['firstname'],
       lastname: userFormData['lastname'],
       email: userFormData['email'],
@@ -62,20 +60,12 @@ export class UserEditComponent implements OnInit {
       companyRoleLevel: userFormData['companyLevels'],
       platformRole: userFormData['platformRoles'],
     };
-
-    if (this.entityState === 'create') {
-      this._save(userModel);
-    }
-
-    if (this.entityState === 'update') {
-      this._update(userModel);
-    }
   }
 
   private _save(user: UserModel) {
     this._usersService
       .save(user)
-      .subscribe((newUser) => this.currentUser$.next(newUser));
+      .subscribe((newUser) => this._store.set('userEdit-currentUser', newUser));
 
     // TODO: feedback interaction during: sending request, save succesfully, error using MessageService
   }
@@ -83,7 +73,9 @@ export class UserEditComponent implements OnInit {
   private _update(user: UserModel) {
     this._usersService
       .update(user)
-      .subscribe((updatedUser) => this.currentUser$.next(updatedUser));
+      .subscribe((updatedUser) =>
+        this._store.set('userEdit-currentUser', updatedUser)
+      );
   }
 }
 

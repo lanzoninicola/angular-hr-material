@@ -13,6 +13,8 @@ import { FormViewTemplateService } from 'src/app/dynamic-form/services/form-view
 import { FormControlConfiguration } from 'src/app/dynamic-form/types/dynamic-form.types';
 import { UserModel } from 'src/app/users/types/user.type';
 
+type FormState = 'idle' | 'submitting' | 'loading' | 'complete';
+
 @Component({
   selector: 'ahr-user-edit-form',
   template: `
@@ -24,6 +26,9 @@ import { UserModel } from 'src/app/users/types/user.type';
 export class UserEditFormComponent implements OnInit {
   @Input('user')
   user: UserModel | null = {} as UserModel;
+
+  @Input()
+  formState: FormState = 'idle';
 
   @Output()
   onSaveEvent: EventEmitter<any> = new EventEmitter();

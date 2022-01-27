@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UsersStoreService } from '../../services/user-store.service';
 
 @Component({
   selector: 'ahr-users-section',
@@ -18,9 +19,10 @@ import { Router } from '@angular/router';
 })
 export class UsersSectionComponent implements OnInit {
   pageTitle: string = 'Users';
-  constructor(private router: Router) {}
+  constructor(private router: Router, private _store: UsersStoreService) {}
 
   addNewUser() {
+    this._store.set('userEdit-currentUser', {});
     this.router.navigate(['users', 'new']);
     this.pageTitle = 'New User';
   }

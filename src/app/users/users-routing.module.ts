@@ -6,6 +6,7 @@ import { UserListComponent } from './components/user-list/user-list.component';
 import { UsersSectionComponent } from './components/users-section/users-section.component';
 import { UserEditFormInitResolver } from './routing/user-edit-form-init.resolver';
 import { UserEditResolver } from './routing/user-edit.resolver';
+import { UserNewResolver } from './routing/user-new.resolver';
 
 const usersModuleRoutes: Routes = [
   {
@@ -19,6 +20,9 @@ const usersModuleRoutes: Routes = [
       {
         path: 'new',
         component: UserEditComponent,
+        resolve: {
+          userNew: UserNewResolver,
+        },
       },
       {
         path: ':id',
