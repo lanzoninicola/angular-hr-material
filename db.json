@@ -3,7 +3,13 @@
     {
       "id": 1,
       "type": "platformRoles",
-      "values": ["admin", "manager", "operator", "user", "guest"]
+      "values": [
+        "admin",
+        "manager",
+        "operator",
+        "user",
+        "guest"
+      ]
     },
     {
       "id": 2,
@@ -19,32 +25,57 @@
     {
       "id": 3,
       "type": "companyLevels",
-      "values": ["Manager", "Team Lead", "Specialist"]
+      "values": [
+        "Manager",
+        "Team Lead",
+        "Specialist"
+      ]
     },
     {
       "id": 4,
       "type": "businessUntis",
-      "values": ["Alpha Product", "Beta Product", "Delta Product"]
+      "values": [
+        "Alpha Product",
+        "Beta Product",
+        "Delta Product"
+      ]
     },
     {
       "id": 5,
       "type": "roleLevels",
-      "values": ["Junior", "Middle", "Senior"]
+      "values": [
+        "Junior",
+        "Middle",
+        "Senior"
+      ]
     },
     {
       "id": 6,
       "type": "jobLocaltionTypes",
-      "values": ["Full Remote", "Presential", "Remote/Presential"]
+      "values": [
+        "Full Remote",
+        "Presential",
+        "Remote/Presential"
+      ]
     },
     {
       "id": 7,
       "type": "employmentStatus",
-      "values": ["Part-time", "Full-time employment"]
+      "values": [
+        "Part-time",
+        "Full-time employment"
+      ]
     },
     {
       "id": 8,
       "type": "rthWorkingStatus",
-      "values": ["new", "backlog", "in progress", "pending", "done"]
+      "values": [
+        "new",
+        "backlog",
+        "in progress",
+        "pending",
+        "done"
+      ]
     }
   ],
   "departments": [
@@ -58,7 +89,11 @@
       "id": 2,
       "name": "Front-end Developers",
       "managerId": 1,
-      "teamLeads": [7, 71, 72]
+      "teamLeads": [
+        7,
+        71,
+        72
+      ]
     },
     {
       "id": 3,
@@ -269,6 +304,15 @@
       "platformRole": "user",
       "department": null,
       "companyRoleLevel": null
+    },
+    {
+      "firstname": "Nicola",
+      "lastname": "Lanzoni",
+      "email": "lanzoni.nicola@gmail.com",
+      "department": "Human Resources",
+      "companyRoleLevel": "Manager",
+      "platformRole": "admin",
+      "id": 73
     }
   ]
 }
