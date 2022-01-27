@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import Helper from 'src/app/core/helpers/helpers';
 
 import { TemplateMap } from '../types/template.types';
@@ -18,10 +18,6 @@ type FormControlKey = string;
 
 type FormGroupKey = string;
 
-type FormGroupName = string;
-
-type FormControlName = string;
-
 /**
  *  Responsible to build the Reactive Form Model starting by a template
  */
@@ -36,6 +32,8 @@ export class DynamicFormBuilderService {
   viewTemplate: TemplateMap;
 
   formModel: FormGroup;
+
+  formKeysMap: Map<FormControlKey, FormGroupKey> = new Map();
 
   constructor(private formViewTemplate: FormViewTemplateService) {
     this.viewTemplate = formViewTemplate.getTemplate();
@@ -52,6 +50,8 @@ export class DynamicFormBuilderService {
       this.formModel = new FormGroup({});
       return this.formModel;
     }
+
+    this._generateMapOfFormKeys();
 
     const childrenGroup = Helper.mapToObjectLiteral(this._childrenGroup());
 
@@ -100,8 +100,8 @@ export class DynamicFormBuilderService {
    *
    */
   setControlsValue(
-    group: FormGroupName,
-    controls: { [key: string]: FormControlName | undefined }
+    group: FormGroupKey,
+    controls: { [key: string]: FormControlKey | undefined }
   ) {
     if (this.formModel && this.formModel !== null) {
       Object.keys(controls).forEach((key) => {
@@ -114,6 +114,22 @@ export class DynamicFormBuilderService {
         }
       });
     }
+  }
+
+  /**
+   * @description
+   * Get the values of all controls of the form
+   *
+   */
+  getControlsValues(): { [key: FormControlKey]: string } {
+    let formValues: { [key: string]: string } = {};
+
+    for (const [controlKey, groupKey] of this.formKeysMap) {
+      let controlValue = this.formModel!.get([groupKey, controlKey])!.value;
+      formValues[controlKey] = controlValue.trim();
+    }
+
+    return formValues;
   }
 
   /**
@@ -182,5 +198,21 @@ export class DynamicFormBuilderService {
   private _createControl(controlConfig: FormControlModelConfig) {
     const { initState, syncValidators, asyncValidators } = controlConfig;
     return new FormControl(initState, syncValidators, asyncValidators);
+  }
+
+  /**
+   * @description
+   * Generates a map of FormControl Key with related FormGroup key
+   *
+   */
+  private _generateMapOfFormKeys() {
+    for (const [group, controls] of this.viewTemplate) {
+      const { key: groupKey } = group;
+
+      controls.forEach((control) => {
+        const { key: controlKey } = control;
+        this.formKeysMap.set(controlKey, groupKey);
+      });
+    }
   }
 }

@@ -1,5 +1,13 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  SimpleChanges,
+} from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
+import { of } from 'rxjs';
 import { DynamicFormBuilderService } from 'src/app/dynamic-form/services/dynamic-form-builder.service';
 import { FormViewTemplateService } from 'src/app/dynamic-form/services/form-view-template.service';
 import { FormControlConfiguration } from 'src/app/dynamic-form/types/dynamic-form.types';
@@ -16,6 +24,9 @@ import { UserModel } from 'src/app/users/types/user.type';
 export class UserEditFormComponent implements OnInit {
   @Input('user')
   user: UserModel | null = {} as UserModel;
+
+  @Output()
+  onSaveEvent: EventEmitter<any> = new EventEmitter();
 
   userEditForm: FormGroup;
 
@@ -70,12 +81,12 @@ export class UserEditFormComponent implements OnInit {
   }
 
   onSave() {
-    this.userEditForm.valueChanges.subscribe((data) => {
-      console.log(data);
-    });
+    this.onSaveEvent.emit(this.dynamicFormBuilder.getControlsValues());
   }
 }
 
+// TODO: async validation to verify if the email already exists in the process of creating the userEditForm
+// localhost:3000/users/?lastname=Graham
 const PERSONAL_INFO_CONTROLS: FormControlConfiguration[] = [
   {
     type: 'input',
