@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DynamicFormBuilderService } from 'src/app/dynamic-form/services/dynamic-form-builder.service';
 import { FormViewTemplateService } from 'src/app/dynamic-form/services/form-view-template.service';
 import { FormControlConfiguration } from 'src/app/dynamic-form/types/dynamic-form.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
-import { UsersStoreService } from 'src/app/users/services/user-store.service';
 import { UserModel } from 'src/app/users/types/user.type';
 
 @Component({
