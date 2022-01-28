@@ -1,39 +1,34 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { of } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, tap } from 'rxjs';
 import { DynamicFormBuilderService } from 'src/app/dynamic-form/services/dynamic-form-builder.service';
 import { FormViewTemplateService } from 'src/app/dynamic-form/services/form-view-template.service';
 import { FormControlConfiguration } from 'src/app/dynamic-form/types/dynamic-form.types';
+import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+import { UsersStoreService } from 'src/app/users/services/user-store.service';
 import { UserModel } from 'src/app/users/types/user.type';
-
-type FormState = 'idle' | 'submitting' | 'loading' | 'complete';
 
 @Component({
   selector: 'ahr-user-edit-form',
-  template: `
-    <ahr-dynamic-form></ahr-dynamic-form>
-    <button type="button" (click)="onSave()">Save</button>
-  `,
+  template: ` <ahr-dynamic-form></ahr-dynamic-form> `,
   styleUrls: ['./user-edit-form.component.scss'],
 })
 export class UserEditFormComponent implements OnInit {
   @Input('user')
   user: UserModel | null = {} as UserModel;
 
-  @Input()
-  formState: FormState = 'idle';
+  @Output('formState')
+  formStateEvent: EventEmitter<BehaviorSubject<FormState>> = new EventEmitter<
+    BehaviorSubject<FormState>
+  >();
 
-  @Output()
-  onSaveEvent: EventEmitter<any> = new EventEmitter();
+  @Output('valueChanges')
+  valueChangesEvent: EventEmitter<Observable<any>> = new EventEmitter<
+    Observable<any>
+  >();
 
   userEditForm: FormGroup;
+  formDataSubscription: Subscription;
 
   constructor(
     private formViewTemplate: FormViewTemplateService,
@@ -58,9 +53,10 @@ export class UserEditFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.user && Object.keys(this.user).length > 0) {
-      this._setFormWithUserData(this.user);
-    }
+    this._initFormValues(this.user);
+
+    this.formStateEvent.emit(this.dynamicFormBuilder.formState$);
+    this.valueChangesEvent.emit(this.dynamicFormBuilder.valueChanges);
   }
 
   ngOnDestroy() {
@@ -68,7 +64,11 @@ export class UserEditFormComponent implements OnInit {
     this.formViewTemplate.destroy();
   }
 
-  private _setFormWithUserData(user: UserModel) {
+  private _initFormValues(user: UserModel | null) {
+    if (!user || Object.keys(user).length === 0) {
+      return;
+    }
+
     this.dynamicFormBuilder.setControlsValue('personalInfo', {
       firstname: user.firstname,
       lastname: user.lastname,
@@ -83,10 +83,6 @@ export class UserEditFormComponent implements OnInit {
     this.dynamicFormBuilder.setControlsValue('platformInfo', {
       platformRoles: user.platformRole,
     });
-  }
-
-  onSave() {
-    this.onSaveEvent.emit(this.dynamicFormBuilder.getControlsValues());
   }
 }
 
