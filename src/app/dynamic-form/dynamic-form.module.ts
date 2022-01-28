@@ -16,6 +16,7 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { FormSelectComponent } from './components/form-select/form-select.component';
 import { DynamicFieldsDirective } from './directives/dynamic-fields.directive';
+import { FormSubmissionButtonDirective } from './directives/form-submission-button.directive';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DynamicFieldsDirective } from './directives/dynamic-fields.directive';
     DynamicFormGroupComponent,
     FormSelectComponent,
     FormInputComponent,
+    FormSubmissionButtonDirective,
   ],
   imports: [
     CommonModule,
@@ -42,6 +44,6 @@ import { DynamicFieldsDirective } from './directives/dynamic-fields.directive';
       useValue: { appearance: 'outline' },
     },
   ],
-  exports: [DynamicFormComponent],
+  exports: [DynamicFormComponent, FormSubmissionButtonDirective],
 })
 export class DynamicFormModule {}
