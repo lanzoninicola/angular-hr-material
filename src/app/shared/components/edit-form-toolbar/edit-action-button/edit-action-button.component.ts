@@ -4,7 +4,11 @@ import { ActionButton } from 'src/app/shared/types/action-button.types';
 @Component({
   selector: 'ahr-edit-action-button',
   template: `
-    <div class="button-wrapper" disabled="disabled" (click)="onClick()">
+    <div
+      class="button-wrapper"
+      [attr.aria-disabled]="disabled"
+      (click)="onClick()"
+    >
       <button mat-icon-button aria-label="label" [disabled]="disabled">
         <mat-icon aria-hidden="false" aria-label="label">{{
           matIcon
@@ -20,7 +24,7 @@ export class EditActionButtonComponent implements OnInit {
   action: string;
 
   @Input()
-  disabled: boolean = false;
+  disabled: boolean;
 
   @Output()
   actionEvent: EventEmitter<any> = new EventEmitter();
@@ -43,7 +47,9 @@ export class EditActionButtonComponent implements OnInit {
   }
 
   onClick() {
-    this.actionEvent.emit();
+    if (!this.disabled) {
+      this.actionEvent.emit();
+    }
   }
 }
 

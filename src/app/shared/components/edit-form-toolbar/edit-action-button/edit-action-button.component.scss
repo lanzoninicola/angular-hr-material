@@ -16,6 +16,11 @@
     border-radius: 5px;
   }
 
+  &[aria-disabled="true"] {
+    cursor: inherit;
+    opacity: 0.5;
+  }
+
   span.button-label {
     font-size: 0.65rem;
     font-weight: 600;
