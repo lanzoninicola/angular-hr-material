@@ -32,6 +32,7 @@ export class EditActionButtonComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
+    console.log(this.disabled);
     if (!this.basicActions.hasOwnProperty(this.action)) {
       throw `EditActionButtonComponent - No button found with the action ${this.action}`;
     }
