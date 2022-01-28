@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
@@ -31,6 +32,7 @@ import { UsersRoutingModule } from './users-routing.module';
     MatDividerModule,
     DynamicFormModule,
     MatButtonModule,
+    MatIconModule,
   ],
 })
 export class UsersModule {}
