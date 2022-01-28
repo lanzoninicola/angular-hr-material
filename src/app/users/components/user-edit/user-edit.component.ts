@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
+import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 
 import { UsersStoreService } from '../../services/user-store.service';
 import { UsersService } from '../../services/users.service';
@@ -10,23 +11,21 @@ import { UserModel } from '../../types/user.type';
 type EntityState = 'create' | 'update';
 @Component({
   selector: 'ahr-user-edit',
-  template: `
-    <div class="container">
-      <ahr-user-edit-form
-        [user]="currentUser$ | async"
-        (onSaveEvent)="onSave($event)"
-      ></ahr-user-edit-form>
-    </div>
-  `,
+  templateUrl: './user-edit.component.html',
   styleUrls: ['./user-edit.component.scss'],
 })
-export class UserEditComponent implements OnInit {
+export class UserEditComponent implements OnInit, OnDestroy {
   currentUser$: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(
     {} as UserModel
   );
-  formState$: BehaviorSubject<EntityState> = new BehaviorSubject<EntityState>(
+  entityState$: BehaviorSubject<EntityState> = new BehaviorSubject<EntityState>(
     'create'
   );
+  formValues: UserFormData;
+  formState: string;
+
+  formStateSub: Subscription;
+  valueChangesSub: Subscription;
 
   constructor(
     private _store: UsersStoreService,
@@ -34,25 +33,53 @@ export class UserEditComponent implements OnInit {
     private _messageService: MessageService
   ) {}
 
-  ngOnInit(): void {
-    this.formState$.next(this._store.get('userEdit-formState').value);
+  ngOnInit() {
+    // This has been set in the resolvers class
+    this.entityState$.next(this._store.get('userEdit-entityState').value);
+    // This has been in the resolvers class
     this.currentUser$.next(this._store.get('userEdit-currentUser').value);
   }
 
-  onSave(userFormData: UserFormData) {
-    const userModel: UserModel = this._transformFormData(userFormData);
+  onFormState(formState: BehaviorSubject<FormState>) {
+    this.formStateSub = formState.subscribe(
+      (formState: FormState) => (this.formState = formState)
+    );
+  }
 
-    if (this.formState$.value === 'create') {
+  onValueChanges(valueChanges: Observable<any>) {
+    this.valueChangesSub = valueChanges.subscribe(
+      (userFormData: UserFormData) => {
+        this.formValues = { ...userFormData };
+      }
+    );
+  }
+
+  ngOnDestroy() {
+    this.formStateSub.unsubscribe();
+    this.valueChangesSub.unsubscribe();
+  }
+
+  onSaveButtonClicked() {
+    const userModel: UserModel = this._transformFormData(this.formValues);
+
+    if (this.entityState$.value === 'create') {
       this._save(userModel);
     }
 
-    if (this.formState$.value === 'update') {
+    if (this.entityState$.value === 'update') {
       this._update(userModel);
     }
   }
 
+  onDisableButtonClicked() {}
+
+  onRemoveButtonClicked() {}
+
   private _transformFormData(userFormData: UserFormData): UserModel {
+    const { id } = this.currentUser$.value;
+
     return {
+      id,
       firstname: userFormData['firstname'],
       lastname: userFormData['lastname'],
       email: userFormData['email'],

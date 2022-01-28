@@ -1,0 +1,29 @@
+<ahr-edit-form-toolbar>
+  <ahr-edit-action-button
+    left
+    ahrFormSubmit
+    [action]="'save'"
+    (actionEvent)="onSaveButtonClicked()"
+  ></ahr-edit-action-button>
+  <ahr-edit-action-button
+    left
+    [action]="'disable'"
+    (actionEvent)="onDisableButtonClicked()"
+  ></ahr-edit-action-button>
+  <ahr-edit-action-button
+    left
+    [action]="'remove'"
+    (actionEvent)="onRemoveButtonClicked()"
+  ></ahr-edit-action-button>
+  <ahr-navigation-action-button
+    right
+    [action]="'goback'"
+  ></ahr-navigation-action-button>
+</ahr-edit-form-toolbar>
+<div class="container-form">
+  <ahr-user-edit-form
+    [user]="currentUser$ | async"
+    (formState)="onFormState($event)"
+    (valueChanges)="onValueChanges($event)"
+  ></ahr-user-edit-form>
+</div>
