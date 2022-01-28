@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import Helper from 'src/app/core/helpers/helpers';
+import { FormState } from '../types/form-state.types';
 
 import { TemplateMap } from '../types/template.types';
 import { FormViewTemplateService } from './form-view-template.service';
@@ -35,6 +37,14 @@ export class DynamicFormBuilderService {
 
   formKeysMap: Map<FormControlKey, FormGroupKey> = new Map();
 
+  formState$: BehaviorSubject<FormState> = new BehaviorSubject<FormState>(
+    'idle'
+  );
+
+  get valueChanges(): Observable<any> {
+    return this._getValueChanges();
+  }
+
   constructor(private formViewTemplate: FormViewTemplateService) {
     this.viewTemplate = formViewTemplate.getTemplate();
   }
@@ -56,6 +66,7 @@ export class DynamicFormBuilderService {
     const childrenGroup = Helper.mapToObjectLiteral(this._childrenGroup());
 
     this.formModel = new FormGroup(childrenGroup);
+
     return this.formModel;
   }
 
@@ -139,6 +150,32 @@ export class DynamicFormBuilderService {
    */
   destroy(): void {
     this.formModel = new FormGroup({});
+  }
+
+  /**
+   *
+   * @description
+   * A multicasting observable that emits an event every time
+   * the value of the control changes, in the UI or programmatically.
+   *
+   * @return the Observable contains all the values of FormModel in a flat way
+   * (it is not separated by the formGroup)
+   */
+  private _getValueChanges(): Observable<any> {
+    return this.formModel.valueChanges.pipe(
+      map((formData: { [key: string]: {} }) => {
+        let flatFormData = {};
+
+        Object.values(formData).forEach(
+          (formGroupData: { [key: string]: string }) => {
+            flatFormData = { ...flatFormData, ...formGroupData };
+          }
+        );
+
+        return flatFormData;
+      }),
+      tap(() => this.formState$.next('changed'))
+    );
   }
 
   /**
