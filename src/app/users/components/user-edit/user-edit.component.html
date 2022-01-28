@@ -2,6 +2,7 @@
   <ahr-edit-action-button
     left
     ahrFormSubmit
+    [disabled]="formState === 'idle' || formStatus === 'invalid'"
     [action]="'save'"
     (actionEvent)="onSaveButtonClicked()"
   ></ahr-edit-action-button>
@@ -25,5 +26,6 @@
     [user]="currentUser$ | async"
     (formState)="onFormState($event)"
     (valueChanges)="onValueChanges($event)"
+    (statusChanges)="onStatusChanges($event)"
   ></ahr-user-edit-form>
 </div>

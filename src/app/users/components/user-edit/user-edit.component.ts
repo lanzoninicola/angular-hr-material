@@ -23,11 +23,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
   );
   formValues$: BehaviorSubject<UserFormData> =
     new BehaviorSubject<UserFormData>({} as UserFormData);
-  formState: string;
+  formState: string = 'idle';
+  formStatus: string = 'invalid';
 
   formStateSub: Subscription;
   valueChangesSub: Subscription;
   formValuesSub: Subscription;
+  formStatusSub: Subscription;
 
   constructor(
     private _store: UsersStoreService,
@@ -40,12 +42,15 @@ export class UserEditComponent implements OnInit, OnDestroy {
     this.entityState$.next(this._store.get('userEdit-entityState').value);
     // This has been in the resolvers class
     this.currentUser$.next(this._store.get('userEdit-currentUser').value);
+
+    console.log(this.formState, this.formStatus);
   }
 
   ngOnDestroy() {
-    // this.formStateSub.unsubscribe();
-    // this.valueChangesSub.unsubscribe();
-    // this.formValuesSub.unsubscribe();
+    this.formStateSub.unsubscribe();
+    this.valueChangesSub.unsubscribe();
+    this.formValuesSub.unsubscribe();
+    this.formStatusSub.unsubscribe();
   }
 
   onFormState(formState: BehaviorSubject<FormState>) {
@@ -59,6 +64,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
       (userFormData: UserFormData) => {
         this.formValues$.next(userFormData);
       }
+    );
+  }
+
+  onStatusChanges(statusChanges: Observable<any>) {
+    this.formStatusSub = statusChanges.subscribe(
+      (formStatus) => (this.formStatus = formStatus)
     );
   }
 

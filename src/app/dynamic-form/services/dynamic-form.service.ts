@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormControlStatus, FormGroup } from '@angular/forms';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import {
   FormControlConfiguration,
@@ -24,6 +24,10 @@ export class DynamicFormService {
 
   get valueChanges(): Observable<any> {
     return this._getValueChanges();
+  }
+
+  get statusChanges(): Observable<any> {
+    return this._getStatusChanges();
   }
 
   constructor(
@@ -101,6 +105,12 @@ export class DynamicFormService {
   destroy() {
     this.view.destroy();
     this.model.destroy();
+  }
+
+  private _getStatusChanges() {
+    return this.formModel.statusChanges.pipe(
+      map((formStatus: FormControlStatus) => formStatus.toLowerCase())
+    );
   }
 
   /**

@@ -2,8 +2,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
-import { FormModelBuilderService } from 'src/app/dynamic-form/services/form-model-builder.service';
-import { FormViewBuilderService } from 'src/app/dynamic-form/services/form-view-builder.service';
 import { FormControlConfiguration } from 'src/app/dynamic-form/types/dynamic-form.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
@@ -33,6 +31,11 @@ export class UserEditFormComponent implements OnInit {
     Observable<any>
   >();
 
+  @Output('statusChanges')
+  statusChangesEvent: EventEmitter<Observable<any>> = new EventEmitter<
+    Observable<any>
+  >();
+
   userEditForm: FormGroup;
   userEditFormView: FormViewTemplate;
   formDataSubscription: Subscription;
@@ -46,6 +49,7 @@ export class UserEditFormComponent implements OnInit {
 
     this.formStateEvent.emit(this._dynamicForm.formState$);
     this.valueChangesEvent.emit(this._dynamicForm.valueChanges);
+    this.statusChangesEvent.emit(this._dynamicForm.statusChanges);
   }
 
   ngOnDestroy() {
