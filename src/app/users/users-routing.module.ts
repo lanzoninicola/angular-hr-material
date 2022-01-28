@@ -4,7 +4,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UsersSectionComponent } from './components/users-section/users-section.component';
-import { UserEditFormInitResolver } from './routing/user-edit-form-init.resolver';
 import { UserEditResolver } from './routing/user-edit.resolver';
 import { UserNewResolver } from './routing/user-new.resolver';
 
