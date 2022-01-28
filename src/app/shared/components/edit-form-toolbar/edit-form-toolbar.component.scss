@@ -1,0 +1,49 @@
+.editFormToolbar {
+  background: linear-gradient(
+    180deg,
+    var(--primary-color-extra-light) 48%,
+    #fafafa 100%
+  );
+
+  .editFormWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5rem 2rem;
+
+    .col-1,
+    .col-2 {
+      display: flex;
+      gap: 0.5rem;
+
+      .button-wrapper {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        padding-inline: 0.5rem;
+
+        button {
+          color: var(--primary-color);
+          height: 35px;
+        }
+
+        &:hover {
+          background-color: var(--primary-color-light);
+          border-radius: 5px;
+        }
+
+        span.button-label {
+          font-size: 0.65rem;
+          font-weight: 600;
+          color: var(--primary-color);
+
+          &.hover {
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
