@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 
@@ -21,11 +21,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
   entityState$: BehaviorSubject<EntityState> = new BehaviorSubject<EntityState>(
     'create'
   );
-  formValues: UserFormData;
+  formValues$: BehaviorSubject<UserFormData> =
+    new BehaviorSubject<UserFormData>({} as UserFormData);
   formState: string;
 
   formStateSub: Subscription;
   valueChangesSub: Subscription;
+  formValuesSub: Subscription;
 
   constructor(
     private _store: UsersStoreService,
@@ -40,6 +42,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
     this.currentUser$.next(this._store.get('userEdit-currentUser').value);
   }
 
+  ngOnDestroy() {
+    this.formStateSub.unsubscribe();
+    this.valueChangesSub.unsubscribe();
+    this.formValuesSub.unsubscribe();
+  }
+
   onFormState(formState: BehaviorSubject<FormState>) {
     this.formStateSub = formState.subscribe(
       (formState: FormState) => (this.formState = formState)
@@ -49,45 +57,39 @@ export class UserEditComponent implements OnInit, OnDestroy {
   onValueChanges(valueChanges: Observable<any>) {
     this.valueChangesSub = valueChanges.subscribe(
       (userFormData: UserFormData) => {
-        this.formValues = { ...userFormData };
+        this.formValues$.next(userFormData);
       }
     );
   }
 
-  ngOnDestroy() {
-    this.formStateSub.unsubscribe();
-    this.valueChangesSub.unsubscribe();
-  }
-
   onSaveButtonClicked() {
-    const userModel: UserModel = this._transformFormData(this.formValues);
-
-    if (this.entityState$.value === 'create') {
-      this._save(userModel);
-    }
-
-    if (this.entityState$.value === 'update') {
-      this._update(userModel);
-    }
+    this.formValuesSub = this.formValues$
+      .pipe<UserModel>(
+        map((userFormData: UserFormData) => {
+          return {
+            id: this.currentUser$.value.id,
+            firstname: userFormData['firstname'],
+            lastname: userFormData['lastname'],
+            email: userFormData['email'],
+            department: userFormData['departments'],
+            companyRoleLevel: userFormData['companyLevels'],
+            platformRole: userFormData['platformRoles'],
+          };
+        })
+      )
+      .subscribe((userModel: UserModel) => {
+        if (this.entityState$.value === 'create') {
+          this._save(userModel);
+        }
+        if (this.entityState$.value === 'update') {
+          this._update(userModel);
+        }
+      });
   }
 
   onDisableButtonClicked() {}
 
   onRemoveButtonClicked() {}
-
-  private _transformFormData(userFormData: UserFormData): UserModel {
-    const { id } = this.currentUser$.value;
-
-    return {
-      id,
-      firstname: userFormData['firstname'],
-      lastname: userFormData['lastname'],
-      email: userFormData['email'],
-      department: userFormData['departments'],
-      companyRoleLevel: userFormData['companyLevels'],
-      platformRole: userFormData['platformRoles'],
-    };
-  }
 
   private _save(user: UserModel) {
     this._usersService
