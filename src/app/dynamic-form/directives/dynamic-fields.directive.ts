@@ -37,7 +37,7 @@ export class DynamicFieldsDirective implements OnInit {
     this.controlsConfig.forEach((config) => {
       const componentToRender = components[config.type];
 
-      if (typeof componentToRender === undefined) {
+      if (!componentToRender) {
         throw 'DynamicFieldsDirective: Component template not found.';
       }
 

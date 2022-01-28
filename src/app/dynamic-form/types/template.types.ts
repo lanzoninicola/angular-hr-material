@@ -3,7 +3,7 @@ import {
   FormGroupConfiguration,
 } from './dynamic-form.types';
 
-export type TemplateMap = Map<
+export type FormViewTemplate = Map<
   FormGroupConfiguration,
   FormControlConfiguration[]
 >;

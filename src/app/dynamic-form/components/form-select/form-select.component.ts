@@ -4,7 +4,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { PicklistService } from 'src/app/core/services/picklist.service';
 import { PicklistValues } from 'src/app/core/types/picklist.type';
 
-import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
+import { DynamicFormService } from '../../services/dynamic-form.service';
 import { FormControlConfiguration } from '../../types/dynamic-form.types';
 
 @Component({
@@ -26,12 +26,12 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   >([]);
 
   constructor(
-    private dynamicFormBuilder: DynamicFormBuilderService,
+    private _dynamicForm: DynamicFormService,
     private picklist: PicklistService
   ) {}
 
   ngOnInit(): void {
-    this.parentFormGroupModel = this.dynamicFormBuilder.getFormGroup(
+    this.parentFormGroupModel = this._dynamicForm.getFormGroup(
       this.parentGroupName
     );
     this.control =

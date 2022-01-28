@@ -1,15 +1,22 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { DynamicFormBuilderService } from 'src/app/dynamic-form/services/dynamic-form-builder.service';
-import { FormViewTemplateService } from 'src/app/dynamic-form/services/form-view-template.service';
+import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
+import { FormModelBuilderService } from 'src/app/dynamic-form/services/form-model-builder.service';
+import { FormViewBuilderService } from 'src/app/dynamic-form/services/form-view-builder.service';
 import { FormControlConfiguration } from 'src/app/dynamic-form/types/dynamic-form.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
 import { UserModel } from 'src/app/users/types/user.type';
 
 @Component({
   selector: 'ahr-user-edit-form',
-  template: ` <ahr-dynamic-form></ahr-dynamic-form> `,
+  template: `
+    <ahr-dynamic-form
+      [model]="userEditForm"
+      [view]="userEditFormView"
+    ></ahr-dynamic-form>
+  `,
   styleUrls: ['./user-edit-form.component.scss'],
 })
 export class UserEditFormComponent implements OnInit {
@@ -27,40 +34,48 @@ export class UserEditFormComponent implements OnInit {
   >();
 
   userEditForm: FormGroup;
+  userEditFormView: FormViewTemplate;
   formDataSubscription: Subscription;
 
-  constructor(
-    private formViewTemplate: FormViewTemplateService,
-    private dynamicFormBuilder: DynamicFormBuilderService
-  ) {
-    this.formViewTemplate.addGroup(
+  constructor(private _dynamicForm: DynamicFormService) {}
+
+  ngOnInit(): void {
+    this._buildForm();
+    this._setTemplatePropertyBinding();
+    this._initFormValues(this.user);
+
+    this.formStateEvent.emit(this._dynamicForm.formState$);
+    this.valueChangesEvent.emit(this._dynamicForm.valueChanges);
+  }
+
+  ngOnDestroy() {
+    this._dynamicForm.destroy();
+  }
+
+  private _buildForm() {
+    this._dynamicForm.view.build(
       { key: 'personalInfo', title: 'Personal Information' },
       PERSONAL_INFO_CONTROLS
     );
 
-    this.formViewTemplate.addGroup(
+    this._dynamicForm.view.build(
       { key: 'companyRoleInfo', title: 'Company Role Information' },
       COMPANY_ROLE_INFO_CONTROLS
     );
 
-    this.formViewTemplate.addGroup(
+    this._dynamicForm.view.build(
       { key: 'platformInfo', title: 'Platform related information' },
       PLATFORM_INFO_CONTROLS
     );
 
-    this.userEditForm = this.dynamicFormBuilder.buildModel();
+    this._dynamicForm.model.build(this._dynamicForm.view.get());
+
+    this._dynamicForm.load();
   }
 
-  ngOnInit(): void {
-    this._initFormValues(this.user);
-
-    this.formStateEvent.emit(this.dynamicFormBuilder.formState$);
-    this.valueChangesEvent.emit(this.dynamicFormBuilder.valueChanges);
-  }
-
-  ngOnDestroy() {
-    this.dynamicFormBuilder.destroy();
-    this.formViewTemplate.destroy();
+  private _setTemplatePropertyBinding() {
+    this.userEditForm = this._dynamicForm.model.get();
+    this.userEditFormView = this._dynamicForm.view.get();
   }
 
   private _initFormValues(user: UserModel | null) {
@@ -68,18 +83,18 @@ export class UserEditFormComponent implements OnInit {
       return;
     }
 
-    this.dynamicFormBuilder.setControlsValue('personalInfo', {
+    this._dynamicForm.setControlsValue('personalInfo', {
       firstname: user.firstname,
       lastname: user.lastname,
       email: user.email,
     });
 
-    this.dynamicFormBuilder.setControlsValue('companyRoleInfo', {
+    this._dynamicForm.setControlsValue('companyRoleInfo', {
       departments: user.department,
       companyLevels: user.companyRoleLevel,
     });
 
-    this.dynamicFormBuilder.setControlsValue('platformInfo', {
+    this._dynamicForm.setControlsValue('platformInfo', {
       platformRoles: user.platformRole,
     });
   }
