@@ -4,20 +4,18 @@ import {
   FormControlConfiguration,
   FormGroupConfiguration,
 } from '../types/dynamic-form.types';
-import { TemplateMap } from '../types/template.types';
-
-// TODO: cache the template && invalidate cache
+import { FormViewTemplate } from '../types/template.types';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FormViewTemplateService {
-  template: TemplateMap = new Map();
+export class FormViewBuilderService {
+  _template: FormViewTemplate = new Map();
 
   constructor() {}
 
-  getTemplate(): TemplateMap {
-    return this.template;
+  get(): FormViewTemplate {
+    return this._template;
   }
 
   /**
@@ -25,11 +23,8 @@ export class FormViewTemplateService {
    * Let configures the template adding form groups
    *
    */
-  addGroup(
-    group: FormGroupConfiguration,
-    controls: FormControlConfiguration[]
-  ) {
-    this.template.set(group, controls);
+  build(group: FormGroupConfiguration, controls: FormControlConfiguration[]) {
+    this._template.set(group, controls);
   }
 
   /**
@@ -38,7 +33,7 @@ export class FormViewTemplateService {
    *
    */
   shouldEmpty(): boolean {
-    if (this.template.size === 0) {
+    if (this._template.size === 0) {
       return true;
     }
 
@@ -51,8 +46,8 @@ export class FormViewTemplateService {
    *
    */
   destroy(): void {
-    for (const [key] of this.template) {
-      this.template.delete(key);
+    for (const [key] of this._template) {
+      this._template.delete(key);
     }
   }
 }

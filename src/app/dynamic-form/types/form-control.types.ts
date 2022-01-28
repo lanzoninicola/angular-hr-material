@@ -1,3 +1,11 @@
+export interface FormControlModelConfig {
+  initState: string;
+  syncValidators: [];
+  asyncValidators?: [];
+}
+
+export type FormControlKey = string;
+
 export interface FormControlInputTextConfig {
   key: string;
   type: FormControlTypeInput;

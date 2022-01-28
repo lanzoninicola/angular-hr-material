@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
-import { FormControlConfiguration } from '../../types/dynamic-form.types';
+import { DynamicFormService } from '../../services/dynamic-form.service';
 import { FormControlInputTextConfig } from '../../types/form-control.types';
 
 @Component({
@@ -35,10 +34,10 @@ export class FormInputComponent implements OnInit {
   control: AbstractControl;
   parentFormGroupModel: FormGroup;
 
-  constructor(private dynamicFormBuilder: DynamicFormBuilderService) {}
+  constructor(private _dynamicForm: DynamicFormService) {}
 
   ngOnInit(): void {
-    this.parentFormGroupModel = this.dynamicFormBuilder.getFormGroup(
+    this.parentFormGroupModel = this._dynamicForm.getFormGroup(
       this.parentGroupName
     );
 

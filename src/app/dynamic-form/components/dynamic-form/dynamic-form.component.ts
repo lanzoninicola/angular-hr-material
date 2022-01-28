@@ -1,15 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { DynamicFormBuilderService } from '../../services/dynamic-form-builder.service';
-import { FormViewTemplateService } from '../../services/form-view-template.service';
-import { TemplateMap } from '../../types/template.types';
+import { FormViewTemplate } from '../../types/template.types';
 
 @Component({
   selector: 'ahr-dynamic-form',
   template: `
     <form [formGroup]="model">
-      <div *ngFor="let groupViewConfig of viewConfig | keyvalue">
+      <div *ngFor="let groupViewConfig of view | keyvalue">
         <ahr-dynamic-form-group [viewConfig]="groupViewConfig">
         </ahr-dynamic-form-group>
       </div>
@@ -18,17 +16,13 @@ import { TemplateMap } from '../../types/template.types';
   styleUrls: ['./dynamic-form.component.scss'],
 })
 export class DynamicFormComponent implements OnInit {
+  @Input()
   model: FormGroup;
 
-  viewConfig: TemplateMap;
+  @Input()
+  view: FormViewTemplate;
 
-  constructor(
-    private formViewTemplate: FormViewTemplateService,
-    private dynamicFormBuilder: DynamicFormBuilderService
-  ) {
-    this.model = this.dynamicFormBuilder.getMainFormGroupModel();
-    this.viewConfig = this.formViewTemplate.getTemplate();
-  }
+  constructor() {}
 
   ngOnInit(): void {}
 }
