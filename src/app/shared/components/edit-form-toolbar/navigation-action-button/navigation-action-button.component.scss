@@ -1,0 +1,28 @@
+.button-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  padding-inline: 0.5rem;
+
+  button {
+    color: var(--primary-color);
+    height: 35px;
+  }
+
+  &:hover {
+    background-color: var(--primary-color-light);
+    border-radius: 5px;
+  }
+
+  span.button-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--primary-color);
+
+    &.hover {
+      color: white;
+    }
+  }
+}

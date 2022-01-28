@@ -14,6 +14,9 @@ import { LogoComponent } from './components/logo/logo.component';
 import { SearchControlComponent } from './components/search-control/search-control.component';
 import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
 import { TableDataComponent } from './components/table-data/table-data.component';
+import { EditFormToolbarComponent } from './components/edit-form-toolbar/edit-form-toolbar.component';
+import { EditActionButtonComponent } from './components/edit-form-toolbar/edit-action-button/edit-action-button.component';
+import { NavigationActionButtonComponent } from './components/edit-form-toolbar/navigation-action-button/navigation-action-button.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +25,9 @@ import { TableDataComponent } from './components/table-data/table-data.component
     TableDataComponent,
     LogoComponent,
     SearchControlComponent,
+    EditFormToolbarComponent,
+    EditActionButtonComponent,
+    NavigationActionButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -41,6 +47,9 @@ import { TableDataComponent } from './components/table-data/table-data.component
     TableDataComponent,
     LogoComponent,
     SearchControlComponent,
+    EditFormToolbarComponent,
+    EditActionButtonComponent,
+    NavigationActionButtonComponent,
   ],
 })
 export class SharedModule {}
