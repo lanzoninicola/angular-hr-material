@@ -35,7 +35,7 @@ export class UserEditResolver implements Resolve<UserModel> {
 
     if (currentUserInStore) {
       if (currentUserInStore.id === userIdParam) {
-        this._store.set('userEdit-formState', 'update');
+        this._store.set('userEdit-entityState', 'update');
         return of(currentUserInStore);
       }
     }
@@ -47,7 +47,7 @@ export class UserEditResolver implements Resolve<UserModel> {
       }),
       map((user) => {
         this._store.set('userEdit-currentUser', user);
-        this._store.set('userEdit-formState', 'update');
+        this._store.set('userEdit-entityState', 'update');
         return user;
       })
     );
