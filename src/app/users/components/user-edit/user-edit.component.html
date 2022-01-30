@@ -23,7 +23,7 @@
 </ahr-edit-form-toolbar>
 <div class="container-form">
   <ahr-user-edit-form
-    [user]="currentUser$ | async"
+    [user]="currentUser"
     (formState)="onFormState($event)"
     (valueChanges)="onValueChanges($event)"
     (statusChanges)="onStatusChanges($event)"

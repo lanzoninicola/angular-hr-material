@@ -16,14 +16,12 @@ type EntityState = 'create' | 'update';
 })
 export class UserEditComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
-  currentUser$: BehaviorSubject<UserModel> = new BehaviorSubject<UserModel>(
-    {} as UserModel
-  );
-  entityState$: BehaviorSubject<EntityState> = new BehaviorSubject<EntityState>(
-    'create'
-  );
+  currentUser: UserModel = {} as UserModel;
+  entityState: EntityState = 'create';
+
   formValues$: BehaviorSubject<UserFormData> =
     new BehaviorSubject<UserFormData>({} as UserFormData);
+
   formState: string = 'idle';
   formStatus: string = 'invalid';
 
@@ -34,12 +32,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // This has been set in the resolvers class
-    this.entityState$.next(this._store.get('userEdit-entityState'));
-    // This has been in the resolvers class
-    this.currentUser$.next(this._store.get('userEdit-currentUser'));
-
-    console.log(this.formState, this.formStatus);
+    this.entityState = this._store.get('userEdit-entityState');
+    this.currentUser = { ...this._store.get('userEdit-currentUser') };
   }
 
   ngOnDestroy() {
@@ -74,7 +68,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
         .pipe<UserModel>(
           map((userFormData: UserFormData) => {
             return {
-              id: this.currentUser$.value.id,
+              id: this.currentUser.id,
               firstname: userFormData['firstname'],
               lastname: userFormData['lastname'],
               email: userFormData['email'],
@@ -85,10 +79,10 @@ export class UserEditComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe((userModel: UserModel) => {
-          if (this.entityState$.value === 'create') {
+          if (this.entityState === 'create') {
             this._save(userModel);
           }
-          if (this.entityState$.value === 'update') {
+          if (this.entityState === 'update') {
             this._update(userModel);
           }
         })
