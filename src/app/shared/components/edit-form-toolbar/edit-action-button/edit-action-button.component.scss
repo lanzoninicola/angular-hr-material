@@ -1,33 +1,47 @@
+@import "variables.scss";
+
+$button-border-radius: 5px;
+
 .button-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 0.25rem;
   cursor: pointer;
-  padding-inline: 0.5rem;
+  padding-block: 0.25rem;
+  border-radius: $button-border-radius;
+  min-width: 45px;
+  max-width: 45px;
 
   button {
-    color: var(--primary-color);
-    height: 35px;
+    color: $grey-dark;
+    height: 24px;
+    width: 24px;
+    line-height: 24px;
+  }
+
+  span.button-label {
+    font-size: 0.5rem;
+    font-weight: 600;
+    color: $grey-dark;
+    line-height: 1;
   }
 
   &:hover {
-    background-color: var(--primary-color-light);
-    border-radius: 5px;
+    background-color: $primary-color-light;
+
+    button {
+      color: $white;
+    }
+
+    span.button-label {
+      color: $white;
+    }
   }
 
   &[aria-disabled="true"] {
     cursor: inherit;
     opacity: 0.5;
-  }
-
-  span.button-label {
-    font-size: 0.65rem;
-    font-weight: 600;
-    color: var(--primary-color);
-
-    &.hover {
-      color: white;
-    }
   }
 }

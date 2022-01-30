@@ -1,3 +1,7 @@
+@import "variables.scss";
+
+$border-radius: 10px;
+
 .container {
   display: flex;
   flex-direction: column;
@@ -10,8 +14,6 @@ table {
   background-color: transparent;
   font-family: Poppins, "san-serif";
 
-  --border-radius: 10px;
-
   &.mat-table {
     border-spacing: 0 5px;
   }
@@ -19,23 +21,23 @@ table {
 
 th.mat-header-cell {
   border: none;
-  color: var(--primary-color);
+  color: $primary-color;
   font-weight: 600;
 }
 
 .mat-row {
-  background-color: white;
+  background-color: $white;
   cursor: pointer;
   height: 65px;
 
   td:first-child {
-    border-top-left-radius: var(--border-radius);
-    border-bottom-left-radius: var(--border-radius);
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
   }
 
   td:last-child {
-    border-top-right-radius: var(--border-radius);
-    border-bottom-right-radius: var(--border-radius);
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 
   td.mat-cell {
@@ -43,7 +45,7 @@ th.mat-header-cell {
   }
 
   &:hover {
-    background-color: var(--tertiary-color);
+    background-color: $secondary-color;
     transition: all 150ms ease-in;
   }
 
