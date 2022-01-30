@@ -179,7 +179,7 @@
     {
       "id": 1,
       "firstname": "Leanne",
-      "lastname": "Graham",
+      "lastname": "Graham234",
       "email": "leanne.graham@gmail.com",
       "platformRole": "admin",
       "department": "IT Infrastructure",
@@ -188,7 +188,7 @@
     {
       "id": 2,
       "firstname": "Ervin",
-      "lastname": "Howell",
+      "lastname": "Howell2",
       "email": "ervin.howell@gmail.com",
       "platformRole": "admin",
       "department": "IT Infrastructure",
@@ -313,6 +313,18 @@
       "companyRoleLevel": "Manager",
       "platformRole": "admin",
       "id": 73
+    },
+    {
+      "firstname": "Nicola",
+      "lastname": "Lanzoni",
+      "email": "lanzoni.nicola@gmail.com",
+      "department": "Back-end Developers",
+      "companyRoleLevel": "Team Lead",
+      "platformRole": "manager",
+      "id": 74
+    },
+    {
+      "id": 75
     }
   ]
 }
