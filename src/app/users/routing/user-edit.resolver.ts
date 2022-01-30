@@ -1,13 +1,9 @@
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  Resolve,
-  Router,
-  RouterStateSnapshot,
-} from '@angular/router';
-import { BehaviorSubject, catchError, EMPTY, map, Observable, of } from 'rxjs';
-import { UsersStoreService } from '../services/user-store.service';
+import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
+import { HttpErrorService } from 'src/app/core/services/http-error.service';
 
+import { UsersStoreService } from '../services/user-store.service';
 import { UsersService } from '../services/users.service';
 import { UserModel } from '../types/user.type';
 
@@ -18,7 +14,8 @@ export class UserEditResolver implements Resolve<UserModel> {
   constructor(
     private _store: UsersStoreService,
     private _userService: UsersService,
-    private router: Router
+    private router: Router,
+    private _httpErrorService: HttpErrorService
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
@@ -31,7 +28,7 @@ export class UserEditResolver implements Resolve<UserModel> {
 
     const currentUserInStore: UserModel = this._store.get(
       'userEdit-currentUser'
-    ).value;
+    );
 
     if (currentUserInStore) {
       if (currentUserInStore.id === userIdParam) {
@@ -41,16 +38,20 @@ export class UserEditResolver implements Resolve<UserModel> {
     }
 
     return this._userService.findById(route.params['id']).pipe(
-      catchError(() => {
-        this.router.navigate(['users']);
-        return of({} as UserModel);
-      }),
-      map((user) => {
+      catchError(this._goBackToUserList()),
+      catchError(this._httpErrorService.handle<any>('open the user profile')),
+      tap((user) => {
         this._store.set('userEdit-currentUser', user);
         this._store.set('userEdit-entityState', 'update');
-        return user;
       })
     );
+  }
+
+  private _goBackToUserList() {
+    return () => {
+      this.router.navigate(['users']);
+      return EMPTY;
+    };
   }
 }
 

@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { BehaviorSubject } from 'rxjs';
+
+type MessageLevel = 'info' | 'notice' | 'warning' | 'error';
 
 /**
  * Collecting error messaging for user consumption
  */
 @Injectable({ providedIn: 'root' })
 export class MessageService {
-  messages: string[] = [];
+  errorMatSnackBar = errorConfig;
 
-  add(message: string) {
-    this.messages.push(message);
-  }
+  constructor(private _snackBar: MatSnackBar) {}
 
-  clear() {
-    this.messages = [];
+  add(message: string, level: MessageLevel = 'info') {
+    this._snackBar.open(message, 'CLOSE', this.errorMatSnackBar);
   }
 }
 
-// TODO: better job of transforming error for user consumption
+// source: https://stackblitz.com/edit/angular-snackbar?file=app%2Fapp.component.ts
+const errorConfig: MatSnackBarConfig = new MatSnackBarConfig();
+
+errorConfig.panelClass = ['snack-bar-error'];

@@ -1,20 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  BehaviorSubject,
-  catchError,
-  distinctUntilChanged,
-  map,
-  Observable,
-  of,
-  shareReplay,
-  switchMap,
-  take,
-} from 'rxjs';
-import { ErrorService } from 'src/app/core/services/error.service';
+import { catchError, map, Observable } from 'rxjs';
+import { HttpErrorService } from 'src/app/core/services/http-error.service';
 import { MessageService } from 'src/app/core/services/message.service';
 import { environment } from 'src/environments/environment';
-import { UserFormData } from '../types/user-edit-form.types';
 
 import { UserModel } from '../types/user.type';
 
@@ -24,7 +13,7 @@ import { UserModel } from '../types/user.type';
 export class UsersService {
   constructor(
     private http: HttpClient,
-    private _errorService: ErrorService,
+    private _httpErrorService: HttpErrorService,
     private _messageService: MessageService
   ) {}
 
@@ -49,7 +38,8 @@ export class UsersService {
 
   findById(id: number) {
     return this.http.get<UserModel>(`${environment.API}/users/${id}`).pipe(
-      map((userData) => {
+      catchError(this._httpErrorService.handle<any>('Getting the user')),
+      map((userData: UserModel) => {
         return {
           ...userData,
           fullName: `${userData.lastname} ${userData.firstname}`,
@@ -60,14 +50,12 @@ export class UsersService {
 
   save(userData: UserModel): Observable<UserModel> {
     //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
-    console.log('save service');
     return this.http
       .post<UserModel>(`${environment.API}/users`, userData, this.httpOptions)
-      .pipe(catchError(this._handleError<any>('saveUser')));
+      .pipe(catchError(this._httpErrorService.handle<any>('Saving the user')));
   }
 
   update(userData: UserModel): Observable<UserModel> {
-    console.log('update service');
     const { id } = userData;
 
     return this.http
@@ -76,18 +64,7 @@ export class UsersService {
         userData,
         this.httpOptions
       )
-      .pipe(catchError(this._handleError<any>('saveUser')));
-  }
-
-  /**
-   * Handle Http operation that failed.
-   * Let the app continue.
-   *
-   * @param operation - name of the operation that failed
-   * @param result - optional value to return as the observable result
-   */
-  private _handleError<T>(operation = 'operation', result?: T) {
-    return this._errorService.handleHttpError(operation, result);
+      .pipe(catchError(this._httpErrorService.handle<any>('Updating user')));
   }
 }
 
