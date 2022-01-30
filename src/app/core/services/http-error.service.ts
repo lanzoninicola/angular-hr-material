@@ -32,13 +32,14 @@ export class HttpErrorService {
    * @description
    * Logging the message with the MessageService
    *
+   * @param operation - name of the operation that failed
    * @param error - The message to log
    */
   private _logToUser(operation: string, error: HttpErrorResponse) {
     const message = `An unexpected error occured during the operation: ${operation?.toLowerCase()}. Error: ${
       error.status
     } - ${error.statusText}`;
-    this.messageService.add(message, 'error');
+    this.messageService.send(message, 'error');
   }
 
   /**
@@ -49,6 +50,6 @@ export class HttpErrorService {
    */
   private _logToService(message: string) {
     // TODO: send the error to remote logging infrastructure
-    console.error(message); // log to console instead
+    // console.error(message); // log to console instead
   }
 }

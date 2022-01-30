@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { BehaviorSubject } from 'rxjs';
 
 type MessageLevel = 'info' | 'notice' | 'warning' | 'error';
 
@@ -9,16 +8,28 @@ type MessageLevel = 'info' | 'notice' | 'warning' | 'error';
  */
 @Injectable({ providedIn: 'root' })
 export class MessageService {
-  errorMatSnackBar = errorConfig;
+  snackBarConfig: MatSnackBarConfig = new MatSnackBarConfig();
 
   constructor(private _snackBar: MatSnackBar) {}
 
-  add(message: string, level: MessageLevel = 'info') {
-    this._snackBar.open(message, 'CLOSE', this.errorMatSnackBar);
+  send(message: string, level: MessageLevel = 'info') {
+    // example: https://stackblitz.com/edit/angular-snackbar?file=app%2Fapp.component.ts
+    this._loadSnackBarConfig(level);
+
+    this._openSnackBar(level, message);
+  }
+
+  private _loadSnackBarConfig(level: MessageLevel) {
+    // css classess in the global css
+    this.snackBarConfig.panelClass = [`snack-bar-${level}`];
+    this.snackBarConfig.duration = 3000;
+  }
+
+  private _openSnackBar(level: MessageLevel, message: string) {
+    this._snackBar.open(
+      `${level.toUpperCase()}: ${message}`,
+      'CLOSE',
+      this.snackBarConfig
+    );
   }
 }
-
-// source: https://stackblitz.com/edit/angular-snackbar?file=app%2Fapp.component.ts
-const errorConfig: MatSnackBarConfig = new MatSnackBarConfig();
-
-errorConfig.panelClass = ['snack-bar-error'];
