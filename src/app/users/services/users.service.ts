@@ -1,21 +1,16 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable } from 'rxjs';
-import { HttpErrorService } from 'src/app/core/services/http-error.service';
-import { MessageService } from 'src/app/core/services/message.service';
+import { map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 import { UserModel } from '../types/user.type';
+import { UsersStoreService } from './user-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(
-    private http: HttpClient,
-    private _httpErrorService: HttpErrorService,
-    private _messageService: MessageService
-  ) {}
+  constructor(private http: HttpClient, private _store: UsersStoreService) {}
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -39,7 +34,6 @@ export class UsersService {
 
   findById(id: number) {
     return this.http.get<UserModel>(`${environment.API}/users/${id}`).pipe(
-      catchError(this._httpErrorService.handle<any>('Getting the user')),
       map((userData: UserModel) => {
         return {
           ...userData,
@@ -49,23 +43,23 @@ export class UsersService {
     );
   }
 
-  save(userData: UserModel): Observable<UserModel> {
+  save(userData: UserModel) {
     //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
     return this.http
       .post<UserModel>(`${environment.API}/users`, userData, this.httpOptions)
-      .pipe(catchError(this._httpErrorService.handle<any>('Saving the user')));
+      .subscribe((newUser) => {
+        this._store.set('userEdit-currentUser', newUser);
+      });
   }
 
-  update(userData: UserModel): Observable<UserModel> {
+  update(userData: UserModel) {
     const { id } = userData;
 
-    return this.http
-      .patch<UserModel>(
-        `${environment.API}/users/${id}`,
-        userData,
-        this.httpOptions
-      )
-      .pipe(catchError(this._httpErrorService.handle<any>('Updating user')));
+    this.http
+      .patch<any>(`${environment.API}/users/${id}`, userData, this.httpOptions)
+      .subscribe((updatedUser) => {
+        this._store.set('userEdit-currentUser', updatedUser);
+      });
   }
 }
 
