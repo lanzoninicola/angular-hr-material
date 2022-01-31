@@ -18,15 +18,25 @@ import { FormViewBuilderService } from './form-view-builder.service';
 export class DynamicFormService {
   formModel: FormGroup = new FormGroup({});
 
-  formState$: BehaviorSubject<FormState> = new BehaviorSubject<FormState>(
-    'idle'
-  );
+  /**
+   * Form state:
+   *
+   * idle
+   * changed    | controller <-- form (EventEmitter)
+   * submitted  | controller <-- form (EventEmitter | Submission Interceptor)
+   */
+  private _formState$: BehaviorSubject<FormState> =
+    new BehaviorSubject<FormState>('idle');
 
-  get valueChanges(): Observable<any> {
+  get formState$(): BehaviorSubject<FormState> {
+    return this._formState$;
+  }
+
+  get valueChanges$(): Observable<any> {
     return this._getValueChanges();
   }
 
-  get statusChanges(): Observable<any> {
+  get statusChanges$(): Observable<string> {
     return this._getStatusChanges();
   }
 
@@ -87,27 +97,46 @@ export class DynamicFormService {
   }
 
   /**
-   * @description
-   * Get the values of all controls of the form
-   *
+   * @description Change the form state to 'idle'
    */
-  // getControlsValues(): { [key: FormControlKey]: string } {
-  //   let formValues: { [key: string]: string } = {};
+  idle() {
+    const IDLE: FormState = 'idle';
+    this._formState$.next(IDLE);
+  }
 
-  //   for (const [controlKey, groupKey] of this.model.formKeysMap) {
-  //     let controlValue = this.formModel!.get([groupKey, controlKey])!.value;
-  //     formValues[controlKey] = controlValue.trim();
-  //   }
+  /**
+   * @description Change the form state to 'changed'
+   */
+  changed() {
+    const CHANGED: FormState = 'changed';
+    this._formState$.next(CHANGED);
+  }
 
-  //   return formValues;
-  // }
+  /**
+   * @description Change the form state to 'submitted'
+   */
+  submitted() {
+    const SUBMITTED: FormState = 'submitted';
+    this._formState$.next(SUBMITTED);
+  }
 
+  /**
+   * @description Reset the view and model
+   */
   destroy() {
     this.view.destroy();
     this.model.destroy();
   }
 
-  private _getStatusChanges() {
+  /**
+   * @description This returns an Observable that emits the value of Change status of control
+   * This value will be emit as @Output() of the Presentation Component that renders the form
+   *
+   * @see FormControlStatus
+   *
+   * @returns
+   */
+  private _getStatusChanges(): Observable<string> {
     return this.formModel.statusChanges.pipe(
       map((formStatus: FormControlStatus) => formStatus.toLowerCase())
     );
@@ -135,7 +164,7 @@ export class DynamicFormService {
 
         return flatFormData;
       }),
-      tap(() => this.formState$.next('changed'))
+      tap(() => this.changed())
     );
   }
 }
