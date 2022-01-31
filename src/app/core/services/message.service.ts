@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
-type MessageLevel = 'info' | 'notice' | 'warning' | 'error';
+type MessageLevel = 'info' | 'warning' | 'error';
 
 /**
  * Collecting error messaging for user consumption
@@ -20,9 +20,12 @@ export class MessageService {
   }
 
   private _loadSnackBarConfig(level: MessageLevel) {
-    // css classess in the global css
+    // css classes in the global css
     this.snackBarConfig.panelClass = [`snack-bar-${level}`];
-    this.snackBarConfig.duration = 3000;
+
+    if (level !== 'error') {
+      this.snackBarConfig.duration = 5000;
+    }
   }
 
   private _openSnackBar(level: MessageLevel, message: string) {
