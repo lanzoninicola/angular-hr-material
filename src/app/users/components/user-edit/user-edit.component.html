@@ -1,8 +1,9 @@
-<ahr-edit-form-toolbar>
+<ahr-edit-form-toolbar [disabled]="formState === 'submitted'">
   <ahr-edit-action-button
     left
-    ahrFormSubmit
-    [disabled]="formState === 'idle' || formStatus === 'invalid'"
+    [disabled]="
+      formState === 'idle' && formStatus === 'invalid' && formState !== 'idle'
+    "
     [action]="'save'"
     (actionEvent)="onSaveButtonClicked()"
   ></ahr-edit-action-button>
@@ -24,6 +25,7 @@
 <div class="container-form">
   <ahr-user-edit-form
     [user]="currentUser"
+    [showSpinner]="formState === 'submitted'"
     (formState)="onFormState($event)"
     (valueChanges)="onValueChanges($event)"
     (statusChanges)="onStatusChanges($event)"

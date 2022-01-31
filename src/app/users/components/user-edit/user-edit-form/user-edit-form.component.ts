@@ -13,6 +13,7 @@ import { UserModel } from 'src/app/users/types/user.type';
     <ahr-dynamic-form
       [model]="userEditForm"
       [view]="userEditFormView"
+      [showSpinner]="showSpinner"
     ></ahr-dynamic-form>
   `,
   styleUrls: ['./user-edit-form.component.scss'],
@@ -20,6 +21,9 @@ import { UserModel } from 'src/app/users/types/user.type';
 export class UserEditFormComponent implements OnInit {
   @Input('user')
   user: UserModel | null = {} as UserModel;
+
+  @Input()
+  showSpinner: boolean = false;
 
   @Output('formState')
   formStateEvent: EventEmitter<BehaviorSubject<FormState>> = new EventEmitter<
@@ -38,7 +42,6 @@ export class UserEditFormComponent implements OnInit {
 
   userEditForm: FormGroup;
   userEditFormView: FormViewTemplate;
-  formDataSubscription: Subscription;
 
   constructor(private _dynamicForm: DynamicFormService) {}
 
@@ -48,8 +51,8 @@ export class UserEditFormComponent implements OnInit {
     this._initFormValues(this.user);
 
     this.formStateEvent.emit(this._dynamicForm.formState$);
-    this.valueChangesEvent.emit(this._dynamicForm.valueChanges);
-    this.statusChangesEvent.emit(this._dynamicForm.statusChanges);
+    this.valueChangesEvent.emit(this._dynamicForm.valueChanges$);
+    this.statusChangesEvent.emit(this._dynamicForm.statusChanges$);
   }
 
   ngOnDestroy() {

@@ -22,7 +22,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   formValues$: BehaviorSubject<UserFormData> =
     new BehaviorSubject<UserFormData>({} as UserFormData);
 
-  formState: string = 'idle';
+  formState: FormState = 'idle';
   formStatus: string = 'invalid';
 
   constructor(
@@ -42,9 +42,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   onFormState(formState: BehaviorSubject<FormState>) {
     this.subs.add(
-      formState.subscribe(
-        (formState: FormState) => (this.formState = formState)
-      )
+      formState.subscribe((formState: FormState) => {
+        this.formState = formState;
+      })
     );
   }
 
@@ -89,8 +89,10 @@ export class UserEditComponent implements OnInit, OnDestroy {
     );
   }
 
+  // TODO: Develop disable user
   onDisableButtonClicked() {}
 
+  // TODO: Develop remove user
   onRemoveButtonClicked() {}
 
   private _save(user: UserModel) {

@@ -34,5 +34,6 @@ import { UsersRoutingModule } from './users-routing.module';
     MatButtonModule,
     MatIconModule,
   ],
+  providers: [],
 })
 export class UsersModule {}
