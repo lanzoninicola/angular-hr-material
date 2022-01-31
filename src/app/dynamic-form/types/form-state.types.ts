@@ -1,1 +1,1 @@
-export type FormState = 'idle' | 'changed' | 'submitting' | 'invalid';
+export type FormState = 'idle' | 'changed' | 'submitted';
