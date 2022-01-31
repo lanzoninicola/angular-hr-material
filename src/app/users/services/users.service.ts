@@ -20,6 +20,7 @@ export class UsersService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
+      'form-action': 'submitted',
     }),
   };
 
