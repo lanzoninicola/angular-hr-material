@@ -10,13 +10,13 @@ import {
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { SharedModule } from '../shared/shared.module';
 
 import { DynamicFormGroupComponent } from './components/dynamic-form-group/dynamic-form-group.component';
 import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { FormSelectComponent } from './components/form-select/form-select.component';
 import { DynamicFieldsDirective } from './directives/dynamic-fields.directive';
-import { FormSubmissionButtonDirective } from './directives/form-submission-button.directive';
 
 @NgModule({
   declarations: [
@@ -25,10 +25,10 @@ import { FormSubmissionButtonDirective } from './directives/form-submission-butt
     DynamicFormGroupComponent,
     FormSelectComponent,
     FormInputComponent,
-    FormSubmissionButtonDirective,
   ],
   imports: [
     CommonModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
@@ -44,6 +44,6 @@ import { FormSubmissionButtonDirective } from './directives/form-submission-butt
       useValue: { appearance: 'outline' },
     },
   ],
-  exports: [DynamicFormComponent, FormSubmissionButtonDirective],
+  exports: [DynamicFormComponent],
 })
 export class DynamicFormModule {}

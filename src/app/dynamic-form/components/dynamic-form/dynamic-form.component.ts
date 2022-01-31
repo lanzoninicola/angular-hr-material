@@ -7,6 +7,7 @@ import { FormViewTemplate } from '../../types/template.types';
   selector: 'ahr-dynamic-form',
   template: `
     <form [formGroup]="model">
+      <ahr-loading-spinner *ngIf="showSpinner"></ahr-loading-spinner>
       <div *ngFor="let groupViewConfig of view | keyvalue">
         <ahr-dynamic-form-group [viewConfig]="groupViewConfig">
         </ahr-dynamic-form-group>
@@ -21,6 +22,9 @@ export class DynamicFormComponent implements OnInit {
 
   @Input()
   view: FormViewTemplate;
+
+  @Input()
+  showSpinner: boolean = false;
 
   constructor() {}
 

@@ -6,17 +6,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
+import { EditActionButtonComponent } from './components/edit-form-toolbar/edit-action-button/edit-action-button.component';
+import { EditFormToolbarComponent } from './components/edit-form-toolbar/edit-form-toolbar.component';
+import { NavigationActionButtonComponent } from './components/edit-form-toolbar/navigation-action-button/navigation-action-button.component';
 import { HeaderComponent } from './components/header/header.component';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { SearchControlComponent } from './components/search-control/search-control.component';
 import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
 import { TableDataComponent } from './components/table-data/table-data.component';
-import { EditFormToolbarComponent } from './components/edit-form-toolbar/edit-form-toolbar.component';
-import { EditActionButtonComponent } from './components/edit-form-toolbar/edit-action-button/edit-action-button.component';
-import { NavigationActionButtonComponent } from './components/edit-form-toolbar/navigation-action-button/navigation-action-button.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,7 @@ import { NavigationActionButtonComponent } from './components/edit-form-toolbar/
     EditFormToolbarComponent,
     EditActionButtonComponent,
     NavigationActionButtonComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -40,6 +43,7 @@ import { NavigationActionButtonComponent } from './components/edit-form-toolbar/
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     HeaderComponent,
@@ -50,6 +54,7 @@ import { NavigationActionButtonComponent } from './components/edit-form-toolbar/
     EditFormToolbarComponent,
     EditActionButtonComponent,
     NavigationActionButtonComponent,
+    LoadingSpinnerComponent,
   ],
 })
 export class SharedModule {}
