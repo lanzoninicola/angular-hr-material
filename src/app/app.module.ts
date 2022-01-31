@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
+import { HttpErrorInterceptor } from './core/interceptors/http-error.interceptor';
 import { FormSubmissionInterceptor } from './dynamic-form/interceptors/form-submission.interceptor';
 import { NavigationModule } from './navigation/navigation.module';
 import { SharedModule } from './shared/shared.module';
@@ -29,6 +30,11 @@ import { SharedModule } from './shared/shared.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: FormSubmissionInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpErrorInterceptor,
       multi: true,
     },
   ],
