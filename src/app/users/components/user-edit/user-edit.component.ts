@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription, take } from 'rxjs';
 import { MessageService } from 'src/app/core/services/message.service';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 
@@ -19,16 +19,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
   currentUser: UserModel = {} as UserModel;
   entityState: EntityState = 'create';
 
-  formValues$: BehaviorSubject<UserFormData> =
-    new BehaviorSubject<UserFormData>({} as UserFormData);
-
+  formValues: UserModel = {} as UserModel;
   formState: FormState = 'idle';
   formStatus: string = 'invalid';
 
   constructor(
     private _store: UsersStoreService,
-    private _usersService: UsersService,
-    private _messageService: MessageService
+    private _usersService: UsersService
   ) {}
 
   ngOnInit() {
@@ -50,21 +47,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   onValueChanges(valueChanges: Observable<any>) {
     this.subs.add(
-      valueChanges.subscribe((userFormData: UserFormData) => {
-        this.formValues$.next(userFormData);
-      })
-    );
-  }
-
-  onStatusChanges(statusChanges: Observable<any>) {
-    this.subs.add(
-      statusChanges.subscribe((formStatus) => (this.formStatus = formStatus))
-    );
-  }
-
-  onSaveButtonClicked() {
-    this.subs.add(
-      this.formValues$
+      valueChanges
         .pipe<UserModel>(
           map((userFormData: UserFormData) => {
             return {
@@ -79,14 +62,24 @@ export class UserEditComponent implements OnInit, OnDestroy {
           })
         )
         .subscribe((userModel: UserModel) => {
-          if (this.entityState === 'create') {
-            this._save(userModel);
-          }
-          if (this.entityState === 'update') {
-            this._update(userModel);
-          }
+          this.formValues = { ...userModel };
         })
     );
+  }
+
+  onStatusChanges(statusChanges: Observable<any>) {
+    this.subs.add(
+      statusChanges.subscribe((formStatus) => (this.formStatus = formStatus))
+    );
+  }
+
+  onSaveButtonClicked() {
+    if (this.entityState === 'create') {
+      this._usersService.save(this.formValues);
+    }
+    if (this.entityState === 'update') {
+      this._usersService.update(this.formValues);
+    }
   }
 
   // TODO: Develop disable user
@@ -94,35 +87,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   // TODO: Develop remove user
   onRemoveButtonClicked() {}
-
-  private _save(user: UserModel) {
-    this._usersService
-      .save(user)
-      .subscribe((newUser) => this._store.set('userEdit-currentUser', newUser));
-
-    // TODO: feedback interaction during: sending request, save succesfully, error using MessageService
-  }
-
-  private _update(user: UserModel) {
-    this._usersService
-      .update(user)
-      .subscribe((updatedUser) =>
-        this._store.set('userEdit-currentUser', updatedUser)
-      );
-  }
 }
 
 // TODO: check if a user with the same e-mail is already registered
-
-/*
-
-{
-        firstname: 'Nicola',
-        lastname: 'Lanzoni',
-        email: 'lanzoni.nicola',
-        departments: '',
-        companyLevels: '',
-        platformRole: '',
-      }
-
-*/

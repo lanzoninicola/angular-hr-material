@@ -2,7 +2,8 @@
   <ahr-edit-action-button
     left
     [disabled]="
-      (formState === 'idle' && formStatus === 'invalid') || formState !== 'idle'
+      (formState === 'idle' || formState === 'submitted') &&
+      formStatus === 'invalid'
     "
     [action]="'save'"
     (actionEvent)="onSaveButtonClicked()"
