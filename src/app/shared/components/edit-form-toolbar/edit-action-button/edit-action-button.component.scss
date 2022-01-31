@@ -39,9 +39,21 @@ $button-border-radius: 5px;
       color: $white;
     }
   }
+}
 
-  &[aria-disabled="true"] {
-    cursor: inherit;
-    opacity: 0.5;
+.button-wrapper[aria-disabled="true"] {
+  cursor: inherit;
+  opacity: 0.5;
+
+  &:hover {
+    background-color: transparent;
+
+    button {
+      color: $grey-dark;
+    }
+
+    span.button-label {
+      color: $grey-dark;
+    }
   }
 }
