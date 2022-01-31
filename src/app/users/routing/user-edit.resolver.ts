@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
-import { HttpErrorService } from 'src/app/core/services/http-error.service';
 
 import { UsersStoreService } from '../services/user-store.service';
 import { UsersService } from '../services/users.service';
@@ -14,8 +13,7 @@ export class UserEditResolver implements Resolve<UserModel> {
   constructor(
     private _store: UsersStoreService,
     private _userService: UsersService,
-    private router: Router,
-    private _httpErrorService: HttpErrorService
+    private router: Router
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
@@ -39,7 +37,6 @@ export class UserEditResolver implements Resolve<UserModel> {
 
     return this._userService.findById(route.params['id']).pipe(
       catchError(this._goBackToUserList()),
-      catchError(this._httpErrorService.handle<any>('open the user profile')),
       tap((user) => {
         this._store.set('userEdit-currentUser', user);
         this._store.set('userEdit-entityState', 'update');
