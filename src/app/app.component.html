@@ -17,6 +17,7 @@
     </div>
   </mat-sidenav>
   <mat-sidenav-content>
+    <ahr-loading-spinner *ngIf="loading"></ahr-loading-spinner>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
