@@ -60,7 +60,7 @@ export class UsersService {
         this._options.formSubmission()
       )
       .subscribe((newUser) => {
-        this._store.set('userEdit-currentUser', newUser);
+        this._store.currentEntity = newUser;
       });
   }
 
@@ -74,7 +74,7 @@ export class UsersService {
         this._options.formSubmission()
       )
       .subscribe((updatedUser) => {
-        this._store.set('userEdit-currentUser', updatedUser);
+        this._store.currentEntity = updatedUser;
       });
   }
 }
