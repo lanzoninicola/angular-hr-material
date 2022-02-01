@@ -15,7 +15,7 @@ export class UserNewResolver implements Resolve<boolean> {
   constructor(private _store: UsersStoreService) {}
 
   resolve(): Observable<boolean> {
-    this._store.set('userEdit-entityState', 'create');
+    this._store.entityStateCreate();
 
     return of(true);
   }

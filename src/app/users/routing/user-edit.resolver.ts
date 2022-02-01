@@ -18,30 +18,26 @@ export class UserEditResolver implements Resolve<UserModel> {
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
-    console.log('...resolver....');
-    const userIdParam = parseInt(route.params['id'], 10);
+    const store = this._store;
+    const entityIdParam = parseInt(route.params['id'], 10);
 
-    if (Number.isNaN(+userIdParam)) {
+    if (Number.isNaN(+entityIdParam)) {
       this._goBack();
     }
 
-    const currentUserInStore: UserModel = this._store.get(
-      'userEdit-currentUser'
-    );
-
-    if (currentUserInStore) {
-      if (currentUserInStore.id === userIdParam) {
-        this._store.set('userEdit-entityState', 'update');
-        return of(currentUserInStore);
+    if (store.currentEntity !== undefined) {
+      const { id } = store.currentEntity;
+      if (id === entityIdParam) {
+        store.entityStateUpdate();
+        return of(store.currentEntity);
       }
     }
 
-    return this._userService.findById(userIdParam).pipe(
-      //TODO: how can we handle the catching now, if we have a HttpBackendErrorInterceptor?
+    return this._userService.findById(entityIdParam).pipe(
       catchError(this._goBack()),
-      tap((user) => {
-        this._store.set('userEdit-currentUser', user);
-        this._store.set('userEdit-entityState', 'update');
+      tap((entity) => {
+        store.currentEntity = entity;
+        store.entityStateUpdate();
       })
     );
   }
