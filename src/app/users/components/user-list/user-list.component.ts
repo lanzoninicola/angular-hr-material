@@ -8,7 +8,15 @@ import { UserModel } from '../../types/user.type';
 
 @Component({
   selector: 'ahr-user-list',
-  templateUrl: './user-list.component.html',
+  template: `
+    <div class="container">
+      <ahr-table-data
+        [dataSource]="tableDataSource$"
+        [columns]="columns"
+        (onRowClicked)="handleTableRowClicked($event)"
+      ></ahr-table-data>
+    </div>
+  `,
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
