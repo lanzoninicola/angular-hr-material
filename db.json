@@ -179,7 +179,7 @@
     {
       "id": 1,
       "firstname": "Leanne",
-      "lastname": "Graham234",
+      "lastname": "Graham",
       "email": "leanne.graham@gmail.com",
       "platformRole": "admin",
       "department": "IT Infrastructure",
@@ -188,7 +188,7 @@
     {
       "id": 2,
       "firstname": "Ervin",
-      "lastname": "Howell2",
+      "lastname": "Howell",
       "email": "ervin.howell@gmail.com",
       "platformRole": "admin",
       "department": "IT Infrastructure",
@@ -325,6 +325,15 @@
     },
     {
       "id": 75
+    },
+    {
+      "firstname": "Dioni",
+      "lastname": "Malacarne",
+      "email": "malcarnemara@gmail.com",
+      "department": null,
+      "companyRoleLevel": null,
+      "platformRole": null,
+      "id": 76
     }
   ]
 }
