@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UsersStoreService } from '../../services/user-store.service';
+import { UserModel } from '../../types/user.type';
 
 @Component({
   selector: 'ahr-users-section',
@@ -15,14 +16,13 @@ import { UsersStoreService } from '../../services/user-store.service';
       <router-outlet></router-outlet>
     </div>
   `,
-  styleUrls: ['./users-section.component.scss'],
 })
 export class UsersSectionComponent implements OnInit {
   pageTitle: string = 'Users';
   constructor(private router: Router, private _store: UsersStoreService) {}
 
   addNewUser() {
-    this._store.set('userEdit-currentUser', {});
+    this._store.currentEntity = {} as UserModel;
     this.router.navigate(['users', 'new']);
     this.pageTitle = 'New User';
   }
