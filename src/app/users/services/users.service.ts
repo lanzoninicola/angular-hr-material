@@ -1,6 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
+import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
 
 import { UserModel } from '../types/user.type';
@@ -10,43 +11,54 @@ import { UsersStoreService } from './user-store.service';
   providedIn: 'root',
 })
 export class UsersService {
-  constructor(private http: HttpClient, private _store: UsersStoreService) {}
-
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'form-action': 'submitted',
-    }),
-  };
+  constructor(
+    private http: HttpClient,
+    private _store: UsersStoreService,
+    private _options: HttpRequestOptionsService
+  ) {}
 
   findAll() {
-    return this.http.get<UserModel[]>(`${environment.API}/users`).pipe(
-      map((userData) => {
-        return userData.map((user) => {
-          return {
-            ...user,
-            fullName: `${user.lastname} ${user.firstname}`,
-          };
-        });
-      })
-    );
+    return this.http
+      .get<UserModel[]>(
+        `${environment.API}/users`,
+        this._options.backendRequest()
+      )
+      .pipe(
+        map((userData) => {
+          return userData.map((user) => {
+            return {
+              ...user,
+              fullName: `${user.lastname} ${user.firstname}`,
+            };
+          });
+        })
+      );
   }
 
   findById(id: number) {
-    return this.http.get<UserModel>(`${environment.API}/users/${id}`).pipe(
-      map((userData: UserModel) => {
-        return {
-          ...userData,
-          fullName: `${userData.lastname} ${userData.firstname}`,
-        };
-      })
-    );
+    return this.http
+      .get<UserModel>(
+        `${environment.API}/users/${id}`,
+        this._options.backendRequest()
+      )
+      .pipe(
+        map((userData: UserModel) => {
+          return {
+            ...userData,
+            fullName: `${userData.lastname} ${userData.firstname}`,
+          };
+        })
+      );
   }
 
   save(userData: UserModel) {
     //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
     return this.http
-      .post<UserModel>(`${environment.API}/users`, userData, this.httpOptions)
+      .post<UserModel>(
+        `${environment.API}/users`,
+        userData,
+        this._options.formSubmission()
+      )
       .subscribe((newUser) => {
         this._store.set('userEdit-currentUser', newUser);
       });
@@ -56,7 +68,11 @@ export class UsersService {
     const { id } = userData;
 
     this.http
-      .patch<any>(`${environment.API}/users/${id}`, userData, this.httpOptions)
+      .patch<any>(
+        `${environment.API}/users/${id}`,
+        userData,
+        this._options.formSubmission()
+      )
       .subscribe((updatedUser) => {
         this._store.set('userEdit-currentUser', updatedUser);
       });
@@ -66,6 +82,9 @@ export class UsersService {
 // TODO: UserService see below
 
 /*
+
+See this article for caching
+https://indepth.dev/posts/1450/how-to-use-ts-decorators-to-add-caching-logic-to-api-calls
 
 The getAll() method cache the result in the UserStore
 
