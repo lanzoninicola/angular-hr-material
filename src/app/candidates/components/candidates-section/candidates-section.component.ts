@@ -1,15 +1,34 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CandidatesStoreService } from '../../services/candidates-store.service';
+import { CandidateModel } from '../../types/candidates.types';
 
 @Component({
   selector: 'app-candidates-section',
-  templateUrl: './candidates-section.component.html',
-  styleUrls: ['./candidates-section.component.scss']
+  template: `
+    <div class="container-section">
+      <app-section-toolbar [title]="pageTitle">
+        <ahr-search-control></ahr-search-control>
+        <button mat-flat-button color="primary" (click)="addNewCandidate()">
+          Add New Candidate
+        </button>
+      </app-section-toolbar>
+      <router-outlet></router-outlet>
+    </div>
+  `,
 })
 export class CandidatesSectionComponent implements OnInit {
+  pageTitle: string = 'Candidates';
+  constructor(private router: Router, private _store: CandidatesStoreService) {}
 
-  constructor() { }
-
-  ngOnInit(): void {
+  addNewCandidate() {
+    this._store.currentEntity = {} as CandidateModel;
+    this.router.navigate(['candidates', 'new']);
+    this.pageTitle = 'New Candidate';
   }
 
+  ngOnInit(): void {
+    this.router.navigate(['candidates', 'list']);
+    this.pageTitle = 'Candidates';
+  }
 }

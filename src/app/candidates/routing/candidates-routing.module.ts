@@ -35,4 +35,4 @@ const candidatesModuleRoutes: Routes = [
   imports: [RouterModule.forChild(candidatesModuleRoutes)],
   exports: [RouterModule],
 })
-export class UsersRoutingModule {}
+export class CandidatesRoutingModule {}

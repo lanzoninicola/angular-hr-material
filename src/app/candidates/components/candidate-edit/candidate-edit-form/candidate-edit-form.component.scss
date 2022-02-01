@@ -1,0 +1,16 @@
+.mat-divider {
+  margin-bottom: 1.5rem;
+  opacity: 0.5;
+}
+
+.form-group-content {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+
+  & > mat-form-field {
+    flex: 1;
+    min-width: 350px;
+    max-width: 400px;
+  }
+}

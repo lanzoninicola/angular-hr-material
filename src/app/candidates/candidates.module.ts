@@ -1,23 +1,30 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CandidatesSectionComponent } from './components/candidates-section/candidates-section.component';
-import { CandidatesListComponent } from './components/candidates-list/candidates-list.component';
-import { CandidatesEditComponent } from './components/candidates-edit/candidates-edit.component';
+import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+
+import { CoreModule } from '../core/core.module';
+import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import { SharedModule } from '../shared/shared.module';
+import { CandidateEditFormComponent } from './components/candidate-edit/candidate-edit-form/candidate-edit-form.component';
 import { CandidateEditComponent } from './components/candidate-edit/candidate-edit.component';
-import { CandidateFormComponent } from './components/candidate-edit/candidate-form/candidate-form.component';
-
-
+import { CandidatesListComponent } from './components/candidates-list/candidates-list.component';
+import { CandidatesSectionComponent } from './components/candidates-section/candidates-section.component';
+import { CandidatesRoutingModule } from './routing/candidates-routing.module';
 
 @NgModule({
   declarations: [
     CandidatesSectionComponent,
     CandidatesListComponent,
-    CandidatesEditComponent,
     CandidateEditComponent,
-    CandidateFormComponent
+    CandidateEditFormComponent,
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    SharedModule,
+    CoreModule,
+    CandidatesRoutingModule,
+    DynamicFormModule,
+    MatButtonModule,
+  ],
 })
-export class CandidatesModule { }
+export class CandidatesModule {}
