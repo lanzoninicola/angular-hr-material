@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subscription, take } from 'rxjs';
-import { MessageService } from 'src/app/core/services/message.service';
+import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
+import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 
 import { UsersStoreService } from '../../services/user-store.service';
@@ -8,7 +8,6 @@ import { UsersService } from '../../services/users.service';
 import { UserFormData } from '../../types/user-edit-form.types';
 import { UserModel } from '../../types/user.type';
 
-type EntityState = 'create' | 'update';
 @Component({
   selector: 'ahr-user-edit',
   templateUrl: './user-edit.component.html',
