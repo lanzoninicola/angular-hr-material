@@ -13,7 +13,7 @@ import { UserEditFormComponent } from './components/user-edit/user-edit-form/use
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { UsersSectionComponent } from './components/users-section/users-section.component';
-import { UsersRoutingModule } from './users-routing.module';
+import { UsersRoutingModule } from './routing/users-routing.module';
 
 @NgModule({
   declarations: [
