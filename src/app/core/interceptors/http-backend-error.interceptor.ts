@@ -9,47 +9,56 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
+
+import { HttpContextService } from '../services/http-context.service';
 import { MessageService } from '../services/message.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HttpErrorInterceptor implements HttpInterceptor {
+export class HttpBackendErrorInterceptor implements HttpInterceptor {
   constructor(
     private _messageService: MessageService,
-    private _dynamicForm: DynamicFormService
+    private _dynamicForm: DynamicFormService,
+    private _httpContext: HttpContextService
   ) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    return next
-      .handle(request)
+    const { isBackendRequest } = request.context.get(this._httpContext.token);
 
-      .pipe(
-        retry(1),
+    if (isBackendRequest) {
+      return next
+        .handle(request)
 
-        catchError((error: HttpErrorResponse) => {
-          let errorMessage = '';
+        .pipe(
+          retry(1),
 
-          if (error.error instanceof ErrorEvent) {
-            // client-side code fail to generate the request and throw the error (ErrorEvent objects)
-            errorMessage = `Error: ${error.error.message}`;
-          } else {
-            // the server might reject the request for various reasons
-            errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
-          }
+          catchError((error: HttpErrorResponse) => {
+            let errorMessage = '';
 
-          this._resetFormState();
+            if (error.error instanceof ErrorEvent) {
+              // client-side code fail to generate the request and throw the error (ErrorEvent objects)
+              errorMessage = `Error: ${error.error.message}`;
+            } else {
+              // the server might reject the request for various reasons
+              errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+            }
 
-          this._logToUser(errorMessage);
+            this._resetFormState();
 
-          this._logToService(errorMessage);
+            this._logToUser(errorMessage);
 
-          return throwError(() => errorMessage);
-        })
-      );
+            this._logToService(errorMessage);
+
+            return throwError(() => errorMessage);
+          })
+        );
+    }
+
+    return next.handle(request);
   }
 
   // TODO: How this works when...? See below
