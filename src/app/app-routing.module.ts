@@ -16,6 +16,13 @@ const routes: Routes = [
         return m.UsersModule;
       }),
   },
+  {
+    path: 'candidates',
+    loadChildren: () =>
+      import('./candidates/candidates.module').then((m) => {
+        return m.CandidatesModule;
+      }),
+  },
 ];
 
 @NgModule({
