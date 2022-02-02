@@ -2,8 +2,8 @@
   "picklist": [
     {
       "id": 1,
-      "type": "platformRoles",
-      "values": ["admin", "manager", "operator", "user", "guest"]
+      "type": "recruitingRoles",
+      "values": ["hiring-manager", "interviewer", "recruiter", "guest"]
     },
     {
       "id": 2,
@@ -117,7 +117,7 @@
       "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
     }
   ],
-  "requestsToHire": [
+  "requests-to-hire": [
     {
       "id": "1",
       "title": "New Front-end Developer",
@@ -135,7 +135,7 @@
       "preferredQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "benefits": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "budget": "0-1.200",
-      "openSpecialCategories": false,
+      "specialCategoriesOpened": false,
       "additionalNotes": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "status": "new"
     }
@@ -190,129 +190,143 @@
       "firstname": "Leanne",
       "lastname": "Graham",
       "email": "leanne.graham@gmail.com",
-      "platformRole": "admin",
+      "recruitingRole": "interviewer",
       "department": "IT Infrastructure",
-      "companyRoleLevel": "Specialist"
+      "companyRoleLevel": "Specialist",
+      "isAdmin": true
     },
     {
       "id": 2,
       "firstname": "Ervin",
       "lastname": "Howell",
       "email": "ervin.howell@gmail.com",
-      "platformRole": "admin",
+      "recruitingRole": "interviewer",
       "department": "IT Infrastructure",
-      "companyRoleLevel": "Specialist"
+      "companyRoleLevel": "Specialist",
+      "isAdmin": true
     },
     {
       "id": 3,
       "firstname": "Clementine",
       "lastname": "Bauch",
       "email": "clementine.bauch@gmail.com",
-      "platformRole": "hr-manager",
+      "recruitingRole": "hiring-manager",
       "department": "Human Resources",
-      "companyRoleLevel": "Manager"
+      "companyRoleLevel": "Manager",
+      "isAdmin": false
     },
     {
       "id": 4,
       "firstname": "Patricia",
       "lastname": "Lebsack",
       "email": "patricia.lebsack@gmail.com",
-      "platformRole": "hr-specialist",
+      "recruitingRole": "recruiter",
       "department": "Human Resources",
-      "companyRoleLevel": "Specialist"
+      "companyRoleLevel": "Specialist",
+      "isAdmin": false
     },
     {
       "id": 5,
       "firstname": "Chelsey",
       "lastname": "Dietrich",
       "email": "chelsey.dietrich@gmail.com",
-      "platformRole": "hr-specialist",
+      "recruitingRole": "recruiter",
       "department": "Human Resources",
-      "companyRoleLevel": "Specialist"
+      "companyRoleLevel": "Specialist",
+      "isAdmin": false
     },
     {
       "id": 6,
       "firstname": "Mrs. Dennis",
       "lastname": "Russel",
       "email": "dennis.russel@gmail.com",
-      "platformRole": "hr-specialist",
+      "recruitingRole": "recruiter",
       "department": "Human Resources",
-      "companyRoleLevel": "Specialist"
+      "companyRoleLevel": "Specialist",
+      "isAdmin": false
     },
     {
       "id": 7,
       "firstname": "Kurtis",
       "lastname": "Weissnat",
       "email": "kurstis.weissnat@gmail.com",
-      "platformRole": "user",
+      "recruitingRole": "interviewer",
       "department": "Front-end Developers",
       "companyRoleLevel": "Team Lead",
-      "businessUnit": "Alpha Product"
+      "businessUnit": "Alpha Product",
+      "isAdmin": false
     },
     {
       "id": 71,
       "firstname": "Nicholas",
       "lastname": "Runolfsdottir",
       "email": "nicholas.runolfsdottir@gmail.com",
-      "platformRole": "user",
+      "recruitingRole": "interviewer",
       "department": "Front-end Developers",
       "companyRoleLevel": "Team Lead",
-      "businessUnit": "Beta Product"
+      "businessUnit": "Beta Product",
+      "isAdmin": false
     },
     {
       "id": 72,
       "firstname": "Glenna",
       "lastname": "Reichert",
       "email": "glenna.reichert@gmail.com",
-      "platformRole": "user",
+      "recruitingRole": "interviewer",
       "department": "Front-end Developers",
       "companyRoleLevel": "Team Lead",
-      "businessUnit": "Delta Product"
+      "businessUnit": "Delta Product",
+      "isAdmin": false
     },
     {
       "id": 8,
       "firstname": "Nicholas",
       "lastname": "Runolfsdottir",
       "email": "nicholas.runolfsdottir@gmail.com",
-      "platformRole": "user",
+      "recruitingRole": "interviewer",
       "department": "Back-end Developers",
-      "companyRoleLevel": "Team Lead"
+      "companyRoleLevel": "Team Lead",
+      "isAdmin": false
     },
     {
       "id": 9,
       "firstname": "Glenna",
       "lastname": "Reichert",
       "email": "glenna.reichert@gmail.com",
-      "platformRole": "user",
+      "recruitingRole": "interviewer",
       "department": "Database Developers",
-      "companyRoleLevel": "Team Lead"
+      "companyRoleLevel": "Team Lead",
+      "isAdmin": false
     },
     {
       "id": 10,
       "firstname": "Clementina",
       "lastname": "DuBuque",
       "email": "clementine.dubuque@gmail.com",
-      "platformRole": "user",
+      "recruitingRole": "interviewer",
       "department": "IT Infrastructure",
-      "companyRoleLevel": "Team Lead"
+      "companyRoleLevel": "Team Lead",
+      "isAdmin": false
     },
     {
       "id": 11,
       "firstname": "Nicholas",
       "lastname": "Runolfsdottir",
       "email": "nicholas.runolfsdottir@gmail.com",
-      "platformRole": "user",
+      "recruitingRole": "interviewer",
       "department": null,
-      "companyRoleLevel": null
+      "companyRoleLevel": null,
+      "isAdmin": false
     },
     {
       "id": 12,
       "firstname": "Glenna",
       "lastname": "Reichert",
       "email": "glenna.reichert@gmail.com",
-      "platformRole": "user",
+      "recruitingRole": "interviewer",
       "department": null,
-      "companyRoleLevel": null
+      "companyRoleLevel": null,
+      "isAdmin": false
     },
     {
       "firstname": "Nicola",
@@ -320,7 +334,8 @@
       "email": "lanzoni.nicola@gmail.com",
       "department": "Human Resources",
       "companyRoleLevel": "Manager",
-      "platformRole": "admin",
+      "recruitingRole": "interviewer",
+      "isAdmin": false,
       "id": 73
     },
     {
@@ -329,11 +344,9 @@
       "email": "lanzoni.nicola@gmail.com",
       "department": "Back-end Developers",
       "companyRoleLevel": "Team Lead",
-      "platformRole": "manager",
+      "recruitingRole": "manager",
+      "isAdmin": false,
       "id": 74
-    },
-    {
-      "id": 75
     },
     {
       "firstname": "Dioni",
@@ -341,8 +354,9 @@
       "email": "malcarnemara@gmail.com",
       "department": null,
       "companyRoleLevel": null,
-      "platformRole": null,
-      "id": 76
+      "recruitingRole": null,
+      "id": 76,
+      "isAdmin": false
     }
   ]
 }
