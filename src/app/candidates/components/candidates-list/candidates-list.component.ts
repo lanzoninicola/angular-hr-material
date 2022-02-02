@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { SearchService } from 'src/app/shared/services/search.service';
+import { CANDIDATES_LIST_TABLE_COLUMNS } from '../../config/candidates.config';
 import { CandidatesService } from '../../services/candidates.service';
 import { CandidateModel } from '../../types/candidates.types';
 
@@ -9,72 +10,40 @@ import { CandidateModel } from '../../types/candidates.types';
   selector: 'ahr-candidates-list',
   template: `
     <div class="container-list">
-      <ahr-table-data
+      <ahr2-table-data
         [dataSource]="tableDataSource$"
         [columns]="columns"
-        (onRowClicked)="handleTableRowClicked($event)"
-      ></ahr-table-data>
+        (onRowClicked)="onRowClicked($event)"
+      ></ahr2-table-data>
     </div>
   `,
 })
 export class CandidatesListComponent implements OnInit {
-  candidateList$: Observable<CandidateModel[]>;
-
   tableDataSource$: BehaviorSubject<CandidateModel[]> = new BehaviorSubject<
     CandidateModel[]
   >([]);
 
   tableDataSourceSubscription: Subscription;
-  columns = [
-    {
-      title: 'Lastname',
-      dsFieldName: 'lastname',
-    },
-    {
-      title: 'Firstname',
-      dsFieldName: 'firstname',
-    },
-    {
-      title: 'E-mail',
-      dsFieldName: 'email',
-    },
-  ];
+  columns = CANDIDATES_LIST_TABLE_COLUMNS;
 
   constructor(
-    private _candidatesService: CandidatesService,
-    private router: Router,
-    private _searchService: SearchService
+    private _dataService: CandidatesService,
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.candidateList$ = this._candidatesService.findAll();
-
-    this._prepareTableDataSource();
-
-    this._handleSearch();
+    this.tableDataSourceSubscription = this._dataService
+      .findAll()
+      .subscribe((entities: CandidateModel[]) => {
+        this.tableDataSource$.next(entities);
+      });
   }
 
-  handleTableRowClicked(userRow: CandidateModel) {
-    this.router.navigate(['candidates', userRow.id]);
+  onRowClicked(entityRow: CandidateModel) {
+    this.router.navigate(['candidates', entityRow.id]);
   }
 
   ngOnDestroy() {
     this.tableDataSourceSubscription.unsubscribe();
-  }
-
-  private _prepareTableDataSource() {
-    this.tableDataSourceSubscription = this.candidateList$.subscribe(
-      (candidatesData) => {
-        this.tableDataSource$.next(candidatesData);
-      }
-    );
-  }
-
-  private _handleSearch(): void {
-    this.tableDataSourceSubscription = this._searchService
-      .setupData(this.candidateList$)
-      .subscribe((dataFiltered) => {
-        this.tableDataSource$.next(dataFiltered);
-      });
   }
 }

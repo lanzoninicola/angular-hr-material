@@ -34,8 +34,9 @@ export class SearchService {
    *
    *
    */
-  setupData(dataset: Observable<any[]>) {
-    dataset.subscribe((data) => this.fullDataset$.next(data));
+  setupData(dataset: any[]) {
+    console.log(dataset);
+    this.fullDataset$.next(dataset);
 
     return this.dataSetFiltered$;
   }

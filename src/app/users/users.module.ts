@@ -9,6 +9,7 @@ import { MatTableModule } from '@angular/material/table';
 import { CoreModule } from '../core/core.module';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { SharedModule } from '../shared/shared.module';
+import { TableDataModule } from '../table-data/table-data.module';
 import { UserEditFormComponent } from './components/user-edit/user-edit-form/user-edit-form.component';
 import { UserEditComponent } from './components/user-edit/user-edit.component';
 import { UserListComponent } from './components/user-list/user-list.component';
@@ -27,12 +28,13 @@ import { UsersRoutingModule } from './routing/users-routing.module';
     UsersRoutingModule,
     CoreModule,
     SharedModule,
-    MatTableModule,
-    MatPaginatorModule,
+    // MatTableModule,
+    // MatPaginatorModule,
     MatDividerModule,
     DynamicFormModule,
     MatButtonModule,
     MatIconModule,
+    TableDataModule,
   ],
   providers: [],
 })
