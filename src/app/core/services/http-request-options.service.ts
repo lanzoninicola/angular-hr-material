@@ -9,7 +9,7 @@ import { HttpContextService } from './http-context.service';
 export class HttpRequestOptionsService {
   constructor(private _httpContext: HttpContextService) {}
 
-  backendRequest() {
+  isBackendRequest() {
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -18,7 +18,7 @@ export class HttpRequestOptionsService {
     };
   }
 
-  formSubmission() {
+  isFormSubmission() {
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
