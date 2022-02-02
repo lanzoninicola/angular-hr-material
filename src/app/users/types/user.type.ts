@@ -6,5 +6,6 @@ export interface UserModel {
   email: string;
   department?: string;
   companyRoleLevel?: string;
-  platformRole: string;
+  recruitingRole: string;
+  isAdmin: boolean | string;
 }

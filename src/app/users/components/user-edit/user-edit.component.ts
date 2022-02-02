@@ -56,7 +56,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
               email: userFormData['email'],
               department: userFormData['departments'],
               companyRoleLevel: userFormData['companyLevels'],
-              platformRole: userFormData['platformRoles'],
+              recruitingRole: userFormData['recruitingRoles'],
+              isAdmin: userFormData['isAdmin'],
             };
           })
         )

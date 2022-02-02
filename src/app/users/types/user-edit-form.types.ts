@@ -10,5 +10,6 @@ export interface UserFormData {
   email: string;
   departments: string;
   companyLevels: string;
-  platformRoles: string;
+  recruitingRoles: string;
+  isAdmin: boolean;
 }

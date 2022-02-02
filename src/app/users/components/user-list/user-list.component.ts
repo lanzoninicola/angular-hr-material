@@ -37,6 +37,10 @@ export class UserListComponent implements OnInit {
       dsFieldName: 'firstname',
     },
     {
+      title: 'Role',
+      dsFieldName: 'recruitingRole',
+    },
+    {
       title: 'E-mail',
       dsFieldName: 'email',
     },

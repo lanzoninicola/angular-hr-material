@@ -2,7 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
-import { FormControlConfiguration } from 'src/app/dynamic-form/types/dynamic-form.types';
+import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
+
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
 import { UserModel } from 'src/app/users/types/user.type';
@@ -71,8 +72,8 @@ export class UserEditFormComponent implements OnInit {
     );
 
     this._dynamicForm.view.build(
-      { key: 'platformInfo', title: 'Platform related information' },
-      PLATFORM_INFO_CONTROLS
+      { key: 'recruitingRole', title: 'Recruiting role' },
+      RECRUITING_ROLE_CONTROLS
     );
 
     this._dynamicForm.model.build(this._dynamicForm.view.get());
@@ -101,15 +102,16 @@ export class UserEditFormComponent implements OnInit {
       companyLevels: user.companyRoleLevel,
     });
 
-    this._dynamicForm.setControlsValue('platformInfo', {
-      platformRoles: user.platformRole,
+    this._dynamicForm.setControlsValue('recruitingRole', {
+      recruitingRoles: user.recruitingRole,
+      isAdmin: user.isAdmin,
     });
   }
 }
 
 // TODO: async validation to verify if the email already exists in the process of creating the userEditForm
 // localhost:3000/users/?lastname=Graham
-const PERSONAL_INFO_CONTROLS: FormControlConfiguration[] = [
+const PERSONAL_INFO_CONTROLS: FormControlConfig[] = [
   {
     type: 'input',
     placeholder: '',
@@ -136,14 +138,14 @@ const PERSONAL_INFO_CONTROLS: FormControlConfiguration[] = [
   },
 ];
 
-const COMPANY_ROLE_INFO_CONTROLS: FormControlConfiguration[] = [
+const COMPANY_ROLE_INFO_CONTROLS: FormControlConfig[] = [
   {
     key: 'departments',
     type: 'select',
     label: 'Department',
     placeholder: '',
     whatToSelect: 'department',
-    selectOptions: [] as string[],
+    value: [] as string[],
   },
   {
     key: 'companyLevels',
@@ -151,17 +153,23 @@ const COMPANY_ROLE_INFO_CONTROLS: FormControlConfiguration[] = [
     label: 'Level',
     placeholder: '',
     whatToSelect: 'level',
-    selectOptions: [] as string[],
+    value: [] as string[],
   },
 ];
 
-const PLATFORM_INFO_CONTROLS: FormControlConfiguration[] = [
+const RECRUITING_ROLE_CONTROLS: FormControlConfig[] = [
   {
-    key: 'platformRoles',
+    key: 'recruitingRoles',
     type: 'select',
     label: 'Role',
     placeholder: '',
     whatToSelect: 'role',
-    selectOptions: [] as string[],
+    value: [] as string[],
+  },
+  {
+    key: 'isAdmin',
+    type: 'checkbox',
+    label: 'Administrator',
+    value: false,
   },
 ];
