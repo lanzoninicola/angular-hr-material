@@ -12,15 +12,15 @@ import { CandidatesStoreService } from './candidates-store.service';
 export class CandidatesService {
   constructor(
     private http: HttpClient,
-    private _store: CandidatesStoreService,
-    private _options: HttpRequestOptionsService
+    private _httpOptions: HttpRequestOptionsService,
+    private _store: CandidatesStoreService
   ) {}
 
   findAll() {
     return this.http
       .get<CandidateModel[]>(
         `${environment.API}/candidates`,
-        this._options.backendRequest()
+        this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((candidateData) => {
@@ -38,7 +38,7 @@ export class CandidatesService {
     return this.http
       .get<CandidateModel>(
         `${environment.API}/candidates/${id}`,
-        this._options.backendRequest()
+        this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((candidateData: CandidateModel) => {
@@ -55,7 +55,7 @@ export class CandidatesService {
       .post<CandidateModel>(
         `${environment.API}/candidates`,
         candidateData,
-        this._options.formSubmission()
+        this._httpOptions.isFormSubmission()
       )
       .subscribe((newCandidate) => {
         this._store.currentEntity = newCandidate;
@@ -69,7 +69,7 @@ export class CandidatesService {
       .patch<any>(
         `${environment.API}/candidates/${id}`,
         candidateData,
-        this._options.formSubmission()
+        this._httpOptions.isFormSubmission()
       )
       .subscribe((updatedCandidate) => {
         this._store.currentEntity = updatedCandidate;
