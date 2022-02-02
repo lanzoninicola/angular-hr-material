@@ -9,7 +9,7 @@ import { UserModel } from '../../types/user.type';
 @Component({
   selector: 'ahr-user-list',
   template: `
-    <div class="container">
+    <div class="container-list">
       <ahr-table-data
         [dataSource]="tableDataSource$"
         [columns]="columns"
@@ -17,7 +17,6 @@ import { UserModel } from '../../types/user.type';
       ></ahr-table-data>
     </div>
   `,
-  styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit {
   userList$: Observable<UserModel[]>;
