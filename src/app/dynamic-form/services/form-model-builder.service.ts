@@ -1,10 +1,16 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import {
+  AbstractControlOptions,
+  AsyncValidatorFn,
+  FormControl,
+  FormGroup,
+  ValidatorFn,
+} from '@angular/forms';
 import Helper from 'src/app/core/helpers/helpers';
 
 import {
-  FormControlKey,
-  FormControlModelConfig,
+  FormControlConfigKey,
+  FormControlConfig,
 } from '../types/form-control.types';
 import { FormGroupKey } from '../types/form-group.types';
 import { FormViewTemplate } from '../types/template.types';
@@ -24,7 +30,7 @@ export class FormModelBuilderService {
 
   _formModel: FormGroup;
 
-  _formKeysMap: Map<FormControlKey, FormGroupKey> = new Map();
+  _formKeysMap: Map<FormControlConfigKey, FormGroupKey> = new Map();
 
   get(): FormGroup {
     return this._formModel;
@@ -97,15 +103,15 @@ export class FormModelBuilderService {
    * }
    *
    */
-  private _createControls(controls: { [key: string]: any }[]): {
-    [key: FormControlKey]: FormControl;
+  private _createControls(controls: FormControlConfig[]): {
+    [key: FormControlConfigKey]: FormControl;
   } {
-    const groupFormControls: { [key: FormControlKey]: FormControl } = {};
+    const groupFormControls: { [key: FormControlConfigKey]: FormControl } = {};
 
-    controls.forEach((config: any) => {
-      const { key, value: initState, syncValidators, asyncValidators } = config;
+    controls.forEach((config: FormControlConfig) => {
+      const { key, value, syncValidators, asyncValidators } = config;
       groupFormControls[key] = this._createControl({
-        initState,
+        value,
         syncValidators,
         asyncValidators,
       });
@@ -119,9 +125,17 @@ export class FormModelBuilderService {
    * Returns an instance of 'FormControl' given the config
    *
    */
-  private _createControl(controlConfig: FormControlModelConfig) {
-    const { initState, syncValidators, asyncValidators } = controlConfig;
-    return new FormControl(initState, syncValidators, asyncValidators);
+  private _createControl(controlConfig: {
+    value: any;
+    syncValidators?:
+      | ValidatorFn
+      | ValidatorFn[]
+      | AbstractControlOptions
+      | null;
+    asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null;
+  }): FormControl {
+    const { value, syncValidators, asyncValidators } = controlConfig;
+    return new FormControl(value, syncValidators, asyncValidators);
   }
 
   /**

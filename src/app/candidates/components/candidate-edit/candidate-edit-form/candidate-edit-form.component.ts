@@ -3,7 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CandidateModel } from 'src/app/candidates/types/candidates.types';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
-import { FormControlConfiguration } from 'src/app/dynamic-form/types/dynamic-form.types';
+import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
 
@@ -90,7 +90,7 @@ export class CandidateEditFormComponent implements OnInit {
 
 // TODO: async validation to verify if the email already exists in the process of creating the candidateEditForm
 // localhost:3000/candidates/?lastname=Graham
-const PERSONAL_INFO_CONTROLS: FormControlConfiguration[] = [
+const PERSONAL_INFO_CONTROLS: FormControlConfig[] = [
   {
     type: 'input',
     placeholder: '',

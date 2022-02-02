@@ -6,12 +6,14 @@ import {
   Type,
   ViewContainerRef,
 } from '@angular/core';
+import { FormCheckboxComponent } from '../components/form-checkbox/form-checkbox.component';
 
 import { FormInputComponent } from '../components/form-input/form-input.component';
 import { FormSelectComponent } from '../components/form-select/form-select.component';
 
 const components: { [type: string]: Type<any> } = {
   input: FormInputComponent,
+  checkbox: FormCheckboxComponent,
   select: FormSelectComponent,
 };
 

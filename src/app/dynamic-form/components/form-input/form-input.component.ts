@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
 import { DynamicFormService } from '../../services/dynamic-form.service';
-import { FormControlInputTextConfig } from '../../types/form-control.types';
+import { InputTextConfig } from '../../types/form-control.types';
 
 @Component({
   selector: 'ahr-form-input',
@@ -28,7 +28,7 @@ export class FormInputComponent implements OnInit {
   /**
    * Inputs from directive: DynamicFields
    */
-  controlConfig: FormControlInputTextConfig;
+  controlConfig: InputTextConfig;
   parentGroupName: string;
 
   control: AbstractControl;

@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import {
-  FormControlConfiguration,
-  FormGroupConfiguration,
-} from '../types/dynamic-form.types';
+import { FormGroupConfiguration } from '../types/dynamic-form.types';
+import { FormControlConfig } from '../types/form-control.types';
 import { FormViewTemplate } from '../types/template.types';
 
 @Injectable({
@@ -23,7 +21,7 @@ export class FormViewBuilderService {
    * Let configures the template adding form groups
    *
    */
-  build(group: FormGroupConfiguration, controls: FormControlConfiguration[]) {
+  build(group: FormGroupConfiguration, controls: FormControlConfig[]) {
     this._template.set(group, controls);
   }
 

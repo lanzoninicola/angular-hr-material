@@ -5,7 +5,7 @@ import { PicklistService } from 'src/app/core/services/picklist.service';
 import { PicklistValues } from 'src/app/core/types/picklist.type';
 
 import { DynamicFormService } from '../../services/dynamic-form.service';
-import { FormControlConfiguration } from '../../types/dynamic-form.types';
+import { SelectConfig } from '../../types/form-control.types';
 
 @Component({
   selector: 'ahr-form-select',
@@ -13,7 +13,7 @@ import { FormControlConfiguration } from '../../types/dynamic-form.types';
   styleUrls: ['./form-select.component.scss'],
 })
 export class FormSelectComponent implements OnInit, OnDestroy {
-  controlConfig: FormControlConfiguration;
+  controlConfig: SelectConfig;
   parentGroupName: string;
 
   control: AbstractControl;
@@ -41,8 +41,8 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   }
 
   private _options() {
-    const templateOptions: [] = this.controlConfig['selectOptions'];
-    if (templateOptions?.length === 0) {
+    const templateOptions: string[] = this.controlConfig['value'] as string[];
+    if (templateOptions.length === 0) {
       this._getFromPicklist();
       return;
     }

@@ -1,14 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FormControlStatus, FormGroup } from '@angular/forms';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import {
-  FormControlConfiguration,
-  FormGroupConfiguration,
-} from '../types/dynamic-form.types';
-import { FormControlKey } from '../types/form-control.types';
+
+import { FormControlConfigKey } from '../types/form-control.types';
 import { FormGroupKey } from '../types/form-group.types';
 import { FormState } from '../types/form-state.types';
-import { FormViewTemplate } from '../types/template.types';
 import { FormModelBuilderService } from './form-model-builder.service';
 import { FormViewBuilderService } from './form-view-builder.service';
 
@@ -79,10 +75,7 @@ export class DynamicFormService {
    * }
    *
    */
-  setControlsValue(
-    group: FormGroupKey,
-    controls: { [key: string]: FormControlKey | undefined }
-  ) {
+  setControlsValue(group: FormGroupKey, controls: { [key: string]: any }) {
     if (this.formModel && this.formModel !== null) {
       Object.keys(controls).forEach((key) => {
         let formControl = this.formModel!.get([group, key]);

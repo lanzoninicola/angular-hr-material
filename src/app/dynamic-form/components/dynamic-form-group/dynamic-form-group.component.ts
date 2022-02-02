@@ -1,8 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  FormControlConfiguration,
-  FormGroupConfiguration,
-} from '../../types/dynamic-form.types';
+
+import { FormGroupConfiguration } from '../../types/dynamic-form.types';
+import { FormControlConfig } from '../../types/form-control.types';
 
 @Component({
   selector: 'ahr-dynamic-form-group',
@@ -22,7 +21,7 @@ export class DynamicFormGroupComponent implements OnInit {
   @Input()
   viewConfig: {
     key: FormGroupConfiguration;
-    value: FormControlConfiguration[];
+    value: FormControlConfig[];
   } = {
     key: { key: '', title: '' },
     value: [],
@@ -30,7 +29,7 @@ export class DynamicFormGroupComponent implements OnInit {
 
   name: string = '';
   title: string = '';
-  childrenControls: FormControlConfiguration[] = [];
+  childrenControls: FormControlConfig[] = [];
 
   constructor() {}
 
