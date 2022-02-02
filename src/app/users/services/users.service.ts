@@ -13,15 +13,15 @@ import { UsersStoreService } from './user-store.service';
 export class UsersService {
   constructor(
     private http: HttpClient,
-    private _store: UsersStoreService,
-    private _options: HttpRequestOptionsService
+    private _httpOptions: HttpRequestOptionsService,
+    private _store: UsersStoreService
   ) {}
 
   findAll() {
     return this.http
       .get<UserModel[]>(
         `${environment.API}/users`,
-        this._options.backendRequest()
+        this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((userData) => {
@@ -39,7 +39,7 @@ export class UsersService {
     return this.http
       .get<UserModel>(
         `${environment.API}/users/${id}`,
-        this._options.backendRequest()
+        this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((userData: UserModel) => {
@@ -57,7 +57,7 @@ export class UsersService {
       .post<UserModel>(
         `${environment.API}/users`,
         userData,
-        this._options.formSubmission()
+        this._httpOptions.isFormSubmission()
       )
       .subscribe((newUser) => {
         this._store.currentEntity = newUser;
@@ -71,7 +71,7 @@ export class UsersService {
       .patch<any>(
         `${environment.API}/users/${id}`,
         userData,
-        this._options.formSubmission()
+        this._httpOptions.isFormSubmission()
       )
       .subscribe((updatedUser) => {
         this._store.currentEntity = updatedUser;
