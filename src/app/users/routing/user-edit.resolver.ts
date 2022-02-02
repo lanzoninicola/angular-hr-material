@@ -13,7 +13,7 @@ import { UserModel } from '../types/user.type';
 export class UserEditResolver implements Resolve<UserModel> {
   constructor(
     private _store: UsersStoreService,
-    private _userService: UsersService,
+    private _dataService: UsersService,
     private _location: Location
   ) {}
 
@@ -33,7 +33,7 @@ export class UserEditResolver implements Resolve<UserModel> {
       }
     }
 
-    return this._userService.findById(entityIdParam).pipe(
+    return this._dataService.findById(entityIdParam).pipe(
       catchError(this._goBack()),
       tap((entity) => {
         store.currentEntity = entity;
