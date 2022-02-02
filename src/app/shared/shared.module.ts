@@ -18,13 +18,11 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { LogoComponent } from './components/logo/logo.component';
 import { SearchControlComponent } from './components/search-control/search-control.component';
 import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
-import { TableDataComponent } from './components/table-data/table-data.component';
 
 @NgModule({
   declarations: [
     HeaderComponent,
     SectionToolbarComponent,
-    TableDataComponent,
     LogoComponent,
     SearchControlComponent,
     EditFormToolbarComponent,
@@ -48,7 +46,6 @@ import { TableDataComponent } from './components/table-data/table-data.component
   exports: [
     HeaderComponent,
     SectionToolbarComponent,
-    TableDataComponent,
     LogoComponent,
     SearchControlComponent,
     EditFormToolbarComponent,

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Subscription } from 'rxjs';
-import { SearchService } from '../../services/search.service';
+import { SearchService } from '../../../table-data/services/search.service';
 
 @Component({
   selector: 'ahr-search-control',
@@ -68,7 +68,7 @@ export class SearchControlComponent implements OnInit, OnDestroy {
   private _setupSearchService(): void {
     this._searchService.setupControl(this.formControl);
 
-    this._searchService.addListener();
+    // this._searchService.addListener();
   }
 
   private _buildFormModel(): void {

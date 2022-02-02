@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription, take } from 'rxjs';
-import { SearchService } from 'src/app/shared/services/search.service';
+import { BehaviorSubject, Subscription } from 'rxjs';
 
+import { USERS_LIST_TABLE_COLUMNS } from '../../config/users.config';
 import { UsersService } from '../../services/users.service';
 import { UserModel } from '../../types/user.type';
 
@@ -10,82 +10,37 @@ import { UserModel } from '../../types/user.type';
   selector: 'ahr-user-list',
   template: `
     <div class="container-list">
-      <ahr-table-data
+      <ahr2-table-data
         [dataSource]="tableDataSource$"
         [columns]="columns"
-        (onRowClicked)="handleTableRowClicked($event)"
-      ></ahr-table-data>
+        (onRowClicked)="onRowClicked($event)"
+      ></ahr2-table-data>
     </div>
   `,
 })
 export class UserListComponent implements OnInit {
-  userList$: Observable<UserModel[]>;
-
   tableDataSource$: BehaviorSubject<UserModel[]> = new BehaviorSubject<
     UserModel[]
   >([]);
 
   tableDataSourceSubscription: Subscription;
-  columns = [
-    {
-      title: 'Lastname',
-      dsFieldName: 'lastname',
-    },
-    {
-      title: 'Firstname',
-      dsFieldName: 'firstname',
-    },
-    {
-      title: 'Role',
-      dsFieldName: 'recruitingRole',
-    },
-    {
-      title: 'E-mail',
-      dsFieldName: 'email',
-    },
-    {
-      title: 'Department',
-      dsFieldName: 'department',
-    },
-    {
-      title: 'Level',
-      dsFieldName: 'companyRoleLevel',
-    },
-  ];
+  columns = USERS_LIST_TABLE_COLUMNS;
 
-  constructor(
-    private _usersService: UsersService,
-    private router: Router,
-    private _searchService: SearchService
-  ) {}
+  constructor(private _dataService: UsersService, private router: Router) {}
 
   ngOnInit() {
-    this.userList$ = this._usersService.findAll();
-
-    this._prepareTableDataSource();
-
-    this._handleSearch();
+    this.tableDataSourceSubscription = this._dataService
+      .findAll()
+      .subscribe((entities: UserModel[]) => {
+        this.tableDataSource$.next(entities);
+      });
   }
 
-  handleTableRowClicked(userRow: UserModel) {
-    this.router.navigate(['users', userRow.id]);
+  onRowClicked(entityRow: UserModel) {
+    this.router.navigate(['users', entityRow.id]);
   }
 
   ngOnDestroy() {
     this.tableDataSourceSubscription.unsubscribe();
-  }
-
-  private _prepareTableDataSource() {
-    this.tableDataSourceSubscription = this.userList$.subscribe((usersData) => {
-      this.tableDataSource$.next(usersData);
-    });
-  }
-
-  private _handleSearch(): void {
-    this.tableDataSourceSubscription = this._searchService
-      .setupData(this.userList$)
-      .subscribe((dataFiltered) => {
-        this.tableDataSource$.next(dataFiltered);
-      });
   }
 }
