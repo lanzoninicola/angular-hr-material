@@ -8,7 +8,7 @@ import { CandidateModel } from '../../types/candidates.types';
 @Component({
   selector: 'ahr-candidates-list',
   template: `
-    <div class="container">
+    <div class="container-list">
       <ahr-table-data
         [dataSource]="tableDataSource$"
         [columns]="columns"
@@ -16,7 +16,6 @@ import { CandidateModel } from '../../types/candidates.types';
       ></ahr-table-data>
     </div>
   `,
-  styleUrls: ['./candidates-list.component.scss'],
 })
 export class CandidatesListComponent implements OnInit {
   candidateList$: Observable<CandidateModel[]>;
