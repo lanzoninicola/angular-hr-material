@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormControl } from '@angular/forms';
-import { BehaviorSubject, combineLatest, filter, map } from 'rxjs';
+import { AbstractControl } from '@angular/forms';
+import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { searchable } from 'src/app/mixins/searchable.mixin';
 
 @Injectable({
@@ -27,18 +27,21 @@ export class SearchService {
    * @source
    * https://medium.com/angular-in-depth/angular-cdk-tables-1537774d7c99
    *
-   * @return dataSetFiltered - BehaviorSubject<any[]>
+   * @param dataset - It is the collection used to populate the table
+   *
+   * @return dataSetFiltered - Subscribe to it for updating the table content according to the search criteria
    */
-  addListener(dataset: BehaviorSubject<any[]>): BehaviorSubject<any[]> {
+  addListener(dataset: Observable<any[]>): BehaviorSubject<any[]> {
     if (this.searchFormControl === undefined) {
       throw 'SearchService: the formControl is undefined. \n\nMaybe you forgot to provide the FormControl instance through the .setupControl() method before performing a search with the .filter() method';
     }
 
     combineLatest([dataset, this.searchFormControl?.valueChanges]).subscribe(
       ([dataSetRecords, searchTerm]) => {
-        let filteredRecords: any[] = dataSetRecords;
+        let filteredRecords: any[] = [...dataSetRecords];
 
         const filteredResults = dataSetRecords.filter((item) => {
+          // used mixin "searchable". It make available the isMatchingSearches() method to search content inside the object
           Object.assign(item, searchable);
           return item.isMatchingSearches(searchTerm);
         });
