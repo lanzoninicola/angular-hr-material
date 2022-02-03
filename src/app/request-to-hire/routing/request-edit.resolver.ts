@@ -5,19 +5,18 @@ import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 
 import { RequestToHireStoreService } from '../services/request-to-hire-store.service';
 import { RequestToHireService } from '../services/request-to-hire.service';
-import { RequestToHireModel } from '../types/request-to-hire.type';
 
 @Injectable({
   providedIn: 'root',
 })
-export class RequestEditResolver implements Resolve<RequestToHireModel> {
+export class RequestEditResolver implements Resolve<any> {
   constructor(
     private _store: RequestToHireStoreService,
     private _dataService: RequestToHireService,
     private _location: Location
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<RequestToHireModel> {
+  resolve(route: ActivatedRouteSnapshot): Observable<any> {
     const store = this._store;
     const entityIdParam = parseInt(route.params['id'], 10);
 

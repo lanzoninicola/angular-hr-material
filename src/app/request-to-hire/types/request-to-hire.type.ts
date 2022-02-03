@@ -1,10 +1,16 @@
-export interface RequestToHireModel {
+export interface RequestToHireHttpResponse {
   id: number;
   title: string;
-  departmentId: string;
+  department: {
+    id: number;
+    name: string;
+  };
   businessUnit: string; // picklist
-  requestId: string;
-  jobRoleId: string;
+  requester: UserRequester;
+  jobRole: {
+    id: number;
+    name: string;
+  };
   roleTaskDescription: string; // long description
   roleLevel: string; // picklist
   highPriority: boolean;
@@ -18,4 +24,13 @@ export interface RequestToHireModel {
   specialCategoriesOpened: boolean;
   additionalNotes: boolean; // long description
   status: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface UserRequester {
+  id: number;
+  firstname: string;
+  lastname: string;
+  email: string;
 }

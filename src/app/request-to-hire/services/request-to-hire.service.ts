@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
-import { RequestToHireModel } from '../types/request-to-hire.type';
+import {
+  RequestToHireHttpResponse,
+  RequestToHireListView,
+} from '../types/request-to-hire.type';
 import { RequestToHireStoreService } from './request-to-hire-store.service';
 
 @Injectable({
@@ -18,15 +21,19 @@ export class RequestToHireService {
 
   findAll() {
     return this.http
-      .get<RequestToHireModel[]>(
+      .get<RequestToHireHttpResponse[]>(
         `${environment.API}/request-to-hire`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
-        map((requestToHireData) => {
-          return requestToHireData.map((requestToHire) => {
+        map((items) => {
+          return items.map((item) => {
             return {
-              ...requestToHire,
+              ...items,
+              department: item.department.name,
+              requestedBy: `${item.requester.lastname} ${item.requester.firstname} (${item.requester.email})`,
+              jobRole: item.jobRole.name,
+              jobLocation: 
             };
           });
         })
@@ -35,12 +42,12 @@ export class RequestToHireService {
 
   findById(id: number) {
     return this.http
-      .get<RequestToHireModel>(
+      .get<RequestToHireHttpResponse>(
         `${environment.API}/request-to-hire/${id}`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
-        map((requestToHireData: RequestToHireModel) => {
+        map((requestToHireData: any) => {
           return {
             ...requestToHireData,
           };
@@ -48,10 +55,10 @@ export class RequestToHireService {
       );
   }
 
-  save(requestToHireData: RequestToHireModel) {
+  save(requestToHireData: any) {
     //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
     return this.http
-      .post<RequestToHireModel>(
+      .post<any>(
         `${environment.API}/request-to-hire`,
         requestToHireData,
         this._httpOptions.isFormSubmission()
@@ -61,7 +68,7 @@ export class RequestToHireService {
       });
   }
 
-  update(requestToHireData: RequestToHireModel) {
+  update(requestToHireData: any) {
     const { id } = requestToHireData;
 
     this.http

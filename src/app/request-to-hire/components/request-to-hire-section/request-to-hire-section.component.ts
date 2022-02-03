@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RequestToHireStoreService } from '../../services/request-to-hire-store.service';
-import { RequestToHireModel } from '../../types/request-to-hire.type';
 
 @Component({
   selector: 'app-request-to-hire-section',
@@ -25,7 +24,7 @@ export class RequestToHireSectionComponent implements OnInit {
   ) {}
 
   addNewUser() {
-    this._store.currentEntity = {} as RequestToHireModel;
+    this._store.currentEntity = {} as any;
     this.router.navigate(['request-to-hire', 'new']);
     this.pageTitle = 'New Request';
   }
