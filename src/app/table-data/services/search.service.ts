@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormControl } from '@angular/forms';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, filter, map } from 'rxjs';
+import { searchable } from 'src/app/mixins/searchable.mixin';
 
 @Injectable({
   providedIn: 'root',
@@ -35,29 +36,14 @@ export class SearchService {
 
     combineLatest([dataset, this.searchFormControl?.valueChanges]).subscribe(
       ([dataSetRecords, searchTerm]) => {
-        const dataSetArray = Object.values(dataSetRecords);
-        let filteredRecords: any[];
+        let filteredRecords: any[] = dataSetRecords;
 
-        if (!searchTerm || searchTerm.length === 0) {
-          filteredRecords = dataSetArray;
-        } else {
-          const filteredResults = dataSetArray.filter(
-            (item: { [key: string]: any }) => {
-              return Object.values(item).reduce((prev, curr) => {
-                if (typeof curr === 'string') {
-                  return (
-                    prev ||
-                    curr
-                      .toString()
-                      .toLowerCase()
-                      .includes(searchTerm.toLowerCase())
-                  );
-                }
-              }, false);
-            }
-          );
-          filteredRecords = filteredResults;
-        }
+        const filteredResults = dataSetRecords.filter((item) => {
+          Object.assign(item, searchable);
+          return item.isMatchingSearches(searchTerm);
+        });
+
+        filteredRecords = filteredResults;
 
         this.dataSetFiltered$.next(filteredRecords);
       }
