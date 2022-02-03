@@ -7,7 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { PageEvent } from '@angular/material/paginator';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 
 import { SearchService } from '../../services/search.service';
 import { TableDataService } from '../../services/table-data.service';
@@ -26,19 +26,20 @@ export class TableDataComponent implements OnInit, OnDestroy {
   columns: TableColumns;
 
   @Input('dataSource')
-  tableDataSource$: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  dataSource$: Observable<any[]>;
 
   @Output('onRowClicked')
   onRowClickedEvent: EventEmitter<any> = new EventEmitter();
 
-  displayedColumns$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
-    []
-  );
+  private _componentSubscription = new Subscription();
+  tableDataSource$ = new BehaviorSubject<any[]>([]);
+  displayedColumns$ = new BehaviorSubject<string[]>([]);
 
+  // Paginator props
   pageEvent: PageEvent;
+  dataOnPage$ = new BehaviorSubject<any[]>([]);
   pageSize$ = new BehaviorSubject<number>(10);
   currentPage$ = new BehaviorSubject<number>(1);
-  dataOnPage$ = new BehaviorSubject<any[]>([]);
 
   constructor(
     private _tableService: TableDataService,
@@ -46,6 +47,8 @@ export class TableDataComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this._setupTableData();
+
     this._setupColumns();
 
     this._setupPaginator();
@@ -54,6 +57,7 @@ export class TableDataComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this._componentSubscription.unsubscribe();
     this._tableService.destroyColumns();
   }
 
@@ -63,6 +67,12 @@ export class TableDataComponent implements OnInit, OnDestroy {
 
   onChangePage(event: PageEvent) {
     this.currentPage$.next(event.pageIndex + 1);
+  }
+
+  private _setupTableData() {
+    this._componentSubscription.add(
+      this.dataSource$.subscribe((data) => this.tableDataSource$.next(data))
+    );
   }
 
   private _setupColumns() {
@@ -83,10 +93,15 @@ export class TableDataComponent implements OnInit, OnDestroy {
   }
 
   private _setupSearch() {
-    this._searchService
-      .addListener(this.tableDataSource$)
-      .subscribe((dataFiltered) => {
-        this.dataOnPage$.next(dataFiltered);
-      });
+    this._componentSubscription.add(
+      this._searchService
+        .addListener(this.dataSource$)
+        .subscribe((dataFiltered) => {
+          this.tableDataSource$.next(dataFiltered);
+          this.dataOnPage$.next(dataFiltered);
+        })
+    );
   }
 }
+
+//TODO: When the input is cleared the table is not paginated correctly
