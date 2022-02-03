@@ -30,7 +30,7 @@ export class UserListComponent implements OnInit {
   }
 
   onRowClicked(entityRow: User) {
-    this.router.navigate(['users', entityRow.id]);
+    this.router.navigate(['users', entityRow.getId()]);
   }
 }
 

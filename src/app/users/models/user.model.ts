@@ -1,48 +1,66 @@
 export class User {
+  private id: number;
+  private firstname: string;
+  private lastname: string;
+  private email: string;
+  private recruitingRole: string;
+  private department: string;
+  private companyRoleLevel: string;
+  private isAdmin: boolean;
+
   constructor(
-    private _id: number,
-    private _firstname: string,
-    private _lastname: string,
-    private _email: string,
-    private _recruitingRole: string,
-    private _department: string,
-    private _companyRoleLevel: string,
-    private _isAdmin: boolean
-  ) {}
-
-  public get id(): number {
-    return this._id;
+    id: number,
+    firstname: string,
+    lastname: string,
+    email: string,
+    recruitingRole: string,
+    department: string,
+    companyRoleLevel: string,
+    isAdmin: boolean
+  ) {
+    this.id = id;
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.email = email;
+    this.recruitingRole = recruitingRole;
+    this.department = department;
+    this.companyRoleLevel = companyRoleLevel;
+    this.isAdmin = isAdmin;
   }
 
-  public get lastname(): string {
-    return this._lastname;
+  getId(): number {
+    return this.id;
   }
 
-  public get firstname(): string {
-    return this._firstname;
+  getFirstname(): string {
+    return this.firstname;
   }
 
-  public get isAdmin(): boolean {
-    return this._isAdmin;
+  getLastname(): string {
+    return this.lastname;
   }
 
-  public get companyRoleLevel(): string {
-    return this._companyRoleLevel;
+  getEmail(): string {
+    return this.email;
   }
 
-  public get department(): string {
-    return this._department;
+  getRecruitingRole(): string {
+    return this.recruitingRole;
   }
 
-  public get recruitingRole(): string {
-    return this._recruitingRole;
+  getDepartment(): string {
+    return this.department;
   }
 
-  public get email(): string {
-    return this._email;
+  getCompanyRoleLevel(): string {
+    return this.companyRoleLevel;
   }
 
-  public get fullname(): string {
-    return `${this._lastname} ${this._firstname}`;
+  getIsAdmin(): boolean {
+    return this.isAdmin;
+  }
+
+  get fullname(): string {
+    return `${this.lastname} ${this.firstname}`;
   }
 }

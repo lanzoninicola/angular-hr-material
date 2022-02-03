@@ -29,14 +29,14 @@ export class UsersService {
           return userData.map(
             (user) =>
               new User(
-                user.id,
-                user.firstname,
-                user.lastname,
-                user.email,
-                user.recruitingRole,
-                user.department,
-                user.companyRoleLevel,
-                user.isAdmin
+                user['id'],
+                user['firstname'],
+                user['lastname'],
+                user['email'],
+                user['recruitingRole'],
+                user['department'],
+                user['companyRoleLevel'],
+                user['isAdmin']
               )
           );
         })
@@ -45,24 +45,31 @@ export class UsersService {
 
   findById(id: number) {
     return this.http
-      .get<UserModel>(
+      .get<User>(
         `${environment.API}/users/${id}`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
-        map((userData: UserModel) => {
-          return {
-            ...userData,
-            fullName: `${userData.lastname} ${userData.firstname}`,
-          };
-        })
+        map(
+          (userData: User) =>
+            new User(
+              userData['id'],
+              userData['firstname'],
+              userData['lastname'],
+              userData['email'],
+              userData['recruitingRole'],
+              userData['department'],
+              userData['companyRoleLevel'],
+              userData['isAdmin']
+            )
+        )
       );
   }
 
-  save(userData: UserModel) {
+  save(userData: User) {
     //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
     return this.http
-      .post<UserModel>(
+      .post<User>(
         `${environment.API}/users`,
         userData,
         this._httpOptions.isFormSubmission()
@@ -72,12 +79,10 @@ export class UsersService {
       });
   }
 
-  update(userData: UserModel) {
-    const { id } = userData;
-
+  update(userData: User) {
     this.http
       .patch<any>(
-        `${environment.API}/users/${id}`,
+        `${environment.API}/users/${userData.getId()}`,
         userData,
         this._httpOptions.isFormSubmission()
       )

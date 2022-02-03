@@ -1,23 +1,23 @@
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 
+import { User } from '../models/user.model';
 import { UsersStoreService } from '../services/user-store.service';
 import { UsersService } from '../services/users.service';
-import { UserModel } from '../types/user.type';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserEditResolver implements Resolve<UserModel> {
+export class UserEditResolver implements Resolve<User> {
   constructor(
     private _store: UsersStoreService,
     private _dataService: UsersService,
     private _location: Location
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
+  resolve(route: ActivatedRouteSnapshot): Observable<User> {
     const store = this._store;
     const entityIdParam = parseInt(route.params['id'], 10);
 
@@ -25,12 +25,9 @@ export class UserEditResolver implements Resolve<UserModel> {
       this._goBack();
     }
 
-    if (store.currentEntity !== undefined) {
-      const { id } = store.currentEntity;
-      if (id === entityIdParam) {
-        store.entityStateUpdate();
-        return of(store.currentEntity);
-      }
+    if (store.currentEntity?.getId() === entityIdParam) {
+      store.entityStateUpdate();
+      return of(store.currentEntity);
     }
 
     return this._dataService.findById(entityIdParam).pipe(

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+import { User } from '../../models/user.model';
 
 import { UsersStoreService } from '../../services/user-store.service';
 import { UsersService } from '../../services/users.service';
@@ -15,10 +16,9 @@ import { UserModel } from '../../types/user.type';
 })
 export class UserEditComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
-  currentUser: UserModel = {} as UserModel;
+  currentUser: User;
   entityState: EntityState = 'create';
 
-  formValues: UserModel = {} as UserModel;
   formState: FormState = 'idle';
   formStatus: string = 'invalid';
 
@@ -29,7 +29,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.entityState = this._store.get('userEdit-entityState');
-    this.currentUser = { ...this._store.get('userEdit-currentUser') };
+    this.currentUser = this._store.get('userEdit-currentUser');
   }
 
   ngOnDestroy() {
@@ -47,22 +47,22 @@ export class UserEditComponent implements OnInit, OnDestroy {
   onValueChanges(valueChanges: Observable<any>) {
     this.subs.add(
       valueChanges
-        .pipe<UserModel>(
+        .pipe<User>(
           map((userFormData: UserFormData) => {
-            return {
-              id: this.currentUser.id,
-              firstname: userFormData['firstname'],
-              lastname: userFormData['lastname'],
-              email: userFormData['email'],
-              department: userFormData['departments'],
-              companyRoleLevel: userFormData['companyLevels'],
-              recruitingRole: userFormData['recruitingRoles'],
-              isAdmin: userFormData['isAdmin'],
-            };
+            return new User(
+              this.currentUser.getId(),
+              userFormData['firstname'],
+              userFormData['lastname'],
+              userFormData['email'],
+              userFormData['recruitingRoles'],
+              userFormData['departments'],
+              userFormData['companyLevels'],
+              userFormData['isAdmin']
+            );
           })
         )
-        .subscribe((userModel: UserModel) => {
-          this.formValues = { ...userModel };
+        .subscribe((userModel: User) => {
+          this.currentUser = userModel;
         })
     );
   }
@@ -75,10 +75,10 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   onSaveButtonClicked() {
     if (this.entityState === 'create') {
-      this._usersService.save(this.formValues);
+      this._usersService.save(this.currentUser);
     }
     if (this.entityState === 'update') {
-      this._usersService.update(this.formValues);
+      this._usersService.update(this.currentUser);
     }
   }
 

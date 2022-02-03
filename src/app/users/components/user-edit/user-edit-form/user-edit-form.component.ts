@@ -6,6 +6,7 @@ import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types
 
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
+import { User } from 'src/app/users/models/user.model';
 import { UserModel } from 'src/app/users/types/user.type';
 
 @Component({
@@ -21,7 +22,7 @@ import { UserModel } from 'src/app/users/types/user.type';
 })
 export class UserEditFormComponent implements OnInit {
   @Input('user')
-  user: UserModel | null = {} as UserModel;
+  user: User;
 
   @Input()
   showSpinner: boolean = false;
@@ -86,25 +87,25 @@ export class UserEditFormComponent implements OnInit {
     this.userEditFormView = this._dynamicForm.view.get();
   }
 
-  private _initFormValues(user: UserModel | null) {
+  private _initFormValues(user: User) {
     if (!user || Object.keys(user).length === 0) {
       return;
     }
 
     this._dynamicForm.setControlsValue('personalInfo', {
-      firstname: user.firstname,
-      lastname: user.lastname,
-      email: user.email,
+      firstname: user.getFirstname(),
+      lastname: user.getLastname(),
+      email: user.getEmail(),
     });
 
     this._dynamicForm.setControlsValue('companyRoleInfo', {
-      departments: user.department,
-      companyLevels: user.companyRoleLevel,
+      departments: user.getDepartment(),
+      companyLevels: user.getCompanyRoleLevel(),
     });
 
     this._dynamicForm.setControlsValue('recruitingRole', {
-      recruitingRoles: user.recruitingRole,
-      isAdmin: user.isAdmin,
+      recruitingRoles: user.getRecruitingRole(),
+      isAdmin: user.getIsAdmin(),
     });
   }
 }
