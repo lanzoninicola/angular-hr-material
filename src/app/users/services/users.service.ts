@@ -4,6 +4,7 @@ import { map } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
 
+import { User } from '../models/user.model';
 import { UserModel } from '../types/user.type';
 import { UsersStoreService } from './user-store.service';
 
@@ -19,18 +20,25 @@ export class UsersService {
 
   findAll() {
     return this.http
-      .get<UserModel[]>(
+      .get<User[]>(
         `${environment.API}/users`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((userData) => {
-          return userData.map((user) => {
-            return {
-              ...user,
-              fullName: `${user.lastname} ${user.firstname}`,
-            };
-          });
+          return userData.map(
+            (user) =>
+              new User(
+                user.id,
+                user.firstname,
+                user.lastname,
+                user.email,
+                user.recruitingRole,
+                user.department,
+                user.companyRoleLevel,
+                user.isAdmin
+              )
+          );
         })
       );
   }
