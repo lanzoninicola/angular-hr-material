@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { SearchService } from 'src/app/shared/services/search.service';
-import { RTH_LIST_TABLE_COLUMNS } from '../../config/request-to-hire.config';
-import { RequestToHireModule } from '../../request-to-hire.module';
+import { Observable } from 'rxjs';
+import { TableColumns } from 'src/app/table-data/types/table.types';
+
 import { RequestToHireService } from '../../services/request-to-hire.service';
-import { RequestToHireModel } from '../../types/request-to-hire.type';
 
 @Component({
   selector: 'ahr-request-to-hire-list',
@@ -20,11 +18,8 @@ import { RequestToHireModel } from '../../types/request-to-hire.type';
   `,
 })
 export class RequestToHireListComponent implements OnInit {
-  tableDataSource$: BehaviorSubject<RequestToHireModel[]> = new BehaviorSubject<
-    RequestToHireModel[]
-  >([]);
+  tableDataSource$: Observable<any[]>;
 
-  tableDataSourceSubscription: Subscription;
   columns = RTH_LIST_TABLE_COLUMNS;
 
   constructor(
@@ -33,18 +28,22 @@ export class RequestToHireListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.tableDataSourceSubscription = this._dataService
-      .findAll()
-      .subscribe((entities: RequestToHireModel[]) => {
-        this.tableDataSource$.next(entities);
-      });
+    this.tableDataSource$ = this._dataService.findAll();
   }
 
-  onRowClicked(requestRow: RequestToHireModel) {
-    this.router.navigate(['request-to-hire', requestRow.id]);
-  }
-
-  ngOnDestroy() {
-    this.tableDataSourceSubscription.unsubscribe();
+  onRowClicked(entityRow: any) {
+    this.router.navigate(['request-to-hire', entityRow.id]);
   }
 }
+
+const RTH_LIST_TABLE_COLUMNS: TableColumns = {
+  title: 'Title',
+  jobRole: 'Job Role',
+  status: 'Status',
+  createdDate: 'Created In',
+  updatedDate: 'Last Update',
+  highPriority: 'High Priority',
+  department: 'Department',
+  businessUnit: 'Business Unit',
+  requester: 'Requester',
+};

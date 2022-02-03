@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
-import { SearchService } from 'src/app/shared/services/search.service';
+import { Observable } from 'rxjs';
+
 import { CANDIDATES_LIST_TABLE_COLUMNS } from '../../config/candidates.config';
 import { CandidatesService } from '../../services/candidates.service';
 import { CandidateModel } from '../../types/candidates.types';
@@ -19,11 +19,8 @@ import { CandidateModel } from '../../types/candidates.types';
   `,
 })
 export class CandidatesListComponent implements OnInit {
-  tableDataSource$: BehaviorSubject<CandidateModel[]> = new BehaviorSubject<
-    CandidateModel[]
-  >([]);
+  tableDataSource$: Observable<CandidateModel[]>;
 
-  tableDataSourceSubscription: Subscription;
   columns = CANDIDATES_LIST_TABLE_COLUMNS;
 
   constructor(
@@ -32,18 +29,10 @@ export class CandidatesListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.tableDataSourceSubscription = this._dataService
-      .findAll()
-      .subscribe((entities: CandidateModel[]) => {
-        this.tableDataSource$.next(entities);
-      });
+    this.tableDataSource$ = this._dataService.findAll();
   }
 
   onRowClicked(entityRow: CandidateModel) {
     this.router.navigate(['candidates', entityRow.id]);
-  }
-
-  ngOnDestroy() {
-    this.tableDataSourceSubscription.unsubscribe();
   }
 }

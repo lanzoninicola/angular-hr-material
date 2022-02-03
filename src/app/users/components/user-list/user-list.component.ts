@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { TableColumns } from 'src/app/table-data/types/table.types';
 
-import { USERS_LIST_TABLE_COLUMNS } from '../../config/users.config';
+import { User } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
-import { UserModel } from '../../types/user.type';
 
 @Component({
   selector: 'ahr-user-list',
@@ -19,28 +19,26 @@ import { UserModel } from '../../types/user.type';
   `,
 })
 export class UserListComponent implements OnInit {
-  tableDataSource$: BehaviorSubject<UserModel[]> = new BehaviorSubject<
-    UserModel[]
-  >([]);
+  tableDataSource$: Observable<User[]>;
 
-  tableDataSourceSubscription: Subscription;
   columns = USERS_LIST_TABLE_COLUMNS;
 
   constructor(private _dataService: UsersService, private router: Router) {}
 
   ngOnInit() {
-    this.tableDataSourceSubscription = this._dataService
-      .findAll()
-      .subscribe((entities: UserModel[]) => {
-        this.tableDataSource$.next(entities);
-      });
+    this.tableDataSource$ = this._dataService.findAll();
   }
 
-  onRowClicked(entityRow: UserModel) {
+  onRowClicked(entityRow: User) {
     this.router.navigate(['users', entityRow.id]);
   }
-
-  ngOnDestroy() {
-    this.tableDataSourceSubscription.unsubscribe();
-  }
 }
+
+const USERS_LIST_TABLE_COLUMNS: TableColumns = {
+  lastname: 'Lastname',
+  firstname: 'Firstname',
+  email: 'E-mail',
+  recruitingRole: 'Role',
+  department: 'Department',
+  companyRoleLevel: 'Level',
+};
