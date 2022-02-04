@@ -1,11 +1,14 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
+import { NgModule } from '@angular/core';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
+
 import { TableDataComponent } from './components/table-data/table-data.component';
+import { CellValuePipe } from './pipes/cell-value.pipe';
+import { TableDataCellDatePipe } from './pipes/table-data-cell-date.pipe';
 
 @NgModule({
-  declarations: [TableDataComponent],
+  declarations: [TableDataComponent, CellValuePipe, TableDataCellDatePipe],
   imports: [CommonModule, MatTableModule, MatPaginatorModule],
   exports: [TableDataComponent],
 })

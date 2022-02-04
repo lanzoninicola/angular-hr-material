@@ -1,24 +1,24 @@
 import { Injectable } from '@angular/core';
-import { HighlightSpanKind } from 'typescript';
 
 import {
+  ColumnConfig,
   ColumnTitle,
   DataSourceField,
   TableColumns,
 } from '../types/table.types';
-import { SearchService } from './search.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableDataService {
-  tableColumnsTemplate: Map<DataSourceField, ColumnTitle> = new Map();
+  tableColumnsTemplate: Map<DataSourceField, ColumnTitle | ColumnConfig> =
+    new Map();
 
   get columnfields(): string[] {
     return Array.from(this.tableColumnsTemplate.keys());
   }
 
-  get columnTitles(): string[] {
+  get columnConfig(): (ColumnTitle | ColumnConfig)[] {
     return Array.from(this.tableColumnsTemplate.values());
   }
 
@@ -30,7 +30,7 @@ export class TableDataService {
     });
   }
 
-  addColumn(key: DataSourceField, value: ColumnTitle) {
+  addColumn(key: DataSourceField, value: ColumnTitle | ColumnConfig) {
     this.tableColumnsTemplate.set(key, value);
   }
 
