@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { Picklist, PicklistValues } from '../types/picklist.type';
+import { Picklist, PicklistValue } from '../types/picklist.type';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ import { Picklist, PicklistValues } from '../types/picklist.type';
 export class PicklistService {
   constructor(private http: HttpClient) {}
 
-  getValuesOf(type: string): Observable<PicklistValues> {
+  getValuesOf(type: string): Observable<PicklistValue[]> {
     return this.http
       .get<Picklist[]>(`${environment.API}/picklist?type=${type}`)
       .pipe(

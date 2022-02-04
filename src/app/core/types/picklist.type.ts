@@ -1,7 +1,7 @@
 export interface Picklist {
   id: number;
   type: string;
-  values: PicklistValues;
+  values: PicklistValue[];
 }
 
-export type PicklistValues = string[];
+export type PicklistValue = string;
