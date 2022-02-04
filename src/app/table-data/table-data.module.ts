@@ -4,11 +4,11 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
 
 import { TableDataComponent } from './components/table-data/table-data.component';
-import { CellValuePipe } from './pipes/cell-value.pipe';
-import { TableDataCellDatePipe } from './pipes/table-data-cell-date.pipe';
+import { CellDatePipe } from './pipes/cell-date.pipe';
+import { CellObjectModelPipe } from './pipes/cell-object-model.pipe';
 
 @NgModule({
-  declarations: [TableDataComponent, CellValuePipe, TableDataCellDatePipe],
+  declarations: [TableDataComponent, CellObjectModelPipe, CellDatePipe],
   imports: [CommonModule, MatTableModule, MatPaginatorModule],
   exports: [TableDataComponent],
 })

@@ -2,9 +2,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { DateService } from 'src/app/core/services/date.service';
 
 @Pipe({
-  name: 'tableDataCellDate',
+  name: 'cellDate',
 })
-export class TableDataCellDatePipe implements PipeTransform {
+export class CellDatePipe implements PipeTransform {
   constructor(private _dateService: DateService) {}
 
   transform(value: Date): any {
