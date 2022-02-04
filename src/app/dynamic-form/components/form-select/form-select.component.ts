@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { PicklistService } from 'src/app/core/services/picklist.service';
-import { PicklistValues } from 'src/app/core/types/picklist.type';
+import { PicklistValue } from 'src/app/core/types/picklist.type';
 
 import { DynamicFormService } from '../../services/dynamic-form.service';
 import { SelectConfig } from '../../types/form-control.types';
@@ -21,9 +21,8 @@ export class FormSelectComponent implements OnInit, OnDestroy {
 
   private _picklistSubscription$: Subscription;
 
-  selectOptions$: BehaviorSubject<PicklistValues | any[]> = new BehaviorSubject<
-    PicklistValues | any[]
-  >([]);
+  selectOptions$: BehaviorSubject<PicklistValue[] | any[]> =
+    new BehaviorSubject<PicklistValue[] | any[]>([]);
 
   constructor(
     private _dynamicForm: DynamicFormService,
@@ -53,7 +52,7 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   private _getFromPicklist() {
     this._picklistSubscription$ = this.picklist
       .getValuesOf(this.controlConfig['key'])
-      .subscribe((pv: PicklistValues) => this.selectOptions$.next(pv));
+      .subscribe((pv: PicklistValue[]) => this.selectOptions$.next(pv));
   }
 
   ngOnDestroy() {
