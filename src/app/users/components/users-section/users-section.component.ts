@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
-import { User } from '../../models/user.model';
+import { UserModel } from '../../models/user.model';
 import { UsersStoreService } from '../../services/user-store.service';
 
 @Component({
@@ -23,7 +22,7 @@ export class UsersSectionComponent implements OnInit {
   constructor(private router: Router, private _store: UsersStoreService) {}
 
   addNewUser() {
-    this._store.currentEntity = {} as User;
+    this._store.currentEntity = {} as UserModel;
     this.router.navigate(['users', 'new']);
     this.pageTitle = 'New User';
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModuleStoreService } from 'src/app/core/services/module-store.service';
 
-import { User } from '../models/user.model';
+import { UserModel } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +15,7 @@ export class UsersStoreService extends ModuleStoreService {
     this.set('userEdit-entityState', 'create');
   }
 
-  set currentEntity(currentUser: User) {
+  set currentEntity(currentUser: UserModel) {
     this.set('userEdit-currentUser', currentUser);
   }
 

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TableColumns } from 'src/app/table-data/types/table.types';
 
-import { User } from '../../models/user.model';
+import { UserModel } from '../../models/user.model';
 import { UsersService } from '../../services/users.service';
 
 @Component({
@@ -19,7 +19,7 @@ import { UsersService } from '../../services/users.service';
   `,
 })
 export class UserListComponent implements OnInit {
-  tableDataSource$: Observable<User[]>;
+  tableDataSource$: Observable<UserModel[]>;
 
   columns = USERS_LIST_TABLE_COLUMNS;
 
@@ -29,7 +29,7 @@ export class UserListComponent implements OnInit {
     this.tableDataSource$ = this._dataService.findAll();
   }
 
-  onRowClicked(entityRow: User) {
+  onRowClicked(entityRow: UserModel) {
     this.router.navigate(['users', entityRow.getId()]);
   }
 }

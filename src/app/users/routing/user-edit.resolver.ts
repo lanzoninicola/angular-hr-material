@@ -3,21 +3,21 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 
-import { User } from '../models/user.model';
+import { UserModel } from '../models/user.model';
 import { UsersStoreService } from '../services/user-store.service';
 import { UsersService } from '../services/users.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class UserEditResolver implements Resolve<User> {
+export class UserEditResolver implements Resolve<UserModel> {
   constructor(
     private _store: UsersStoreService,
     private _dataService: UsersService,
     private _location: Location
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<User> {
+  resolve(route: ActivatedRouteSnapshot): Observable<UserModel> {
     const store = this._store;
     const entityIdParam = parseInt(route.params['id'], 10);
 
