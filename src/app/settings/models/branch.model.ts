@@ -1,10 +1,10 @@
 export class BranchModel {
-  id: number;
-  name: string;
-  street: string;
-  city: string;
-  country: string;
-  timezone: string;
+  private id: number;
+  private name: string;
+  private street: string;
+  private city: string;
+  private country: string;
+  private timezone: string;
 
   constructor(
     id: number,
