@@ -3,10 +3,9 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
-import {
-  RequestToHireHttpResponse,
-  RequestToHireListView,
-} from '../types/request-to-hire.type';
+import { RequestToHireModel } from '../models/request-to-hire.model';
+import { RequestToHireDTO } from '../types/request-to-hire.type';
+import { RequestToHireSerializerService } from './request-to-hire-serializer.service';
 import { RequestToHireStoreService } from './request-to-hire-store.service';
 
 @Injectable({
@@ -16,25 +15,68 @@ export class RequestToHireService {
   constructor(
     private http: HttpClient,
     private _httpOptions: HttpRequestOptionsService,
-    private _store: RequestToHireStoreService
+    private _store: RequestToHireStoreService,
+    private _serializer: RequestToHireSerializerService
   ) {}
 
   findAll() {
     return this.http
-      .get<RequestToHireHttpResponse[]>(
+      .get<RequestToHireDTO[]>(
         `${environment.API}/request-to-hire`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((items) => {
           return items.map((item) => {
-            return {
-              ...items,
-              department: item.department.name,
-              requestedBy: `${item.requester.lastname} ${item.requester.firstname} (${item.requester.email})`,
-              jobRole: item.jobRole.name,
-              jobLocation: 
-            };
+            const requestDeserialized = this._serializer.deserialize(item);
+
+            const {
+              id,
+              title,
+              department,
+              businessUnit,
+              requester,
+              jobRole,
+              roleTaskDescription,
+              roleLevel,
+              highPriority,
+              jobLocationType,
+              jobLocation,
+              employmentStatus,
+              minimumQualifications,
+              preferredQualifications,
+              benefits,
+              budget,
+              specialCategoriesOpened,
+              additionalNotes,
+              status,
+              createdAt,
+              updatedAt,
+            } = requestDeserialized;
+
+            return new RequestToHireModel(
+              id,
+              title,
+              department,
+              businessUnit,
+              requester,
+              jobRole,
+              roleTaskDescription,
+              roleLevel,
+              highPriority,
+              jobLocationType,
+              jobLocation,
+              employmentStatus,
+              minimumQualifications,
+              preferredQualifications,
+              benefits,
+              budget,
+              specialCategoriesOpened,
+              additionalNotes,
+              status,
+              createdAt,
+              updatedAt
+            );
           });
         })
       );
@@ -42,7 +84,7 @@ export class RequestToHireService {
 
   findById(id: number) {
     return this.http
-      .get<RequestToHireHttpResponse>(
+      .get<RequestToHireDTO>(
         `${environment.API}/request-to-hire/${id}`,
         this._httpOptions.isBackendRequest()
       )

@@ -1,36 +1,59 @@
-export interface RequestToHireHttpResponse {
+import { PicklistValue } from 'src/app/core/types/picklist.type';
+import { BranchModel } from 'src/app/settings/models/branch.model';
+import { DepartmentModel } from 'src/app/settings/models/department.model';
+import { JobRoleModel } from 'src/app/settings/models/job-role.model';
+import { BranchDTO } from 'src/app/settings/types/branch.type';
+import { DepartmentDTO } from 'src/app/settings/types/department.type';
+import { JobRoleDTO } from 'src/app/settings/types/job-role.type';
+import { UserModel } from 'src/app/users/models/user.model';
+import { UserDTO } from 'src/app/users/types/user.type';
+
+export interface RequestToHireDTO {
   id: number;
   title: string;
-  department: {
-    id: number;
-    name: string;
-  };
-  businessUnit: string; // picklist
-  requester: UserRequester;
-  jobRole: {
-    id: number;
-    name: string;
-  };
+  department: DepartmentDTO;
+  businessUnit: PicklistValue;
+  requester: UserDTO;
+  jobRole: JobRoleDTO;
   roleTaskDescription: string; // long description
-  roleLevel: string; // picklist
+  roleLevel: PicklistValue;
   highPriority: boolean;
-  jobLocationType: string; // picklist
-  jobLocationId: string; // model
-  employmentStatus: string; // picklist
+  jobLocationType: PicklistValue;
+  jobLocation: BranchDTO | null;
+  employmentStatus: PicklistValue;
   minimumQualifications: string; // long description
   preferredQualifications: string; // long description
   benefits: string; // long description
   budget: string;
   specialCategoriesOpened: boolean;
-  additionalNotes: boolean; // long description
-  status: string;
+  additionalNotes: string; // long description
+  status: RTHStatus;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface UserRequester {
+export interface RequestToHireHttpSerialized {
   id: number;
-  firstname: string;
-  lastname: string;
-  email: string;
+  title: string;
+  department: DepartmentModel;
+  businessUnit: PicklistValue;
+  requester: UserModel;
+  jobRole: JobRoleModel;
+  roleTaskDescription: string; // long description
+  roleLevel: PicklistValue;
+  highPriority: boolean;
+  jobLocationType: PicklistValue;
+  jobLocation: BranchModel | null;
+  employmentStatus: PicklistValue;
+  minimumQualifications: string; // long description
+  preferredQualifications: string; // long description
+  benefits: string; // long description
+  budget: string;
+  specialCategoriesOpened: boolean;
+  additionalNotes: string; // long description
+  status: RTHStatus;
+  createdAt: Date;
+  updatedAt: Date;
 }
+
+export type RTHStatus = 'new' | 'backlog' | 'in-progress' | 'peding' | 'done';

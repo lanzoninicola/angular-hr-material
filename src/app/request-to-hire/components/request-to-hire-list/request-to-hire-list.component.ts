@@ -37,13 +37,13 @@ export class RequestToHireListComponent implements OnInit {
 }
 
 const RTH_LIST_TABLE_COLUMNS: TableColumns = {
-  title: 'Title',
-  jobRole: 'Job Role',
-  status: 'Status',
-  createdDate: 'Created In',
-  updatedDate: 'Last Update',
-  highPriority: 'High Priority',
-  department: 'Department',
-  businessUnit: 'Business Unit',
-  requester: 'Requester',
+  title: { title: 'Title' },
+  jobRole: { title: 'Job Role', field: 'name' },
+  status: { title: 'Status' },
+  createdAt: { title: 'Created In' },
+  updatedAt: { title: 'Last Update' },
+  highPriority: { title: 'High Priority' },
+  department: { title: 'Department', field: 'name' },
+  businessUnit: { title: 'Business Unit' },
+  requester: { title: 'Requester', field: 'fullname' },
 };
