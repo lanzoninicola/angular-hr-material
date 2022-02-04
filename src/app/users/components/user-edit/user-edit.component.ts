@@ -27,8 +27,8 @@ export class UserEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.entityState = this._store.get('userEdit-entityState');
-    this.currentUser = this._store.get('userEdit-currentUser');
+    this.entityState = this._store.entityState;
+    this.currentUser = this._store.currentEntity;
   }
 
   ngOnDestroy() {
