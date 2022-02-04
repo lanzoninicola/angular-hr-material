@@ -4,8 +4,8 @@ import { map } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
 
-import { User } from '../models/user.model';
-import { UserModel } from '../types/user.type';
+import { UserModel } from '../models/user.model';
+
 import { UsersStoreService } from './user-store.service';
 
 @Injectable({
@@ -20,7 +20,7 @@ export class UsersService {
 
   findAll() {
     return this.http
-      .get<User[]>(
+      .get<UserModel[]>(
         `${environment.API}/users`,
         this._httpOptions.isBackendRequest()
       )
@@ -28,7 +28,7 @@ export class UsersService {
         map((userData) => {
           return userData.map(
             (user) =>
-              new User(
+              new UserModel(
                 user['id'],
                 user['firstname'],
                 user['lastname'],
@@ -45,14 +45,14 @@ export class UsersService {
 
   findById(id: number) {
     return this.http
-      .get<User>(
+      .get<UserModel>(
         `${environment.API}/users/${id}`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
         map(
-          (userData: User) =>
-            new User(
+          (userData: UserModel) =>
+            new UserModel(
               userData['id'],
               userData['firstname'],
               userData['lastname'],
@@ -66,10 +66,10 @@ export class UsersService {
       );
   }
 
-  save(userData: User) {
+  save(userData: UserModel) {
     //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
     return this.http
-      .post<User>(
+      .post<UserModel>(
         `${environment.API}/users`,
         userData,
         this._httpOptions.isFormSubmission()
@@ -79,7 +79,7 @@ export class UsersService {
       });
   }
 
-  update(userData: User) {
+  update(userData: UserModel) {
     this.http
       .patch<any>(
         `${environment.API}/users/${userData.getId()}`,
@@ -103,7 +103,7 @@ The getAll() method cache the result in the UserStore
 
 The findById check in the store the user
 
-Add button in the top bar of section, when pressed update the userStore with the new list that fired a new getAll() User
+Add button in the top bar of section, when pressed update the userStore with the new list that fired a new getAll() UserModel
 
 Automate the update of the userStore :
 First solution: after xxx second or minutes (in the global settings the user can decide holding the button that show the options), 

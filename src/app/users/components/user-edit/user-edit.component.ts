@@ -2,12 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
-import { User } from '../../models/user.model';
+import { UserModel } from '../../models/user.model';
 
 import { UsersStoreService } from '../../services/user-store.service';
 import { UsersService } from '../../services/users.service';
 import { UserFormData } from '../../types/user-edit-form.types';
-import { UserModel } from '../../types/user.type';
 
 @Component({
   selector: 'ahr-user-edit',
@@ -16,7 +15,7 @@ import { UserModel } from '../../types/user.type';
 })
 export class UserEditComponent implements OnInit, OnDestroy {
   private subs = new Subscription();
-  currentUser: User;
+  currentUser: UserModel;
   entityState: EntityState = 'create';
 
   formState: FormState = 'idle';
@@ -47,9 +46,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
   onValueChanges(valueChanges: Observable<any>) {
     this.subs.add(
       valueChanges
-        .pipe<User>(
+        .pipe<UserModel>(
           map((userFormData: UserFormData) => {
-            return new User(
+            return new UserModel(
               this.currentUser.getId(),
               userFormData['firstname'],
               userFormData['lastname'],
@@ -61,7 +60,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
             );
           })
         )
-        .subscribe((userModel: User) => {
+        .subscribe((userModel: UserModel) => {
           this.currentUser = userModel;
         })
     );

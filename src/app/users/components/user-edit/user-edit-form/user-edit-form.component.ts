@@ -1,13 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
-
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
-import { User } from 'src/app/users/models/user.model';
-import { UserModel } from 'src/app/users/types/user.type';
+import { UserModel } from 'src/app/users/models/user.model';
 
 @Component({
   selector: 'ahr-user-edit-form',
@@ -22,7 +20,7 @@ import { UserModel } from 'src/app/users/types/user.type';
 })
 export class UserEditFormComponent implements OnInit {
   @Input('user')
-  user: User;
+  user: UserModel;
 
   @Input()
   showSpinner: boolean = false;
@@ -87,7 +85,7 @@ export class UserEditFormComponent implements OnInit {
     this.userEditFormView = this._dynamicForm.view.get();
   }
 
-  private _initFormValues(user: User) {
+  private _initFormValues(user: UserModel) {
     if (!user || Object.keys(user).length === 0) {
       return;
     }
