@@ -5,7 +5,7 @@ import { Location } from '@angular/common';
 
 import { CandidatesStoreService } from '../services/candidates-store.service';
 import { CandidatesService } from '../services/candidates.service';
-import { CandidateModel } from '../types/candidates.types';
+import { CandidateModel } from '../models/candidate.model';
 
 @Injectable({
   providedIn: 'root',

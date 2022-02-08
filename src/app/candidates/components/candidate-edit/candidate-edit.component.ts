@@ -2,12 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+import { CandidateModel } from '../../models/candidate.model';
 import { CandidatesStoreService } from '../../services/candidates-store.service';
 import { CandidatesService } from '../../services/candidates.service';
-import {
-  CandidateFormData,
-  CandidateModel,
-} from '../../types/candidates.types';
+import { CandidateFormData } from '../../types/candidates.types';
 
 @Component({
   selector: 'ahr-candidate-edit',
@@ -29,8 +27,8 @@ export class CandidateEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.entityState = this._store.get('userEdit-entityState');
-    this.currentCandidate = { ...this._store.get('userEdit-currentCandidate') };
+    this.entityState = this._store.entityState;
+    this.currentCandidate = this._store.currentEntity;
   }
 
   ngOnDestroy() {

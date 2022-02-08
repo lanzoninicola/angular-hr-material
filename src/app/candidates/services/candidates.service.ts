@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
-import { CandidateModel } from '../types/candidates.types';
+import { CandidateModel } from '../models/candidate.model';
+
 import { CandidatesStoreService } from './candidates-store.service';
 
 @Injectable({

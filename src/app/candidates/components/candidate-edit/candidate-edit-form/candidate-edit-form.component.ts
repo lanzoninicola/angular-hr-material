@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CandidateModel } from 'src/app/candidates/types/candidates.types';
+import { CandidateModel } from 'src/app/candidates/models/candidate.model';
+
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';

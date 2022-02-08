@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CandidateModel } from '../../models/candidate.model';
 import { CandidatesStoreService } from '../../services/candidates-store.service';
-import { CandidateModel } from '../../types/candidates.types';
 
 @Component({
   selector: 'app-candidates-section',

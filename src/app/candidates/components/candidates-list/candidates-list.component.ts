@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { CANDIDATES_LIST_TABLE_COLUMNS } from '../../config/candidates.config';
+import { CandidateModel } from '../../models/candidate.model';
 import { CandidatesService } from '../../services/candidates.service';
-import { CandidateModel } from '../../types/candidates.types';
 
 @Component({
   selector: 'ahr-candidates-list',
