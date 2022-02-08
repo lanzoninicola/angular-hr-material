@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { IconBadgeComponent } from 'src/app/shared/components/icon-badge/icon-badge.component';
 import { TableColumns } from 'src/app/table-data/types/table.types';
 
 import { RequestToHireService } from '../../services/request-to-hire.service';
@@ -42,7 +43,7 @@ const RTH_LIST_TABLE_COLUMNS: TableColumns = {
   status: { title: 'Status' },
   createdAt: { title: 'Created In' },
   updatedAt: { title: 'Last Update' },
-  highPriority: { title: 'High Priority' },
+  highPriority: { title: 'High Priority', component: IconBadgeComponent },
   department: { title: 'Department', field: 'name' },
   businessUnit: { title: 'Business Unit' },
   requester: { title: 'Requester', field: 'fullname' },

@@ -17,6 +17,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { LogoComponent } from './components/logo/logo.component';
 import { SearchControlComponent } from './components/search-control/search-control.component';
 import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
+import { IconBadgeComponent } from './components/icon-badge/icon-badge.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { SectionToolbarComponent } from './components/section-toolbar/section-to
     EditActionButtonComponent,
     NavigationActionButtonComponent,
     LoadingSpinnerComponent,
+    IconBadgeComponent,
   ],
   imports: [
     CommonModule,

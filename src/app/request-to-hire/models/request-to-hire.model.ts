@@ -5,6 +5,8 @@ import { JobRoleModel } from 'src/app/settings/models/job-role.model';
 import { UserModel } from 'src/app/users/models/user.model';
 import { RTHStatus } from '../types/request-to-hire.type';
 
+//TODO: separate the model into head and body
+
 export class RequestToHireModel {
   private id: number;
   private title: string;
