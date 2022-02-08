@@ -6,9 +6,11 @@
     >
       <th mat-header-cell *matHeaderCellDef>{{ column.value["title"] }}</th>
       <td mat-cell *matCellDef="let row">
-        {{
-          row[column.key] | cellObjectModel: column.value["field"] | cellDate
-        }}
+        <ng-content>
+          <!-- {{
+            row[column.key] | cellObjectModel: column.value["field"] | cellDate
+          }} -->
+        </ng-content>
       </td>
     </ng-container>
 
