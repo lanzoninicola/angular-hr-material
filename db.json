@@ -79,6 +79,24 @@
       "teamLeads": []
     }
   ],
+  "branches": [
+    {
+      "id": 1,
+      "name": "New York Office",
+      "street": "45th street",
+      "city": "Brooklyn",
+      "country": "USA",
+      "timezone": "GMT-5"
+    },
+    {
+      "id": 2,
+      "name": "Sao Paulo Office",
+      "street": "Rua Prefeito Marcado",
+      "city": "Sao Paolo",
+      "country": "Brazil",
+      "timezone": "GMT-3"
+    }
+  ],
   "jobRoles": [
     {
       "id": 1,
@@ -117,19 +135,37 @@
       "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
     }
   ],
-  "requests-to-hire": [
+  "request-to-hire": [
     {
-      "id": "1",
+      "id": 1,
       "title": "New Front-end Developer",
-      "departmentId": "2",
+      "department": {
+        "id": 2,
+        "name": "Front-end Developers"
+      },
       "businessUnit": "Alpha Product",
-      "requesterId": "71",
-      "jobRoleId": "1",
+      "requester": {
+        "id": 72,
+        "firstname": "Glenna",
+        "lastname": "Reichert",
+        "email": "glenna.reichert@gmail.com",
+        "recruitingRole": "interviewer",
+        "department": "Front-end Developers",
+        "companyRoleLevel": "manager",
+        "businessUnit": "Delta Product",
+        "isAdmin": false
+      },
+      "jobRole": {
+        "id": 1,
+        "name": "Front-end Developer",
+        "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
+        "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
+      },
       "roleTaskDescription": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "roleLevel": "Junior",
       "highPriority": true,
       "jobLocationType": "Full Remote",
-      "jobLocation": null,
+      "jobLocationId": null,
       "employmentStatus": "Full-time employment",
       "minimumQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "preferredQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
@@ -137,7 +173,9 @@
       "budget": "0-1.200",
       "specialCategoriesOpened": false,
       "additionalNotes": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
-      "status": "new"
+      "status": "new",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2020-01-01T00:00:00.000Z"
     }
   ],
   "candidates": [
@@ -188,7 +226,7 @@
     {
       "id": 1,
       "firstname": "Leanne",
-      "lastname": "Graham",
+      "lastname": "Graham23",
       "email": "leanne.graham@gmail.com",
       "recruitingRole": "interviewer",
       "department": "IT Infrastructure",

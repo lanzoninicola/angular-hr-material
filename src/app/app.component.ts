@@ -4,6 +4,9 @@ import { ResolveEnd, ResolveStart, Router, RouterEvent } from '@angular/router';
 import { filter, Observable, Subscription } from 'rxjs';
 import { BreakpointService } from './core/services/breakpoint.service';
 
+//TODO: Prefetching data Picklist, Settings, Users in the store starting after 15000ms
+// skipping loading spinner and http error handling intercepotrs
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

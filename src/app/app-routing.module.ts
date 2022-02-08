@@ -9,20 +9,20 @@ const routes: Routes = [
         return m.DashboardModule;
       }),
   },
-  {
-    path: 'users',
-    loadChildren: () =>
-      import('./users/users.module').then((m) => {
-        return m.UsersModule;
-      }),
-  },
-  {
-    path: 'candidates',
-    loadChildren: () =>
-      import('./candidates/candidates.module').then((m) => {
-        return m.CandidatesModule;
-      }),
-  },
+  // {
+  //   path: 'users',
+  //   loadChildren: () =>
+  //     import('./users/users.module').then((m) => {
+  //       return m.UsersModule;
+  //     }),
+  // },
+  // {
+  //   path: 'candidates',
+  //   loadChildren: () =>
+  //     import('./candidates/candidates.module').then((m) => {
+  //       return m.CandidatesModule;
+  //     }),
+  // },
   {
     path: 'request-to-hire',
     loadChildren: () =>
