@@ -56,4 +56,4 @@ export interface RequestToHireHttpSerialized {
   updatedAt: Date;
 }
 
-export type RTHStatus = 'new' | 'backlog' | 'in-progress' | 'peding' | 'done';
+export type RTHStatus = 'new' | 'backlog' | 'in-progress' | 'pending' | 'done';

@@ -5,6 +5,7 @@ import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { TableColumnConfig } from 'src/app/table-data/types/table.types';
 
 import { RequestToHireService } from '../../services/request-to-hire.service';
+import { RequestStatusChipComponent } from '../request-status-chip/request-status-chip.component';
 
 @Component({
   selector: 'ahr-request-to-hire-list',
@@ -60,9 +61,14 @@ const RTH_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
   {
     key: 'status',
     title: 'Status',
+    viewType: 'component',
+    component: {
+      key: RequestStatusChipComponent,
+    },
     sortable: false,
     headerStyle: {
       'min-width': '80px',
+      'text-align': 'center',
     },
   },
   {
