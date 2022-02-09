@@ -44,11 +44,13 @@ export class ComponentOutletDirective implements OnInit {
    */
 
   private _passingInputsToComponent() {
-    this.componentConfig['inputs'].forEach((input: any) => {
-      Object.keys(input).forEach((inputKey: string) => {
-        this.componentRef.instance[inputKey] = input[inputKey];
+    if (this.componentConfig['inputs']) {
+      this.componentConfig['inputs'].forEach((input: any) => {
+        Object.keys(input).forEach((inputKey: string) => {
+          this.componentRef.instance[inputKey] = input[inputKey];
+        });
       });
-    });
+    }
   }
 
   /**
