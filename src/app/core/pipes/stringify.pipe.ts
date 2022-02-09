@@ -1,9 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'cellObjectModel',
+  name: 'stringify',
 })
-export class CellObjectModelPipe implements PipeTransform {
+export class StringifyPipe implements PipeTransform {
   /**
    * @description
    * This pipe is used to display the value of a cell when the value is an object.
@@ -21,7 +21,7 @@ export class CellObjectModelPipe implements PipeTransform {
       // fieldname => The entity-model property name that contains the information to render inside the cell
 
       if (fieldname === undefined) {
-        throw 'CellValuePipe - The descriptor for the field name is missing. What is the name of the column configuration that indicates the name of model prop to display?';
+        throw 'StringifyPipe - The field name to stringify is missing. What is the name of the column configuration that indicates the name of model prop to display?';
       }
 
       return value[fieldname];
