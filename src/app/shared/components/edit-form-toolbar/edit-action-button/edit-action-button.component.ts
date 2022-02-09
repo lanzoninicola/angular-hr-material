@@ -9,7 +9,11 @@ import { ActionButton } from 'src/app/shared/types/action-button.types';
       [attr.aria-disabled]="disabled"
       (click)="onClick()"
     >
-      <button mat-icon-button aria-label="label" [disabled]="disabled">
+      <button
+        mat-icon-button
+        attr.aria-label="{{ label }}"
+        [disabled]="disabled"
+      >
         <mat-icon aria-hidden="false" aria-label="label">{{
           matIcon
         }}</mat-icon>

@@ -12,7 +12,7 @@ import { ActionButton } from 'src/app/shared/types/action-button.types';
         [disabled]="disabled"
         (click)="onNavigationButtonClicked()"
       >
-        <mat-icon aria-hidden="false" aria-label="label">{{
+        <mat-icon aria-hidden="false" attr.aria-label="{{ label }}">{{
           matIcon
         }}</mat-icon>
       </button>
