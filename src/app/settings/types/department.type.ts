@@ -1,8 +1,8 @@
-import { UserDTO } from 'src/app/users/types/user.type';
+import { UserModel } from 'src/app/users/models/user.model';
 
 export interface DepartmentDTO {
   id: number;
   name: string;
-  manager: UserDTO;
-  teamLeads: UserDTO[];
+  manager: UserModel;
+  teamLeads: UserModel[];
 }

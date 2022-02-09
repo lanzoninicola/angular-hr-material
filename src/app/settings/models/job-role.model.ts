@@ -4,9 +4,16 @@ export class JobRoleModel {
   private roleAbout: string;
   private responsibilities: string;
 
-  constructor(id: number, name: string) {
+  constructor(
+    id: number,
+    name: string,
+    roleAbout: string,
+    responsibilities: string
+  ) {
     this.id = id;
     this.name = name;
+    this.roleAbout = roleAbout;
+    this.responsibilities = responsibilities;
   }
 
   getId(): number {
@@ -27,4 +34,11 @@ export class JobRoleModel {
   setResponsibilities(responsibilities: string): void {
     this.responsibilities = responsibilities;
   }
+}
+
+export interface JobRoleDTO {
+  id: number;
+  name: string;
+  roleAbout: string;
+  responsibilities: string;
 }

@@ -6,9 +6,16 @@ export class DepartmentModel {
   private manager: UserModel;
   private teamLeads: UserModel[];
 
-  constructor(id: number, name: string) {
+  constructor(
+    id: number,
+    name: string,
+    manager: UserModel,
+    teamLeads: UserModel[]
+  ) {
     this.id = id;
     this.name = name;
+    this.manager = manager;
+    this.teamLeads = teamLeads;
   }
 
   getId(): number {
@@ -34,4 +41,11 @@ export class DepartmentModel {
   setTeamLeads(teamLeads: UserModel[]): void {
     this.teamLeads = teamLeads;
   }
+}
+
+export interface DepartmentDTO {
+  id: number;
+  name: string;
+  manager: UserModel;
+  teamLeads: UserModel[];
 }
