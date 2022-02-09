@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IconBadgeComponent } from 'src/app/shared/components/icon-badge/icon-badge.component';
-import { TableColumns } from 'src/app/table-data/types/table.types';
+import { IconComponent } from 'src/app/shared/components/icon/icon.component';
+import { TableColumnConfig } from 'src/app/table-data/types/table.types';
 
 import { RequestToHireService } from '../../services/request-to-hire.service';
 
@@ -14,7 +14,8 @@ import { RequestToHireService } from '../../services/request-to-hire.service';
         [dataSource]="tableDataSource$"
         [columns]="columns"
         (onRowClicked)="onRowClicked($event)"
-      ></ahr2-table-data>
+      >
+      </ahr2-table-data>
     </div>
   `,
 })
@@ -37,14 +38,104 @@ export class RequestToHireListComponent implements OnInit {
   }
 }
 
-const RTH_LIST_TABLE_COLUMNS: TableColumns = {
-  title: { title: 'Title' },
-  jobRole: { title: 'Job Role', field: 'name' },
-  status: { title: 'Status' },
-  createdAt: { title: 'Created In' },
-  updatedAt: { title: 'Last Update' },
-  highPriority: { title: 'High Priority', component: IconBadgeComponent },
-  department: { title: 'Department', field: 'name' },
-  businessUnit: { title: 'Business Unit' },
-  requester: { title: 'Requester', field: 'fullname' },
-};
+const RTH_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
+  {
+    key: 'title',
+    title: 'Title',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+  {
+    key: 'jobRole',
+    title: 'Job Role',
+    objectProp: 'name',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+
+  {
+    key: 'status',
+    title: 'Status',
+    sortable: false,
+    headerStyle: {
+      'min-width': '80px',
+    },
+  },
+  {
+    key: 'createdAt',
+    title: 'Created at',
+    type: 'date',
+    sortable: false,
+    headerStyle: {
+      'min-width': '80px',
+      'text-align': 'center',
+      'padding-inline': '0.5rem',
+      'word-break': 'break-all',
+    },
+    cellStyle: {
+      'text-align': 'center',
+    },
+  },
+  {
+    key: 'updatedAt',
+    title: 'Updated at',
+    type: 'date',
+    sortable: false,
+    headerStyle: {
+      'min-width': '80px',
+      'text-align': 'center',
+      'padding-inline': '0.5rem',
+    },
+    cellStyle: {
+      'text-align': 'center',
+    },
+  },
+  {
+    key: 'highPriority',
+    title: 'High Priority',
+    viewType: 'component',
+    component: {
+      key: IconComponent,
+      inputs: [{ icon: 'error' }, { label: 'high' }, { color: 'red' }],
+    },
+    headerStyle: {
+      'min-width': '80px',
+      'text-align': 'center',
+      'padding-inline': '0.5rem',
+    },
+    cellStyle: {
+      'text-align': 'center',
+    },
+    sortable: false,
+  },
+  {
+    key: 'department',
+    title: 'Department',
+    objectProp: 'name',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+  {
+    key: 'businessUnit',
+    title: 'Business Unit',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+  {
+    key: 'requester',
+    title: 'Requester',
+    objectProp: 'lastname',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+];
