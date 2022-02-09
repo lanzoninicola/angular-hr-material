@@ -1,36 +1,30 @@
 import { Injectable } from '@angular/core';
 
-import {
-  ColumnConfig,
-  ColumnTitle,
-  DataSourceField,
-  TableColumns,
-} from '../types/table.types';
+import { DataSourceField, TableColumnConfig } from '../types/table.types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableDataService {
-  tableColumnsTemplate: Map<DataSourceField, ColumnTitle | ColumnConfig> =
-    new Map();
+  tableColumnsTemplate: Map<DataSourceField, TableColumnConfig> = new Map();
 
   get columnfields(): string[] {
     return Array.from(this.tableColumnsTemplate.keys());
   }
 
-  get columnConfig(): (ColumnTitle | ColumnConfig)[] {
+  get columnConfig(): TableColumnConfig[] {
     return Array.from(this.tableColumnsTemplate.values());
   }
 
   constructor() {}
 
-  loadColumns(columns: TableColumns) {
-    Object.keys(columns).forEach((key: DataSourceField) => {
-      this.addColumn(key, columns[key]);
+  loadColumns(columns: TableColumnConfig[]) {
+    columns.forEach((column: TableColumnConfig) => {
+      this.addColumn(column['key'], column);
     });
   }
 
-  addColumn(key: DataSourceField, value: ColumnTitle | ColumnConfig) {
+  addColumn(key: DataSourceField, value: TableColumnConfig) {
     this.tableColumnsTemplate.set(key, value);
   }
 

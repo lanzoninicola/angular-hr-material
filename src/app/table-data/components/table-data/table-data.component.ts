@@ -11,7 +11,7 @@ import { BehaviorSubject, combineLatest, Observable, Subscription } from 'rxjs';
 
 import { SearchService } from '../../services/search.service';
 import { TableDataService } from '../../services/table-data.service';
-import { TableColumns } from '../../types/table.types';
+import { TableColumnConfig } from '../../types/table.types';
 
 // TODO: styling buttons in paginator. Maybe with a directive
 // https://stackoverflow.com/questions/53646259/how-to-customize-mat-paginator-in-angular-material
@@ -23,7 +23,7 @@ import { TableColumns } from '../../types/table.types';
 })
 export class TableDataComponent implements OnInit, OnDestroy {
   @Input()
-  columns: TableColumns;
+  columns: TableColumnConfig[];
 
   @Input('dataSource')
   dataSource$: Observable<any[]>;

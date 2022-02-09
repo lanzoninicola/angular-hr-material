@@ -1,16 +1,37 @@
 <div class="container">
   <table mat-table [dataSource]="dataOnPage$" class="data-table">
     <ng-container
-      *ngFor="let column of columns | keyvalue; let i = index"
-      matColumnDef="{{ column.key }}"
+      *ngFor="let columnConfig of columns; let i = index"
+      matColumnDef="{{ columnConfig.key }}"
     >
-      <th mat-header-cell *matHeaderCellDef>{{ column.value["title"] }}</th>
-      <td mat-cell *matCellDef="let row">
-        <ng-content>
-          <!-- {{
-            row[column.key] | cellObjectModel: column.value["field"] | cellDate
-          }} -->
-        </ng-content>
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        [ngStyle]="columnConfig['headerStyle'] || {}"
+      >
+        {{ columnConfig["title"] }}
+      </th>
+      <td
+        mat-cell
+        *matCellDef="let row"
+        [ngStyle]="columnConfig['cellStyle'] || {}"
+      >
+        <ng-container *ngIf="!columnConfig['viewType']">
+          <ng-container *ngIf="!columnConfig['type']">
+            {{ row[columnConfig.key] | stringify: columnConfig["objectProp"] }}
+          </ng-container>
+          <ng-container *ngIf="columnConfig['type'] === 'date'">
+            {{ row[columnConfig.key] | date: "dd/MM/yy" }}
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="columnConfig['viewType'] === 'component'">
+          <ng-container
+            *componentOutlet="
+              row[columnConfig.key];
+              config: columnConfig['component']
+            "
+          ></ng-container>
+        </ng-container>
       </td>
     </ng-container>
 

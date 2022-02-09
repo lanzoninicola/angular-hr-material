@@ -1,13 +1,25 @@
 import { Type } from '@angular/core';
 
-export type TableColumns = {
-  [key: DataSourceField]: ColumnConfig;
-};
-
 export type ColumnTitle = string;
 export type DataSourceField = string;
-export type ColumnConfig = {
-  title: string;
-  field?: string;
-  component?: Type<any>;
-};
+
+export type ComponentType = 'component';
+
+export interface TableColumnConfig {
+  key: DataSourceField;
+  title: ColumnTitle;
+  type?: string;
+  viewType?: ComponentType;
+  objectProp?: string;
+  component?: {
+    key: Type<any>;
+    inputs?: {}[];
+  };
+  headerStyle?: {};
+  cellStyle?: {};
+  sortable?: boolean;
+}
+
+export interface TableDataCell {
+  content: string;
+}
