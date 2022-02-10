@@ -2,8 +2,8 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
-import { DepartmentsService } from 'src/app/settings/services/department.service';
 
+import { RequestToHireModel } from '../models/request-to-hire.model';
 import { RequestToHireStoreService } from '../services/request-to-hire-store.service';
 import { RequestToHireService } from '../services/request-to-hire.service';
 
@@ -11,37 +11,55 @@ import { RequestToHireService } from '../services/request-to-hire.service';
   providedIn: 'root',
 })
 export class RequestEditResolver implements Resolve<any> {
+  entityIdParam: number;
+
   constructor(
     private _store: RequestToHireStoreService,
-    private _dataService: RequestToHireService,
-    private _departmentService: DepartmentsService,
+    private _requestToHireService: RequestToHireService,
     private _location: Location
   ) {}
 
-  resolve(route: ActivatedRouteSnapshot): Observable<any> {
-    const store = this._store;
-    const entityIdParam = parseInt(route.params['id'], 10);
+  resolve(route: ActivatedRouteSnapshot): Observable<RequestToHireModel> {
+    this.entityIdParam = parseInt(route.params['id'], 10);
 
-    if (Number.isNaN(+entityIdParam)) {
+    if (Number.isNaN(+this.entityIdParam)) {
       this._goBack();
     }
 
-    if (store.currentEntity !== undefined) {
-      const id = store.currentEntity.getId();
-      if (id === entityIdParam) {
-        store.entityStateUpdate();
-        return of(store.currentEntity);
+    return this._shouldEntityCached()
+      ? this._getEntityFromCache()
+      : this._getEntityFromServer();
+  }
+
+  private _shouldEntityCached() {
+    const currentEntity = this._store.currentEntity;
+
+    if (currentEntity !== undefined) {
+      if (currentEntity instanceof RequestToHireModel) {
+        return currentEntity.getId() === this.entityIdParam;
       }
     }
 
-    return this._dataService.findById(entityIdParam).pipe(
+    return false;
+  }
+
+  private _getEntityFromCache(): Observable<RequestToHireModel> {
+    this._setEntityState();
+    return of(this._store.currentEntity);
+  }
+
+  private _getEntityFromServer(): Observable<RequestToHireModel> {
+    return this._requestToHireService.findById(this.entityIdParam).pipe(
       catchError(this._goBack()),
       tap((entity) => {
-        console.log(entity);
-        store.currentEntity = entity;
-        store.entityStateUpdate();
+        this._store.currentEntity = entity;
+        this._setEntityState();
       })
     );
+  }
+
+  private _setEntityState() {
+    this._store.entityStateUpdate();
   }
 
   private _goBack() {
