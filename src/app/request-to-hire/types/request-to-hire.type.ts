@@ -19,7 +19,7 @@ export interface RequestToHireDTO {
   roleLevel: PicklistValue;
   highPriority: boolean;
   jobLocationType: PicklistValue;
-  jobLocation: BranchDTO | null;
+  jobLocation: BranchDTO;
   employmentStatus: PicklistValue;
   minimumQualifications: string; // long description
   preferredQualifications: string; // long description
@@ -43,7 +43,7 @@ export interface RequestToHireHttpSerialized {
   roleLevel: PicklistValue;
   highPriority: boolean;
   jobLocationType: PicklistValue;
-  jobLocation: BranchModel | null;
+  jobLocation: BranchModel;
   employmentStatus: PicklistValue;
   minimumQualifications: string; // long description
   preferredQualifications: string; // long description

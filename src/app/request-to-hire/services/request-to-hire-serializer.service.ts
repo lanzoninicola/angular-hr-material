@@ -62,16 +62,14 @@ export class RequestToHireSerializerService {
     );
   }
 
-  private _getBranchModel(location: BranchDTO | null) {
-    return location
-      ? new BranchModel(
-          location.id,
-          location.name,
-          location.street,
-          location.city,
-          location.country,
-          location.timezone
-        )
-      : null;
+  private _getBranchModel(location: BranchDTO) {
+    return new BranchModel(
+      location.id,
+      location.name,
+      location.street,
+      location.city,
+      location.country,
+      location.timezone
+    );
   }
 }

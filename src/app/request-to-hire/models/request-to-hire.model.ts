@@ -18,7 +18,7 @@ export class RequestToHireModel {
   private roleLevel: PicklistValue;
   private highPriority: boolean;
   private jobLocationType: PicklistValue;
-  private jobLocation: BranchModel | null;
+  private jobLocation: BranchModel;
   private employmentStatus: PicklistValue;
   private minimumQualifications: string; // long description
   private preferredQualifications: string; // long description
@@ -41,7 +41,7 @@ export class RequestToHireModel {
     roleLevel: PicklistValue,
     highPriority: boolean,
     jobLocationType: PicklistValue,
-    jobLocation: BranchModel | null,
+    jobLocation: BranchModel,
     employmentStatus: PicklistValue,
     minimumQualifications: string,
     preferredQualifications: string,
@@ -84,20 +84,20 @@ export class RequestToHireModel {
     return this.title;
   }
 
-  getDepartment(): string {
-    return this.department.getName();
+  getDepartment(): DepartmentModel {
+    return this.department;
   }
 
   getBusinessUnit(): string {
     return this.businessUnit;
   }
 
-  getRequester(): string {
-    return this.requester.fullname;
+  getRequester(): UserModel {
+    return this.requester;
   }
 
-  getJobRole(): string {
-    return this.jobRole.getName();
+  getJobRole(): JobRoleModel {
+    return this.jobRole;
   }
 
   getRoleTaskDescription(): string {
@@ -116,7 +116,7 @@ export class RequestToHireModel {
     return this.jobLocationType;
   }
 
-  getJobLocation(): BranchModel | null {
+  getJobLocation(): BranchModel {
     return this.jobLocation;
   }
 
