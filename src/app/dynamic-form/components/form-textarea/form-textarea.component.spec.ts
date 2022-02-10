@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IconBadgeComponent } from './icon-badge.component';
+import { FormTextareaComponent } from './form-textarea.component';
 
-describe('IconBadgeComponent', () => {
-  let component: IconBadgeComponent;
-  let fixture: ComponentFixture<IconBadgeComponent>;
+describe('FormTextareaComponent', () => {
+  let component: FormTextareaComponent;
+  let fixture: ComponentFixture<FormTextareaComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ IconBadgeComponent ]
+      declarations: [ FormTextareaComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IconBadgeComponent);
+    fixture = TestBed.createComponent(FormTextareaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

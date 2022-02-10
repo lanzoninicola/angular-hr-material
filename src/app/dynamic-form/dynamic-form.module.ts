@@ -19,6 +19,7 @@ import { FormCheckboxComponent } from './components/form-checkbox/form-checkbox.
 import { FormInputComponent } from './components/form-input/form-input.component';
 import { FormSelectComponent } from './components/form-select/form-select.component';
 import { DynamicFieldsDirective } from './directives/dynamic-fields.directive';
+import { FormTextAreaComponent } from './components/form-textarea/form-textarea.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { DynamicFieldsDirective } from './directives/dynamic-fields.directive';
     FormSelectComponent,
     FormInputComponent,
     FormCheckboxComponent,
+    FormTextAreaComponent,
   ],
   imports: [
     CommonModule,

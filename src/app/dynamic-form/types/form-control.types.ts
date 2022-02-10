@@ -15,7 +15,7 @@ export interface InputTextConfig {
   asyncValidators?: any[];
 }
 
-type FormControlTypeInput = 'input';
+type FormControlTypeInput = 'input' | 'textarea';
 
 export interface InputCheckboxConfig {
   key: string;

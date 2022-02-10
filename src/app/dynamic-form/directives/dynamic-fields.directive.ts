@@ -10,9 +10,11 @@ import { FormCheckboxComponent } from '../components/form-checkbox/form-checkbox
 
 import { FormInputComponent } from '../components/form-input/form-input.component';
 import { FormSelectComponent } from '../components/form-select/form-select.component';
+import { FormTextAreaComponent } from '../components/form-textarea/form-textarea.component';
 
 const components: { [type: string]: Type<any> } = {
   input: FormInputComponent,
+  textarea: FormTextAreaComponent,
   checkbox: FormCheckboxComponent,
   select: FormSelectComponent,
 };
