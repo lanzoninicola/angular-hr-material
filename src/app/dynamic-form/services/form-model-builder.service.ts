@@ -109,9 +109,9 @@ export class FormModelBuilderService {
     const groupFormControls: { [key: FormControlConfigKey]: FormControl } = {};
 
     controls.forEach((config: FormControlConfig) => {
-      const { key, value, syncValidators, asyncValidators } = config;
+      const { key, initialValue, syncValidators, asyncValidators } = config;
       groupFormControls[key] = this._createControl({
-        value,
+        initialValue,
         syncValidators,
         asyncValidators,
       });
@@ -126,7 +126,7 @@ export class FormModelBuilderService {
    *
    */
   private _createControl(controlConfig: {
-    value: any;
+    initialValue: any;
     syncValidators?:
       | ValidatorFn
       | ValidatorFn[]
@@ -134,8 +134,8 @@ export class FormModelBuilderService {
       | null;
     asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null;
   }): FormControl {
-    const { value, syncValidators, asyncValidators } = controlConfig;
-    return new FormControl(value, syncValidators, asyncValidators);
+    const { initialValue, syncValidators, asyncValidators } = controlConfig;
+    return new FormControl(initialValue, syncValidators, asyncValidators);
   }
 
   /**
