@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { RequestToHireModel } from '../../models/request-to-hire.model';
@@ -42,26 +42,27 @@ export class RequestToHireEditComponent implements OnInit {
   }
 
   onValueChanges(valueChanges: Observable<any>) {
-    // this.subs.add(
-    //   valueChanges
-    //     .pipe<RequestToHireModel>(
-    //       map((userFormData: UserFormData) => {
-    //         return new RequestToHireModel(
-    //           this.currentRequest.getId(),
-    //           userFormData['firstname'],
-    //           userFormData['lastname'],
-    //           userFormData['email'],
-    //           userFormData['recruitingRoles'],
-    //           userFormData['departments'],
-    //           userFormData['companyLevels'],
-    //           userFormData['isAdmin']
-    //         );
-    //       })
-    //     )
-    //     .subscribe((userModel: RequestToHireModel) => {
-    //       this.currentRequest = userModel;
-    //     })
-    // );
+    this.subs.add(
+      valueChanges
+        .pipe<any>(
+          map((formData: any) => {
+            console.log(formData);
+            // return new RequestToHireModel(
+            //   this.currentRequest.getId(),
+            //   userFormData['firstname'],
+            //   userFormData['lastname'],
+            //   userFormData['email'],
+            //   userFormData['recruitingRoles'],
+            //   userFormData['departments'],
+            //   userFormData['companyLevels'],
+            //   userFormData['isAdmin']
+            // );
+          })
+        )
+        .subscribe((userModel: RequestToHireModel) => {
+          // this.currentRequest = userModel;
+        })
+    );
   }
 
   onStatusChanges(statusChanges: Observable<any>) {

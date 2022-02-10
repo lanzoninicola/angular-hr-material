@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModuleStoreService } from 'src/app/core/services/module-store.service';
 import { EntityState } from 'src/app/core/types/entityState.type';
+import { SelectOptionConfig } from 'src/app/dynamic-form/types/form-control.types';
 import { BranchModel } from 'src/app/settings/models/branch.model';
 import { DepartmentModel } from 'src/app/settings/models/department.model';
 import { RequestToHireModel } from '../models/request-to-hire.model';
@@ -41,19 +42,19 @@ export class RequestToHireStoreService extends ModuleStoreService {
     this.set(`${this.PREFIX}_ENTITY_STATE`, 'create');
   }
 
-  setDepartmentsFormControl(departmentsName: string[]) {
+  setDepartmentsFormControl(departmentsName: SelectOptionConfig[]) {
     this.set(this.DEPARTMENTS_LIST_FORM_CONTROL, departmentsName);
   }
 
-  getDepartmentsFormControl(): string[] {
+  getDepartmentsFormControl(): SelectOptionConfig[] {
     return this.get(this.DEPARTMENTS_LIST_FORM_CONTROL);
   }
 
-  setBranchesFormControl(branchesName: string[]) {
+  setBranchesFormControl(branchesName: SelectOptionConfig[]) {
     this.set(this.BRANCHES_LIST_FORM_CONTROL, branchesName);
   }
 
-  getBranchesFormControl(): string[] {
+  getBranchesFormControl(): SelectOptionConfig[] {
     return this.get(this.BRANCHES_LIST_FORM_CONTROL);
   }
 }

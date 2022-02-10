@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
+import { tap } from 'rxjs';
 import { DateSerializerService } from 'src/app/core/services/date-serializer.service';
+import { PicklistService } from 'src/app/core/services/picklist.service';
+import { PicklistId } from 'src/app/core/types/picklist.type';
 import { BranchModel } from 'src/app/settings/models/branch.model';
 import { DepartmentModel } from 'src/app/settings/models/department.model';
 import { JobRoleModel } from 'src/app/settings/models/job-role.model';
@@ -17,7 +20,10 @@ import {
   providedIn: 'root',
 })
 export class RequestToHireSerializerService {
-  constructor(private _dateSerializer: DateSerializerService) {}
+  constructor(
+    private _dateSerializer: DateSerializerService,
+    private _picklistService: PicklistService
+  ) {}
 
   deserialize(data: RequestToHireDTO): RequestToHireHttpSerialized {
     return {
@@ -72,4 +78,15 @@ export class RequestToHireSerializerService {
       location.timezone
     );
   }
+
+  // private _getSpecialCategoriesOpened(specialCategories: boolean): PicklistId {
+  //   const picklistValue = specialCategories ? 'Yes' : 'No';
+  //   let specialCategoriesOpened: PicklistId = 0;
+
+  //   this._picklistService
+  //     .findByTypeAndValue('yesno', picklistValue)
+  //     .pipe(tap((picklist) => (specialCategoriesOpened = picklist.id)));
+
+  //   return specialCategoriesOpened;
+  // }
 }

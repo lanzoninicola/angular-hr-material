@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { DateService } from 'src/app/core/services/date.service';
+import { PicklistService } from 'src/app/core/services/picklist.service';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
@@ -54,7 +55,8 @@ export class RequestToHireEditFormComponent implements OnInit {
   constructor(
     private _dynamicForm: DynamicFormService,
     private _store: RequestToHireStoreService,
-    private _dateService: DateService
+    private _dateService: DateService,
+    private _picklistService: PicklistService
   ) {}
 
   ngOnInit(): void {
@@ -73,8 +75,8 @@ export class RequestToHireEditFormComponent implements OnInit {
   }
 
   private _buildFormGroups() {
-    const departments = this._store.getDepartmentsFormControl();
-    const branches = this._store.getBranchesFormControl();
+    const departmentsSelectOptions = this._store.getDepartmentsFormControl();
+    const branchesSelectOptions = this._store.getBranchesFormControl();
 
     this.RTH_MAIN_INFO = [
       {
@@ -82,7 +84,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Title',
         key: 'title',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -90,7 +92,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Requester',
         key: 'requester',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -98,7 +100,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Created At',
         key: 'createdAt',
-        value: '',
+        initialValue: '',
         syncValidators: [],
       },
       {
@@ -106,22 +108,23 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Last Updated At',
         key: 'updatedAt',
-        value: '',
+        initialValue: '',
         syncValidators: [],
       },
       {
-        type: 'input',
-        placeholder: '',
-        label: 'Status',
         key: 'status',
-        value: '',
-        syncValidators: [],
+        type: 'select',
+        label: 'Working Status',
+        placeholder: '',
+        whatToSelect: 'status',
+        initialValue: '',
+        picklistType: 'rthWorkingStatus',
       },
       {
         key: 'highPriority',
         type: 'checkbox',
         label: 'High Priority',
-        value: false,
+        initialValue: false,
       },
     ];
 
@@ -131,7 +134,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Budget',
         key: 'budget',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -139,7 +142,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Job Role',
         key: 'jobRole',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -148,14 +151,15 @@ export class RequestToHireEditFormComponent implements OnInit {
         label: 'Department',
         placeholder: '',
         whatToSelect: 'department',
-        value: departments,
+        initialValue: '',
+        options: departmentsSelectOptions,
       },
       {
         type: 'input',
         placeholder: '',
         label: 'Business Unit',
         key: 'businessUnit',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -163,7 +167,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Employment Status',
         key: 'employmentStatus',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
     ];
@@ -174,7 +178,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Tasks Description',
         key: 'roleTaskDescription',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -182,7 +186,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Minimum Qualifications',
         key: 'minimumQualifications',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -190,7 +194,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Preferred Qualifications',
         key: 'preferredQualifications',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -198,7 +202,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Role Level',
         key: 'roleLevel',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -206,7 +210,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Location Type',
         key: 'jobLocationType',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
       {
@@ -215,7 +219,8 @@ export class RequestToHireEditFormComponent implements OnInit {
         label: 'Location',
         placeholder: '',
         whatToSelect: 'branches',
-        value: branches,
+        initialValue: '',
+        options: branchesSelectOptions,
       },
 
       {
@@ -223,7 +228,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Benefits',
         key: 'benefits',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
     ];
@@ -235,14 +240,15 @@ export class RequestToHireEditFormComponent implements OnInit {
         label: 'Open for Special Categories',
         placeholder: '',
         whatToSelect: '',
-        value: [] as string[],
+        initialValue: '',
+        picklistType: 'yesno',
       },
       {
         type: 'textarea',
         placeholder: '',
         label: 'Additional Notes',
         key: 'additionalNotes',
-        value: '',
+        initialValue: '',
         syncValidators: [Validators.required],
       },
     ];
@@ -296,7 +302,7 @@ export class RequestToHireEditFormComponent implements OnInit {
     this._dynamicForm.setControlsValue('rthPositionMainInfo', {
       budget: requestToHire.getBudget(),
       jobRole: requestToHire.getJobRole().getName(),
-      department: requestToHire.getDepartment().getName(),
+      department: requestToHire.getDepartment().getId(),
       businessUnit: requestToHire.getBusinessUnit(),
       employmentStatus: requestToHire.getEmploymentStatus(),
     });
@@ -307,12 +313,12 @@ export class RequestToHireEditFormComponent implements OnInit {
       preferredQualifications: requestToHire.getPreferredQualifications(),
       roleLevel: requestToHire.getRoleLevel(),
       jobLocationType: requestToHire.getJobLocationType(),
-      jobLocation: requestToHire.getJobLocation().getName(),
+      jobLocation: requestToHire.getJobLocation().getId(),
       benefits: requestToHire.getBenefits(),
     });
 
     this._dynamicForm.setControlsValue('rthPositionOther', {
-      specialCategoriesOpened: requestToHire.getSpecialCategoriesOpened(),
+      specialCategoriesOpened: 9, //requestToHire.getSpecialCategoriesOpened(),
       additionalNotes: requestToHire.getAdditionalNotes(),
     });
   }

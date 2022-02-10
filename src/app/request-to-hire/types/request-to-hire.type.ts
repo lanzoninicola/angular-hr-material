@@ -1,4 +1,4 @@
-import { PicklistValue } from 'src/app/core/types/picklist.type';
+import { PicklistId, PicklistValue } from 'src/app/core/types/picklist.type';
 import { BranchModel } from 'src/app/settings/models/branch.model';
 import { DepartmentModel } from 'src/app/settings/models/department.model';
 import { JobRoleModel } from 'src/app/settings/models/job-role.model';
