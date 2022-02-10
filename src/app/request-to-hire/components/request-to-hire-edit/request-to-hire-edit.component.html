@@ -1,1 +1,34 @@
-<p>request-to-hire-edit works!</p>
+<ahr-edit-form-toolbar [disabled]="formState === 'submitted'">
+  <ahr-edit-action-button
+    left
+    [disabled]="
+      (formState === 'idle' || formState === 'submitted') &&
+      formStatus === 'invalid'
+    "
+    [action]="'save'"
+    (actionEvent)="onSaveButtonClicked()"
+  ></ahr-edit-action-button>
+  <ahr-edit-action-button
+    left
+    [action]="'disable'"
+    (actionEvent)="onDisableButtonClicked()"
+  ></ahr-edit-action-button>
+  <ahr-edit-action-button
+    left
+    [action]="'remove'"
+    (actionEvent)="onRemoveButtonClicked()"
+  ></ahr-edit-action-button>
+  <ahr-navigation-action-button
+    right
+    [action]="'goback'"
+  ></ahr-navigation-action-button>
+</ahr-edit-form-toolbar>
+<div class="container-form">
+  <app-request-to-hire-edit-form
+    [requestToHire]="currentRequest"
+    [showSpinner]="formState === 'submitted'"
+    (formState)="onFormState($event)"
+    (valueChanges)="onValueChanges($event)"
+    (statusChanges)="onStatusChanges($event)"
+  ></app-request-to-hire-edit-form>
+</div>

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 
 import { CoreModule } from '../core/core.module';
+import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { SharedModule } from '../shared/shared.module';
 import { TableDataModule } from '../table-data/table-data.module';
 import { RequestStatusChipComponent } from './components/request-status-chip/request-status-chip.component';
@@ -18,7 +19,6 @@ import { RequestToHireRoutingModule } from './routing/request-to-hire-routing.mo
     RequestToHireSectionComponent,
     RequestToHireEditComponent,
     RequestToHireEditFormComponent,
-
     RequestStatusChipComponent,
   ],
   imports: [
@@ -28,6 +28,7 @@ import { RequestToHireRoutingModule } from './routing/request-to-hire-routing.mo
     RequestToHireRoutingModule,
     MatButtonModule,
     TableDataModule,
+    DynamicFormModule,
   ],
 })
 export class RequestToHireModule {}

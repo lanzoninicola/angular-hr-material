@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
+import { DepartmentsService } from 'src/app/settings/services/department.service';
 
 import { RequestToHireStoreService } from '../services/request-to-hire-store.service';
 import { RequestToHireService } from '../services/request-to-hire.service';
@@ -13,6 +14,7 @@ export class RequestEditResolver implements Resolve<any> {
   constructor(
     private _store: RequestToHireStoreService,
     private _dataService: RequestToHireService,
+    private _departmentService: DepartmentsService,
     private _location: Location
   ) {}
 
@@ -25,7 +27,7 @@ export class RequestEditResolver implements Resolve<any> {
     }
 
     if (store.currentEntity !== undefined) {
-      const { id } = store.currentEntity;
+      const id = store.currentEntity.getId();
       if (id === entityIdParam) {
         store.entityStateUpdate();
         return of(store.currentEntity);
@@ -35,6 +37,7 @@ export class RequestEditResolver implements Resolve<any> {
     return this._dataService.findById(entityIdParam).pipe(
       catchError(this._goBack()),
       tap((entity) => {
+        console.log(entity);
         store.currentEntity = entity;
         store.entityStateUpdate();
       })

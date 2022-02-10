@@ -84,20 +84,20 @@ export class RequestToHireModel {
     return this.title;
   }
 
-  getDepartment(): DepartmentModel {
-    return this.department;
+  getDepartment(): string {
+    return this.department.getName();
   }
 
   getBusinessUnit(): string {
     return this.businessUnit;
   }
 
-  getRequester(): UserModel {
-    return this.requester;
+  getRequester(): string {
+    return this.requester.fullname;
   }
 
-  getJobRole(): JobRoleModel {
-    return this.jobRole;
+  getJobRole(): string {
+    return this.jobRole.getName();
   }
 
   getRoleTaskDescription(): string {
