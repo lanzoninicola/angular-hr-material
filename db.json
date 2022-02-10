@@ -3,78 +3,152 @@
     {
       "id": 1,
       "type": "recruitingRoles",
-      "values": [
-        "hiring-manager",
-        "interviewer",
-        "recruiter",
-        "guest"
-      ]
+      "value": "hiring-manager"
+    },
+    {
+      "id": 12,
+      "type": "recruitingRoles",
+      "value": "interviewer"
+    },
+    {
+      "id": 13,
+      "type": "recruitingRoles",
+      "value": "recruiter"
+    },
+    {
+      "id": 14,
+      "type": "recruitingRoles",
+      "value": "guest"
     },
     {
       "id": 2,
       "type": "departments",
-      "values": [
-        "Human Resources",
-        "Front-end Developers",
-        "Back-end Developers",
-        "Database Developers",
-        "IT Infrastructure"
-      ]
+      "value": "Human Resources"
+    },
+    {
+      "id": 21,
+      "type": "departments",
+      "value": "Front-end Developers"
+    },
+    {
+      "id": 22,
+      "type": "departments",
+      "value": "Back-end Developers"
+    },
+    {
+      "id": 23,
+      "type": "departments",
+      "value": "Database Developers"
+    },
+    {
+      "id": 24,
+      "type": "departments",
+      "value": "IT Infrastructure"
     },
     {
       "id": 3,
       "type": "companyLevels",
-      "values": [
-        "Manager",
-        "Team Lead",
-        "Specialist"
-      ]
+      "value": "Manager"
+    },
+    {
+      "id": 31,
+      "type": "companyLevels",
+      "value": "Team Lead"
+    },
+    {
+      "id": 32,
+      "type": "companyLevels",
+      "value": "Specialist"
     },
     {
       "id": 4,
       "type": "businessUntis",
-      "values": [
-        "Alpha Product",
-        "Beta Product",
-        "Delta Product"
-      ]
+      "value": "Alpha Product"
+    },
+    {
+      "id": 41,
+      "type": "businessUntis",
+      "value": "Beta Product"
+    },
+    {
+      "id": 42,
+      "type": "businessUntis",
+      "value": "Delta Product"
     },
     {
       "id": 5,
       "type": "roleLevels",
-      "values": [
-        "Junior",
-        "Middle",
-        "Senior"
-      ]
+      "value": "Junior"
+    },
+    {
+      "id": 51,
+      "type": "roleLevels",
+      "value": "Middle"
+    },
+    {
+      "id": 52,
+      "type": "roleLevels",
+      "value": "Senior"
     },
     {
       "id": 6,
       "type": "jobLocaltionTypes",
-      "values": [
-        "Full Remote",
-        "Presential",
-        "Remote/Presential"
-      ]
+      "value": "Full Remote"
+    },
+    {
+      "id": 61,
+      "type": "jobLocaltionTypes",
+      "value": "Presential"
+    },
+    {
+      "id": 62,
+      "type": "jobLocaltionTypes",
+      "value": "Remote/Presential"
     },
     {
       "id": 7,
       "type": "employmentStatus",
-      "values": [
-        "Part-time",
-        "Full-time employment"
-      ]
+      "value": "Part-time"
+    },
+    {
+      "id": 71,
+      "type": "employmentStatus",
+      "value": "Full-time employment"
     },
     {
       "id": 8,
       "type": "rthWorkingStatus",
-      "values": [
-        "new",
-        "backlog",
-        "in progress",
-        "pending",
-        "done"
-      ]
+      "value": "new"
+    },
+    {
+      "id": 81,
+      "type": "rthWorkingStatus",
+      "value": "backlog"
+    },
+    {
+      "id": 82,
+      "type": "rthWorkingStatus",
+      "value": "in progress"
+    },
+    {
+      "id": 83,
+      "type": "rthWorkingStatus",
+      "value": "pending"
+    },
+    {
+      "id": 84,
+      "type": "rthWorkingStatus",
+      "value": "done"
+    },
+    {
+      "id": 9,
+      "type": "yesno",
+      "value": "Yes"
+    },
+    {
+      "id": 91,
+      "type": "yesno",
+      "value": "No"
     }
   ],
   "departments": [
