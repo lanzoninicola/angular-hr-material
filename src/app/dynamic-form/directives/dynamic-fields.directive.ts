@@ -30,8 +30,8 @@ export class DynamicFieldsDirective implements OnInit {
   @Input('dynamicFields')
   controlsConfig: any[];
 
-  @Input()
-  dynamicFieldsParentGroupName: string;
+  @Input('dynamicFieldsParentGroupName')
+  parentGroupName: string;
 
   component: ComponentRef<any>;
 
@@ -47,8 +47,7 @@ export class DynamicFieldsDirective implements OnInit {
 
       this.component = this.container.createComponent(componentToRender);
       this.component.instance.controlConfig = config;
-      this.component.instance.parentGroupName =
-        this.dynamicFieldsParentGroupName;
+      this.component.instance.parentGroupName = this.parentGroupName;
     });
   }
 }
