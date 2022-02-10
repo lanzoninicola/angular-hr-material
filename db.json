@@ -3,7 +3,12 @@
     {
       "id": 1,
       "type": "recruitingRoles",
-      "values": ["hiring-manager", "interviewer", "recruiter", "guest"]
+      "values": [
+        "hiring-manager",
+        "interviewer",
+        "recruiter",
+        "guest"
+      ]
     },
     {
       "id": 2,
@@ -19,69 +24,171 @@
     {
       "id": 3,
       "type": "companyLevels",
-      "values": ["Manager", "Team Lead", "Specialist"]
+      "values": [
+        "Manager",
+        "Team Lead",
+        "Specialist"
+      ]
     },
     {
       "id": 4,
       "type": "businessUntis",
-      "values": ["Alpha Product", "Beta Product", "Delta Product"]
+      "values": [
+        "Alpha Product",
+        "Beta Product",
+        "Delta Product"
+      ]
     },
     {
       "id": 5,
       "type": "roleLevels",
-      "values": ["Junior", "Middle", "Senior"]
+      "values": [
+        "Junior",
+        "Middle",
+        "Senior"
+      ]
     },
     {
       "id": 6,
       "type": "jobLocaltionTypes",
-      "values": ["Full Remote", "Presential", "Remote/Presential"]
+      "values": [
+        "Full Remote",
+        "Presential",
+        "Remote/Presential"
+      ]
     },
     {
       "id": 7,
       "type": "employmentStatus",
-      "values": ["Part-time", "Full-time employment"]
+      "values": [
+        "Part-time",
+        "Full-time employment"
+      ]
     },
     {
       "id": 8,
       "type": "rthWorkingStatus",
-      "values": ["new", "backlog", "in progress", "pending", "done"]
+      "values": [
+        "new",
+        "backlog",
+        "in progress",
+        "pending",
+        "done"
+      ]
     }
   ],
   "departments": [
     {
       "id": 1,
       "name": "Human Resources",
-      "managerId": 1,
+      "managerId": {
+        "id": 1,
+        "firstname": "Leanne",
+        "lastname": "Graham23",
+        "email": "leanne.graham@gmail.com",
+        "recruitingRole": "interviewer",
+        "department": "IT Infrastructure",
+        "companyRoleLevel": "Specialist",
+        "isAdmin": true
+      },
       "teamLeads": []
     },
     {
       "id": 2,
       "name": "Front-end Developers",
-      "managerId": 1,
-      "teamLeads": [7, 71, 72]
+      "managerId": {
+        "id": 7,
+        "firstname": "Kurtis",
+        "lastname": "Weissnat",
+        "email": "kurstis.weissnat@gmail.com",
+        "recruitingRole": "interviewer",
+        "department": "Front-end Developers",
+        "companyRoleLevel": "Manager",
+        "businessUnit": "Alpha Product",
+        "isAdmin": false
+      },
+      "teamLeads": [
+        {
+          "id": 71,
+          "firstname": "Nicholas",
+          "lastname": "Runolfsdottir",
+          "email": "nicholas.runolfsdottir@gmail.com",
+          "recruitingRole": "interviewer",
+          "department": "Front-end Developers",
+          "companyRoleLevel": "Team Lead",
+          "businessUnit": "Beta Product",
+          "isAdmin": false
+        },
+        {
+          "id": 72,
+          "firstname": "Glenna",
+          "lastname": "Reichert",
+          "email": "glenna.reichert@gmail.com",
+          "recruitingRole": "interviewer",
+          "department": "Front-end Developers",
+          "companyRoleLevel": "Team Lead",
+          "businessUnit": "Delta Product",
+          "isAdmin": false
+        }
+      ]
     },
     {
       "id": 3,
       "name": "Back-end Developers",
-      "managerId": 1,
+      "managerId": {
+        "id": 1,
+        "firstname": "Leanne",
+        "lastname": "Graham23",
+        "email": "leanne.graham@gmail.com",
+        "recruitingRole": "interviewer",
+        "department": "IT Infrastructure",
+        "companyRoleLevel": "Specialist",
+        "isAdmin": true
+      },
       "teamLeads": []
     },
     {
       "id": 4,
       "name": "Database Developers",
-      "managerId": 1,
+      "managerId": {
+        "id": 1,
+        "firstname": "Leanne",
+        "lastname": "Graham23",
+        "email": "leanne.graham@gmail.com",
+        "recruitingRole": "interviewer",
+        "department": "IT Infrastructure",
+        "companyRoleLevel": "Specialist",
+        "isAdmin": true
+      },
       "teamLeads": []
     },
     {
       "id": 5,
       "name": "IT Infrastructure",
-      "managerId": 1,
+      "managerId": {
+        "id": 1,
+        "firstname": "Leanne",
+        "lastname": "Graham23",
+        "email": "leanne.graham@gmail.com",
+        "recruitingRole": "interviewer",
+        "department": "IT Infrastructure",
+        "companyRoleLevel": "Specialist",
+        "isAdmin": true
+      },
       "teamLeads": []
     }
   ],
   "branches": [
     {
       "id": 1,
+      "name": "Home Office",
+      "street": "",
+      "city": "",
+      "country": "",
+      "timezone": ""
+    },
+    {
+      "id": 2,
       "name": "New York Office",
       "street": "45th street",
       "city": "Brooklyn",
@@ -89,7 +196,7 @@
       "timezone": "GMT-5"
     },
     {
-      "id": 2,
+      "id": 3,
       "name": "Sao Paulo Office",
       "street": "Rua Prefeito Marcado",
       "city": "Sao Paolo",
@@ -97,7 +204,7 @@
       "timezone": "GMT-3"
     }
   ],
-  "jobRoles": [
+  "job-roles": [
     {
       "id": 1,
       "name": "Front-end Developer",
@@ -145,14 +252,13 @@
       },
       "businessUnit": "Alpha Product",
       "requester": {
-        "id": 72,
-        "firstname": "Glenna",
-        "lastname": "Reichert",
-        "email": "glenna.reichert@gmail.com",
+        "id": 7,
+        "firstname": "Kurtis",
+        "lastname": "Weissnat",
+        "email": "kurstis.weissnat@gmail.com",
         "recruitingRole": "interviewer",
         "department": "Front-end Developers",
-        "companyRoleLevel": "manager",
-        "businessUnit": "Delta Product",
+        "companyRoleLevel": "Manager",
         "isAdmin": false
       },
       "jobRole": {
@@ -165,7 +271,14 @@
       "roleLevel": "Junior",
       "highPriority": true,
       "jobLocationType": "Full Remote",
-      "jobLocationId": null,
+      "jobLocation": {
+        "id": 1,
+        "name": "Home Office",
+        "street": "",
+        "city": "",
+        "country": "",
+        "timezone": ""
+      },
       "employmentStatus": "Full-time employment",
       "minimumQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "preferredQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
@@ -290,7 +403,7 @@
       "email": "kurstis.weissnat@gmail.com",
       "recruitingRole": "interviewer",
       "department": "Front-end Developers",
-      "companyRoleLevel": "Team Lead",
+      "companyRoleLevel": "Manager",
       "businessUnit": "Alpha Product",
       "isAdmin": false
     },
