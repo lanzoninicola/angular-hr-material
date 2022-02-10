@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { EMPTY, map, Observable, of, tap } from 'rxjs';
+import { SelectOptionConfig } from 'src/app/dynamic-form/types/form-control.types';
 import { DepartmentsService } from 'src/app/settings/services/department.service';
 
 import { RequestToHireStoreService } from '../services/request-to-hire-store.service';
@@ -19,11 +20,14 @@ export class DepartmentsFormControlResolver implements Resolve<boolean> {
       return this._departmentsService.findAll().pipe(
         map((departments) => {
           return departments.map((department) => {
-            return department.getName();
+            return {
+              value: department.getId(),
+              textContext: department.getName(),
+            };
           });
         }),
-        tap((departmentsName) => {
-          this._store.setDepartmentsFormControl(departmentsName);
+        tap<SelectOptionConfig[]>((departmentsOptions) => {
+          this._store.setDepartmentsFormControl(departmentsOptions);
         })
       );
     }

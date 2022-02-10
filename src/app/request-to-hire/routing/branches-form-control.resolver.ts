@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { EMPTY, map, Observable, of, tap } from 'rxjs';
+import { SelectOptionConfig } from 'src/app/dynamic-form/types/form-control.types';
 import { BranchesService } from 'src/app/settings/services/branches.service';
 
 import { RequestToHireStoreService } from '../services/request-to-hire-store.service';
@@ -18,12 +19,15 @@ export class BranchesFormControlResolver implements Resolve<boolean> {
     if (this._store.getBranchesFormControl() === undefined) {
       return this._branchesService.findAll().pipe(
         map((branches) => {
-          return branches.map((branche) => {
-            return branche.getName();
+          return branches.map((branch) => {
+            return {
+              value: branch.getId(),
+              textContext: branch.getName(),
+            };
           });
         }),
-        tap((branchesName) => {
-          this._store.setBranchesFormControl(branchesName);
+        tap<SelectOptionConfig[]>((branchesOptions) => {
+          this._store.setBranchesFormControl(branchesOptions);
         })
       );
     }
