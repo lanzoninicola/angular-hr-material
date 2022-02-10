@@ -19,7 +19,7 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   control: AbstractControl;
   parentFormGroupModel: FormGroup;
 
-  private _picklistSubscription$: Subscription;
+  private _picklistSubscription$: Subscription = new Subscription();
 
   selectOptions$: BehaviorSubject<PicklistValue[] | any[]> =
     new BehaviorSubject<PicklistValue[] | any[]>([]);
@@ -36,10 +36,11 @@ export class FormSelectComponent implements OnInit, OnDestroy {
     this.control =
       this.parentFormGroupModel.controls[this.controlConfig['key']];
 
-    this._options();
+    this._loadOptions();
   }
 
-  private _options() {
+  private _loadOptions() {
+    // TODO: set to form control config a field that explicit want to load from picklist
     const templateOptions: string[] = this.controlConfig['value'] as string[];
     if (templateOptions.length === 0) {
       this._getFromPicklist();
