@@ -4,6 +4,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { RequestToHireEditComponent } from '../components/request-to-hire-edit/request-to-hire-edit.component';
 import { RequestToHireListComponent } from '../components/request-to-hire-list/request-to-hire-list.component';
 import { RequestToHireSectionComponent } from '../components/request-to-hire-section/request-to-hire-section.component';
+import { BranchesFormControlResolver } from './branches-form-control.resolver';
+import { DepartmentsFormControlResolver } from './departments-form-control.resolver';
 import { RequestEditResolver } from './request-edit.resolver';
 import { RequestNewResolver } from './request-new.resolver';
 
@@ -27,7 +29,9 @@ const moduleRoutes: Routes = [
         path: ':id',
         component: RequestToHireEditComponent,
         resolve: {
-          entityEdit: RequestEditResolver,
+          entity: RequestEditResolver,
+          departmentsFormControl: DepartmentsFormControlResolver,
+          branchesFormControl: BranchesFormControlResolver,
         },
       },
     ],
