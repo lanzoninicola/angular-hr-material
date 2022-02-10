@@ -1,28 +1,31 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map, Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
-import { Picklist, PicklistValue } from '../types/picklist.type';
+import { Picklist } from '../types/picklist.type';
+import { HttpRequestOptionsService } from './http-request-options.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PicklistService {
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private _httpOptions: HttpRequestOptionsService
+  ) {}
 
-  getValuesOf(type: string): Observable<PicklistValue[]> {
-    return this.http
-      .get<Picklist[]>(`${environment.API}/picklist?type=${type}`)
-      .pipe(
-        catchError(() => of([])),
-        map((plArray: Picklist[]) => plArray[0]),
-        map((picklist: Picklist) => {
-          if (typeof picklist === 'undefined') {
-            return [];
-          }
-          return picklist.values;
-        })
-      );
+  findByType(type: string): Observable<Picklist[]> {
+    return this.http.get<Picklist[]>(
+      `${environment.API}/picklist?type=${type}`,
+      this._httpOptions.isBackendRequest()
+    );
+  }
+
+  findByTypeAndValue(type: string, value: string): Observable<Picklist> {
+    return this.http.get<Picklist>(
+      `${environment.API}/picklist?type=${type}&value=${value}`,
+      this._httpOptions.isBackendRequest()
+    );
   }
 }
