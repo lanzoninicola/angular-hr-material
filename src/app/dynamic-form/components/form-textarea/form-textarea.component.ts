@@ -4,17 +4,17 @@ import { DynamicFormService } from '../../services/dynamic-form.service';
 import { InputTextConfig } from '../../types/form-control.types';
 
 @Component({
-  selector: 'app-form-textarea',
+  selector: 'ahr-form-textarea',
   template: `
     <div [formGroup]="parentFormGroupModel">
       <mat-form-field>
         <mat-label>{{ controlConfig['label'] }}</mat-label>
-        <input
+        <textarea
           matInput
           placeholder="{{ controlConfig['label'] }}"
           [formControlName]="controlConfig['key']"
           [type]="controlConfig['type']"
-        />
+        ></textarea>
         <mat-error *ngIf="!control.valid && control.touched"
           >{{ controlConfig['label'] }} is not valid!</mat-error
         >
