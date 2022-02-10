@@ -89,10 +89,56 @@ export class RequestToHireService {
         this._httpOptions.isBackendRequest()
       )
       .pipe(
-        map((requestToHireData: any) => {
-          return {
-            ...requestToHireData,
-          };
+        map((item) => {
+          const requestDeserialized = this._serializer.deserialize(item);
+
+          const {
+            id,
+            title,
+            department,
+            businessUnit,
+            requester,
+            jobRole,
+            roleTaskDescription,
+            roleLevel,
+            highPriority,
+            jobLocationType,
+            jobLocation,
+            employmentStatus,
+            minimumQualifications,
+            preferredQualifications,
+            benefits,
+            budget,
+            specialCategoriesOpened,
+            additionalNotes,
+            status,
+            createdAt,
+            updatedAt,
+          } = requestDeserialized;
+
+          return new RequestToHireModel(
+            id,
+            title,
+            department,
+            businessUnit,
+            requester,
+            jobRole,
+            roleTaskDescription,
+            roleLevel,
+            highPriority,
+            jobLocationType,
+            jobLocation,
+            employmentStatus,
+            minimumQualifications,
+            preferredQualifications,
+            benefits,
+            budget,
+            specialCategoriesOpened,
+            additionalNotes,
+            status,
+            createdAt,
+            updatedAt
+          );
         })
       );
   }

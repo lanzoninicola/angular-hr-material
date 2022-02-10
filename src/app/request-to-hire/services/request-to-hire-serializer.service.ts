@@ -32,7 +32,12 @@ export class RequestToHireSerializerService {
   }
 
   private _getDepartmentModel(department: DepartmentDTO) {
-    return new DepartmentModel(department.id, department.name);
+    return new DepartmentModel(
+      department.id,
+      department.name,
+      department.manager,
+      department.teamLeads
+    );
   }
 
   private _getUserModel(requester: UserDTO) {
@@ -49,7 +54,12 @@ export class RequestToHireSerializerService {
   }
 
   private _getJobRoleModel(role: JobRoleDTO) {
-    return new JobRoleModel(role.id, role.name);
+    return new JobRoleModel(
+      role.id,
+      role.name,
+      role.roleAbout,
+      role.responsibilities
+    );
   }
 
   private _getBranchModel(location: BranchDTO | null) {
