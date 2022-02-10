@@ -10,7 +10,7 @@ export interface InputTextConfig {
   type: FormControlTypeInput;
   label: string;
   placeholder: string;
-  value: string;
+  initialValue: string;
   syncValidators?: any[];
   asyncValidators?: any[];
 }
@@ -21,7 +21,7 @@ export interface InputCheckboxConfig {
   key: string;
   type: FormControlTypeCheckbox;
   label: string;
-  value: boolean;
+  initialValue: boolean;
   syncValidators?: [];
   asyncValidators?: [];
 }
@@ -34,9 +34,17 @@ export interface SelectConfig {
   label: string;
   placeholder: string;
   whatToSelect: string;
-  value?: string[];
+  initialValue: string | null;
+  options?: SelectOptionConfig[];
+  picklistType?: PicklistType | null;
   syncValidators?: [];
   asyncValidators?: [];
 }
 
+export interface SelectOptionConfig {
+  value: number;
+  textContext: string;
+}
+
 type FormControlTypeSelect = 'select';
+type PicklistType = string;

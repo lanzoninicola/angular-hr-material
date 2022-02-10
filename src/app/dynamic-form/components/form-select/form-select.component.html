@@ -11,8 +11,8 @@
       >
       <mat-option
         *ngFor="let selectOption of selectOptions$ | async"
-        [value]="selectOption"
-        >{{ selectOption }}</mat-option
+        [value]="selectOption.value"
+        >{{ selectOption.textContext }}</mat-option
       >
     </mat-select>
 
