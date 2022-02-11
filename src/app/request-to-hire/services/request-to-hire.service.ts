@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
+
 import { RequestToHireModel } from '../models/request-to-hire.model';
-import { RequestToHireDTO } from '../types/request-to-hire.type';
+import {
+  RequestToHireDTO,
+  RequestToHireHttpSerialized,
+} from '../types/request-to-hire.type';
 import { RequestToHireSerializerService } from './request-to-hire-serializer.service';
 import { RequestToHireStoreService } from './request-to-hire-store.service';
 
@@ -19,66 +23,71 @@ export class RequestToHireService {
     private _serializer: RequestToHireSerializerService
   ) {}
 
-  findAll() {
+  findAll(): Observable<RequestToHireModel[]> {
     return this.http
       .get<RequestToHireDTO[]>(
         `${environment.API}/request-to-hire`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
-        map((items) => {
+        map<RequestToHireDTO[], RequestToHireHttpSerialized[]>((items) => {
           return items.map((item) => {
-            const requestDeserialized = this._serializer.deserialize(item);
-
-            const {
-              id,
-              title,
-              department,
-              businessUnit,
-              requester,
-              jobRole,
-              roleTaskDescription,
-              roleLevel,
-              highPriority,
-              jobLocationType,
-              jobLocation,
-              employmentStatus,
-              minimumQualifications,
-              preferredQualifications,
-              benefits,
-              budget,
-              specialCategoriesOpened,
-              additionalNotes,
-              status,
-              createdAt,
-              updatedAt,
-            } = requestDeserialized;
-
-            return new RequestToHireModel(
-              id,
-              title,
-              department,
-              businessUnit,
-              requester,
-              jobRole,
-              roleTaskDescription,
-              roleLevel,
-              highPriority,
-              jobLocationType,
-              jobLocation,
-              employmentStatus,
-              minimumQualifications,
-              preferredQualifications,
-              benefits,
-              budget,
-              specialCategoriesOpened,
-              additionalNotes,
-              status,
-              createdAt,
-              updatedAt
-            );
+            return this._serializer.deserialize(item);
           });
-        })
+        }),
+        map<RequestToHireHttpSerialized[], RequestToHireModel[]>(
+          (dataSerialized) => {
+            return dataSerialized.map((requestDeserialized) => {
+              const {
+                id,
+                title,
+                department,
+                businessUnit,
+                requester,
+                jobRole,
+                roleTaskDescription,
+                roleLevel,
+                highPriority,
+                jobLocationType,
+                jobLocation,
+                employmentStatus,
+                minimumQualifications,
+                preferredQualifications,
+                benefits,
+                budget,
+                specialCategoriesOpened,
+                additionalNotes,
+                status,
+                createdAt,
+                updatedAt,
+              } = requestDeserialized;
+
+              return new RequestToHireModel(
+                id,
+                title,
+                department,
+                businessUnit,
+                requester,
+                jobRole,
+                roleTaskDescription,
+                roleLevel,
+                highPriority,
+                jobLocationType,
+                jobLocation,
+                employmentStatus,
+                minimumQualifications,
+                preferredQualifications,
+                benefits,
+                budget,
+                specialCategoriesOpened,
+                additionalNotes,
+                status,
+                createdAt,
+                updatedAt
+              );
+            });
+          }
+        )
       );
   }
 
