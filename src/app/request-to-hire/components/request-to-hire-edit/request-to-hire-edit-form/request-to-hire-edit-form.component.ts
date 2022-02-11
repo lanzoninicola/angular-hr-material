@@ -63,7 +63,7 @@ export class RequestToHireEditFormComponent implements OnInit {
     this._buildFormGroups();
     this._buildForm();
     this._setTemplatePropertyBinding();
-    this._initFormValues(this.requestToHire);
+    this._initFormValues();
 
     this.formStateEvent.emit(this._dynamicForm.formState$);
     this.valueChangesEvent.emit(this._dynamicForm.valueChanges$);
@@ -285,41 +285,43 @@ export class RequestToHireEditFormComponent implements OnInit {
     this.requestToHireEditFormView = this._dynamicForm.view.get();
   }
 
-  private _initFormValues(requestToHire: RequestToHireModel) {
-    if (!requestToHire || Object.keys(requestToHire).length === 0) {
+  private _initFormValues() {
+    const rth = this.requestToHire;
+
+    if (!rth || Object.keys(rth).length === 0) {
       return;
     }
 
     this._dynamicForm.setControlsValue('rthMainInfo', {
-      title: requestToHire.getTitle(),
-      requester: requestToHire.getRequester().fullname,
-      createdAt: this._dateService.getDate(requestToHire.getCreatedAt()),
-      updatedAt: this._dateService.getDate(requestToHire.getUpdatedAt()),
-      status: requestToHire.getStatus(),
-      highPriority: requestToHire.getHighPriority(),
+      title: rth.getTitle(),
+      requester: rth.getRequester().fullname,
+      createdAt: this._dateService.getDate(rth.getCreatedAt()),
+      updatedAt: this._dateService.getDate(rth.getUpdatedAt()),
+      status: rth.getStatus(),
+      highPriority: rth.getHighPriority(),
     });
 
     this._dynamicForm.setControlsValue('rthPositionMainInfo', {
-      budget: requestToHire.getBudget(),
-      jobRole: requestToHire.getJobRole().getName(),
-      department: requestToHire.getDepartment().getId(),
-      businessUnit: requestToHire.getBusinessUnit(),
-      employmentStatus: requestToHire.getEmploymentStatus(),
+      budget: rth.getBudget(),
+      jobRole: rth.getJobRole().getName(),
+      department: rth.getDepartment().getId(),
+      businessUnit: rth.getBusinessUnit(),
+      employmentStatus: rth.getEmploymentStatus(),
     });
 
     this._dynamicForm.setControlsValue('rthPositionDetails', {
-      roleTaskDescription: requestToHire.getRoleTaskDescription(),
-      minimumQualifications: requestToHire.getMinimumQualifications(),
-      preferredQualifications: requestToHire.getPreferredQualifications(),
-      roleLevel: requestToHire.getRoleLevel(),
-      jobLocationType: requestToHire.getJobLocationType(),
-      jobLocation: requestToHire.getJobLocation().getId(),
-      benefits: requestToHire.getBenefits(),
+      roleTaskDescription: rth.getRoleTaskDescription(),
+      minimumQualifications: rth.getMinimumQualifications(),
+      preferredQualifications: rth.getPreferredQualifications(),
+      roleLevel: rth.getRoleLevel(),
+      jobLocationType: rth.getJobLocationType(),
+      jobLocation: rth.getJobLocation().getId(),
+      benefits: rth.getBenefits(),
     });
 
     this._dynamicForm.setControlsValue('rthPositionOther', {
       specialCategoriesOpened: 9, //requestToHire.getSpecialCategoriesOpened(),
-      additionalNotes: requestToHire.getAdditionalNotes(),
+      additionalNotes: rth.getAdditionalNotes(),
     });
   }
 }
