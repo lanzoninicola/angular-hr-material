@@ -72,6 +72,7 @@ export class RequestToHireEditComponent implements OnInit {
   }
 
   onSaveButtonClicked() {
+    // TRANSFORM FORM DATA TO MODEL
     if (this.entityState === 'create') {
       this._dataService.save(this.currentRequest);
     }
