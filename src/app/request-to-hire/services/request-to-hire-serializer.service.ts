@@ -1,20 +1,12 @@
 import { Injectable } from '@angular/core';
-import { tap } from 'rxjs';
 import { DateSerializerService } from 'src/app/core/services/date-serializer.service';
-import { PicklistService } from 'src/app/core/services/picklist.service';
-import { PicklistId } from 'src/app/core/types/picklist.type';
-import { BranchModel } from 'src/app/settings/models/branch.model';
-import { DepartmentModel } from 'src/app/settings/models/department.model';
-import { JobRoleModel } from 'src/app/settings/models/job-role.model';
-import { BranchDTO } from 'src/app/settings/types/branch.type';
-import { DepartmentDTO } from 'src/app/settings/types/department.type';
-import { JobRoleDTO } from 'src/app/settings/types/job-role.type';
-import { UserModel } from 'src/app/users/models/user.model';
-import { UserDTO } from 'src/app/users/types/user.type';
-import {
-  RequestToHireDTO,
-  RequestToHireHttpSerialized,
-} from '../types/request-to-hire.type';
+import { BranchSerializerService } from 'src/app/settings/services/branch-serializer.service';
+import { DepartmentSerializerService } from 'src/app/settings/services/department-serializer.service';
+import { JobRoleSerializerService } from 'src/app/settings/services/job-role-serializer.service';
+import { UserSerializerService } from 'src/app/users/services/user-serializer.service';
+
+import { RequestToHireModel } from '../models/request-to-hire.model';
+import { RequestToHireDTO } from '../types/request-to-hire.type';
 
 @Injectable({
   providedIn: 'root',
@@ -22,63 +14,39 @@ import {
 export class RequestToHireSerializerService {
   constructor(
     private _dateSerializer: DateSerializerService,
-    private _picklistService: PicklistService
+    private _usersSerializer: UserSerializerService,
+    private _departmentSerializer: DepartmentSerializerService,
+    private _jobRoleSerializer: JobRoleSerializerService,
+    private _branchSerializer: BranchSerializerService
   ) {}
 
-  deserialize(data: RequestToHireDTO): RequestToHireHttpSerialized {
-    return {
-      ...data,
-      department: this._getDepartmentModel(data.department),
-      requester: this._getUserModel(data.requester),
-      jobRole: this._getJobRoleModel(data.jobRole),
-      jobLocation: this._getBranchModel(data.jobLocation),
-      createdAt: this._dateSerializer.transform(data.createdAt),
-      updatedAt: this._dateSerializer.transform(data.updatedAt),
-    };
-  }
-
-  private _getDepartmentModel(department: DepartmentDTO) {
-    return new DepartmentModel(
-      department.id,
-      department.name,
-      department.manager,
-      department.teamLeads
+  deserialize(dto: RequestToHireDTO): RequestToHireModel {
+    return new RequestToHireModel(
+      dto.id,
+      dto.title,
+      this._departmentSerializer.deserialize(dto.department),
+      dto.businessUnit,
+      this._usersSerializer.deserialize(dto.requester),
+      this._jobRoleSerializer.deserialize(dto.jobRole),
+      dto.roleTaskDescription,
+      dto.roleLevel,
+      dto.highPriority,
+      dto.jobLocationType,
+      this._branchSerializer.deserialize(dto.jobLocation),
+      dto.employmentStatus,
+      dto.minimumQualifications,
+      dto.preferredQualifications,
+      dto.benefits,
+      dto.budget,
+      dto.specialCategoriesOpened,
+      dto.additionalNotes,
+      dto.status,
+      this._dateSerializer.transform(dto.createdAt),
+      this._dateSerializer.transform(dto.updatedAt)
     );
   }
 
-  private _getUserModel(requester: UserDTO) {
-    return new UserModel(
-      requester.id,
-      requester.firstname,
-      requester.lastname,
-      requester.email,
-      requester.recruitingRole,
-      requester.department,
-      requester.companyRoleLevel,
-      requester.isAdmin
-    );
-  }
-
-  private _getJobRoleModel(role: JobRoleDTO) {
-    return new JobRoleModel(
-      role.id,
-      role.name,
-      role.roleAbout,
-      role.responsibilities
-    );
-  }
-
-  private _getBranchModel(location: BranchDTO) {
-    return new BranchModel(
-      location.id,
-      location.name,
-      location.street,
-      location.city,
-      location.country,
-      location.timezone
-    );
-  }
-
+  // MOVE TO COMPONENT CONTROLLER
   // private _getSpecialCategoriesOpened(specialCategories: boolean): PicklistId {
   //   const picklistValue = specialCategories ? 'Yes' : 'No';
   //   let specialCategoriesOpened: PicklistId = 0;
