@@ -48,6 +48,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
       valueChanges
         .pipe<UserModel>(
           map((userFormData: UserFormData) => {
+            // TODO: !!!! Warning a new object is created here
             return new UserModel(
               this.currentUser.getId(),
               userFormData['firstname'],
