@@ -4,56 +4,50 @@ import { map, Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
 
-import { BranchDTO, BranchModel } from '../models/branch.model';
-import { SettingsStoreService } from './settings-store.service';
+import { JobRoleDTO, JobRoleModel } from '../../models/job-role.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BranchesService {
+export class JobRoleService {
   constructor(
     private http: HttpClient,
-    private _httpOptions: HttpRequestOptionsService,
-    private _store: SettingsStoreService
+    private _httpOptions: HttpRequestOptionsService
   ) {}
 
-  findAll(): Observable<BranchModel[]> {
+  findAll(): Observable<JobRoleModel[]> {
     return this.http
-      .get<BranchDTO[]>(
-        `${environment.API}/branches`,
+      .get<JobRoleDTO[]>(
+        `${environment.API}/job-roles`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((items) => {
           return items.map((item) => {
-            return new BranchModel(
+            return new JobRoleModel(
               item.id,
               item.name,
-              item.street,
-              item.city,
-              item.country,
-              item.timezone
+              item.roleAbout,
+              item.responsibilities
             );
           });
         })
       );
   }
 
-  findById(id: number): Observable<BranchModel> {
+  findById(id: number): Observable<JobRoleModel> {
     return this.http
-      .get<BranchDTO>(
-        `${environment.API}/branches/${id}`,
+      .get<JobRoleDTO>(
+        `${environment.API}/job-roles/${id}`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((item) => {
-          return new BranchModel(
+          return new JobRoleModel(
             item.id,
             item.name,
-            item.street,
-            item.city,
-            item.country,
-            item.timezone
+            item.roleAbout,
+            item.responsibilities
           );
         })
       );
@@ -63,7 +57,7 @@ export class BranchesService {
   //   //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
   //   return this.http
   //     .post<any>(
-  //       `${environment.API}/branches`,
+  //       `${environment.API}/job-roles`,
   //       requestToHireData,
   //       this._httpOptions.isFormSubmission()
   //     )
@@ -77,7 +71,7 @@ export class BranchesService {
 
   //   this.http
   //     .patch<any>(
-  //       `${environment.API}/branches/${id}`,
+  //       `${environment.API}/job-roles/${id}`,
   //       requestToHireData,
   //       this._httpOptions.isFormSubmission()
   //     )

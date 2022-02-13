@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { JobRoleDTO, JobRoleModel } from '../models/job-role.model';
+import { JobRoleModel } from '../../models/job-role.model';
+import { JobRoleDTO } from '../../types/job-role.type';
 
 @Injectable({
   providedIn: 'root',

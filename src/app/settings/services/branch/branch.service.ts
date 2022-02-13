@@ -4,52 +4,54 @@ import { map, Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
 
-import { DepartmentDTO, DepartmentModel } from '../models/department.model';
-import { SettingsStoreService } from './settings-store.service';
+import { BranchDTO, BranchModel } from '../../models/branch.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DepartmentsService {
+export class BranchService {
   constructor(
     private http: HttpClient,
-    private _httpOptions: HttpRequestOptionsService,
-    private _store: SettingsStoreService
+    private _httpOptions: HttpRequestOptionsService
   ) {}
 
-  findAll(): Observable<DepartmentModel[]> {
+  findAll(): Observable<BranchModel[]> {
     return this.http
-      .get<DepartmentDTO[]>(
-        `${environment.API}/departments`,
+      .get<BranchDTO[]>(
+        `${environment.API}/branches`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((items) => {
           return items.map((item) => {
-            return new DepartmentModel(
+            return new BranchModel(
               item.id,
               item.name,
-              item.manager,
-              item.teamLeads
+              item.street,
+              item.city,
+              item.country,
+              item.timezone
             );
           });
         })
       );
   }
 
-  findById(id: number): Observable<DepartmentModel> {
+  findById(id: number): Observable<BranchModel> {
     return this.http
-      .get<DepartmentDTO>(
-        `${environment.API}/departments/${id}`,
+      .get<BranchDTO>(
+        `${environment.API}/branches/${id}`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
         map((item) => {
-          return new DepartmentModel(
+          return new BranchModel(
             item.id,
             item.name,
-            item.manager,
-            item.teamLeads
+            item.street,
+            item.city,
+            item.country,
+            item.timezone
           );
         })
       );
@@ -59,7 +61,7 @@ export class DepartmentsService {
   //   //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
   //   return this.http
   //     .post<any>(
-  //       `${environment.API}/departments`,
+  //       `${environment.API}/branches`,
   //       requestToHireData,
   //       this._httpOptions.isFormSubmission()
   //     )
@@ -73,7 +75,7 @@ export class DepartmentsService {
 
   //   this.http
   //     .patch<any>(
-  //       `${environment.API}/departments/${id}`,
+  //       `${environment.API}/branches/${id}`,
   //       requestToHireData,
   //       this._httpOptions.isFormSubmission()
   //     )
