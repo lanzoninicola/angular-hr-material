@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { EMPTY, map, Observable, of, tap } from 'rxjs';
 import { SelectOptionConfig } from 'src/app/dynamic-form/types/form-control.types';
-import { DepartmentsService } from 'src/app/settings/services/department.service';
+import { DepartmentService } from 'src/app/settings/services/department/department.service';
 
 import { RequestToHireStoreService } from '../services/request-to-hire-store.service';
 
@@ -12,12 +12,12 @@ import { RequestToHireStoreService } from '../services/request-to-hire-store.ser
 export class DepartmentsFormControlResolver implements Resolve<boolean> {
   constructor(
     private _store: RequestToHireStoreService,
-    private _departmentsService: DepartmentsService
+    private _departmentService: DepartmentService
   ) {}
 
   resolve(): Observable<any> {
     if (this._store.getDepartmentsFormControl() === undefined) {
-      return this._departmentsService.findAll().pipe(
+      return this._departmentService.findAll().pipe(
         map((departments) => {
           return departments.map((department) => {
             return {
