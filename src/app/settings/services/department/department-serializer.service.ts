@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { DepartmentDTO, DepartmentModel } from '../models/department.model';
+import { DepartmentModel } from '../../models/department.model';
+import { DepartmentDTO } from '../../types/department.type';
 
 @Injectable({
   providedIn: 'root',
