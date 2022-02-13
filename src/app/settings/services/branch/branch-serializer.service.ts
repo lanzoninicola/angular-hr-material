@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BranchDTO, BranchModel } from '../models/branch.model';
+import { BranchModel } from '../../models/branch.model';
+import { BranchDTO } from '../../types/branch.type';
 
 @Injectable({
   providedIn: 'root',
