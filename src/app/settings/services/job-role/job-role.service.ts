@@ -5,6 +5,7 @@ import { HttpRequestOptionsService } from 'src/app/core/services/http-request-op
 import { environment } from 'src/environments/environment';
 
 import { JobRoleDTO, JobRoleModel } from '../../models/job-role.model';
+import { JobRoleSerializerService } from './job-role-serializer.service';
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +13,8 @@ import { JobRoleDTO, JobRoleModel } from '../../models/job-role.model';
 export class JobRoleService {
   constructor(
     private http: HttpClient,
-    private _httpOptions: HttpRequestOptionsService
+    private _httpOptions: HttpRequestOptionsService,
+    private _serializer: JobRoleSerializerService
   ) {}
 
   findAll(): Observable<JobRoleModel[]> {
@@ -22,14 +24,9 @@ export class JobRoleService {
         this._httpOptions.isBackendRequest()
       )
       .pipe(
-        map((items) => {
-          return items.map((item) => {
-            return new JobRoleModel(
-              item.id,
-              item.name,
-              item.roleAbout,
-              item.responsibilities
-            );
+        map<JobRoleDTO[], JobRoleModel[]>((dtos) => {
+          return dtos.map((dto) => {
+            return this._serializer.deserialize(dto);
           });
         })
       );
@@ -42,13 +39,8 @@ export class JobRoleService {
         this._httpOptions.isBackendRequest()
       )
       .pipe(
-        map((item) => {
-          return new JobRoleModel(
-            item.id,
-            item.name,
-            item.roleAbout,
-            item.responsibilities
-          );
+        map<JobRoleDTO, JobRoleModel>((dto) => {
+          return this._serializer.deserialize(dto);
         })
       );
   }
