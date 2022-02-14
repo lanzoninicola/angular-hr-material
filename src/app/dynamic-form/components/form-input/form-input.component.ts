@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { RequestToHireHttpService } from 'src/app/request-to-hire/services/request-to-hire-http.service';
 
 import { DynamicFormService } from '../../services/dynamic-form.service';
 import { InputTextConfig } from '../../types/form-control.types';
@@ -13,6 +14,7 @@ import { InputTextConfig } from '../../types/form-control.types';
         <input
           matInput
           placeholder="{{ controlConfig['label'] }}"
+          [readonly]="controlConfig['readonly']"
           [formControlName]="controlConfig['key']"
           [type]="controlConfig['type']"
         />
@@ -34,6 +36,8 @@ export class FormInputComponent implements OnInit {
   control: AbstractControl;
   parentFormGroupModel: FormGroup;
 
+  readonly: boolean = false;
+
   constructor(private _dynamicForm: DynamicFormService) {}
 
   ngOnInit(): void {
@@ -43,5 +47,7 @@ export class FormInputComponent implements OnInit {
 
     this.control =
       this.parentFormGroupModel.controls[this.controlConfig['key']];
+
+    this.readonly = this.controlConfig['readonly'] || false;
   }
 }
