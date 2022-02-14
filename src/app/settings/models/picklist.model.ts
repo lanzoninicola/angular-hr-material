@@ -6,4 +6,10 @@ export class PicklistModel {
   constructor(picklistItems: PicklistItemModel[]) {
     this.items = picklistItems;
   }
+
+  findItemByValue(value: string): PicklistItemModel | undefined {
+    return this.items.find(
+      (item) => item.getValue().toLowerCase() === value.toLowerCase()
+    );
+  }
 }
