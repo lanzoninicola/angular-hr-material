@@ -37,7 +37,5 @@ export class FormCheckboxComponent implements OnInit {
 
     this.control =
       this.parentFormGroupModel.controls[this.controlConfig['key']];
-
-    console.log(this.control.value);
   }
 }
