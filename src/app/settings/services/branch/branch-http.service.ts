@@ -1,33 +1,32 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
+import { environment } from 'src/environments/environment';
 
-import { BranchDTO, BranchModel } from '../../models/branch.model';
-import { BranchHttpService } from './branch-http.service';
-import { BranchSerializerService } from './branch-serializer.service';
+import { BranchDTO } from '../../models/branch.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BranchService {
+export class BranchHttpService {
   constructor(
-    private _httpService: BranchHttpService,
-    private _serializer: BranchSerializerService
+    private http: HttpClient,
+    private _httpOptions: HttpRequestOptionsService
   ) {}
 
-  findAll(): Observable<BranchModel[]> {
-    return this._httpService.findAll().pipe(
-      map<BranchDTO[], BranchModel[]>((dtos) => {
-        return dtos.map((dto) => this._serializer.deserialize(dto));
-      })
+  findAll(): Observable<BranchDTO[]> {
+    return this.http.get<BranchDTO[]>(
+      `${environment.API}/branches`,
+      this._httpOptions.isBackendRequest()
     );
   }
 
-  findById(id: number): Observable<BranchModel> {
-    return this._httpService
-      .findById(id)
-      .pipe(
-        map<BranchDTO, BranchModel>((dto) => this._serializer.deserialize(dto))
-      );
+  findById(id: number): Observable<BranchDTO> {
+    return this.http.get<BranchDTO>(
+      `${environment.API}/branches/${id}`,
+      this._httpOptions.isBackendRequest()
+    );
   }
 
   // save(requestToHireData: any) {
