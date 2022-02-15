@@ -1,7 +1,7 @@
 export class PicklistItemModel {
-  private id: number;
-  private type: string;
-  private value: string;
+  id: number;
+  type: string;
+  value: string;
 
   constructor(id: number, type: string, value: string) {
     this.id = id;
