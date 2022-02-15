@@ -55,8 +55,8 @@ export class RequestToHireSerializerService {
       dto.specialCategoriesOpened,
       dto.additionalNotes,
       this.getPicklistModelById(dto.status),
-      this._dateSerializer.transform(dto.createdAt),
-      this._dateSerializer.transform(dto.updatedAt)
+      this._dateSerializer.toDate(dto.createdAt),
+      this._dateSerializer.toDate(dto.updatedAt)
     );
   }
 
@@ -80,5 +80,35 @@ export class RequestToHireSerializerService {
     return this.picklist
       ? this.picklist.findItemById(id)
       : this._picklistService.EMPTY_PICKLIST_ITEM;
+  }
+
+  serialize(model: RequestToHireModel): RequestToHireDTO {
+    return {
+      id: 0,
+      title: model.getTitle(),
+      departmentId: model.getDepartment().getId(),
+      businessUnit: model.getBusinessUnit().getId(),
+      usersId: model.getRequester().getId(),
+      jobrolesId: model.getJobRole().getId(),
+      roleTaskDescription: model.getRoleTaskDescription(),
+      roleLevel: model.getRoleLevel().getId(),
+      highPriority: model.getHighPriority(),
+      jobLocationType: model.getJobLocationType().getId(),
+      branchesId: model.getJobLocation().getId(),
+      employmentStatus: model.getEmploymentStatus().getId(),
+      minimumQualifications: model.getMinimumQualifications(),
+      preferredQualifications: model.getPreferredQualifications(),
+      benefits: model.getBenefits(),
+      budget: model.getBudget(),
+      specialCategoriesOpened: model.getSpecialCategoriesOpened(),
+      additionalNotes: model.getAdditionalNotes(),
+      status: model.getStatus().getId(),
+      createdAt: '',
+      updatedAt: '',
+      users: {} as UserDTO,
+      departments: {} as DepartmentDTO,
+      jobroles: {} as JobRoleDTO,
+      branches: {} as BranchDTO,
+    };
   }
 }

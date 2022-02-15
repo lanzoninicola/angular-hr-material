@@ -45,6 +45,22 @@ export class RequestToHireHttpService {
     );
   }
 
+  save(dto: RequestToHireDTO): Observable<RequestToHireDTO> {
+    return this.http.post<RequestToHireDTO>(
+      this.baseURL,
+      dto,
+      this._httpOptions.isBackendRequest()
+    );
+  }
+
+  update(dto: RequestToHireDTO): Observable<RequestToHireDTO> {
+    return this.http.put<RequestToHireDTO>(
+      `${this.baseURL}/${dto.id}`,
+      dto,
+      this._httpOptions.isBackendRequest()
+    );
+  }
+
   /**
    *
    * @description

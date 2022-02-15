@@ -2,32 +2,33 @@ import { BranchModel } from 'src/app/settings/models/branch.model';
 import { DepartmentModel } from 'src/app/settings/models/department.model';
 import { JobRoleModel } from 'src/app/settings/models/job-role.model';
 import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
+
 import { UserModel } from 'src/app/users/models/user.model';
 
 //TODO: separate the model into head and body
 
 export class RequestToHireModel {
-  private id: number;
-  private title: string;
-  private department: DepartmentModel;
-  private businessUnit: PicklistItemModel;
-  private requester: UserModel;
-  private jobRole: JobRoleModel;
-  private roleTaskDescription: string; // long description
-  private roleLevel: PicklistItemModel;
-  private highPriority: boolean;
-  private jobLocationType: PicklistItemModel;
-  private jobLocation: BranchModel;
-  private employmentStatus: PicklistItemModel;
-  private minimumQualifications: string; // long description
-  private preferredQualifications: string; // long description
-  private benefits: string; // long description
-  private budget: string;
-  private specialCategoriesOpened: boolean;
-  private additionalNotes: string; // long description
-  private status: PicklistItemModel;
-  private createdAt: Date;
-  private updatedAt: Date;
+  id: number;
+  title: string;
+  department: DepartmentModel;
+  businessUnit: PicklistItemModel;
+  requester: UserModel;
+  jobRole: JobRoleModel;
+  roleTaskDescription: string; // long description
+  roleLevel: PicklistItemModel;
+  highPriority: boolean;
+  jobLocationType: PicklistItemModel;
+  jobLocation: BranchModel;
+  employmentStatus: PicklistItemModel;
+  minimumQualifications: string; // long description
+  preferredQualifications: string; // long description
+  benefits: string; // long description
+  budget: string;
+  specialCategoriesOpened: boolean;
+  additionalNotes: string; // long description
+  status: PicklistItemModel;
+  createdAt: Date;
+  updatedAt: Date;
 
   constructor(
     id: number,

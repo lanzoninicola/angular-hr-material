@@ -63,9 +63,15 @@ export class RequestToHireService {
     );
   }
 
-  save() {}
+  save(model: RequestToHireModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService.save(dto);
+  }
 
-  update() {}
+  update(model: RequestToHireModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService.update(dto);
+  }
 
   loadRequiredPicklist(): Observable<PicklistModel> {
     const query = this._picklistQueryString();
@@ -85,31 +91,4 @@ export class RequestToHireService {
 
     return fullUrlQuery;
   }
-
-  // save(requestToHireData: any) {
-  //   //TODO: see the issue https://github.com/lanzoninicola/angular-hr-material/issues/3]
-  //   return this.http
-  //     .post<any>(
-  //       `${environment.API}/request-to-hire`,
-  //       requestToHireData,
-  //       this._httpOptions.isFormSubmission()
-  //     )
-  //     .subscribe((newRequest) => {
-  //       this._store.currentEntity = newRequest;
-  //     });
-  // }
-
-  // update(requestToHireData: any) {
-  //   const { id } = requestToHireData;
-
-  //   this.http
-  //     .patch<any>(
-  //       `${environment.API}/request-to-hire/${id}`,
-  //       requestToHireData,
-  //       this._httpOptions.isFormSubmission()
-  //     )
-  //     .subscribe((updatedRequest) => {
-  //       this._store.currentEntity = updatedRequest;
-  //     });
-  // }
 }

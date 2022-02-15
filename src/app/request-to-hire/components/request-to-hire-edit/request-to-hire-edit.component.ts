@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
-import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 
 import { RequestToHireModel } from '../../models/request-to-hire.model';
 import { RequestToHireService } from '../../services/request-to-hire.service';
@@ -19,6 +18,7 @@ export class RequestToHireEditComponent implements OnInit {
 
   formState$ = this._dynamicForm.formState$;
   formStatus$: Observable<any>;
+  formData: RequestToHireModel;
 
   constructor(
     private _dynamicForm: DynamicFormService,
@@ -26,7 +26,6 @@ export class RequestToHireEditComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('init edit component');
     this.entityState = this._dataService.store.entityState;
     this.currentRequest = this._dataService.store.currentRequest;
   }
@@ -37,12 +36,9 @@ export class RequestToHireEditComponent implements OnInit {
 
   onValueChanges(valueChanges: Observable<any>) {
     this.subs.add(
-      valueChanges
-        .pipe<any>(map((formData: any) => formData))
-        .subscribe((userModel: any) => {
-          console.log(userModel);
-          // this.currentUser = userModel;
-        })
+      valueChanges.subscribe((formData: RequestToHireModel) => {
+        this.formData = formData;
+      })
     );
   }
 
@@ -51,14 +47,37 @@ export class RequestToHireEditComponent implements OnInit {
   }
 
   onSaveButtonClicked() {
-    // TRANSFORM FORM DATA TO MODEL
-    // if (this.entityState === 'create') {
-    //   this._dataService.save(this.currentRequest);
-    // }
-    if (this.entityState === 'update') {
-      console.log(this.currentRequest);
+    const requestToHireModel = new RequestToHireModel(
+      this.formData.id,
+      this.formData.title,
+      this.formData.department,
+      this.formData.businessUnit,
+      this.formData.requester,
+      this.formData.jobRole,
+      this.formData.roleTaskDescription,
+      this.formData.roleLevel,
+      this.formData.highPriority,
+      this.formData.jobLocationType,
+      this.formData.jobLocation,
+      this.formData.employmentStatus,
+      this.formData.minimumQualifications,
+      this.formData.preferredQualifications,
+      this.formData.benefits,
+      this.formData.budget,
+      this.formData.specialCategoriesOpened,
+      this.formData.additionalNotes,
+      this.formData.status,
+      this.formData.createdAt,
+      this.formData.updatedAt
+    );
 
-      // this._dataService.update(this.currentRequest);
+    this._dataService.store.currentRequest = requestToHireModel;
+
+    if (this.entityState === 'create') {
+      this._dataService.save(requestToHireModel);
+    }
+    if (this.entityState === 'update') {
+      this._dataService.update(requestToHireModel);
     }
   }
 

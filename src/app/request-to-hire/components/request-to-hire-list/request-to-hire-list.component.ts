@@ -61,6 +61,7 @@ const RTH_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
   {
     key: 'status',
     title: 'Status',
+    objectProp: 'value',
     viewType: 'component',
     component: {
       key: RequestStatusChipComponent,
@@ -130,6 +131,7 @@ const RTH_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
   {
     key: 'businessUnit',
     title: 'Business Unit',
+    objectProp: 'value',
     sortable: false,
     headerStyle: {
       'min-width': '180px',

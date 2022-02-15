@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { RequestToHireStoreService } from '../../services/request-to-hire-store.service';
 
 @Component({
   selector: 'app-request-to-hire-section',
@@ -8,7 +7,7 @@ import { RequestToHireStoreService } from '../../services/request-to-hire-store.
     <div class="container-section">
       <app-section-toolbar [title]="pageTitle">
         <ahr-search-control></ahr-search-control>
-        <button mat-flat-button color="primary" (click)="addNewUser()">
+        <button mat-flat-button color="primary" (click)="addNewRequest()">
           Add New Request
         </button>
       </app-section-toolbar>
@@ -18,19 +17,15 @@ import { RequestToHireStoreService } from '../../services/request-to-hire-store.
 })
 export class RequestToHireSectionComponent implements OnInit {
   pageTitle: string = 'Request to Hire';
-  constructor(
-    private router: Router,
-    private _store: RequestToHireStoreService
-  ) {}
+  constructor(private router: Router) {}
 
-  addNewUser() {
-    this._store.currentEntity = {} as any;
+  addNewRequest() {
     this.router.navigate(['request-to-hire', 'new']);
     this.pageTitle = 'New Request';
   }
 
   ngOnInit(): void {
-    this.router.navigate(['request-to-hire', 'list']);
+    // this.router.navigate(['request-to-hire', 'list']);
     this.pageTitle = 'Request to Hire List';
   }
 }

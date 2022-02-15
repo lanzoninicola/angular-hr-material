@@ -27,6 +27,8 @@ export class RequestEditResolver implements Resolve<any> {
       this._goBack();
     }
 
+    this._store.entityStateUpdate();
+
     return this._shouldEntityCached()
       ? this._getEntityFromCache()
       : this._getEntityFromServer();
@@ -45,7 +47,6 @@ export class RequestEditResolver implements Resolve<any> {
   }
 
   private _getEntityFromCache(): Observable<RequestToHireModel> {
-    this._setEntityState();
     return of(this._dataService.store.currentRequest);
   }
 
@@ -54,13 +55,8 @@ export class RequestEditResolver implements Resolve<any> {
       catchError(this._goBack()),
       tap((entity) => {
         this._dataService.store.currentRequest = entity;
-        this._setEntityState();
       })
     );
-  }
-
-  private _setEntityState() {
-    this._store.entityStateUpdate();
   }
 
   private _goBack() {
