@@ -18,4 +18,15 @@ export class BranchSerializerService {
       dto.timezone
     );
   }
+
+  serialize(model: BranchModel): BranchDTO {
+    return {
+      id: model.getId(),
+      name: model.getName(),
+      street: model.getStreet(),
+      city: model.getCity(),
+      country: model.getCountry(),
+      timezone: model.getTimezone(),
+    };
+  }
 }

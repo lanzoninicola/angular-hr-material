@@ -16,4 +16,13 @@ export class JobRoleSerializerService {
       dto.responsibilities
     );
   }
+
+  serialize(model: JobRoleModel): JobRoleDTO {
+    return {
+      id: model.getId(),
+      name: model.getName(),
+      roleAbout: model.getRoleAbout(),
+      responsibilities: model.getResponsibilities(),
+    };
+  }
 }

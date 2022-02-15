@@ -20,4 +20,17 @@ export class UserSerializerService {
       dto.isAdmin
     );
   }
+
+  serialize(model: UserModel): UserDTO {
+    return {
+      id: model.getId(),
+      firstname: model.getFirstname(),
+      lastname: model.getLastname(),
+      email: model.getEmail(),
+      recruitingRole: model.getRecruitingRole(),
+      department: model.getDepartment(),
+      companyRoleLevel: model.getCompanyRoleLevel(),
+      isAdmin: model.getIsAdmin(),
+    };
+  }
 }

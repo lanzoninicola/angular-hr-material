@@ -11,4 +11,13 @@ export class DepartmentSerializerService {
   deserialize(dto: DepartmentDTO) {
     return new DepartmentModel(dto.id, dto.name, dto.manager, dto.teamLeads);
   }
+
+  serialize(model: DepartmentModel): DepartmentDTO {
+    return {
+      id: model.getId(),
+      name: model.getName(),
+      manager: model.getManager(),
+      teamLeads: model.getTeamLeads(),
+    };
+  }
 }
