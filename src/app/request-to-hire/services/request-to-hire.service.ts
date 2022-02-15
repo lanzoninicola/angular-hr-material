@@ -39,7 +39,7 @@ export class RequestToHireService {
 
   findAll(): Observable<RequestToHireModel[]> {
     const records: Observable<RequestToHireDTO[]> = this._httpService.findAll();
-    const picklist: Observable<PicklistModel> = this._loadRequiredPicklist();
+    const picklist: Observable<PicklistModel> = this.loadRequiredPicklist();
 
     return forkJoin([records, picklist]).pipe(
       map(([records, picklist]) => {
@@ -53,7 +53,7 @@ export class RequestToHireService {
 
   findById(id: number): Observable<RequestToHireModel> {
     const record: Observable<RequestToHireDTO> = this._httpService.findById(id);
-    const picklist: Observable<PicklistModel> = this._loadRequiredPicklist();
+    const picklist: Observable<PicklistModel> = this.loadRequiredPicklist();
 
     return forkJoin([record, picklist]).pipe(
       map(([record, picklist]) => {
@@ -67,7 +67,7 @@ export class RequestToHireService {
 
   update() {}
 
-  private _loadRequiredPicklist(): Observable<PicklistModel> {
+  loadRequiredPicklist(): Observable<PicklistModel> {
     const query = this._picklistQueryString();
     return this._picklistService.findByQuery(query);
   }
