@@ -50,6 +50,13 @@ export class PicklistService {
       );
   }
 
+  /**
+   * @description Returns multiple picklist items by type
+   *
+   * The query is the URL query string supported by the API
+   * to get multiple picklist items
+   *
+   */
   findByQuery(query: string): Observable<PicklistModel> {
     return this._http
       .findByQuery(query)
