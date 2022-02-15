@@ -1,35 +1,32 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
+import { environment } from 'src/environments/environment';
 
-import { JobRoleDTO, JobRoleModel } from '../../models/job-role.model';
-import { JobRoleHttpService } from './job-role-http.service';
-import { JobRoleSerializerService } from './job-role-serializer.service';
+import { JobRoleDTO } from '../../models/job-role.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class JobRoleService {
+export class JobRoleHttpService {
   constructor(
-    private _httpService: JobRoleHttpService,
-    private _serializer: JobRoleSerializerService
+    private http: HttpClient,
+    private _httpOptions: HttpRequestOptionsService
   ) {}
 
-  findAll(): Observable<JobRoleModel[]> {
-    return this._httpService.findAll().pipe(
-      map<JobRoleDTO[], JobRoleModel[]>((dtos) => {
-        return dtos.map((dto) => this._serializer.deserialize(dto));
-      })
+  findAll(): Observable<JobRoleDTO[]> {
+    return this.http.get<JobRoleDTO[]>(
+      `${environment.API}/jobroles`,
+      this._httpOptions.isBackendRequest()
     );
   }
 
-  findById(id: number): Observable<JobRoleModel> {
-    return this._httpService
-      .findById(id)
-      .pipe(
-        map<JobRoleDTO, JobRoleModel>((dto) =>
-          this._serializer.deserialize(dto)
-        )
-      );
+  findById(id: number): Observable<JobRoleDTO> {
+    return this.http.get<JobRoleDTO>(
+      `${environment.API}/jobroles/${id}`,
+      this._httpOptions.isBackendRequest()
+    );
   }
 
   // save(requestToHireData: any) {
