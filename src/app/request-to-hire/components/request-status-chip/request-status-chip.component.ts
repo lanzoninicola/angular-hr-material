@@ -1,10 +1,4 @@
-import {
-  Component,
-  HostBinding,
-  Input,
-  OnInit,
-  ViewEncapsulation,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { RTHStatus } from '../../types/request-to-hire.dto.type';
 
@@ -23,6 +17,6 @@ export class RequestStatusChipComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.label = this.payload;
+    this.label = this.payload.value;
   }
 }
