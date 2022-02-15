@@ -64,6 +64,26 @@ export abstract class ModuleStoreService implements StoreService {
   }
 
   /**
+   * @description Remove the key from the store
+   *
+   */
+  reset(key: string) {
+    if (!this._store.hasOwnProperty(key)) {
+      return;
+    }
+
+    this._newStore = this._cloneStore();
+
+    delete this._newStore[key];
+
+    this._replaceStore();
+
+    this.dispatch(this._newStore);
+
+    this._clean(this._newStore);
+  }
+
+  /**
    * @description Make a copy of store
    */
   private _cloneStore() {
@@ -75,6 +95,13 @@ export abstract class ModuleStoreService implements StoreService {
    */
   private _mergeStores() {
     this._store = { ...this._store, ...this._newStore };
+  }
+
+  /**
+   * @description Replace the current store with the new store
+   */
+  private _replaceStore() {
+    this._store = { ...this._newStore };
   }
 
   /**
