@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
 
@@ -18,7 +18,7 @@ export class UsersService {
     private _store: UsersStoreService
   ) {}
 
-  findAll() {
+  findAll(): Observable<UserModel[]> {
     return this.http
       .get<UserModel[]>(
         `${environment.API}/users`,
