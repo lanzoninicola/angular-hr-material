@@ -1,8 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { BehaviorSubject, map, Subscription } from 'rxjs';
-import { PicklistService } from 'src/app/core/services/picklist.service';
-import { Picklist, PicklistValue } from 'src/app/core/types/picklist.type';
+import { Observable, of } from 'rxjs';
 
 import { DynamicFormService } from '../../services/dynamic-form.service';
 import {
@@ -22,16 +20,9 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   control: AbstractControl;
   parentFormGroupModel: FormGroup;
 
-  private _picklistSubscription$: Subscription = new Subscription();
+  selectOptions$: Observable<SelectOptionConfig[]>;
 
-  selectOptions$: BehaviorSubject<SelectOptionConfig[]> = new BehaviorSubject<
-    SelectOptionConfig[]
-  >([]);
-
-  constructor(
-    private _dynamicForm: DynamicFormService,
-    private picklist: PicklistService
-  ) {}
+  constructor(private _dynamicForm: DynamicFormService) {}
 
   ngOnInit(): void {
     this.parentFormGroupModel = this._dynamicForm.getFormGroup(
@@ -44,41 +35,11 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   }
 
   private _loadOptions() {
-    if (this.controlConfig?.picklistType) {
-      this._loadFromPicklist();
-    } else {
-      this._loadFromControlConfig();
-    }
+    this.selectOptions$ =
+      this.controlConfig['options'] || of([] as SelectOptionConfig[]);
   }
 
-  private _loadFromControlConfig() {
-    const options = this.controlConfig['options'] || [];
-    this.selectOptions$.next(options);
-  }
-
-  private _loadFromPicklist() {
-    const type = this.controlConfig.picklistType || '';
-    this._picklistSubscription$ = this.picklist
-      .findByType(type)
-      .pipe(
-        map((picklists: Picklist[]) => {
-          return picklists.map((picklist) => {
-            return {
-              value: picklist.id,
-              textContext: picklist.value,
-            };
-          });
-        })
-      )
-      .subscribe((picklistOptions: SelectOptionConfig[]) => {
-        console.log(picklistOptions);
-        this.selectOptions$.next(picklistOptions);
-      });
-  }
-
-  ngOnDestroy() {
-    this._picklistSubscription$.unsubscribe();
-  }
+  ngOnDestroy() {}
 }
 
 // controlConfig['key']
