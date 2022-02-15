@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { TableColumnConfig } from 'src/app/table-data/types/table.types';
 
-import { RequestToHireFacadeService } from '../../services/request-to-hire-facade.service';
+import { RequestToHireService } from '../../services/request-to-hire.service';
 import { RequestStatusChipComponent } from '../request-status-chip/request-status-chip.component';
 
 @Component({
@@ -26,7 +26,7 @@ export class RequestToHireListComponent implements OnInit {
   columns = RTH_LIST_TABLE_COLUMNS;
 
   constructor(
-    private _dataService: RequestToHireFacadeService,
+    private _dataService: RequestToHireService,
     private router: Router
   ) {}
 
