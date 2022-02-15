@@ -5,6 +5,7 @@ import { RequestToHireEditComponent } from '../components/request-to-hire-edit/r
 import { RequestToHireListComponent } from '../components/request-to-hire-list/request-to-hire-list.component';
 import { RequestToHireSectionComponent } from '../components/request-to-hire-section/request-to-hire-section.component';
 import { RequestEditResolver } from './request-edit.resolver';
+import { RequestFormResolver } from './request-form.resolver';
 import { RequestNewResolver } from './request-new.resolver';
 
 const moduleRoutes: Routes = [
@@ -21,6 +22,7 @@ const moduleRoutes: Routes = [
         component: RequestToHireEditComponent,
         resolve: {
           newEntity: RequestNewResolver,
+          formControlsData: RequestFormResolver,
         },
       },
       {
@@ -28,6 +30,7 @@ const moduleRoutes: Routes = [
         component: RequestToHireEditComponent,
         resolve: {
           entity: RequestEditResolver,
+          formControlsData: RequestFormResolver,
         },
       },
     ],
