@@ -1,35 +1,32 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
+import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
+import { environment } from 'src/environments/environment';
 
-import { DepartmentDTO, DepartmentModel } from '../../models/department.model';
-import { DepartmentHttpService } from './department-http.service';
-import { DepartmentSerializerService } from './department-serializer.service';
+import { DepartmentDTO } from '../../models/department.model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DepartmentService {
+export class DepartmentHttpService {
   constructor(
-    private _httpService: DepartmentHttpService,
-    private _serializer: DepartmentSerializerService
+    private http: HttpClient,
+    private _httpOptions: HttpRequestOptionsService
   ) {}
 
-  findAll(): Observable<DepartmentModel[]> {
-    return this._httpService.findAll().pipe(
-      map<DepartmentDTO[], DepartmentModel[]>((dtos) => {
-        return dtos.map((dto) => this._serializer.deserialize(dto));
-      })
+  findAll(): Observable<DepartmentDTO[]> {
+    return this.http.get<DepartmentDTO[]>(
+      `${environment.API}/departments`,
+      this._httpOptions.isBackendRequest()
     );
   }
 
-  findById(id: number): Observable<DepartmentModel> {
-    return this._httpService
-      .findById(id)
-      .pipe(
-        map<DepartmentDTO, DepartmentModel>((dto) =>
-          this._serializer.deserialize(dto)
-        )
-      );
+  findById(id: number): Observable<DepartmentDTO> {
+    return this.http.get<DepartmentDTO>(
+      `${environment.API}/departments/${id}`,
+      this._httpOptions.isBackendRequest()
+    );
   }
 
   // save(requestToHireData: any) {
