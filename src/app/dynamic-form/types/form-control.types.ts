@@ -47,9 +47,8 @@ export interface SelectConfig {
 }
 
 export interface SelectOptionConfig {
-  value: number;
+  value: number | object;
   textContext: string;
 }
 
 type FormControlTypeSelect = 'select';
-type PicklistType = string;

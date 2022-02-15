@@ -5,6 +5,7 @@
     <mat-select
       placeholder="{{ controlConfig['label'] }}"
       [formControlName]="controlConfig['key']"
+      [compareWith]="objectComparisonFunction"
     >
       <mat-option selected="true">
         Please select {{ controlConfig["whatToSelect"] }}</mat-option

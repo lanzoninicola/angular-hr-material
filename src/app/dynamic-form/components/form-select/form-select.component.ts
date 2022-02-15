@@ -34,6 +34,10 @@ export class FormSelectComponent implements OnInit, OnDestroy {
     this._loadOptions();
   }
 
+  objectComparisonFunction(option: any, value: any) {
+    return option.id === value.id;
+  }
+
   private _loadOptions() {
     this.selectOptions$ =
       this.controlConfig['options'] || of([] as SelectOptionConfig[]);
