@@ -13,13 +13,13 @@ export class PicklistSerializerService {
 
   deserialize(dto: PicklistDTO): PicklistModel {
     const picklist: PicklistItemModel[] = dto.map((dtoItem) =>
-      this.getItemModel(dtoItem)
+      this.deserializeItem(dtoItem)
     );
 
     return new PicklistModel(picklist);
   }
 
-  private getItemModel(dto: PicklistItemDTO): PicklistItemModel {
+  deserializeItem(dto: PicklistItemDTO): PicklistItemModel {
     return new PicklistItemModel(dto.id, dto.type, dto.value);
   }
 }

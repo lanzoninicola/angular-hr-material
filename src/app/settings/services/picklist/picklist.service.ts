@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
+import { PicklistItemModel } from '../../models/picklist-item.model';
 import { PicklistModel } from '../../models/picklist.model';
+import { PicklistItemDTO } from '../../types/picklist-item.type';
 import { PicklistDTO } from '../../types/picklist.type';
 
 import { PicklistHttpService } from './picklist-http.service';
@@ -10,28 +12,51 @@ import { PicklistSerializerService } from './picklist-serializer.service';
   providedIn: 'root',
 })
 export class PicklistService {
+  EMPTY_PICKLIST_ITEM: PicklistItemModel = new PicklistItemModel(0, '', '');
+  EMPTY_PICKLIST: PicklistModel = new PicklistModel([]);
+
   constructor(
     private _http: PicklistHttpService,
     private _serializer: PicklistSerializerService
   ) {}
 
-  findByType(type: string): Observable<PicklistModel> {
-    const dto = this._http.findByType(type);
+  findById(id: number): Observable<PicklistItemModel> {
+    return this._http
+      .findById(id)
+      .pipe(
+        map<PicklistItemDTO, PicklistItemModel>((dto) =>
+          this._serializer.deserializeItem(dto)
+        )
+      );
+  }
 
-    return dto.pipe(
-      map<PicklistDTO, PicklistModel>((dto) =>
-        this._serializer.deserialize(dto)
-      )
-    );
+  findByType(type: string): Observable<PicklistModel> {
+    return this._http
+      .findByType(type)
+      .pipe(
+        map<PicklistDTO, PicklistModel>((dto) =>
+          this._serializer.deserialize(dto)
+        )
+      );
   }
 
   findByTypeAndValue(type: string, value: string): Observable<PicklistModel> {
-    const dto = this._http.findByTypeAndValue(type, value);
+    return this._http
+      .findByTypeAndValue(type, value)
+      .pipe(
+        map<PicklistDTO, PicklistModel>((dto) =>
+          this._serializer.deserialize(dto)
+        )
+      );
+  }
 
-    return dto.pipe(
-      map<PicklistDTO, PicklistModel>((dto) =>
-        this._serializer.deserialize(dto)
-      )
-    );
+  findByQuery(query: string): Observable<PicklistModel> {
+    return this._http
+      .findByQuery(query)
+      .pipe(
+        map<PicklistDTO, PicklistModel>((dto) =>
+          this._serializer.deserialize(dto)
+        )
+      );
   }
 }
