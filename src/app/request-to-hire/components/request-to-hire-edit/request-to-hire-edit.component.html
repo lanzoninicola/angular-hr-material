@@ -1,9 +1,10 @@
-<ahr-edit-form-toolbar [disabled]="formState === 'submitted'">
+<ahr-edit-form-toolbar [disabled]="(formState$ | async) === 'submitted'">
   <ahr-edit-action-button
     left
     [disabled]="
-      (formState === 'idle' || formState === 'submitted') &&
-      formStatus === 'invalid'
+      (formState$ | async) === 'idle' ||
+      (formState$ | async) === 'submitted' ||
+      (formStatus$ | async) === 'invalid'
     "
     [action]="'save'"
     (actionEvent)="onSaveButtonClicked()"
@@ -24,11 +25,9 @@
   ></ahr-navigation-action-button>
 </ahr-edit-form-toolbar>
 <div class="container-form">
-  <app-request-to-hire-edit-form
-    [requestToHire]="currentRequest"
-    [showSpinner]="formState === 'submitted'"
-    (formState)="onFormState($event)"
+  <ahr-request-to-hire-edit-form
+    [showSpinner]="(formState$ | async) === 'submitted'"
     (valueChanges)="onValueChanges($event)"
     (statusChanges)="onStatusChanges($event)"
-  ></app-request-to-hire-edit-form>
+  ></ahr-request-to-hire-edit-form>
 </div>
