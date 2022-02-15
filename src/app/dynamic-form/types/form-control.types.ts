@@ -1,3 +1,6 @@
+import { ValidationErrors } from '@angular/forms';
+import { Observable } from 'rxjs';
+
 export type FormControlConfigKey = string;
 
 export type FormControlConfig =
@@ -10,9 +13,11 @@ export interface InputTextConfig {
   type: FormControlTypeInput;
   label: string;
   placeholder: string;
-  initialValue: string;
   syncValidators?: any[];
   asyncValidators?: any[];
+  disabled?: boolean;
+  readonly?: boolean;
+  style?: { [klass: string]: any };
 }
 
 type FormControlTypeInput = 'input' | 'textarea';
@@ -21,9 +26,10 @@ export interface InputCheckboxConfig {
   key: string;
   type: FormControlTypeCheckbox;
   label: string;
-  initialValue: boolean;
   syncValidators?: [];
   asyncValidators?: [];
+  disabled?: boolean;
+  readonly?: boolean;
 }
 
 type FormControlTypeCheckbox = 'checkbox';
@@ -34,11 +40,10 @@ export interface SelectConfig {
   label: string;
   placeholder: string;
   whatToSelect: string;
-  initialValue: string | null;
-  options?: SelectOptionConfig[];
-  picklistType?: PicklistType | null;
-  syncValidators?: [];
+  options?: Observable<SelectOptionConfig[]>;
+  syncValidators?: ValidationErrors;
   asyncValidators?: [];
+  disabled?: boolean;
 }
 
 export interface SelectOptionConfig {
