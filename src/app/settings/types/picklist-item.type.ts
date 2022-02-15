@@ -1,8 +1,9 @@
 export interface PicklistItemDTO {
   id: PicklistId;
-  type: string;
+  type: PicklistType;
   value: PicklistValue;
 }
 
 export type PicklistValue = string;
 export type PicklistId = number;
+export type PicklistType = string;
