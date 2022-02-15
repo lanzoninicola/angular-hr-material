@@ -13,6 +13,7 @@ export class RequestToHireStoreService extends ModuleStoreService {
   readonly PREFIX: string = 'RTH_';
   readonly DEPARTMENTS_LIST_FORM_CONTROL: string = `${this.PREFIX}_DEPARTMENTS_LIST_FORM_CONTROL`;
   readonly BRANCHES_LIST_FORM_CONTROL: string = `${this.PREFIX}_BRANCHES_LIST_FORM_CONTROL`;
+  readonly JOB_ROLES_LIST_FORM_CONTROL: string = `${this.PREFIX}_JOB_ROLES_LIST_FORM_CONTROL`;
 
   set entities(entities: RequestToHireModel[]) {
     this.set(`${this.PREFIX}_LIST`, entities);
@@ -22,12 +23,16 @@ export class RequestToHireStoreService extends ModuleStoreService {
     return this.get(`${this.PREFIX}_LIST`);
   }
 
-  set currentEntity(currentEntity: RequestToHireModel) {
+  set currentRequest(currentEntity: RequestToHireModel) {
     this.set(`${this.PREFIX}_CURRENT_REQUEST`, currentEntity);
   }
 
-  get currentEntity(): RequestToHireModel {
+  get currentRequest(): RequestToHireModel {
     return this.get(`${this.PREFIX}_CURRENT_REQUEST`);
+  }
+
+  currentRequestReset() {
+    this.reset(`${this.PREFIX}_CURRENT_REQUEST`);
   }
 
   get entityState(): EntityState {
@@ -42,19 +47,7 @@ export class RequestToHireStoreService extends ModuleStoreService {
     this.set(`${this.PREFIX}_ENTITY_STATE`, 'create');
   }
 
-  setDepartmentsFormControl(departmentsName: SelectOptionConfig[]) {
-    this.set(this.DEPARTMENTS_LIST_FORM_CONTROL, departmentsName);
-  }
-
-  getDepartmentsFormControl(): SelectOptionConfig[] {
-    return this.get(this.DEPARTMENTS_LIST_FORM_CONTROL);
-  }
-
-  setBranchesFormControl(branchesName: SelectOptionConfig[]) {
-    this.set(this.BRANCHES_LIST_FORM_CONTROL, branchesName);
-  }
-
-  getBranchesFormControl(): SelectOptionConfig[] {
-    return this.get(this.BRANCHES_LIST_FORM_CONTROL);
+  entityStateReset() {
+    this.reset(`${this.PREFIX}_ENTITY_STATE`);
   }
 }

@@ -14,3 +14,14 @@ content-type: application/json
 GET http://localhost:3000/users
 
 
+###
+GET http://localhost:3000/request-to-hire/1
+
+###
+PATCH http://localhost:3000/request-to-hire/1
+content-type: application/json
+    
+{
+    "firstname": "Nicola",
+    "lastname": "Lanzoni"
+}

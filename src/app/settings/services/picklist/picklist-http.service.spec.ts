@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { BranchesService } from './branches.service';
+import { PicklistHttpService } from './picklist-http.service';
 
-describe('BranchesService', () => {
-  let service: BranchesService;
+describe('PicklistHttpService', () => {
+  let service: PicklistHttpService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(BranchesService);
+    service = TestBed.inject(PicklistHttpService);
   });
 
   it('should be created', () => {

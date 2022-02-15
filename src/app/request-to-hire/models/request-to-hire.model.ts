@@ -1,9 +1,8 @@
-import { PicklistValue } from 'src/app/core/types/picklist.type';
 import { BranchModel } from 'src/app/settings/models/branch.model';
 import { DepartmentModel } from 'src/app/settings/models/department.model';
 import { JobRoleModel } from 'src/app/settings/models/job-role.model';
+import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
 import { UserModel } from 'src/app/users/models/user.model';
-import { RTHStatus } from '../types/request-to-hire.type';
 
 //TODO: separate the model into head and body
 
@@ -11,22 +10,22 @@ export class RequestToHireModel {
   private id: number;
   private title: string;
   private department: DepartmentModel;
-  private businessUnit: PicklistValue;
+  private businessUnit: PicklistItemModel;
   private requester: UserModel;
   private jobRole: JobRoleModel;
   private roleTaskDescription: string; // long description
-  private roleLevel: PicklistValue;
+  private roleLevel: PicklistItemModel;
   private highPriority: boolean;
-  private jobLocationType: PicklistValue;
+  private jobLocationType: PicklistItemModel;
   private jobLocation: BranchModel;
-  private employmentStatus: PicklistValue;
+  private employmentStatus: PicklistItemModel;
   private minimumQualifications: string; // long description
   private preferredQualifications: string; // long description
   private benefits: string; // long description
   private budget: string;
   private specialCategoriesOpened: boolean;
   private additionalNotes: string; // long description
-  private status: RTHStatus;
+  private status: PicklistItemModel;
   private createdAt: Date;
   private updatedAt: Date;
 
@@ -34,22 +33,22 @@ export class RequestToHireModel {
     id: number,
     title: string,
     department: DepartmentModel,
-    businessUnit: PicklistValue,
+    businessUnit: PicklistItemModel,
     requester: UserModel,
     jobRole: JobRoleModel,
     roleTaskDescription: string,
-    roleLevel: PicklistValue,
+    roleLevel: PicklistItemModel,
     highPriority: boolean,
-    jobLocationType: PicklistValue,
+    jobLocationType: PicklistItemModel,
     jobLocation: BranchModel,
-    employmentStatus: PicklistValue,
+    employmentStatus: PicklistItemModel,
     minimumQualifications: string,
     preferredQualifications: string,
     benefits: string,
     budget: string,
     specialCategoriesOpened: boolean,
     additionalNotes: string,
-    status: RTHStatus,
+    status: PicklistItemModel,
     createdAt: Date,
     updatedAt: Date
   ) {
@@ -88,7 +87,7 @@ export class RequestToHireModel {
     return this.department;
   }
 
-  getBusinessUnit(): string {
+  getBusinessUnit(): PicklistItemModel {
     return this.businessUnit;
   }
 
@@ -104,7 +103,7 @@ export class RequestToHireModel {
     return this.roleTaskDescription;
   }
 
-  getRoleLevel(): string {
+  getRoleLevel(): PicklistItemModel {
     return this.roleLevel;
   }
 
@@ -112,7 +111,7 @@ export class RequestToHireModel {
     return this.highPriority;
   }
 
-  getJobLocationType(): string {
+  getJobLocationType(): PicklistItemModel {
     return this.jobLocationType;
   }
 
@@ -120,7 +119,7 @@ export class RequestToHireModel {
     return this.jobLocation;
   }
 
-  getEmploymentStatus(): string {
+  getEmploymentStatus(): PicklistItemModel {
     return this.employmentStatus;
   }
 
@@ -148,7 +147,7 @@ export class RequestToHireModel {
     return this.additionalNotes;
   }
 
-  getStatus(): RTHStatus {
+  getStatus(): PicklistItemModel {
     return this.status;
   }
 

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { FormControlStatus, FormGroup } from '@angular/forms';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
@@ -24,16 +24,52 @@ export class DynamicFormService {
   private _formState$: BehaviorSubject<FormState> =
     new BehaviorSubject<FormState>('idle');
 
+  /**
+   * @description
+   * This returns an Observable that emits the value of the form
+   *
+   * Different from the statusChanges and ValueChanges, this prop can be used everywhere
+   */
   get formState$(): BehaviorSubject<FormState> {
     return this._formState$;
   }
 
-  get valueChanges$(): Observable<any> {
-    return this._getValueChanges();
+  /**
+   * @description
+   * Return an Observable that emits the status of the form
+   *
+   * This values MUST BE EMITTED by the Presentation Component that renders the form (Angular requirement)
+   *
+   * In the Presentation Component:
+   *
+   * @Output('statusChanges')
+   * statusChangesEvent: EventEmitter<Observable<any>> = new EventEmitter<Observable<any>>();
+   *
+   * ngOnInit(): void {
+   *    this.statusChangesEvent.emit(this._dynamicForm.statusChanges$)
+   * }
+   */
+  get formStatus$(): Observable<string> {
+    return this._getFormStatus();
   }
 
-  get statusChanges$(): Observable<string> {
-    return this._getStatusChanges();
+  /**
+   * @description
+   * Return an Observable that emits the values of the form
+   *
+   * This values MUST BE EMITTED by the Presentation Component that renders the form (Angular requirement)
+   *
+   * In the Presentation Component:
+   *
+   * @Output('valueChanges')
+   * valueChangesEvent: EventEmitter<Observable<any>> = new EventEmitter<Observable<any>>();
+   *
+   * ngOnInit(): void {
+   *   this.valueChangesEvent.emit(this._dynamicForm.formData$)
+   * }
+   */
+  get formData$(): Observable<any> {
+    return this._getFormData();
   }
 
   constructor(
@@ -63,7 +99,7 @@ export class DynamicFormService {
 
   /**
    * @description
-   * Set the value of FormControl
+   * Set the initial value of FormControl
    *
    *
    * @param group - The FormGroup name
@@ -73,6 +109,7 @@ export class DynamicFormService {
    *  FormControlKey1: FormControlName1,
    * FormControlKey2: FormControlName2
    * }
+   *
    *
    */
   setControlsValue(group: FormGroupKey, controls: { [key: string]: any }) {
@@ -114,7 +151,7 @@ export class DynamicFormService {
   }
 
   /**
-   * @description Reset the view and model
+   * @description Reset the view and model to blank
    */
   destroy() {
     this.view.destroy();
@@ -129,7 +166,7 @@ export class DynamicFormService {
    *
    * @returns
    */
-  private _getStatusChanges(): Observable<string> {
+  private _getFormStatus(): Observable<string> {
     return this.formModel.statusChanges.pipe(
       map((formStatus: FormControlStatus) => formStatus.toLowerCase())
     );
@@ -141,10 +178,9 @@ export class DynamicFormService {
    * A multicasting observable that emits an event every time
    * the value of the control changes, in the UI or programmatically.
    *
-   * @return the Observable contains all the values of FormModel in a flat way
-   * (it is not separated by the formGroup)
+   * @return an Observable that emits the values of the form
    */
-  private _getValueChanges(): Observable<any> {
+  private _getFormData(): Observable<any> {
     return this.formModel.valueChanges.pipe(
       map((formData: { [key: string]: {} }) => {
         let flatFormData = {};

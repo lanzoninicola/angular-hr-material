@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 
 import { RequestToHireModel } from '../models/request-to-hire.model';
+
 import { RequestToHireStoreService } from '../services/request-to-hire-store.service';
 import { RequestToHireService } from '../services/request-to-hire.service';
 
@@ -15,7 +16,7 @@ export class RequestEditResolver implements Resolve<any> {
 
   constructor(
     private _store: RequestToHireStoreService,
-    private _requestToHireService: RequestToHireService,
+    private _dataService: RequestToHireService,
     private _location: Location
   ) {}
 
@@ -32,7 +33,7 @@ export class RequestEditResolver implements Resolve<any> {
   }
 
   private _shouldEntityCached() {
-    const currentEntity = this._store.currentEntity;
+    const currentEntity = this._dataService.store.currentRequest;
 
     if (currentEntity !== undefined) {
       if (currentEntity instanceof RequestToHireModel) {
@@ -45,14 +46,14 @@ export class RequestEditResolver implements Resolve<any> {
 
   private _getEntityFromCache(): Observable<RequestToHireModel> {
     this._setEntityState();
-    return of(this._store.currentEntity);
+    return of(this._dataService.store.currentRequest);
   }
 
   private _getEntityFromServer(): Observable<RequestToHireModel> {
-    return this._requestToHireService.findById(this.entityIdParam).pipe(
+    return this._dataService.findById(this.entityIdParam).pipe(
       catchError(this._goBack()),
       tap((entity) => {
-        this._store.currentEntity = entity;
+        this._dataService.store.currentRequest = entity;
         this._setEntityState();
       })
     );

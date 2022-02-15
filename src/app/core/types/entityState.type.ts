@@ -1,1 +1,1 @@
-export type EntityState = 'create' | 'update';
+export type EntityState = 'idle' | 'create' | 'update';

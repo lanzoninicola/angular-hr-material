@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
+import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+
 import { RequestToHireModel } from '../../models/request-to-hire.model';
-import { RequestToHireStoreService } from '../../services/request-to-hire-store.service';
 import { RequestToHireService } from '../../services/request-to-hire.service';
 
 @Component({
@@ -16,68 +17,48 @@ export class RequestToHireEditComponent implements OnInit {
   currentRequest: RequestToHireModel;
   entityState: EntityState = 'create';
 
-  formState: FormState = 'idle';
-  formStatus: string = 'invalid';
+  formState$ = this._dynamicForm.formState$;
+  formStatus$: Observable<any>;
 
   constructor(
-    private _store: RequestToHireStoreService,
+    private _dynamicForm: DynamicFormService,
     private _dataService: RequestToHireService
   ) {}
 
   ngOnInit() {
-    this.entityState = this._store.entityState;
-    this.currentRequest = this._store.currentEntity;
+    console.log('init edit component');
+    this.entityState = this._dataService.store.entityState;
+    this.currentRequest = this._dataService.store.currentRequest;
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
-  onFormState(formState: BehaviorSubject<FormState>) {
-    this.subs.add(
-      formState.subscribe((formState: FormState) => {
-        this.formState = formState;
-      })
-    );
-  }
-
   onValueChanges(valueChanges: Observable<any>) {
     this.subs.add(
       valueChanges
-        .pipe<any>(
-          map((formData: any) => {
-            console.log(formData);
-            // return new RequestToHireModel(
-            //   this.currentRequest.getId(),
-            //   userFormData['firstname'],
-            //   userFormData['lastname'],
-            //   userFormData['email'],
-            //   userFormData['recruitingRoles'],
-            //   userFormData['departments'],
-            //   userFormData['companyLevels'],
-            //   userFormData['isAdmin']
-            // );
-          })
-        )
-        .subscribe((userModel: RequestToHireModel) => {
-          // this.currentRequest = userModel;
+        .pipe<any>(map((formData: any) => formData))
+        .subscribe((userModel: any) => {
+          console.log(userModel);
+          // this.currentUser = userModel;
         })
     );
   }
 
   onStatusChanges(statusChanges: Observable<any>) {
-    this.subs.add(
-      statusChanges.subscribe((formStatus) => (this.formStatus = formStatus))
-    );
+    this.formStatus$ = statusChanges;
   }
 
   onSaveButtonClicked() {
     // TRANSFORM FORM DATA TO MODEL
-    if (this.entityState === 'create') {
-      this._dataService.save(this.currentRequest);
-    }
+    // if (this.entityState === 'create') {
+    //   this._dataService.save(this.currentRequest);
+    // }
     if (this.entityState === 'update') {
-      this._dataService.update(this.currentRequest);
+      console.log(this.currentRequest);
+
+      // this._dataService.update(this.currentRequest);
     }
   }
 

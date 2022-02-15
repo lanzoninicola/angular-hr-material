@@ -18,7 +18,7 @@ export class FormViewBuilderService {
 
   /**
    * @description
-   * Let configures the template adding form groups
+   * Set up the template adding form groups
    *
    */
   build(group: FormGroupConfiguration, controls: FormControlConfig[]) {

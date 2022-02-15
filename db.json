@@ -21,31 +21,6 @@
       "value": "guest"
     },
     {
-      "id": 2,
-      "type": "departments",
-      "value": "Human Resources"
-    },
-    {
-      "id": 21,
-      "type": "departments",
-      "value": "Front-end Developers"
-    },
-    {
-      "id": 22,
-      "type": "departments",
-      "value": "Back-end Developers"
-    },
-    {
-      "id": 23,
-      "type": "departments",
-      "value": "Database Developers"
-    },
-    {
-      "id": 24,
-      "type": "departments",
-      "value": "IT Infrastructure"
-    },
-    {
       "id": 3,
       "type": "companyLevels",
       "value": "Manager"
@@ -62,82 +37,82 @@
     },
     {
       "id": 4,
-      "type": "businessUntis",
+      "type": "business-unit",
       "value": "Alpha Product"
     },
     {
       "id": 41,
-      "type": "businessUntis",
+      "type": "business-unit",
       "value": "Beta Product"
     },
     {
       "id": 42,
-      "type": "businessUntis",
+      "type": "business-unit",
       "value": "Delta Product"
     },
     {
       "id": 5,
-      "type": "roleLevels",
+      "type": "role-level",
       "value": "Junior"
     },
     {
       "id": 51,
-      "type": "roleLevels",
+      "type": "role-level",
       "value": "Middle"
     },
     {
       "id": 52,
-      "type": "roleLevels",
+      "type": "role-level",
       "value": "Senior"
     },
     {
       "id": 6,
-      "type": "jobLocaltionTypes",
+      "type": "job-location-type",
       "value": "Full Remote"
     },
     {
       "id": 61,
-      "type": "jobLocaltionTypes",
+      "type": "job-location-type",
       "value": "Presential"
     },
     {
       "id": 62,
-      "type": "jobLocaltionTypes",
+      "type": "job-location-type",
       "value": "Remote/Presential"
     },
     {
       "id": 7,
-      "type": "employmentStatus",
+      "type": "employment-status",
       "value": "Part-time"
     },
     {
       "id": 71,
-      "type": "employmentStatus",
+      "type": "employment-status",
       "value": "Full-time employment"
     },
     {
       "id": 8,
-      "type": "rthWorkingStatus",
+      "type": "rth-working-status",
       "value": "new"
     },
     {
       "id": 81,
-      "type": "rthWorkingStatus",
+      "type": "rth-working-status",
       "value": "backlog"
     },
     {
       "id": 82,
-      "type": "rthWorkingStatus",
+      "type": "rth-working-status",
       "value": "in progress"
     },
     {
       "id": 83,
-      "type": "rthWorkingStatus",
+      "type": "rth-working-status",
       "value": "pending"
     },
     {
       "id": 84,
-      "type": "rthWorkingStatus",
+      "type": "rth-working-status",
       "value": "done"
     },
     {
@@ -155,100 +130,31 @@
     {
       "id": 1,
       "name": "Human Resources",
-      "managerId": {
-        "id": 1,
-        "firstname": "Leanne",
-        "lastname": "Graham23",
-        "email": "leanne.graham@gmail.com",
-        "recruitingRole": "interviewer",
-        "department": "IT Infrastructure",
-        "companyRoleLevel": "Specialist",
-        "isAdmin": true
-      },
+      "managerId": 1,
       "teamLeads": []
     },
     {
       "id": 2,
       "name": "Front-end Developers",
-      "managerId": {
-        "id": 7,
-        "firstname": "Kurtis",
-        "lastname": "Weissnat",
-        "email": "kurstis.weissnat@gmail.com",
-        "recruitingRole": "interviewer",
-        "department": "Front-end Developers",
-        "companyRoleLevel": "Manager",
-        "businessUnit": "Alpha Product",
-        "isAdmin": false
-      },
-      "teamLeads": [
-        {
-          "id": 71,
-          "firstname": "Nicholas",
-          "lastname": "Runolfsdottir",
-          "email": "nicholas.runolfsdottir@gmail.com",
-          "recruitingRole": "interviewer",
-          "department": "Front-end Developers",
-          "companyRoleLevel": "Team Lead",
-          "businessUnit": "Beta Product",
-          "isAdmin": false
-        },
-        {
-          "id": 72,
-          "firstname": "Glenna",
-          "lastname": "Reichert",
-          "email": "glenna.reichert@gmail.com",
-          "recruitingRole": "interviewer",
-          "department": "Front-end Developers",
-          "companyRoleLevel": "Team Lead",
-          "businessUnit": "Delta Product",
-          "isAdmin": false
-        }
-      ]
+      "managerId": 1,
+      "teamLeads": [71, 72]
     },
     {
       "id": 3,
       "name": "Back-end Developers",
-      "managerId": {
-        "id": 1,
-        "firstname": "Leanne",
-        "lastname": "Graham23",
-        "email": "leanne.graham@gmail.com",
-        "recruitingRole": "interviewer",
-        "department": "IT Infrastructure",
-        "companyRoleLevel": "Specialist",
-        "isAdmin": true
-      },
+      "managerId": 2,
       "teamLeads": []
     },
     {
       "id": 4,
       "name": "Database Developers",
-      "managerId": {
-        "id": 1,
-        "firstname": "Leanne",
-        "lastname": "Graham23",
-        "email": "leanne.graham@gmail.com",
-        "recruitingRole": "interviewer",
-        "department": "IT Infrastructure",
-        "companyRoleLevel": "Specialist",
-        "isAdmin": true
-      },
+      "managerId": 1,
       "teamLeads": []
     },
     {
       "id": 5,
       "name": "IT Infrastructure",
-      "managerId": {
-        "id": 1,
-        "firstname": "Leanne",
-        "lastname": "Graham23",
-        "email": "leanne.graham@gmail.com",
-        "recruitingRole": "interviewer",
-        "department": "IT Infrastructure",
-        "companyRoleLevel": "Specialist",
-        "isAdmin": true
-      },
+      "managerId": 1,
       "teamLeads": []
     }
   ],
@@ -278,7 +184,7 @@
       "timezone": "GMT-3"
     }
   ],
-  "job-roles": [
+  "jobroles": [
     {
       "id": 1,
       "name": "Front-end Developer",
@@ -316,51 +222,27 @@
       "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
     }
   ],
-  "request-to-hire": [
+  "requests-to-hire": [
     {
       "id": 1,
-      "title": "New Front-end Developer",
-      "department": {
-        "id": 2,
-        "name": "Front-end Developers"
-      },
-      "businessUnit": "Alpha Product",
-      "requester": {
-        "id": 7,
-        "firstname": "Kurtis",
-        "lastname": "Weissnat",
-        "email": "kurstis.weissnat@gmail.com",
-        "recruitingRole": "interviewer",
-        "department": "Front-end Developers",
-        "companyRoleLevel": "Manager",
-        "isAdmin": false
-      },
-      "jobRole": {
-        "id": 1,
-        "name": "Front-end Developer",
-        "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
-        "responsibilities": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
-      },
+      "title": "New Front-end Developer 1",
+      "departmentsId": 2,
+      "businessUnit": 4,
+      "usersId": 7,
+      "jobrolesId": 1,
       "roleTaskDescription": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
-      "roleLevel": "Junior",
+      "roleLevel": 5,
       "highPriority": true,
-      "jobLocationType": "Full Remote",
-      "jobLocation": {
-        "id": 1,
-        "name": "Home Office",
-        "street": "",
-        "city": "",
-        "country": "",
-        "timezone": ""
-      },
-      "employmentStatus": "Full-time employment",
+      "jobLocationType": 6,
+      "branchesId": 1,
+      "employmentStatus": 71,
       "minimumQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "preferredQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "benefits": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "budget": "0-1.200",
-      "specialCategoriesOpened": false,
+      "specialCategoriesOpened": 91,
       "additionalNotes": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
-      "status": "new",
+      "status": 8,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2020-01-01T00:00:00.000Z"
     }

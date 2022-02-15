@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { JobrolesService } from './jobroles.service';
+import { JobRoleHttpService } from './job-role-http.service';
 
-describe('JobrolesService', () => {
-  let service: JobrolesService;
+describe('JobRoleHttpService', () => {
+  let service: JobRoleHttpService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(JobrolesService);
+    service = TestBed.inject(JobRoleHttpService);
   });
 
   it('should be created', () => {
