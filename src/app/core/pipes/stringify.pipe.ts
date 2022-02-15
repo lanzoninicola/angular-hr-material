@@ -21,7 +21,7 @@ export class StringifyPipe implements PipeTransform {
       // fieldname => The entity-model property name that contains the information to render inside the cell
 
       if (fieldname === undefined) {
-        throw 'StringifyPipe - The field name to stringify is missing. What is the name of the column configuration that indicates the name of model prop to display?';
+        throw `StringifyPipe - The field name '${fieldname}' to stringify is missing. What is the name of the column configuration that indicates the name of model prop to display? Now is ${value}`;
       }
 
       return value[fieldname];
