@@ -4,28 +4,68 @@ import { Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
 
-import { RequestToHireDTO } from '../types/request-to-hire.type';
+import { RequestToHireDTO } from '../types/request-to-hire.dto.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RequestToHireHttpService {
+  baseURL = `${environment.API}/requests-to-hire`;
+  parentRelations: string[] = ['users', 'departments', 'jobroles', 'branches'];
+
   constructor(
     private http: HttpClient,
     private _httpOptions: HttpRequestOptionsService
   ) {}
 
-  findAll(): Observable<RequestToHireDTO[]> {
+  findAll(
+    options = {
+      withRelations: true,
+    }
+  ): Observable<RequestToHireDTO[]> {
+    const url = `${this.baseURL}`;
+
     return this.http.get<RequestToHireDTO[]>(
-      `${environment.API}/request-to-hire`,
+      options.withRelations ? this._getURLwithRelations(url) : url,
       this._httpOptions.isBackendRequest()
     );
   }
 
-  findById(id: number): Observable<RequestToHireDTO> {
+  findById(
+    id: number,
+    options = {
+      withRelations: true,
+    }
+  ): Observable<RequestToHireDTO> {
+    const url = `${this.baseURL}/${id}`;
+
     return this.http.get<RequestToHireDTO>(
-      `${environment.API}/request-to-hire/${id}`,
+      options.withRelations ? this._getURLwithRelations(url) : url,
       this._httpOptions.isBackendRequest()
     );
+  }
+
+  /**
+   *
+   * @description
+   * Returns the full URL with the query parameters of the relations to be expanded
+   *
+   */
+  private _getURLwithRelations(baseURL: string) {
+    return `${baseURL}?${this._relationsQueryString()}`;
+  }
+
+  /**
+   * @description
+   * Returns a string of the query parameters of the relations to be expanded
+   */
+  private _relationsQueryString() {
+    let fullUrlQuery = '';
+
+    this.parentRelations.forEach((model) => {
+      fullUrlQuery = fullUrlQuery + `&_expand=${model}`;
+    });
+
+    return fullUrlQuery;
   }
 }
