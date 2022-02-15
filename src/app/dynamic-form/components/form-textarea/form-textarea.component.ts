@@ -14,6 +14,7 @@ import { InputTextConfig } from '../../types/form-control.types';
           placeholder="{{ controlConfig['label'] }}"
           [formControlName]="controlConfig['key']"
           [type]="controlConfig['type']"
+          [ngStyle]="controlConfig['style'] ? controlConfig['style'] : null"
         ></textarea>
         <mat-error *ngIf="!control.valid && control.touched"
           >{{ controlConfig['label'] }} is not valid!</mat-error
@@ -32,6 +33,7 @@ export class FormTextAreaComponent implements OnInit {
 
   control: AbstractControl;
   parentFormGroupModel: FormGroup;
+  style: { [klass: string]: any } | null;
 
   constructor(private _dynamicForm: DynamicFormService) {}
 
@@ -42,5 +44,7 @@ export class FormTextAreaComponent implements OnInit {
 
     this.control =
       this.parentFormGroupModel.controls[this.controlConfig['key']];
+
+    this.style = this.controlConfig['style'] || null;
   }
 }
