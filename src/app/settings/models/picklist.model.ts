@@ -12,6 +12,10 @@ export class PicklistModel {
     return this.items.find((item) => item.getId() === id) || this.EMPTY;
   }
 
+  findItemByType(type: string): PicklistItemModel[] {
+    return this.items.filter((item) => item.getType() === type);
+  }
+
   findItemByValue(value: string): PicklistItemModel {
     return (
       this.items.find(
