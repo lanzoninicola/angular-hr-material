@@ -49,9 +49,9 @@ export class FormModelBuilderService {
    *
    */
   build(viewTemplate: FormViewTemplate) {
-    // if (this._viewService.shouldEmpty()) {
-    //   throw 'Dynamic Form Builder - Before build the model you must provide the template using the buildView() method';
-    // }
+    if (viewTemplate.size === 0) {
+      throw 'Dynamic Form Builder - The view template is missing. Before building the model you must provide a valid template. Build the view before.';
+    }
 
     this._viewTemplate = viewTemplate;
 
@@ -109,9 +109,14 @@ export class FormModelBuilderService {
     const groupFormControls: { [key: FormControlConfigKey]: FormControl } = {};
 
     controls.forEach((config: FormControlConfig) => {
-      const { key, initialValue, syncValidators, asyncValidators } = config;
+      const { key, syncValidators, asyncValidators } = config;
+
+      const initialValue = null; // do not change this logic!
+      const disabled = config.disabled || false;
+
       groupFormControls[key] = this._createControl({
         initialValue,
+        disabled,
         syncValidators,
         asyncValidators,
       });
@@ -127,6 +132,7 @@ export class FormModelBuilderService {
    */
   private _createControl(controlConfig: {
     initialValue: any;
+    disabled: boolean;
     syncValidators?:
       | ValidatorFn
       | ValidatorFn[]
@@ -134,8 +140,13 @@ export class FormModelBuilderService {
       | null;
     asyncValidators?: AsyncValidatorFn | AsyncValidatorFn[] | null;
   }): FormControl {
-    const { initialValue, syncValidators, asyncValidators } = controlConfig;
-    return new FormControl(initialValue, syncValidators, asyncValidators);
+    const { initialValue, disabled, syncValidators, asyncValidators } =
+      controlConfig;
+    return new FormControl(
+      { value: initialValue, disabled },
+      syncValidators,
+      asyncValidators
+    );
   }
 
   /**
