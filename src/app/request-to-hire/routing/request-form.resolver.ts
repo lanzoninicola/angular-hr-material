@@ -7,6 +7,7 @@ import { BranchService } from 'src/app/settings/services/branch/branch.service';
 import { DepartmentService } from 'src/app/settings/services/department/department.service';
 import { JobRoleService } from 'src/app/settings/services/job-role/job-role.service';
 import { PicklistType } from 'src/app/settings/types/picklist-item.type';
+import { UsersService } from 'src/app/users/services/users.service';
 
 import { RequestToHireService } from '../services/request-to-hire.service';
 import { RequestToHireFormControlsData } from '../types/request-to-hire.form.type';
@@ -19,20 +20,30 @@ export class RequestFormResolver
 {
   constructor(
     private _dataService: RequestToHireService,
+    private _usersService: UsersService,
     private _departmentService: DepartmentService,
     private _branchService: BranchService,
     private _jobRoleService: JobRoleService
   ) {}
 
   resolve(): Observable<RequestToHireFormControlsData> {
+    const requester = this._usersService.findAll();
     const departments = this._departmentService.findAll();
     const branches = this._branchService.findAll();
     const jobRoles = this._jobRoleService.findAll();
     const picklist: Observable<PicklistModel> =
       this._dataService.loadRequiredPicklist();
 
-    return forkJoin([picklist, departments, branches, jobRoles]).pipe(
-      map(([picklist, departments, branches, jobRoles]) => {
+    return forkJoin([
+      picklist,
+      requester,
+      departments,
+      branches,
+      jobRoles,
+    ]).pipe(
+      map(([picklist, requester, departments, branches, jobRoles]) => {
+        const requesterSelectOptions: SelectOptionConfig[] =
+          this._getRequesterSelectOptionsFromModel(requester);
         const departmentsSelectOptions: SelectOptionConfig[] =
           this._getSelectOptionsFromModel(departments);
         const branchesSelectOptions: SelectOptionConfig[] =
@@ -63,6 +74,7 @@ export class RequestFormResolver
               'job-location-type'
             ),
           },
+          requester: requesterSelectOptions,
           departments: departmentsSelectOptions,
           branches: branchesSelectOptions,
           jobRoles: jobRolesSelectOptions,
@@ -72,10 +84,21 @@ export class RequestFormResolver
     );
   }
 
+  private _getRequesterSelectOptionsFromModel(
+    models: any[]
+  ): SelectOptionConfig[] {
+    return models.map((model: any) => {
+      return {
+        value: model,
+        textContext: model.fullname,
+      };
+    });
+  }
+
   private _getSelectOptionsFromModel(models: any[]): SelectOptionConfig[] {
     return models.map((model: any) => {
       return {
-        value: model.getId(),
+        value: model,
         textContext: model.getName(),
       };
     });
@@ -87,7 +110,7 @@ export class RequestFormResolver
   ) {
     return model.findItemByType(type).map((item) => {
       return {
-        value: item.getId(),
+        value: item,
         textContext: item.getValue(),
       };
     });

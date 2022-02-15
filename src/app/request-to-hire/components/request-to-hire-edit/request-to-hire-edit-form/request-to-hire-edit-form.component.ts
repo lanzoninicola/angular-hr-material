@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { filter, map, Observable, Subscription } from 'rxjs';
+import { map, Observable } from 'rxjs';
+import { DateService } from 'src/app/core/services/date.service';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
-import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
-import { RequestToHireFormService } from 'src/app/request-to-hire/services/request-to-hire-form.service';
+import { RequestToHireService } from 'src/app/request-to-hire/services/request-to-hire.service';
 
 @Component({
   selector: 'ahr-request-to-hire-edit-form',
@@ -44,7 +44,8 @@ export class RequestToHireEditFormComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _dynamicForm: DynamicFormService,
-    private _formService: RequestToHireFormService
+    private _dataService: RequestToHireService,
+    private _dateService: DateService
   ) {}
 
   ngOnInit(): void {
@@ -53,7 +54,7 @@ export class RequestToHireEditFormComponent implements OnInit {
     this._buildModel();
     this._setTemplatePropertyBinding();
 
-    if (this._formService.currentEntityState === 'update') {
+    if (this._dataService.store.entityState === 'update') {
       this._initFormValues();
     }
 
@@ -62,9 +63,7 @@ export class RequestToHireEditFormComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    console.log('im destroing');
     this._dynamicForm.destroy();
-    this._formService.reset();
   }
 
   private _setFormControlsConfig() {
@@ -72,18 +71,36 @@ export class RequestToHireEditFormComponent implements OnInit {
       {
         type: 'input',
         placeholder: '',
-        label: 'Title',
-        key: 'title',
-        syncValidators: [Validators.required],
+        label: 'id',
+        key: 'id',
+        readonly: true,
       },
       {
         type: 'input',
         placeholder: '',
-        label: 'Requester',
-        key: 'requester',
+        label: 'Title',
+        key: 'title',
         syncValidators: [Validators.required],
-        readonly: true,
       },
+      // {
+      //   type: 'input',
+      //   placeholder: '',
+      //   label: 'Requester',
+      //   key: 'requester',
+      //   syncValidators: [Validators.required],
+      //   readonly: true,
+      // },
+      {
+        key: 'requester',
+        type: 'select',
+        label: 'Requester',
+        placeholder: '',
+        whatToSelect: 'requester',
+        options: this._route.data.pipe(
+          map((data) => data['formControlsData']['requester'])
+        ),
+      },
+
       {
         type: 'input',
         placeholder: '',
@@ -295,36 +312,39 @@ export class RequestToHireEditFormComponent implements OnInit {
   }
 
   private _initFormValues() {
+    const currentRequest = this._dataService.store.currentRequest;
+
     this._dynamicForm.setControlsValue('rthMainInfo', {
-      title: this._formService.title,
-      requester: this._formService.requester,
-      createdAt: this._formService.createdAt,
-      updatedAt: this._formService.updatedAt,
-      status: this._formService.status,
-      highPriority: this._formService.highPriority,
+      id: currentRequest.getId(),
+      title: currentRequest.getTitle(),
+      requester: currentRequest.getRequester(),
+      createdAt: this._dateService.getDate(currentRequest.getCreatedAt()),
+      updatedAt: this._dateService.getDate(currentRequest.getUpdatedAt()),
+      status: currentRequest.getStatus(),
+      highPriority: currentRequest.getHighPriority(),
     });
 
     this._dynamicForm.setControlsValue('rthPositionMainInfo', {
-      budget: this._formService.budget,
-      jobRole: this._formService.jobRole,
-      department: this._formService.department,
-      businessUnit: this._formService.businessUnit,
-      employmentStatus: this._formService.employmentsStatus,
+      budget: currentRequest.getBudget(),
+      jobRole: currentRequest.getJobRole(),
+      department: currentRequest.getDepartment(),
+      businessUnit: currentRequest.getBusinessUnit(),
+      employmentStatus: currentRequest.getEmploymentStatus(),
     });
 
     this._dynamicForm.setControlsValue('rthPositionDetails', {
-      roleTaskDescription: this._formService.roleTaskDescription,
-      minimumQualifications: this._formService.minimumQualifications,
-      preferredQualifications: this._formService.preferredQualifications,
-      roleLevel: this._formService.roleLevel,
-      jobLocationType: this._formService.jobLocationType,
-      jobLocation: this._formService.jobLocation,
-      benefits: this._formService.benefits,
+      roleTaskDescription: currentRequest.getRoleTaskDescription(),
+      minimumQualifications: currentRequest.getMinimumQualifications(),
+      preferredQualifications: currentRequest.getPreferredQualifications(),
+      roleLevel: currentRequest.getRoleLevel(),
+      jobLocationType: currentRequest.getJobLocationType(),
+      jobLocation: currentRequest.getJobLocation(),
+      benefits: currentRequest.getBenefits(),
     });
 
     this._dynamicForm.setControlsValue('rthPositionOther', {
-      specialCategoriesOpened: this._formService.specialCategoriesOpened,
-      additionalNotes: this._formService.additionalNotes,
+      specialCategoriesOpened: currentRequest.getSpecialCategoriesOpened(),
+      additionalNotes: currentRequest.getAdditionalNotes(),
     });
   }
 }
