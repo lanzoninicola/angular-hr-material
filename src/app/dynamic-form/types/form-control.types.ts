@@ -18,6 +18,7 @@ export interface InputTextConfig {
   disabled?: boolean;
   readonly?: boolean;
   style?: { [klass: string]: any };
+  hidden?: boolean;
 }
 
 type FormControlTypeInput = 'input' | 'textarea';
@@ -30,6 +31,7 @@ export interface InputCheckboxConfig {
   asyncValidators?: [];
   disabled?: boolean;
   readonly?: boolean;
+  hidden?: boolean;
 }
 
 type FormControlTypeCheckbox = 'checkbox';
@@ -44,6 +46,7 @@ export interface SelectConfig {
   syncValidators?: ValidationErrors;
   asyncValidators?: [];
   disabled?: boolean;
+  hidden?: boolean;
 }
 
 export interface SelectOptionConfig {
