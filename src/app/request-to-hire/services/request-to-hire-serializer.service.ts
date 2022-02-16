@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { DateSerializerService } from 'src/app/core/services/date-serializer.service';
+import { DateService } from 'src/app/core/services/date.service';
 import { JobRoleDTO } from 'src/app/settings/models/job-role.model';
 import { PicklistModel } from 'src/app/settings/models/picklist.model';
 import { BranchSerializerService } from 'src/app/settings/services/branch/branch-serializer.service';
@@ -21,7 +21,7 @@ export class RequestToHireSerializerService {
   picklist: PicklistModel | null;
 
   constructor(
-    private _dateSerializer: DateSerializerService,
+    private _dateService: DateService,
     private _usersSerializer: UserSerializerService,
     private _departmentSerializer: DepartmentSerializerService,
     private _branchSerializer: BranchSerializerService,
@@ -55,8 +55,8 @@ export class RequestToHireSerializerService {
       dto.specialCategoriesOpened,
       dto.additionalNotes,
       this.getPicklistModelById(dto.status),
-      this._dateSerializer.toDate(dto.createdAt),
-      this._dateSerializer.toDate(dto.updatedAt)
+      this._dateService.ISOToFullDate(dto.createdAt),
+      this._dateService.ISOToFullDate(dto.updatedAt)
     );
   }
 
@@ -84,9 +84,9 @@ export class RequestToHireSerializerService {
 
   serialize(model: RequestToHireModel): RequestToHireDTO {
     return {
-      id: 0,
+      id: model.id ? model.id : 0,
       title: model.getTitle(),
-      departmentId: model.getDepartment().getId(),
+      departmentsId: model.getDepartment().getId(),
       businessUnit: model.getBusinessUnit().getId(),
       usersId: model.getRequester().getId(),
       jobrolesId: model.getJobRole().getId(),
@@ -103,8 +103,8 @@ export class RequestToHireSerializerService {
       specialCategoriesOpened: model.getSpecialCategoriesOpened(),
       additionalNotes: model.getAdditionalNotes(),
       status: model.getStatus().getId(),
-      createdAt: '',
-      updatedAt: '',
+      createdAt: this._dateService.dateToISOString(model.createdAt),
+      updatedAt: this._dateService.dateToISOString(model.updatedAt),
       users: {} as UserDTO,
       departments: {} as DepartmentDTO,
       jobroles: {} as JobRoleDTO,

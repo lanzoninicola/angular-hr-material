@@ -1,12 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { map, Observable } from 'rxjs';
-import { DateService } from 'src/app/core/services/date.service';
+import { ActivatedRoute, Data } from '@angular/router';
+import { filter, map, Observable } from 'rxjs';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
-import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
+import {
+  FormControlConfig,
+  SelectOptionConfig,
+} from 'src/app/dynamic-form/types/form-control.types';
 import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
 import { RequestToHireService } from 'src/app/request-to-hire/services/request-to-hire.service';
+import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
+
+//TODO: task description / minimum qualification / preferred qualification can be retrieve from the job roles as template
+//TODO: validation between location type and location
 
 @Component({
   selector: 'ahr-request-to-hire-edit-form',
@@ -44,8 +50,7 @@ export class RequestToHireEditFormComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private _dynamicForm: DynamicFormService,
-    private _dataService: RequestToHireService,
-    private _dateService: DateService
+    private _dataService: RequestToHireService
   ) {}
 
   ngOnInit(): void {
@@ -54,8 +59,12 @@ export class RequestToHireEditFormComponent implements OnInit {
     this._buildModel();
     this._setTemplatePropertyBinding();
 
+    if (this._dataService.store.entityState === 'create') {
+      this._initFormValuesEntityCreate();
+    }
+
     if (this._dataService.store.entityState === 'update') {
-      this._initFormValues();
+      this._initFormValuesEntityUpdate();
     }
 
     this.valueChangesEvent.emit(this._dynamicForm.formData$);
@@ -74,6 +83,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         label: 'id',
         key: 'id',
         readonly: true,
+        hidden: true,
       },
       {
         type: 'input',
@@ -82,14 +92,6 @@ export class RequestToHireEditFormComponent implements OnInit {
         key: 'title',
         syncValidators: [Validators.required],
       },
-      // {
-      //   type: 'input',
-      //   placeholder: '',
-      //   label: 'Requester',
-      //   key: 'requester',
-      //   syncValidators: [Validators.required],
-      //   readonly: true,
-      // },
       {
         key: 'requester',
         type: 'select',
@@ -100,13 +102,13 @@ export class RequestToHireEditFormComponent implements OnInit {
           map((data) => data['formControlsData']['requester'])
         ),
       },
-
       {
         type: 'input',
         placeholder: '',
         label: 'Created At',
         key: 'createdAt',
         syncValidators: [],
+        hidden: true,
       },
       {
         type: 'input',
@@ -115,6 +117,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         key: 'updatedAt',
         syncValidators: [],
         readonly: true,
+        hidden: true,
       },
       {
         key: 'status',
@@ -136,13 +139,6 @@ export class RequestToHireEditFormComponent implements OnInit {
 
     this.RTH_POSITION_MAIN = [
       {
-        type: 'input',
-        placeholder: '',
-        label: 'Budget',
-        key: 'budget',
-        syncValidators: [Validators.required],
-      },
-      {
         type: 'select',
         key: 'jobRole',
         label: 'Job Role',
@@ -154,6 +150,17 @@ export class RequestToHireEditFormComponent implements OnInit {
         ),
       },
       {
+        type: 'select',
+        key: 'roleLevel',
+        label: 'Role Level',
+        placeholder: '',
+        whatToSelect: 'Role Level',
+        options: this._route.data.pipe(
+          map((data) => data['formControlsData']['picklist']['roleLevel'])
+        ),
+        syncValidators: [Validators.required],
+      },
+      {
         key: 'department',
         type: 'select',
         label: 'Department',
@@ -162,6 +169,7 @@ export class RequestToHireEditFormComponent implements OnInit {
         options: this._route.data.pipe(
           map((data) => data['formControlsData']['departments'])
         ),
+        syncValidators: [Validators.required],
       },
       {
         type: 'select',
@@ -187,50 +195,6 @@ export class RequestToHireEditFormComponent implements OnInit {
         ),
         syncValidators: [Validators.required],
       },
-    ];
-
-    this.RTH_POSITION_DETAILS = [
-      {
-        type: 'textarea',
-        placeholder: '',
-        label: 'Tasks Description',
-        key: 'roleTaskDescription',
-        syncValidators: [Validators.required],
-        style: {
-          minHeight: '300px',
-        },
-      },
-      {
-        type: 'textarea',
-        placeholder: '',
-        label: 'Minimum Qualifications',
-        key: 'minimumQualifications',
-        syncValidators: [Validators.required],
-        style: {
-          minHeight: '300px',
-        },
-      },
-      {
-        type: 'textarea',
-        placeholder: '',
-        label: 'Preferred Qualifications',
-        key: 'preferredQualifications',
-        syncValidators: [Validators.required],
-        style: {
-          minHeight: '300px',
-        },
-      },
-      {
-        type: 'select',
-        key: 'roleLevel',
-        label: 'Role Level',
-        placeholder: '',
-        whatToSelect: 'Role Level',
-        options: this._route.data.pipe(
-          map((data) => data['formControlsData']['picklist']['roleLevel'])
-        ),
-        syncValidators: [Validators.required],
-      },
       {
         type: 'select',
         key: 'jobLocationType',
@@ -246,19 +210,68 @@ export class RequestToHireEditFormComponent implements OnInit {
       {
         key: 'jobLocation',
         type: 'select',
-        label: 'Location',
+        label: 'Branch Office',
         placeholder: '',
         whatToSelect: 'branches',
         options: this._route.data.pipe(
           map((data) => data['formControlsData']['branches'])
         ),
+        syncValidators: [Validators.required],
       },
+      {
+        type: 'input',
+        placeholder: '1500-2000',
+        label: 'Budget',
+        key: 'budget',
+        syncValidators: [Validators.required],
+      },
+    ];
+
+    this.RTH_POSITION_DETAILS = [
+      {
+        type: 'textarea',
+        placeholder: '',
+        label: 'Tasks Description',
+        key: 'roleTaskDescription',
+        syncValidators: [Validators.required],
+        style: {
+          minHeight: '300px',
+          lineHeight: '1.5',
+        },
+      },
+      {
+        type: 'textarea',
+        placeholder: '',
+        label: 'Minimum Qualifications',
+        key: 'minimumQualifications',
+        syncValidators: [Validators.required],
+        style: {
+          minHeight: '300px',
+          lineHeight: '1.5',
+        },
+      },
+      {
+        type: 'textarea',
+        placeholder: '',
+        label: 'Preferred Qualifications',
+        key: 'preferredQualifications',
+        syncValidators: [Validators.required],
+        style: {
+          minHeight: '300px',
+          lineHeight: '1.5',
+        },
+      },
+
       {
         type: 'textarea',
         placeholder: '',
         label: 'Benefits',
         key: 'benefits',
         syncValidators: [Validators.required],
+        style: {
+          minHeight: '300px',
+          lineHeight: '1.5',
+        },
       },
     ];
 
@@ -273,7 +286,6 @@ export class RequestToHireEditFormComponent implements OnInit {
         placeholder: '',
         label: 'Additional Notes',
         key: 'additionalNotes',
-        syncValidators: [Validators.required],
       },
     ];
   }
@@ -311,15 +323,15 @@ export class RequestToHireEditFormComponent implements OnInit {
     this.requestToHireEditFormView = this._dynamicForm.view.get();
   }
 
-  private _initFormValues() {
+  private _initFormValuesEntityUpdate() {
     const currentRequest = this._dataService.store.currentRequest;
 
     this._dynamicForm.setControlsValue('rthMainInfo', {
       id: currentRequest.getId(),
       title: currentRequest.getTitle(),
       requester: currentRequest.getRequester(),
-      createdAt: this._dateService.getDate(currentRequest.getCreatedAt()),
-      updatedAt: this._dateService.getDate(currentRequest.getUpdatedAt()),
+      createdAt: currentRequest.getCreatedAt(),
+      updatedAt: currentRequest.getUpdatedAt(),
       status: currentRequest.getStatus(),
       highPriority: currentRequest.getHighPriority(),
     });
@@ -327,18 +339,19 @@ export class RequestToHireEditFormComponent implements OnInit {
     this._dynamicForm.setControlsValue('rthPositionMainInfo', {
       budget: currentRequest.getBudget(),
       jobRole: currentRequest.getJobRole(),
+      roleLevel: currentRequest.getRoleLevel(),
       department: currentRequest.getDepartment(),
       businessUnit: currentRequest.getBusinessUnit(),
       employmentStatus: currentRequest.getEmploymentStatus(),
+      jobLocationType: currentRequest.getJobLocationType(),
+      jobLocation: currentRequest.getJobLocation(),
     });
 
     this._dynamicForm.setControlsValue('rthPositionDetails', {
       roleTaskDescription: currentRequest.getRoleTaskDescription(),
       minimumQualifications: currentRequest.getMinimumQualifications(),
       preferredQualifications: currentRequest.getPreferredQualifications(),
-      roleLevel: currentRequest.getRoleLevel(),
-      jobLocationType: currentRequest.getJobLocationType(),
-      jobLocation: currentRequest.getJobLocation(),
+
       benefits: currentRequest.getBenefits(),
     });
 
@@ -346,5 +359,31 @@ export class RequestToHireEditFormComponent implements OnInit {
       specialCategoriesOpened: currentRequest.getSpecialCategoriesOpened(),
       additionalNotes: currentRequest.getAdditionalNotes(),
     });
+  }
+
+  private _initFormValuesEntityCreate() {
+    this._initWorkingStatusFormControl();
+  }
+
+  private _initWorkingStatusFormControl() {
+    this._route.data
+      .pipe(
+        map<Data, SelectOptionConfig>((data) => {
+          const [newWorkingStatus] = data['formControlsData']['picklist'][
+            'workingStatus'
+          ].filter(
+            (item: SelectOptionConfig) =>
+              item.textContext.toLowerCase() === 'new'
+          );
+          return newWorkingStatus;
+        })
+      )
+      .subscribe((data) => {
+        const { value: picklistWorkingStatusNew } = data;
+
+        this._dynamicForm.setControlsValue('rthMainInfo', {
+          status: picklistWorkingStatusNew,
+        });
+      });
   }
 }

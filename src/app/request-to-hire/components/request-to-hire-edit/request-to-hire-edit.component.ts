@@ -5,6 +5,7 @@ import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.s
 
 import { RequestToHireModel } from '../../models/request-to-hire.model';
 import { RequestToHireService } from '../../services/request-to-hire.service';
+import { RequestToHireFormData } from '../../types/request-to-hire.form.type';
 
 @Component({
   selector: 'app-request-to-hire-edit',
@@ -18,7 +19,7 @@ export class RequestToHireEditComponent implements OnInit {
 
   formState$ = this._dynamicForm.formState$;
   formStatus$: Observable<any>;
-  formData: RequestToHireModel;
+  formData: RequestToHireFormData;
 
   constructor(
     private _dynamicForm: DynamicFormService,
@@ -28,6 +29,8 @@ export class RequestToHireEditComponent implements OnInit {
   ngOnInit() {
     this.entityState = this._dataService.store.entityState;
     this.currentRequest = this._dataService.store.currentRequest;
+
+    console.log(this._dataService.store.dispatcher);
   }
 
   ngOnDestroy() {
@@ -36,7 +39,7 @@ export class RequestToHireEditComponent implements OnInit {
 
   onValueChanges(valueChanges: Observable<any>) {
     this.subs.add(
-      valueChanges.subscribe((formData: RequestToHireModel) => {
+      valueChanges.subscribe((formData: RequestToHireFormData) => {
         this.formData = formData;
       })
     );
@@ -47,7 +50,25 @@ export class RequestToHireEditComponent implements OnInit {
   }
 
   onSaveButtonClicked() {
-    const requestToHireModel = new RequestToHireModel(
+    this._createModel();
+
+    if (this.entityState === 'create') {
+      this._dataService.save(this.currentRequest);
+    }
+    if (this.entityState === 'update') {
+      this._dataService.update(this.currentRequest);
+    }
+  }
+
+  // TODO: Develop remove user
+  onRemoveButtonClicked() {}
+
+  private _createModel() {
+    const createdAt =
+      this.entityState === 'update' ? this.formData.createdAt : new Date();
+    const updatedAt = new Date();
+
+    this.currentRequest = new RequestToHireModel(
       this.formData.id,
       this.formData.title,
       this.formData.department,
@@ -67,23 +88,8 @@ export class RequestToHireEditComponent implements OnInit {
       this.formData.specialCategoriesOpened,
       this.formData.additionalNotes,
       this.formData.status,
-      this.formData.createdAt,
-      this.formData.updatedAt
+      createdAt,
+      updatedAt
     );
-
-    this._dataService.store.currentRequest = requestToHireModel;
-
-    if (this.entityState === 'create') {
-      this._dataService.save(requestToHireModel);
-    }
-    if (this.entityState === 'update') {
-      this._dataService.update(requestToHireModel);
-    }
   }
-
-  // TODO: Develop disable user
-  onDisableButtonClicked() {}
-
-  // TODO: Develop remove user
-  onRemoveButtonClicked() {}
 }

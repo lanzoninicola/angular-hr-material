@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { IconComponent } from 'src/app/shared/components/icon/icon.component';
 import { TableColumnConfig } from 'src/app/table-data/types/table.types';
 
 import { RequestToHireService } from '../../services/request-to-hire.service';
+import { HighPriorityIconComponent } from '../high-priority-icon/high-priority-icon.component';
 import { RequestStatusChipComponent } from '../request-status-chip/request-status-chip.component';
 
 @Component({
@@ -106,7 +106,7 @@ const RTH_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
     title: 'High Priority',
     viewType: 'component',
     component: {
-      key: IconComponent,
+      key: HighPriorityIconComponent,
       inputs: [{ icon: 'error' }, { label: 'high' }, { color: 'red' }],
     },
     headerStyle: {

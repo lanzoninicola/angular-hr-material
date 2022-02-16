@@ -7,7 +7,7 @@ import { UserDTO } from 'src/app/users/types/user.type';
 export interface RequestToHireDTO {
   id: number;
   title: string;
-  departmentId: number;
+  departmentsId: number;
   businessUnit: PicklistId;
   usersId: number;
   jobrolesId: number;

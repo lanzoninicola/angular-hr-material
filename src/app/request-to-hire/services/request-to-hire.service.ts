@@ -15,8 +15,6 @@ import { RequestToHireStoreService } from './request-to-hire-store.service';
   providedIn: 'root',
 })
 export class RequestToHireService {
-  // http://localhost:3000/picklist?type=business-unit&type=role-level&type=job-location-type&type=employment-status&type=yesno&type=rth-working-status
-
   requiredPicklistTypes: PicklistType[] = [
     'business-unit',
     'role-level',
@@ -65,12 +63,16 @@ export class RequestToHireService {
 
   save(model: RequestToHireModel) {
     const dto = this._serializationService.serialize(model);
-    return this._httpService.save(dto);
+    return this._httpService
+      .save(dto)
+      .subscribe(() => (this._store.currentRequest = model));
   }
 
   update(model: RequestToHireModel) {
     const dto = this._serializationService.serialize(model);
-    return this._httpService.update(dto);
+    return this._httpService
+      .update(dto)
+      .subscribe(() => (this._store.currentRequest = model));
   }
 
   loadRequiredPicklist(): Observable<PicklistModel> {

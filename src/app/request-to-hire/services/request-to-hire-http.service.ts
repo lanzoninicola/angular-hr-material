@@ -49,7 +49,7 @@ export class RequestToHireHttpService {
     return this.http.post<RequestToHireDTO>(
       this.baseURL,
       dto,
-      this._httpOptions.isBackendRequest()
+      this._httpOptions.isFormSubmission()
     );
   }
 
@@ -57,7 +57,7 @@ export class RequestToHireHttpService {
     return this.http.put<RequestToHireDTO>(
       `${this.baseURL}/${dto.id}`,
       dto,
-      this._httpOptions.isBackendRequest()
+      this._httpOptions.isFormSubmission()
     );
   }
 
