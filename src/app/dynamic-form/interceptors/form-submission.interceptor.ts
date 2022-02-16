@@ -1,4 +1,5 @@
 import {
+  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
@@ -6,11 +7,13 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 import { HttpContextService } from 'src/app/core/services/http-context.service';
 import { MessageService } from 'src/app/core/services/message.service';
 
 import { DynamicFormService } from '../services/dynamic-form.service';
+
+// TODO: Loggin error to third party service
 
 @Injectable({ providedIn: 'root' })
 export class FormSubmissionInterceptor implements HttpInterceptor {
@@ -32,13 +35,9 @@ export class FormSubmissionInterceptor implements HttpInterceptor {
       return next.handle(req).pipe(
         tap((event) => {
           if (event instanceof HttpResponse) {
-            this._dynamicForm.idle();
-          }
-        }),
-        tap((event) => {
-          if (event instanceof HttpResponse) {
             if (event.ok) {
               this._messageService.send('Record saved correctly', 'info');
+              this._dynamicForm.idle();
             }
           }
         })
