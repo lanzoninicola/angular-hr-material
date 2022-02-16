@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-import { RequestToHireHttpService } from 'src/app/request-to-hire/services/request-to-hire-http.service';
 
 import { DynamicFormService } from '../../services/dynamic-form.service';
 import { InputTextConfig } from '../../types/form-control.types';
@@ -8,7 +7,10 @@ import { InputTextConfig } from '../../types/form-control.types';
 @Component({
   selector: 'ahr-form-input',
   template: `
-    <div [formGroup]="parentFormGroupModel">
+    <div
+      [formGroup]="parentFormGroupModel"
+      [ngClass]="controlConfig['hidden'] ? 'hidden' : ''"
+    >
       <mat-form-field>
         <mat-label>{{ controlConfig['label'] }}</mat-label>
         <input
