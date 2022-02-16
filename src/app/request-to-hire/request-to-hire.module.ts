@@ -12,6 +12,7 @@ import { RequestToHireEditComponent } from './components/request-to-hire-edit/re
 import { RequestToHireListComponent } from './components/request-to-hire-list/request-to-hire-list.component';
 import { RequestToHireSectionComponent } from './components/request-to-hire-section/request-to-hire-section.component';
 import { RequestToHireRoutingModule } from './routing/request-to-hire-routing.module';
+import { HighPriorityIconComponent } from './components/high-priority-icon/high-priority-icon.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { RequestToHireRoutingModule } from './routing/request-to-hire-routing.mo
     RequestToHireEditComponent,
     RequestToHireEditFormComponent,
     RequestStatusChipComponent,
+    HighPriorityIconComponent,
   ],
   imports: [
     CommonModule,
