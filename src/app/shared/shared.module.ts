@@ -54,6 +54,7 @@ import { SectionToolbarComponent } from './components/section-toolbar/section-to
     EditActionButtonComponent,
     NavigationActionButtonComponent,
     LoadingSpinnerComponent,
+    IconComponent,
     ChipComponent,
   ],
 })
