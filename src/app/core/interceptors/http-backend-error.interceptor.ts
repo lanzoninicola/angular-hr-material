@@ -13,6 +13,11 @@ import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.s
 import { HttpContextService } from '../services/http-context.service';
 import { MessageService } from '../services/message.service';
 
+/**
+ * @description
+ * This interceptor handles errors when APIs are consuming in a regular workflow.
+ */
+
 @Injectable({
   providedIn: 'root',
 })
@@ -27,9 +32,11 @@ export class HttpBackendErrorInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const { isBackendRequest } = request.context.get(this._httpContext.token);
+    const { isBackendRequest, isFormSubmission } = request.context.get(
+      this._httpContext.token
+    );
 
-    if (isBackendRequest) {
+    if (isBackendRequest || isFormSubmission) {
       return next
         .handle(request)
 
@@ -47,7 +54,7 @@ export class HttpBackendErrorInterceptor implements HttpInterceptor {
               errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
             }
 
-            this._resetFormState();
+            this._restoreFormState();
 
             this._logToUser(errorMessage);
 
@@ -63,8 +70,14 @@ export class HttpBackendErrorInterceptor implements HttpInterceptor {
 
   // TODO: How this works when...? See below
 
-  private _resetFormState() {
-    this._dynamicForm.idle();
+  /**
+   * @description
+   * This restore the form state to changed.
+   * So, the loading spinner will be removed and the form will be enabled again.
+   *
+   */
+  private _restoreFormState() {
+    this._dynamicForm.changed();
   }
 
   private _logToUser(message: string) {
