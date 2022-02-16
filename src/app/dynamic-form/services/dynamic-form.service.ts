@@ -1,8 +1,7 @@
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { FormControlStatus, FormGroup } from '@angular/forms';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
-import { FormControlConfigKey } from '../types/form-control.types';
 import { FormGroupKey } from '../types/form-group.types';
 import { FormState } from '../types/form-state.types';
 import { FormModelBuilderService } from './form-model-builder.service';
