@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-icon',
+  selector: 'ahr-icon',
   template: ` <mat-icon
     aria-hidden="false"
     attr.aria-label="{{ label }}"
