@@ -35,7 +35,7 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   }
 
   objectComparisonFunction(option: any, value: any) {
-    return option.id === value.id;
+    return value ? option.id === value.id : false;
   }
 
   private _loadOptions() {
