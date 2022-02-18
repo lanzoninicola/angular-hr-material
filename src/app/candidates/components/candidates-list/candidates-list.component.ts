@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { TableColumnConfig } from 'src/app/table-data/types/table.types';
 
-import { CANDIDATES_LIST_TABLE_COLUMNS } from '../../config/candidates.config';
 import { CandidateModel } from '../../models/candidate.model';
-import { CandidatesService } from '../../services/candidate.service';
+import { CandidateService } from '../../services/candidate.service';
 
 @Component({
   selector: 'ahr-candidates-list',
@@ -23,10 +23,7 @@ export class CandidatesListComponent implements OnInit {
 
   columns = CANDIDATES_LIST_TABLE_COLUMNS;
 
-  constructor(
-    private _dataService: CandidatesService,
-    private router: Router
-  ) {}
+  constructor(private _dataService: CandidateService, private router: Router) {}
 
   ngOnInit() {
     this.tableDataSource$ = this._dataService.findAll();
@@ -36,3 +33,30 @@ export class CandidatesListComponent implements OnInit {
     this.router.navigate(['candidates', entityRow.id]);
   }
 }
+
+export const CANDIDATES_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
+  {
+    key: 'lastname',
+    title: 'Lastname',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+  {
+    key: 'firstname',
+    title: 'Firstname',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+  {
+    key: 'email',
+    title: 'E-mail',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+];

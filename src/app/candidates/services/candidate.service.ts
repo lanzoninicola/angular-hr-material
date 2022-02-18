@@ -1,9 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs';
+import { forkJoin, map, Observable, of, shareReplay } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
+import { PicklistModel } from 'src/app/settings/models/picklist.model';
+import { PicklistService } from 'src/app/settings/services/picklist/picklist.service';
+import { PicklistType } from 'src/app/settings/types/picklist-item.type';
 import { environment } from 'src/environments/environment';
 import { CandidateModel } from '../models/candidate.model';
+import { CandidateDTO } from '../types/candidate.dto.type';
+import { CandidateFormData } from '../types/candidates.types';
+import { CandidateHttpService } from './candidate-http.service';
+import { CandidateSerializerService } from './candidate-serializer.service';
 
 import { CandidateStoreService } from './candidate-store.service';
 
@@ -11,69 +18,119 @@ import { CandidateStoreService } from './candidate-store.service';
   providedIn: 'root',
 })
 export class CandidateService {
+  requiredPicklistTypes: PicklistType[] = [];
+
   constructor(
-    private http: HttpClient,
-    private _httpOptions: HttpRequestOptionsService,
-    private _store: CandidateStoreService
+    private _httpService: CandidateHttpService,
+    private _serializationService: CandidateSerializerService,
+    private _store: CandidateStoreService,
+    private _picklistService: PicklistService
   ) {}
 
-  findAll() {
-    return this.http
-      .get<CandidateModel[]>(
-        `${environment.API}/candidates`,
-        this._httpOptions.isBackendRequest()
-      )
-      .pipe(
-        map((candidateData) => {
-          return candidateData.map((candidate) => {
-            return {
-              ...candidate,
-              fullName: `${candidate.lastname} ${candidate.firstname}`,
-            };
-          });
-        })
-      );
+  get store() {
+    return this._store;
   }
 
-  findById(id: number) {
-    return this.http
-      .get<CandidateModel>(
-        `${environment.API}/candidates/${id}`,
-        this._httpOptions.isBackendRequest()
-      )
-      .pipe(
-        map((candidateData: CandidateModel) => {
-          return {
-            ...candidateData,
-            fullName: `${candidateData.lastname} ${candidateData.firstname}`,
-          };
-        })
-      );
+  findAll(): Observable<CandidateModel[]> {
+    const records: Observable<CandidateDTO[]> = this._httpService.findAll();
+
+    return forkJoin([records]).pipe(
+      map(([records]) => {
+        return records.map((record) => {
+          return this._serializationService.deserialize(record);
+        });
+      }),
+      shareReplay(1)
+    );
   }
 
-  save(candidateData: CandidateModel) {
-    return this.http
-      .post<CandidateModel>(
-        `${environment.API}/candidates`,
-        candidateData,
-        this._httpOptions.isFormSubmission()
-      )
-      .subscribe((newCandidate) => {
-        this._store.currentEntity = newCandidate;
-      });
+  findById(id: number): Observable<CandidateModel> {
+    if (this._shouldCurrentCached(id)) {
+      return of(this._currentCached());
+    }
+
+    const record: Observable<CandidateDTO> = this._httpService.findById(id);
+
+    return forkJoin([record]).pipe(
+      map(([record]) => {
+        return this._serializationService.deserialize(record);
+      }),
+      shareReplay(1)
+    );
   }
 
-  update(candidateData: CandidateModel) {
-    const { id } = candidateData;
+  save(model: CandidateModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService
+      .save(dto)
+      .subscribe(() => (this._store.currentCandidate = model));
+  }
 
-    this.http
-      .patch<any>(
-        `${environment.API}/candidates/${id}`,
-        candidateData,
-        this._httpOptions.isFormSubmission()
-      )
-      .subscribe((updatedCandidate) => {
-        this._store.currentEntity = updatedCandidate;
-      });
+  update(model: CandidateModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService
+      .update(dto)
+      .subscribe(() => (this._store.currentCandidate = model));
+  }
+
+  loadRequiredPicklist(): Observable<PicklistModel> {
+    const query = this._picklistQueryString();
+    return this._picklistService.findByQuery(query);
+  }
+
+  getEntityModelFromFormData(formData: CandidateFormData): CandidateModel {
+    const createdAt =
+      this.store.entityState === 'update' ? formData.createdAt : new Date();
+    const updatedAt = new Date();
+
+    return new CandidateModel(
+      formData.id ? formData.id : 0,
+      formData.firstname,
+      formData.lastname,
+      formData.email,
+      createdAt,
+      updatedAt
+    );
+  }
+
+  _currentCached(): CandidateModel {
+    return this._store.currentCandidate;
+  }
+
+  /**
+   *
+   */
+  _shouldCurrentCached(entity?: CandidateModel | number): boolean {
+    if (!this._currentCached()) {
+      return false;
+    }
+
+    if (!(this._currentCached() instanceof CandidateModel)) {
+      return false;
+    }
+
+    if (entity instanceof CandidateModel) {
+      return entity.getId() === this._currentCached().getId();
+    }
+
+    if (Number.isInteger(entity)) {
+      return entity === this._currentCached().getId();
+    }
+
+    return false;
+  }
+
+  /**
+   * @description
+   * Returns a string of the query parameters for the picklist service
+   */
+  private _picklistQueryString() {
+    let fullUrlQuery = '';
+
+    this.requiredPicklistTypes.forEach((picklistType) => {
+      fullUrlQuery = fullUrlQuery + `&type=${picklistType}`;
+    });
+
+    return fullUrlQuery;
   }
 }

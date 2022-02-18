@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CandidateModel } from '../../models/candidate.model';
-import { CandidatesStoreService } from '../../services/candidate-store.service';
+import { CandidateStoreService } from '../../services/candidate-store.service';
 
 @Component({
   selector: 'app-candidates-section',
@@ -19,10 +19,10 @@ import { CandidatesStoreService } from '../../services/candidate-store.service';
 })
 export class CandidatesSectionComponent implements OnInit {
   pageTitle: string = 'Candidates';
-  constructor(private router: Router, private _store: CandidatesStoreService) {}
+  constructor(private router: Router, private _store: CandidateStoreService) {}
 
   addNewCandidate() {
-    this._store.currentEntity = {} as CandidateModel;
+    this._store.currentCandidate = {} as CandidateModel;
     this.router.navigate(['candidates', 'new']);
     this.pageTitle = 'New Candidate';
   }

@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
+import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { CandidateModel } from '../../models/candidate.model';
-import { CandidatesStoreService } from '../../services/candidate-store.service';
-import { CandidatesService } from '../../services/candidate.service';
+import { CandidateStoreService } from '../../services/candidate-store.service';
+import { CandidateService } from '../../services/candidate.service';
+
 import { CandidateFormData } from '../../types/candidates.types';
 
 @Component({
@@ -17,63 +19,47 @@ export class CandidateEditComponent implements OnInit {
   currentCandidate: CandidateModel = {} as CandidateModel;
   entityState: EntityState = 'create';
 
-  formValues: CandidateModel = {} as CandidateModel;
-  formState: FormState = 'idle';
-  formStatus: string = 'invalid';
+  formState$ = this._dynamicForm.formState$;
+  formStatus$: Observable<any>;
+  formData: CandidateFormData;
 
   constructor(
-    private _store: CandidatesStoreService,
-    private _candidatesService: CandidatesService
+    private _store: CandidateStoreService,
+    private _dataService: CandidateService,
+    private _dynamicForm: DynamicFormService
   ) {}
 
   ngOnInit() {
     this.entityState = this._store.entityState;
-    this.currentCandidate = this._store.currentEntity;
+    this.currentCandidate = this._store.currentCandidate;
   }
 
   ngOnDestroy() {
     this.subs.unsubscribe();
   }
 
-  onFormState(formState: BehaviorSubject<FormState>) {
+  onValueChanges(valueChanges: Observable<any>) {
     this.subs.add(
-      formState.subscribe((formState: FormState) => {
-        this.formState = formState;
+      valueChanges.subscribe((formData: CandidateFormData) => {
+        this.formData = formData;
       })
     );
   }
 
-  onValueChanges(valueChanges: Observable<any>) {
-    this.subs.add(
-      valueChanges
-        .pipe<CandidateModel>(
-          map((userFormData: CandidateFormData) => {
-            return {
-              id: this.currentCandidate.id,
-              firstname: userFormData['firstname'],
-              lastname: userFormData['lastname'],
-              email: userFormData['email'],
-            };
-          })
-        )
-        .subscribe((userModel: CandidateModel) => {
-          this.formValues = { ...userModel };
-        })
-    );
-  }
-
   onStatusChanges(statusChanges: Observable<any>) {
-    this.subs.add(
-      statusChanges.subscribe((formStatus) => (this.formStatus = formStatus))
-    );
+    this.formStatus$ = statusChanges;
   }
 
   onSaveButtonClicked() {
+    this.currentCandidate = this._dataService.getEntityModelFromFormData(
+      this.formData
+    );
+
     if (this.entityState === 'create') {
-      this._candidatesService.save(this.formValues);
+      this._dataService.save(this.currentCandidate);
     }
     if (this.entityState === 'update') {
-      this._candidatesService.update(this.formValues);
+      this._dataService.update(this.currentCandidate);
     }
   }
 

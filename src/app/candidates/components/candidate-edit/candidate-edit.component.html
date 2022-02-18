@@ -1,9 +1,10 @@
-<ahr-edit-form-toolbar [disabled]="formState === 'submitted'">
+<ahr-edit-form-toolbar [disabled]="(formState$ | async) === 'submitted'">
   <ahr-edit-action-button
     left
     [disabled]="
-      (formState === 'idle' || formState === 'submitted') &&
-      formStatus === 'invalid'
+      (formState$ | async) === 'idle' ||
+      (formState$ | async) === 'submitted' ||
+      (formStatus$ | async) === 'invalid'
     "
     [action]="'save'"
     (actionEvent)="onSaveButtonClicked()"
@@ -25,9 +26,7 @@
 </ahr-edit-form-toolbar>
 <div class="container-form">
   <ahr-candidate-edit-form
-    [candidate]="currentCandidate"
-    [showSpinner]="formState === 'submitted'"
-    (formState)="onFormState($event)"
+    [showSpinner]="(formState$ | async) === 'submitted'"
     (valueChanges)="onValueChanges($event)"
     (statusChanges)="onStatusChanges($event)"
   ></ahr-candidate-edit-form>

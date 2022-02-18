@@ -1,20 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { CandidateModel } from 'src/app/candidates/models/candidate.model';
-import { CandidatesService } from 'src/app/candidates/services/candidate.service';
-
+import { Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { CandidateService } from 'src/app/candidates/services/candidate.service';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
+import { FormModelBuilderService } from 'src/app/dynamic-form/services/form-model-builder.service';
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
-import { FormState } from 'src/app/dynamic-form/types/form-state.types';
-import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
 
 @Component({
   selector: 'ahr-candidate-edit-form',
   template: `
     <ahr-dynamic-form
-      [model]="candidateEditForm"
-      [view]="candidateEditFormView"
+      [model]="candidateEditForm.model"
+      [settings]="candidateEditForm.settings"
       [showSpinner]="showSpinner"
     ></ahr-dynamic-form>
   `,
@@ -36,23 +34,18 @@ export class CandidateEditFormComponent implements OnInit {
 
   PERSONAL_INFO_CONTROLS: FormControlConfig[] = [];
 
-  candidateEditForm: FormGroup;
-  candidateEditFormView: FormViewTemplate;
+  candidateEditForm: FormModelBuilderService;
 
   constructor(
     private _dynamicForm: DynamicFormService,
-    private _dataService: CandidatesService
+    private _dataService: CandidateService
   ) {}
 
   ngOnInit(): void {
+    this.candidateEditForm = new FormModelBuilderService();
     this._setFormControlsConfig();
-    this._buildView();
-    this._buildModel();
-    this._setTemplatePropertyBinding();
-
-    if (this._dataService.store.entityState === 'create') {
-      this._initFormValuesEntityCreate();
-    }
+    this._setupForm();
+    this._handleForms();
 
     if (this._dataService.store.entityState === 'update') {
       this._initFormValuesEntityUpdate();
@@ -92,33 +85,28 @@ export class CandidateEditFormComponent implements OnInit {
     ];
   }
 
-  private _buildView() {
-    this._dynamicForm.view.build(
-      { key: 'personalInfo', title: 'Personal Info' },
+  private _setupForm() {
+    const { candidateEditForm } = this;
+
+    candidateEditForm.setup(
+      { key: 'jbMainInfo', title: 'Main Information' },
       this.PERSONAL_INFO_CONTROLS
     );
   }
 
-  private _buildModel() {
-    this._dynamicForm.model.build(this._dynamicForm.view.get());
+  private _handleForms() {
+    const { candidateEditForm } = this;
 
-    this._dynamicForm.load();
+    this._dynamicForm.load(candidateEditForm);
   }
 
-  private _setTemplatePropertyBinding() {
-    this.candidateEditForm = this._dynamicForm.model.get();
-    this.candidateEditFormView = this._dynamicForm.view.get();
-  }
+  private _initFormValuesEntityUpdate() {
+    const { currentCandidate } = this._dataService.store;
 
-  private _initFormValuesEntityUpdate(candidate: CandidateModel | null) {
-    if (!candidate || Object.keys(candidate).length === 0) {
-      return;
-    }
-
-    this._dynamicForm.setControlsValue('personalInfo', {
-      firstname: candidate.firstname,
-      lastname: candidate.lastname,
-      email: candidate.email,
+    this._dynamicForm.setControlsValue({
+      firstname: currentCandidate.getFirstname(),
+      lastname: currentCandidate.getLastname(),
+      email: currentCandidate.getEmail(),
     });
   }
 }

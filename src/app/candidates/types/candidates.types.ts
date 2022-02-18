@@ -3,4 +3,6 @@ export interface CandidateFormData {
   firstname: string;
   lastname: string;
   email: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

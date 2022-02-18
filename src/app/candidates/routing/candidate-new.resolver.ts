@@ -1,18 +1,14 @@
 import { Injectable } from '@angular/core';
-import {
-  Router,
-  Resolve,
-  RouterStateSnapshot,
-  ActivatedRouteSnapshot,
-} from '@angular/router';
+import { Resolve } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { CandidatesStoreService } from '../services/candidate-store.service';
+
+import { CandidateStoreService } from '../services/candidate-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CandidateNewResolver implements Resolve<boolean> {
-  constructor(private _store: CandidatesStoreService) {}
+  constructor(private _store: CandidateStoreService) {}
 
   resolve(): Observable<boolean> {
     this._store.entityStateCreate();

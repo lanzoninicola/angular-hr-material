@@ -17,11 +17,11 @@ export class CandidateStoreService extends ModuleStoreService {
     return this.get(`${this.PREFIX}_LIST`);
   }
 
-  set currentEntity(currentEntity: CandidateModel) {
-    this.set(`${this.PREFIX}_CURRENT_CANDIDATE`, currentEntity);
+  set currentCandidate(currentCandidate: CandidateModel) {
+    this.set(`${this.PREFIX}_CURRENT_CANDIDATE`, currentCandidate);
   }
 
-  get currentEntity(): CandidateModel {
+  get currentCandidate(): CandidateModel {
     return this.get(`${this.PREFIX}_CURRENT_CANDIDATE`);
   }
 

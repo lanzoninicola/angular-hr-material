@@ -1,43 +1,34 @@
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
-import { Location } from '@angular/common';
 
-import { CandidatesStoreService } from '../services/candidate-store.service';
-import { CandidatesService } from '../services/candidate.service';
 import { CandidateModel } from '../models/candidate.model';
+import { CandidateStoreService } from '../services/candidate-store.service';
+import { CandidateService } from '../services/candidate.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CandidateEditResolver implements Resolve<CandidateModel> {
   constructor(
-    private _store: CandidatesStoreService,
-    private _dataService: CandidatesService,
+    private _store: CandidateStoreService,
+    private _dataService: CandidateService,
     private _location: Location
   ) {}
 
   resolve(route: ActivatedRouteSnapshot): Observable<CandidateModel> {
-    const store = this._store;
     const entityIdParam = parseInt(route.params['id'], 10);
 
     if (Number.isNaN(+entityIdParam)) {
       this._goBack();
     }
 
-    if (store.currentEntity !== undefined) {
-      const { id } = store.currentEntity;
-      if (id === entityIdParam) {
-        store.entityStateUpdate();
-        return of(store.currentEntity);
-      }
-    }
-
     return this._dataService.findById(entityIdParam).pipe(
       catchError(this._goBack()),
       tap((entity) => {
-        store.currentEntity = entity;
-        store.entityStateUpdate();
+        this._dataService.store.currentCandidate = entity;
+        this._store.entityStateUpdate();
       })
     );
   }
