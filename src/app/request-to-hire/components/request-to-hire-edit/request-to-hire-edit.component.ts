@@ -29,8 +29,6 @@ export class RequestToHireEditComponent implements OnInit {
   ngOnInit() {
     this.entityState = this._dataService.store.entityState;
     this.currentRequest = this._dataService.store.currentRequest;
-
-    console.log(this._dataService.store.dispatcher);
   }
 
   ngOnDestroy() {
@@ -50,7 +48,11 @@ export class RequestToHireEditComponent implements OnInit {
   }
 
   onSaveButtonClicked() {
-    this._createModel();
+    console.log(this.formData);
+
+    this.currentRequest = this._dataService.getEntityModelFromFormData(
+      this.formData
+    );
 
     if (this.entityState === 'create') {
       this._dataService.save(this.currentRequest);
@@ -62,34 +64,4 @@ export class RequestToHireEditComponent implements OnInit {
 
   // TODO: Develop remove user
   onRemoveButtonClicked() {}
-
-  private _createModel() {
-    const createdAt =
-      this.entityState === 'update' ? this.formData.createdAt : new Date();
-    const updatedAt = new Date();
-
-    this.currentRequest = new RequestToHireModel(
-      this.formData.id,
-      this.formData.title,
-      this.formData.department,
-      this.formData.businessUnit,
-      this.formData.requester,
-      this.formData.jobRole,
-      this.formData.roleTaskDescription,
-      this.formData.roleLevel,
-      this.formData.highPriority,
-      this.formData.jobLocationType,
-      this.formData.jobLocation,
-      this.formData.employmentStatus,
-      this.formData.minimumQualifications,
-      this.formData.preferredQualifications,
-      this.formData.benefits,
-      this.formData.budget,
-      this.formData.specialCategoriesOpened,
-      this.formData.additionalNotes,
-      this.formData.status,
-      createdAt,
-      updatedAt
-    );
-  }
 }
