@@ -1,6 +1,6 @@
 export interface FormGroupConfiguration {
   key: string;
-  title: string;
+  title?: string;
   description?: string;
 }
 

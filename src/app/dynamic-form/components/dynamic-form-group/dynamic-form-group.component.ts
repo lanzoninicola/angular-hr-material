@@ -8,6 +8,7 @@ import { FormControlConfig } from '../../types/form-control.types';
   template: `
     <div class="form-group">
       <h3 class="form-group-title">{{ title }}</h3>
+      <p>{{ description }}</p>
       <div class="form-group-content">
         <ng-content *dynamicFields="childrenControls; parentGroupName: name">
         </ng-content>
@@ -28,7 +29,8 @@ export class DynamicFormGroupComponent implements OnInit {
   };
 
   name: string = '';
-  title: string = '';
+  title: string | undefined = '';
+  description: string | undefined = '';
   childrenControls: FormControlConfig[] = [];
 
   constructor() {}
@@ -36,6 +38,7 @@ export class DynamicFormGroupComponent implements OnInit {
   ngOnInit(): void {
     this.name = this.viewConfig['key']['key'];
     this.title = this.viewConfig['key']['title'];
+    this.description = this.viewConfig['key']['description'];
     this.childrenControls = this.viewConfig['value'];
   }
 }

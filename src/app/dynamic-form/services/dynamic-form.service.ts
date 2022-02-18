@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
-import { FormControlStatus, FormGroup } from '@angular/forms';
+import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
-import { FormGroupKey } from '../types/form-group.types';
 import { FormState } from '../types/form-state.types';
 import { FormModelBuilderService } from './form-model-builder.service';
-import { FormViewBuilderService } from './form-view-builder.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DynamicFormService {
-  formModel: FormGroup = new FormGroup({});
+  private _formModel: FormGroup = new FormGroup({});
+
+  private _formControls: Map<string, FormControl> = new Map();
+
+  private _formGroups: Map<string, FormGroup> = new Map();
+
+  private _flatFormData: any = {};
 
   /**
    * Form state:
@@ -71,58 +75,94 @@ export class DynamicFormService {
     return this._getFormData();
   }
 
-  constructor(
-    public model: FormModelBuilderService,
-    public view: FormViewBuilderService
-  ) {}
+  constructor() {}
 
-  load() {
-    this.formModel = this.model.get();
+  /**
+   * @description
+   * Create the global form model
+   *
+   * @param children - {key: name of the form group, value: FormModelBuilderService}
+   *
+   */
+  load(children: FormModelBuilderService) {
+    const DEFAULT_FORMGROUP_KEY = 'main';
+    this._formModel.addControl(DEFAULT_FORMGROUP_KEY, children.model);
+    this._getAllControls(this._formModel);
+  }
+
+  /**
+   * @description
+   * Merge separate dynamic form in a single model.
+   *
+   * This allows to control the status of multiple from
+   * in a single global form and allows to manage
+   * the template of the two forms separately inside the component.
+   *
+   * @param childrens A collection of form created with the FormModelBuilderService.
+   * The key for each child is the name under which it is registered.
+   *
+   * children = { key: name of the form group, value: FormModelBuilderService }
+   *
+   */
+  mergeAll(childrens: { [key: string]: FormModelBuilderService }[]) {
+    childrens.forEach((children) => {
+      const [formGroupName] = Object.keys(children);
+      this._formModel.addControl(formGroupName, children[formGroupName].model);
+    });
+    this._getAllControls(this._formModel);
   }
 
   /**
    * @description
    * Returns the 'FormGroup' object given a form group name
-   * Note: This method manages only one level of indentation
    *
    * @param name The key of FormGroup
    * @returns FormGroup object
    */
-  getFormGroup(name: string): FormGroup {
-    if (this.formModel.contains(name)) {
-      return this.formModel.controls[name] as FormGroup;
+  findFormGroupByName(name: string): FormGroup {
+    if (!this._formGroups.has(name)) {
+      throw new Error(`FormGroup with name ${name} not found`);
     }
 
-    return new FormGroup({});
+    return this._formGroups.get(name) as FormGroup;
+  }
+
+  /**
+   * @description
+   * Returns the 'FormControl' object given a form control name
+   *
+   * @param name The key of FormControl
+   * @returns FormControl object
+   */
+  findFormControlByName(name: string): FormControl {
+    if (!this._formControls.has(name)) {
+      throw new Error(`FormControl with name ${name} not found`);
+    }
+
+    return this._formControls.get(name) as FormControl;
   }
 
   /**
    * @description
    * Set the initial value of FormControl
    *
-   *
-   * @param group - The FormGroup name
-   * @param controls - It is an object of all FormControls that belong to a FormGroup
+   * @param controlsValues - It is an object of all FormControls
    *
    * {
-   *  FormControlKey1: FormControlName1,
-   * FormControlKey2: FormControlName2
+   *    FormControlKey1: value,
+   *    FormControlKey2: value
    * }
-   *
-   *
    */
-  setControlsValue(group: FormGroupKey, controls: { [key: string]: any }) {
-    if (this.formModel && this.formModel !== null) {
-      Object.keys(controls).forEach((key) => {
-        let formControl = this.formModel!.get([group, key]);
+  setControlsValue(controlsValues: { [key: string]: any }) {
+    const { _formModel } = this;
 
-        if (formControl && formControl !== null) {
-          formControl.setValue(controls[key]);
-        } else {
-          throw `The FormControl '${key}' not found in the group '${group}'. Did you spell it wrong?`;
-        }
-      });
+    if (!_formModel || _formModel === null) {
+      throw 'DynamicFormService - setControlValue - The form model is not loaded yet. You cannot set the values of the form controls.';
     }
+
+    Object.keys(controlsValues).forEach((key) => {
+      this.findFormControlByName(key).setValue(controlsValues[key]);
+    });
   }
 
   /**
@@ -153,8 +193,9 @@ export class DynamicFormService {
    * @description Reset the view and model to blank
    */
   destroy() {
-    this.view.destroy();
-    this.model.destroy();
+    this._formModel = new FormGroup({});
+    this._formControls.clear();
+    this._formGroups.clear();
   }
 
   /**
@@ -166,7 +207,7 @@ export class DynamicFormService {
    * @returns
    */
   private _getFormStatus(): Observable<string> {
-    return this.formModel.statusChanges.pipe(
+    return this._formModel.statusChanges.pipe(
       map((formStatus: FormControlStatus) => formStatus.toLowerCase())
     );
   }
@@ -180,19 +221,55 @@ export class DynamicFormService {
    * @return an Observable that emits the values of the form
    */
   private _getFormData(): Observable<any> {
-    return this.formModel.valueChanges.pipe(
+    return this._formModel.valueChanges.pipe(
       map((formData: { [key: string]: {} }) => {
-        let flatFormData = {};
+        this._flattingFormData(formData);
 
-        Object.values(formData).forEach(
-          (formGroupData: { [key: string]: string }) => {
-            flatFormData = { ...flatFormData, ...formGroupData };
-          }
-        );
-
-        return flatFormData;
+        return this._flatFormData;
       }),
       tap(() => this.changed())
     );
+  }
+
+  /**
+   * @description
+   * Utility function to flatten the form data
+   *
+   * @param obj
+   */
+  private _flattingFormData(obj: any) {
+    Object.keys(obj).forEach((key) => {
+      const isFormControl = this._formControls.has(key);
+      if (isFormControl) {
+        this._flatFormData = { ...this._flatFormData, ...{ [key]: obj[key] } };
+      }
+
+      if (typeof obj[key] === 'object' && obj[key] !== null) {
+        this._flattingFormData(obj[key]);
+      }
+    });
+  }
+
+  /**
+   * @description
+   * This method is used to get all the controls of the form
+   * and store them in a Map (FormGroups && FormControls)
+   *
+   * @param formGroup
+   */
+  private _getAllControls(model: FormGroup) {
+    const { controls } = model as FormGroup;
+
+    Object.keys(controls).forEach((key) => {
+      if (controls[key] instanceof FormControl) {
+        this._formControls.set(key, controls[key] as FormControl);
+      }
+
+      if (controls[key] instanceof FormGroup) {
+        this._formGroups.set(key, controls[key] as FormGroup);
+
+        this._getAllControls(controls[key] as FormGroup);
+      }
+    });
   }
 }

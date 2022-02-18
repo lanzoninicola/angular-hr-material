@@ -38,7 +38,7 @@ export class FormTextAreaComponent implements OnInit {
   constructor(private _dynamicForm: DynamicFormService) {}
 
   ngOnInit(): void {
-    this.parentFormGroupModel = this._dynamicForm.getFormGroup(
+    this.parentFormGroupModel = this._dynamicForm.findFormGroupByName(
       this.parentGroupName
     );
 

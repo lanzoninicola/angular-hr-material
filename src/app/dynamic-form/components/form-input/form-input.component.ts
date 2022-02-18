@@ -20,9 +20,9 @@ import { InputTextConfig } from '../../types/form-control.types';
           [formControlName]="controlConfig['key']"
           [type]="controlConfig['type']"
         />
-        <mat-error *ngIf="!control.valid && control.touched"
+        <!-- <mat-error *ngIf="!control.valid && control.touched"
           >{{ controlConfig['label'] }} is not valid!</mat-error
-        >
+        > -->
       </mat-form-field>
     </div>
   `,
@@ -43,7 +43,7 @@ export class FormInputComponent implements OnInit {
   constructor(private _dynamicForm: DynamicFormService) {}
 
   ngOnInit(): void {
-    this.parentFormGroupModel = this._dynamicForm.getFormGroup(
+    this.parentFormGroupModel = this._dynamicForm.findFormGroupByName(
       this.parentGroupName
     );
 
