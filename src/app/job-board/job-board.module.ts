@@ -1,21 +1,36 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { JobBoardSectionComponent } from './components/job-board-section/job-board-section.component';
+import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+
+import { CoreModule } from '../core/core.module';
+import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
+import { SharedModule } from '../shared/shared.module';
+import { TableDataModule } from '../table-data/table-data.module';
 import { JobBoardListComponent } from './components/job-board-list/job-board-list.component';
-import { JobBoardEditComponent } from './components/job-board-edit/job-board-edit.component';
-import { JobBoardEditFormComponent } from './components/job-board-edit/job-board-edit-form/job-board-edit-form.component';
-
-
+import { JobBoardSectionComponent } from './components/job-board-section/job-board-section.component';
+import { JobidEditFormComponent } from './components/jobid-edit/jobid-edit-form/jobid-edit-form.component';
+import { JobidEditComponent } from './components/jobid-edit/jobid-edit.component';
+import { JobidStatusChipComponent } from './components/jobid-status-chip/jobid-status-chip.component';
+import { JobBoardRoutingModule } from './routing/job-board-routing.module';
 
 @NgModule({
   declarations: [
     JobBoardSectionComponent,
     JobBoardListComponent,
-    JobBoardEditComponent,
-    JobBoardEditFormComponent
+    JobidStatusChipComponent,
+    JobidEditComponent,
+    JobidEditFormComponent,
   ],
   imports: [
-    CommonModule
-  ]
+    CommonModule,
+    CoreModule,
+    SharedModule,
+    JobBoardRoutingModule,
+    MatButtonModule,
+    TableDataModule,
+    DynamicFormModule,
+    MatExpansionModule,
+  ],
 })
-export class JobBoardModule { }
+export class JobBoardModule {}

@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { JobBoardEditFormComponent } from './job-board-edit-form.component';
+import { JobidEditComponent } from './jobid-edit.component';
 
-describe('JobBoardEditFormComponent', () => {
-  let component: JobBoardEditFormComponent;
-  let fixture: ComponentFixture<JobBoardEditFormComponent>;
+describe('JobidEditComponent', () => {
+  let component: JobidEditComponent;
+  let fixture: ComponentFixture<JobidEditComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ JobBoardEditFormComponent ]
+      declarations: [ JobidEditComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(JobBoardEditFormComponent);
+    fixture = TestBed.createComponent(JobidEditComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,22 @@
+@import "variables.scss";
+
+.chip-wrapper.draft {
+  background-color: $info-background;
+
+  & > span {
+    color: $white;
+  }
+}
+
+.chip-wrapper.published {
+  background-color: $secondary-color;
+}
+
+.chip-wrapper.closed {
+  background-color: $secondary-color-dark;
+}
+
+.chip-wrapper > span {
+  text-transform: uppercase;
+  font-size: 0.65rem;
+}
