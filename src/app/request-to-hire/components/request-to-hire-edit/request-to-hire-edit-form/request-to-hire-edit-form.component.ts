@@ -1,15 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Inject,
+  InjectionToken,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Data } from '@angular/router';
-import { filter, map, Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
+import { FormModelBuilderService } from 'src/app/dynamic-form/services/form-model-builder.service';
 import {
   FormControlConfig,
   SelectOptionConfig,
 } from 'src/app/dynamic-form/types/form-control.types';
-import { FormViewTemplate } from 'src/app/dynamic-form/types/template.types';
+
 import { RequestToHireService } from 'src/app/request-to-hire/services/request-to-hire.service';
-import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
 
 //TODO: task description / minimum qualification / preferred qualification can be retrieve from the job roles as template
 //TODO: validation between location type and location
@@ -18,12 +27,11 @@ import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
   selector: 'ahr-request-to-hire-edit-form',
   template: `
     <ahr-dynamic-form
-      [model]="requestToHireEditForm"
-      [view]="requestToHireEditFormView"
+      [model]="requestToHireEditForm.model"
+      [settings]="requestToHireEditForm.settings"
       [showSpinner]="showSpinner"
     ></ahr-dynamic-form>
   `,
-  styleUrls: ['./request-to-hire-edit-form.component.scss'],
 })
 export class RequestToHireEditFormComponent implements OnInit {
   @Input()
@@ -44,20 +52,19 @@ export class RequestToHireEditFormComponent implements OnInit {
   RTH_POSITION_DETAILS: FormControlConfig[] = [];
   RTH_POSITION_OTHER: FormControlConfig[] = [];
 
-  requestToHireEditForm: FormGroup;
-  requestToHireEditFormView: FormViewTemplate;
+  requestToHireEditForm: FormModelBuilderService;
 
   constructor(
     private _route: ActivatedRoute,
-    private _dynamicForm: DynamicFormService,
+    private _dynamicFormService: DynamicFormService,
     private _dataService: RequestToHireService
   ) {}
 
   ngOnInit(): void {
+    this.requestToHireEditForm = new FormModelBuilderService();
     this._setFormControlsConfig();
-    this._buildView();
-    this._buildModel();
-    this._setTemplatePropertyBinding();
+    this._setupForm();
+    this._handleForm();
 
     if (this._dataService.store.entityState === 'create') {
       this._initFormValuesEntityCreate();
@@ -67,12 +74,12 @@ export class RequestToHireEditFormComponent implements OnInit {
       this._initFormValuesEntityUpdate();
     }
 
-    this.valueChangesEvent.emit(this._dynamicForm.formData$);
-    this.statusChangesEvent.emit(this._dynamicForm.formStatus$);
+    this.valueChangesEvent.emit(this._dynamicFormService.formData$);
+    this.statusChangesEvent.emit(this._dynamicFormService.formStatus$);
   }
 
   ngOnDestroy() {
-    this._dynamicForm.destroy();
+    this._dynamicFormService.destroy();
   }
 
   private _setFormControlsConfig() {
@@ -290,43 +297,40 @@ export class RequestToHireEditFormComponent implements OnInit {
     ];
   }
 
-  private _buildView() {
-    this._dynamicForm.view.build(
+  private _setupForm() {
+    const { requestToHireEditForm } = this;
+
+    requestToHireEditForm.setup(
       { key: 'rthMainInfo', title: 'Main Information' },
       this.RTH_MAIN_INFO
     );
 
-    this._dynamicForm.view.build(
+    requestToHireEditForm.setup(
       { key: 'rthPositionMainInfo', title: 'Position Information' },
       this.RTH_POSITION_MAIN
     );
 
-    this._dynamicForm.view.build(
+    requestToHireEditForm.setup(
       { key: 'rthPositionDetails', title: 'Position Details' },
       this.RTH_POSITION_DETAILS
     );
 
-    this._dynamicForm.view.build(
+    requestToHireEditForm.setup(
       { key: 'rthPositionOther', title: 'Additional Information' },
       this.RTH_POSITION_OTHER
     );
   }
 
-  private _buildModel() {
-    this._dynamicForm.model.build(this._dynamicForm.view.get());
+  private _handleForm() {
+    const { requestToHireEditForm } = this;
 
-    this._dynamicForm.load();
-  }
-
-  private _setTemplatePropertyBinding() {
-    this.requestToHireEditForm = this._dynamicForm.model.get();
-    this.requestToHireEditFormView = this._dynamicForm.view.get();
+    this._dynamicFormService.load(requestToHireEditForm);
   }
 
   private _initFormValuesEntityUpdate() {
-    const currentRequest = this._dataService.store.currentRequest;
+    const { currentRequest } = this._dataService.store;
 
-    this._dynamicForm.setControlsValue('rthMainInfo', {
+    this._dynamicFormService.setControlsValue({
       id: currentRequest.getId(),
       title: currentRequest.getTitle(),
       requester: currentRequest.getRequester(),
@@ -334,9 +338,6 @@ export class RequestToHireEditFormComponent implements OnInit {
       updatedAt: currentRequest.getUpdatedAt(),
       status: currentRequest.getStatus(),
       highPriority: currentRequest.getHighPriority(),
-    });
-
-    this._dynamicForm.setControlsValue('rthPositionMainInfo', {
       budget: currentRequest.getBudget(),
       jobRole: currentRequest.getJobRole(),
       roleLevel: currentRequest.getRoleLevel(),
@@ -345,17 +346,10 @@ export class RequestToHireEditFormComponent implements OnInit {
       employmentStatus: currentRequest.getEmploymentStatus(),
       jobLocationType: currentRequest.getJobLocationType(),
       jobLocation: currentRequest.getJobLocation(),
-    });
-
-    this._dynamicForm.setControlsValue('rthPositionDetails', {
       roleTaskDescription: currentRequest.getRoleTaskDescription(),
       minimumQualifications: currentRequest.getMinimumQualifications(),
       preferredQualifications: currentRequest.getPreferredQualifications(),
-
       benefits: currentRequest.getBenefits(),
-    });
-
-    this._dynamicForm.setControlsValue('rthPositionOther', {
       specialCategoriesOpened: currentRequest.getSpecialCategoriesOpened(),
       additionalNotes: currentRequest.getAdditionalNotes(),
     });
@@ -381,7 +375,7 @@ export class RequestToHireEditFormComponent implements OnInit {
       .subscribe((data) => {
         const { value: picklistWorkingStatusNew } = data;
 
-        this._dynamicForm.setControlsValue('rthMainInfo', {
+        this._dynamicFormService.setControlsValue({
           status: picklistWorkingStatusNew,
         });
       });
