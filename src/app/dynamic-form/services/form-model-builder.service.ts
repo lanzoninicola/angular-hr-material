@@ -40,9 +40,7 @@ export class FormModelBuilderService {
   //   return this._formKeysMap;
   // }
 
-  constructor() {
-    console.log('Form Builder - Instance created');
-  }
+  constructor() {}
 
   /**
    * @description
