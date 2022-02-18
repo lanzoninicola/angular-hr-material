@@ -9,13 +9,15 @@ export abstract class ModuleStoreService implements StoreService {
   private _store: Store = {};
   private _newStore: Store = {};
 
-  constructor() {}
-
   /**
    * @description Responsible to dispatch the new Store
    * You might subscribe to it if necessary
    */
-  readonly dispatcher: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  readonly dispatcher: BehaviorSubject<any>;
+
+  constructor() {
+    this.dispatcher = new BehaviorSubject(this._store);
+  }
 
   /**
    * @description Returns the value from the store
@@ -35,24 +37,21 @@ export abstract class ModuleStoreService implements StoreService {
   }
 
   /**
-   * @description Subscribes to dispatcher and returns the value from the store
+   * @description Returns the value from the store synchronously
    * @param key | optional. If not return the store
    */
   get(key?: string): any | null {
+    const currentStore = this.dispatcher.value;
+
     if (!key) {
-      return this._store;
+      return currentStore;
     }
 
-    let _storeData;
+    if (!currentStore.hasOwnProperty(key)) {
+      return null;
+    }
 
-    const sub = this.dispatcher.subscribe((storeData: Store) => {
-      if (storeData.hasOwnProperty(key)) {
-        _storeData = storeData[key];
-      }
-    });
-
-    sub.unsubscribe();
-    return _storeData;
+    return currentStore[key];
   }
 
   /**
