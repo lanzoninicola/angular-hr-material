@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
+import { HttpService } from 'src/app/core/types/http-service.type';
 import { environment } from 'src/environments/environment';
 
 import { RequestToHireDTO } from '../types/request-to-hire.dto.type';
@@ -9,8 +10,8 @@ import { RequestToHireDTO } from '../types/request-to-hire.dto.type';
 @Injectable({
   providedIn: 'root',
 })
-export class RequestToHireHttpService {
-  baseURL = `${environment.API}/requests-to-hire`;
+export class RequestToHireHttpService implements HttpService {
+  baseURL = `${environment.API}/requests`;
   parentRelations: string[] = ['users', 'departments', 'jobroles', 'branches'];
 
   constructor(

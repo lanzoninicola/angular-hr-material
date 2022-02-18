@@ -27,34 +27,11 @@ export class RequestEditResolver implements Resolve<any> {
       this._goBack();
     }
 
-    this._store.entityStateUpdate();
-
-    return this._shouldEntityCached()
-      ? this._getEntityFromCache()
-      : this._getEntityFromServer();
-  }
-
-  private _shouldEntityCached() {
-    const currentEntity = this._dataService.store.currentRequest;
-
-    if (currentEntity !== undefined) {
-      if (currentEntity instanceof RequestToHireModel) {
-        return currentEntity.getId() === this.entityIdParam;
-      }
-    }
-
-    return false;
-  }
-
-  private _getEntityFromCache(): Observable<RequestToHireModel> {
-    return of(this._dataService.store.currentRequest);
-  }
-
-  private _getEntityFromServer(): Observable<RequestToHireModel> {
     return this._dataService.findById(this.entityIdParam).pipe(
       catchError(this._goBack()),
       tap((entity) => {
         this._dataService.store.currentRequest = entity;
+        this._store.entityStateUpdate();
       })
     );
   }
