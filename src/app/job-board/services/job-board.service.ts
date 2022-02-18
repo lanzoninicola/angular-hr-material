@@ -6,6 +6,7 @@ import { PicklistType } from 'src/app/settings/types/picklist-item.type';
 import { JobIdModel } from '../models/job-id.model';
 import { JobIdDTO } from '../types/jobid.dto.type';
 import { JobIdFormData } from '../types/jobid.form.type';
+import { JobApplicationsHttpService } from './job-applications-http.service';
 import { JobBoardHttpService } from './job-board-http.service';
 import { JobBoardSerializerService } from './job-board-serializer.service';
 import { JobBoardStoreService } from './job-board-store.service';
@@ -23,6 +24,7 @@ export class JobBoardService {
 
   constructor(
     private _httpService: JobBoardHttpService,
+    private _httpJobApplicationsService: JobApplicationsHttpService,
     private _picklistService: PicklistService,
     private _serializationService: JobBoardSerializerService,
     private _store: JobBoardStoreService
@@ -60,6 +62,13 @@ export class JobBoardService {
       }),
       shareReplay(1)
     );
+  }
+
+  findApplicationsByJobId(
+    id: number,
+    options?: { withRelations: boolean; relations: [] }
+  ): Observable<any> {
+    return this._httpJobApplicationsService.findByJobId(id, options);
   }
 
   save(model: JobIdModel) {

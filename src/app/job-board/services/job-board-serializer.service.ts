@@ -75,8 +75,6 @@ export class JobBoardSerializerService {
   }
 
   serialize(model: JobIdModel): JobIdDTO {
-    console.log(model);
-
     return {
       id: model.id ? model.id : 0,
       requestsId: model.requestToHire.getId(),

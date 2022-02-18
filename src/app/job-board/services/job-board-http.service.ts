@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
+import { HttpService } from 'src/app/core/types/http-service.type';
 import { environment } from 'src/environments/environment';
 import { JobIdDTO } from '../types/jobid.dto.type';
 
 @Injectable({
   providedIn: 'root',
 })
-export class JobBoardHttpService {
+export class JobBoardHttpService implements HttpService {
   baseURL = `${environment.API}/jobs`;
   parentRelations: string[] = [
     'requests',

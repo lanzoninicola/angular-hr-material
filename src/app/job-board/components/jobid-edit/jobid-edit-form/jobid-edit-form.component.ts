@@ -1,12 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Inject,
-  InjectionToken,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute, Data } from '@angular/router';
 import { map, Observable } from 'rxjs';
@@ -26,22 +18,22 @@ import { JobBoardService } from 'src/app/job-board/services/job-board.service';
       [settings]="mainForm.settings"
       [showSpinner]="showSpinner"
     ></ahr-dynamic-form>
-    <mat-accordion>
-      <mat-expansion-panel>
-        <mat-expansion-panel-header>
-          <mat-panel-title>Position Details</mat-panel-title>
-          <mat-panel-description
-            >Open to view the details</mat-panel-description
-          >
-        </mat-expansion-panel-header>
-        <ahr-dynamic-form
-          [model]="detailsForm.model"
-          [settings]="detailsForm.settings"
-          [showSpinner]="showSpinner"
-        ></ahr-dynamic-form>
-      </mat-expansion-panel>
-    </mat-accordion>
+
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Details">
+        <div class="tab-content-wrapper">
+          <ahr-dynamic-form
+            [model]="detailsForm.model"
+            [settings]="detailsForm.settings"
+            [showSpinner]="showSpinner"
+          ></ahr-dynamic-form>
+        </div>
+      </mat-tab>
+      <mat-tab label="Second">Content 2</mat-tab>
+      <mat-tab label="Third">Content 3</mat-tab>
+    </mat-tab-group>
   `,
+  styleUrls: ['./jobid-edit-form.component.scss'],
 })
 export class JobidEditFormComponent implements OnInit {
   @Input()
@@ -269,7 +261,10 @@ export class JobidEditFormComponent implements OnInit {
       this.RTH_POSITION_MAIN
     );
 
-    detailsForm.setup({ key: 'jbPositionDetails' }, this.RTH_POSITION_DETAILS);
+    detailsForm.setup(
+      { key: 'jbPositionDetails', title: 'Position Details' },
+      this.RTH_POSITION_DETAILS
+    );
   }
 
   private _handleForms() {
