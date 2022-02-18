@@ -10,23 +10,26 @@ import { BranchDTO } from '../../models/branch.model';
   providedIn: 'root',
 })
 export class BranchHttpService {
+  baseURL = `${environment.API}/branches`;
+
   constructor(
     private http: HttpClient,
     private _httpOptions: HttpRequestOptionsService
   ) {}
 
   findAll(): Observable<BranchDTO[]> {
+    const url = `${this.baseURL}`;
+
     return this.http.get<BranchDTO[]>(
-      `${environment.API}/branches`,
+      url,
       this._httpOptions.isBackendRequest()
     );
   }
 
   findById(id: number): Observable<BranchDTO> {
-    return this.http.get<BranchDTO>(
-      `${environment.API}/branches/${id}`,
-      this._httpOptions.isBackendRequest()
-    );
+    const url = `${this.baseURL}/${id}`;
+
+    return this.http.get<BranchDTO>(url, this._httpOptions.isBackendRequest());
   }
 
   // save(requestToHireData: any) {
