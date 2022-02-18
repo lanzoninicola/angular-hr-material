@@ -3,8 +3,8 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, of, tap } from 'rxjs';
 import { Location } from '@angular/common';
 
-import { CandidatesStoreService } from '../services/candidates-store.service';
-import { CandidatesService } from '../services/candidates.service';
+import { CandidatesStoreService } from '../services/candidate-store.service';
+import { CandidatesService } from '../services/candidate.service';
 import { CandidateModel } from '../models/candidate.model';
 
 @Injectable({

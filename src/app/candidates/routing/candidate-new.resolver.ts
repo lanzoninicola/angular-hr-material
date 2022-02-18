@@ -6,7 +6,7 @@ import {
   ActivatedRouteSnapshot,
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { CandidatesStoreService } from '../services/candidates-store.service';
+import { CandidatesStoreService } from '../services/candidate-store.service';
 
 @Injectable({
   providedIn: 'root',

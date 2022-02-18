@@ -6,7 +6,7 @@ import { CandidateModel } from '../models/candidate.model';
 @Injectable({
   providedIn: 'root',
 })
-export class CandidatesStoreService extends ModuleStoreService {
+export class CandidateStoreService extends ModuleStoreService {
   readonly PREFIX: string = 'CANDIDATES';
 
   set entities(entities: CandidateModel[]) {

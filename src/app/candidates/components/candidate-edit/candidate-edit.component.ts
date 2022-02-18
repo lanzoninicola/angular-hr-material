@@ -3,8 +3,8 @@ import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { CandidateModel } from '../../models/candidate.model';
-import { CandidatesStoreService } from '../../services/candidates-store.service';
-import { CandidatesService } from '../../services/candidates.service';
+import { CandidatesStoreService } from '../../services/candidate-store.service';
+import { CandidatesService } from '../../services/candidate.service';
 import { CandidateFormData } from '../../types/candidates.types';
 
 @Component({

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { CANDIDATES_LIST_TABLE_COLUMNS } from '../../config/candidates.config';
 import { CandidateModel } from '../../models/candidate.model';
-import { CandidatesService } from '../../services/candidates.service';
+import { CandidatesService } from '../../services/candidate.service';
 
 @Component({
   selector: 'ahr-candidates-list',

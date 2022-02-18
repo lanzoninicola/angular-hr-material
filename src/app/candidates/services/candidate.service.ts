@@ -5,16 +5,16 @@ import { HttpRequestOptionsService } from 'src/app/core/services/http-request-op
 import { environment } from 'src/environments/environment';
 import { CandidateModel } from '../models/candidate.model';
 
-import { CandidatesStoreService } from './candidates-store.service';
+import { CandidateStoreService } from './candidate-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CandidatesService {
+export class CandidateService {
   constructor(
     private http: HttpClient,
     private _httpOptions: HttpRequestOptionsService,
-    private _store: CandidatesStoreService
+    private _store: CandidateStoreService
   ) {}
 
   findAll() {
