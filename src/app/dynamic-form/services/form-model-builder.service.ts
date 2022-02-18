@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import {
   AbstractControlOptions,
   AsyncValidatorFn,
@@ -8,67 +7,88 @@ import {
 } from '@angular/forms';
 import Helper from 'src/app/core/helpers/helpers';
 
+import { FormGroupConfiguration } from '../types/dynamic-form.types';
 import {
-  FormControlConfigKey,
   FormControlConfig,
+  FormControlConfigKey,
 } from '../types/form-control.types';
 import { FormGroupKey } from '../types/form-group.types';
-import { FormViewTemplate } from '../types/template.types';
+import { FormSettings } from '../types/template.types';
 
 // TODO: cache the template && invalidate cache
 // TODO: verify if all methods are return types
 
 /**
- *  Responsible to build the Reactive Form Model starting by a template
+ *  Responsible to build the Reactive Form Model starting by a configuration
  */
-
-@Injectable({
-  providedIn: 'root',
-})
 export class FormModelBuilderService {
-  _viewTemplate: FormViewTemplate;
+  private _formSettings: FormSettings = new Map();
 
-  _formModel: FormGroup;
+  private _formModel: FormGroup;
 
-  _formKeysMap: Map<FormControlConfigKey, FormGroupKey> = new Map();
+  // private _formKeysMap: Map<FormControlConfigKey, FormGroupKey> = new Map();
 
-  get(): FormGroup {
+  get model(): FormGroup {
     return this._formModel;
   }
 
-  get formKeysMap() {
-    return this._formKeysMap;
+  get settings(): FormSettings {
+    return this._formSettings;
   }
 
-  constructor() {}
+  // get formKeysMap() {
+  //   return this._formKeysMap;
+  // }
+
+  constructor() {
+    console.log('Form Builder - Instance created');
+  }
 
   /**
-   *
    * @description
-   * Returns the model of Form given a template
-   *
+   * Setting up the FormGroup configuration given a configuration
    */
-  build(viewTemplate: FormViewTemplate) {
-    if (viewTemplate.size === 0) {
+  setup(group: FormGroupConfiguration, controls: FormControlConfig[]) {
+    this._loadConfiguration(group, controls);
+
+    this._build();
+  }
+
+  private _loadConfiguration(
+    group: FormGroupConfiguration,
+    controls: FormControlConfig[]
+  ) {
+    if (!this._shouldSettingExist(group)) {
+      this._formSettings.set(group, controls);
+    }
+  }
+
+  /**
+   * @description
+   * Instanciate the model of Form
+   */
+  private _build() {
+    if (this._formSettings.size === 0) {
       throw 'Dynamic Form Builder - The view template is missing. Before building the model you must provide a valid template. Build the view before.';
     }
 
-    this._viewTemplate = viewTemplate;
-
-    this._generateMapOfFormKeys();
+    // this._generateMapOfFormKeys();
 
     const childrenGroup = Helper.mapToObjectLiteral(this._childrenGroup());
 
     this._formModel = new FormGroup(childrenGroup);
   }
 
-  /**
-   * @description
-   * This reset the FormGroup used when the component is destroyed
-   *
-   */
-  destroy(): void {
-    this._formModel = new FormGroup({});
+  private _shouldSettingExist(group: FormGroupConfiguration) {
+    const { key } = group;
+
+    for (const [groupConfig, value] of this._formSettings) {
+      const { key: groupKey } = groupConfig;
+      if (groupKey === key) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -84,7 +104,7 @@ export class FormModelBuilderService {
   private _childrenGroup() {
     let childrenGroup: Map<FormGroupKey, FormGroup> = new Map();
 
-    for (const [group, controls] of this._viewTemplate) {
+    for (const [group, controls] of this._formSettings) {
       const childrenControlsModel = this._createControls(controls);
       childrenGroup.set(group.key, new FormGroup(childrenControlsModel));
     }
@@ -154,14 +174,15 @@ export class FormModelBuilderService {
    * Generates a map of FormControl Key with related FormGroup key
    *
    */
-  private _generateMapOfFormKeys() {
-    for (const [group, controls] of this._viewTemplate) {
-      const { key: groupKey } = group;
+  // TODO: move to DynamicFormService
+  // private _generateMapOfFormKeys() {
+  //   for (const [group, controls] of this._formSettings) {
+  //     const { key: groupKey } = group;
 
-      controls.forEach((control) => {
-        const { key: controlKey } = control;
-        this._formKeysMap.set(controlKey, groupKey);
-      });
-    }
-  }
+  //     controls.forEach((control) => {
+  //       const { key: controlKey } = control;
+  //       this._formKeysMap.set(controlKey, groupKey);
+  //     });
+  //   }
+  // }
 }
