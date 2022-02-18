@@ -1,6 +1,8 @@
 @import "variables.scss";
 
 $border-radius: 10px;
+$space-between-columns: 10px;
+$space-between-rows: 0 5px;
 
 .container {
   display: flex;
@@ -10,12 +12,12 @@ $border-radius: 10px;
 
 table {
   border-collapse: separate;
-  border-spacing: 0 5px;
+
   background-color: transparent;
   font-family: Poppins, "san-serif";
 
   &.mat-table {
-    border-spacing: 0 5px;
+    border-spacing: $space-between-rows;
   }
 }
 
@@ -23,12 +25,17 @@ th.mat-header-cell {
   border: none;
   color: $primary-color;
   font-weight: 600;
+  padding-right: $space-between-columns;
 }
 
 .mat-row {
   background-color: $white;
   cursor: pointer;
   height: 65px;
+
+  td {
+    padding-right: $space-between-columns;
+  }
 
   td:first-child {
     border-top-left-radius: $border-radius;
