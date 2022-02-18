@@ -124,6 +124,21 @@
       "id": 91,
       "type": "yesno",
       "value": "No"
+    },
+    {
+      "id": 10,
+      "type": "jobid-working-status",
+      "value": "draft"
+    },
+    {
+      "id": 101,
+      "type": "jobid-working-status",
+      "value": "published"
+    },
+    {
+      "id": 102,
+      "type": "jobid-working-status",
+      "value": "closed"
     }
   ],
   "departments": [
@@ -250,10 +265,10 @@
       "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
     }
   ],
-  "requests-to-hire": [
+  "requests": [
     {
       "id": 1,
-      "title": "New Front-end Developer 4",
+      "title": "New Front-end Developer 45",
       "departmentsId": 2,
       "businessUnit": 4,
       "usersId": 7,
@@ -272,7 +287,7 @@
       "additionalNotes": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "status": 8,
       "createdAt": "2020-01-01T00:00:00.000Z",
-      "updatedAt": "2022-02-16T14:33:15.092Z",
+      "updatedAt": "2022-02-18T14:57:07.135Z",
       "users": {},
       "departments": {},
       "jobroles": {},
@@ -304,6 +319,57 @@
       "departments": {},
       "jobroles": {},
       "branches": {}
+    }
+  ],
+  "boardtemplates": [
+    {
+      "id": 1,
+      "title": "Board Template 1",
+      "content": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
+    }
+  ],
+  "jobs": [
+    {
+      "id": 1,
+      "requestsId": 1,
+      "boardtemplatesId": 1,
+      "title": "New Front-end Developer 4",
+      "jobrolesId": 1,
+      "roleTaskDescription": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "roleLevel": 5,
+      "jobLocationType": 6,
+      "branchesId": 1,
+      "employmentStatus": 71,
+      "minimumQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "preferredQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "benefits": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "specialCategoriesOpened": 91,
+      "status": 10,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
+    }
+  ],
+  "jobboardapplications": [
+    {
+      "id": 1,
+      "jobsId": 1,
+      "candidatesId": 1,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 2,
+      "jobsId": 1,
+      "candidatesId": 2,
+      "createdAt": "2020-02-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
+    },
+    {
+      "id": 3,
+      "jobsId": 1,
+      "candidatesId": 4,
+      "createdAt": "2020-03-04T00:00:00.000Z",
+      "updatedAt": "2022-03-16T14:33:15.092Z"
     }
   ],
   "candidates": [
