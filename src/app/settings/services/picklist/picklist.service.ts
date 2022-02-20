@@ -12,7 +12,13 @@ import { PicklistSerializerService } from './picklist-serializer.service';
   providedIn: 'root',
 })
 export class PicklistService {
-  EMPTY_PICKLIST_ITEM: PicklistItemModel = new PicklistItemModel(0, '', '');
+  EMPTY_PICKLIST_ITEM: PicklistItemModel = new PicklistItemModel(
+    0,
+    '',
+    '',
+    '',
+    0
+  );
   EMPTY_PICKLIST: PicklistModel = new PicklistModel([]);
 
   constructor(

@@ -20,6 +20,12 @@ export class PicklistSerializerService {
   }
 
   deserializeItem(dto: PicklistItemDTO): PicklistItemModel {
-    return new PicklistItemModel(dto.id, dto.type, dto.value);
+    return new PicklistItemModel(
+      dto.id,
+      dto.type,
+      dto.key,
+      dto.value,
+      dto.order
+    );
   }
 }

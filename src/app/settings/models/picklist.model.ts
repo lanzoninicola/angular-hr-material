@@ -1,7 +1,6 @@
 import { PicklistItemModel } from './picklist-item.model';
 
 export class PicklistModel {
-  EMPTY: PicklistItemModel = new PicklistItemModel(0, '', '');
   items: PicklistItemModel[];
 
   constructor(picklistItems: PicklistItemModel[]) {
@@ -9,18 +8,29 @@ export class PicklistModel {
   }
 
   findItemById(id: number): PicklistItemModel {
-    return this.items.find((item) => item.getId() === id) || this.EMPTY;
+    return (
+      this.items.find((item) => item.getId() === id) ||
+      ({} as PicklistItemModel)
+    );
   }
 
   findItemByType(type: string): PicklistItemModel[] {
-    return this.items.filter((item) => item.getType() === type);
+    const itemsFiltered = this.items.filter((item) => item.getType() === type);
+
+    return this._orderItems(itemsFiltered);
   }
 
   findItemByValue(value: string): PicklistItemModel {
     return (
       this.items.find(
         (item) => item.getValue().toLowerCase() === value.toLowerCase()
-      ) || this.EMPTY
+      ) || ({} as PicklistItemModel)
     );
+  }
+
+  private _orderItems(items: PicklistItemModel[]): PicklistItemModel[] {
+    return items.sort((prev, next) => {
+      return prev.order - next.order;
+    });
   }
 }
