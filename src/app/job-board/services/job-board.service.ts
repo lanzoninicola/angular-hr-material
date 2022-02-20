@@ -4,6 +4,7 @@ import { PicklistModel } from 'src/app/settings/models/picklist.model';
 import { PicklistService } from 'src/app/settings/services/picklist/picklist.service';
 import { PicklistType } from 'src/app/settings/types/picklist-item.type';
 import { JobIdModel } from '../models/job-id.model';
+import { JobsCollection } from '../models/jobs.collection';
 import { JobIdDTO } from '../types/jobid.dto.type';
 import { JobIdFormData } from '../types/jobid.form.type';
 import { JobApplicationsHttpService } from './job-applications-http.service';
@@ -24,7 +25,6 @@ export class JobBoardService {
 
   constructor(
     private _httpService: JobBoardHttpService,
-    private _httpJobApplicationsService: JobApplicationsHttpService,
     private _picklistService: PicklistService,
     private _serializationService: JobBoardSerializerService,
     private _store: JobBoardStoreService
@@ -34,15 +34,17 @@ export class JobBoardService {
     return this._store;
   }
 
-  findAll(): Observable<JobIdModel[]> {
+  findAll(): Observable<JobsCollection> {
     const records: Observable<JobIdDTO[]> = this._httpService.findAll();
     const picklist: Observable<PicklistModel> = this.loadRequiredPicklist();
 
     return forkJoin([records, picklist]).pipe(
       map(([records, picklist]) => {
-        return records.map((record) => {
+        const items = records.map((record) => {
           return this._serializationService.deserialize(record, picklist);
         });
+
+        return new JobsCollection(items);
       }),
       shareReplay(1)
     );
@@ -64,12 +66,12 @@ export class JobBoardService {
     );
   }
 
-  findApplicationsByJobId(
-    id: number,
-    options?: { withRelations: boolean; relations: [] }
-  ): Observable<any> {
-    return this._httpJobApplicationsService.findByJobId(id, options);
-  }
+  // findApplicationsByJobId(
+  //   id: number,
+  //   options?: { withRelations: boolean; relations: [] }
+  // ): Observable<any> {
+  //   return this._httpJobApplicationsService.findByJobId(id, options);
+  // }
 
   save(model: JobIdModel) {
     const dto = this._serializationService.serialize(model);
