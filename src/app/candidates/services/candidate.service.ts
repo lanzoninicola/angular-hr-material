@@ -7,6 +7,7 @@ import { PicklistService } from 'src/app/settings/services/picklist/picklist.ser
 import { PicklistType } from 'src/app/settings/types/picklist-item.type';
 import { environment } from 'src/environments/environment';
 import { CandidateModel } from '../models/candidate.model';
+import { CandidatesCollection } from '../models/candidates.collection';
 import { CandidateDTO } from '../types/candidate.dto.type';
 import { CandidateFormData } from '../types/candidates.types';
 import { CandidateHttpService } from './candidate-http.service';
@@ -31,14 +32,16 @@ export class CandidateService {
     return this._store;
   }
 
-  findAll(): Observable<CandidateModel[]> {
+  findAll(): Observable<CandidatesCollection> {
     const records: Observable<CandidateDTO[]> = this._httpService.findAll();
 
     return forkJoin([records]).pipe(
       map(([records]) => {
-        return records.map((record) => {
+        const candidates = records.map((record) => {
           return this._serializationService.deserialize(record);
         });
+
+        return new CandidatesCollection(candidates);
       }),
       shareReplay(1)
     );
