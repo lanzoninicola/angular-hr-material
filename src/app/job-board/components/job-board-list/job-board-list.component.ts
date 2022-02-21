@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { TableColumnConfig } from 'src/app/table-data/types/table.types';
+import { JobIdModel } from '../../models/job-id.model';
 import { JobBoardService } from '../../services/job-board.service';
 import { JobidStatusChipComponent } from '../jobid-status-chip/jobid-status-chip.component';
 
@@ -19,14 +20,18 @@ import { JobidStatusChipComponent } from '../jobid-status-chip/jobid-status-chip
   `,
 })
 export class JobBoardListComponent implements OnInit {
-  tableDataSource$: Observable<any[]>;
+  tableDataSource$: Observable<JobIdModel[]>;
 
   columns = JB_LIST_TABLE_COLUMNS;
 
   constructor(private _dataService: JobBoardService, private router: Router) {}
 
   ngOnInit() {
-    this.tableDataSource$ = this._dataService.findAll();
+    this.tableDataSource$ = this._dataService.findAll().pipe(
+      map((jobBoard) => {
+        return jobBoard.getItems();
+      })
+    );
   }
 
   onRowClicked(entityRow: any) {
