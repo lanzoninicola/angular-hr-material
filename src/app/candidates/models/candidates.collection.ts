@@ -7,6 +7,10 @@ export class CandidatesCollection {
     this.items = candidates;
   }
 
+  getItems(): CandidateModel[] {
+    return this.items;
+  }
+
   findItemById(id: number): CandidateModel {
     return (
       this.items.find((item) => item.getId() === id) || ({} as CandidateModel)

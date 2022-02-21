@@ -7,6 +7,10 @@ export class JobsCollection {
     this.items = jobid;
   }
 
+  getItems(): JobIdModel[] {
+    return this.items;
+  }
+
   add(item: JobIdModel) {
     this.items.push(item);
   }

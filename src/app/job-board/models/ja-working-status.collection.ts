@@ -7,6 +7,10 @@ export class JobApplicationWorkingStatusCollection {
     this.items = items;
   }
 
+  getItems(): JobApplicationWorkingStatusModel[] {
+    return this.items;
+  }
+
   add(item: JobApplicationWorkingStatusModel) {
     this.items.push(item);
   }

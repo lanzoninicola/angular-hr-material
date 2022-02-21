@@ -7,6 +7,10 @@ export class JobsApplicationsCollection {
     this.items = candidates;
   }
 
+  getItems(): JobApplicationModel[] {
+    return this.items;
+  }
+
   findItemById(id: number): JobApplicationModel | null {
     return this.items.find((item) => item.getId() === id) || null;
   }
