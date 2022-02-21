@@ -14,6 +14,7 @@ import { JobidEditFormComponent } from './components/jobid-edit/jobid-edit-form/
 import { JobidEditComponent } from './components/jobid-edit/jobid-edit.component';
 import { JobidStatusChipComponent } from './components/jobid-status-chip/jobid-status-chip.component';
 import { JobBoardRoutingModule } from './routing/job-board-routing.module';
+import { JobBoardService } from './services/job-board.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,6 @@ import { JobBoardRoutingModule } from './routing/job-board-routing.module';
     JobidApplicationsComponent,
   ],
   imports: [
-    CommonModule,
     CoreModule,
     SharedModule,
     JobBoardRoutingModule,
