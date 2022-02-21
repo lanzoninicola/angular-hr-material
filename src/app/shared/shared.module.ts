@@ -46,6 +46,7 @@ import { SectionToolbarComponent } from './components/section-toolbar/section-to
     MatProgressSpinnerModule,
   ],
   exports: [
+    CommonModule,
     HeaderComponent,
     SectionToolbarComponent,
     LogoComponent,
