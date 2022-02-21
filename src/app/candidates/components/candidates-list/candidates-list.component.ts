@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { TableColumnConfig } from 'src/app/table-data/types/table.types';
 
 import { CandidateModel } from '../../models/candidate.model';
@@ -26,7 +26,11 @@ export class CandidatesListComponent implements OnInit {
   constructor(private _dataService: CandidateService, private router: Router) {}
 
   ngOnInit() {
-    this.tableDataSource$ = this._dataService.findAll();
+    this.tableDataSource$ = this._dataService.findAll().pipe(
+      map((candidates) => {
+        return candidates.getItems();
+      })
+    );
   }
 
   onRowClicked(entityRow: CandidateModel) {
