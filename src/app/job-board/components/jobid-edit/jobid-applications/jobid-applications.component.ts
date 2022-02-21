@@ -18,7 +18,7 @@ import { TableColumnConfig } from 'src/app/table-data/types/table.types';
   `,
 })
 export class JobidApplicationsComponent implements OnInit {
-  tableDataSource$: Observable<any[]>;
+  tableDataSource$: Observable<any>;
 
   columns = JBA_LIST_TABLE_COLUMNS;
 
