@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { TableColumnConfig } from 'src/app/table-data/types/table.types';
-import { JobIdModel } from '../../models/job-id.model';
+import { JobIdModel } from '../../models/jobid.model';
 import { JobBoardService } from '../../services/job-board.service';
 import { JobidStatusChipComponent } from '../jobid-status-chip/jobid-status-chip.component';
 
@@ -19,7 +19,7 @@ import { JobidStatusChipComponent } from '../jobid-status-chip/jobid-status-chip
     </div>
   `,
 })
-export class JobBoardListComponent implements OnInit {
+export class JobidListComponent implements OnInit {
   tableDataSource$: Observable<JobIdModel[]>;
 
   columns = JB_LIST_TABLE_COLUMNS;
@@ -29,13 +29,14 @@ export class JobBoardListComponent implements OnInit {
   ngOnInit() {
     this.tableDataSource$ = this._dataService.findAll().pipe(
       map((jobBoard) => {
+        console.log(jobBoard);
         return jobBoard.getItems();
       })
     );
   }
 
   onRowClicked(entityRow: any) {
-    this.router.navigate(['job-board', entityRow.id]);
+    this.router.navigate(['job-board', 'jobid', entityRow.id]);
   }
 }
 
@@ -60,6 +61,24 @@ const JB_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
     headerStyle: {
       'min-width': '80px',
       'text-align': 'center',
+    },
+  },
+  {
+    key: 'department',
+    title: 'Department',
+    objectProp: 'name',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
+    },
+  },
+  {
+    key: 'requester',
+    title: 'Requester',
+    objectProp: 'fullname',
+    sortable: false,
+    headerStyle: {
+      'min-width': '180px',
     },
   },
   {
