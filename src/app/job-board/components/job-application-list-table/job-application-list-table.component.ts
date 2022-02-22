@@ -4,9 +4,11 @@ import { Observable } from 'rxjs';
 import { TableColumnConfig } from 'src/app/table-data/types/table.types';
 
 import { JobApplicationModel } from '../../models/job-application.model';
+import { CandidateIdBadgeComponent } from '../candidate-id-badge/candidate-id-badge.component';
+import { JobidBadgeComponent } from '../jobid-badge/jobid-badge.component';
 
 @Component({
-  selector: 'ahr-job-applications-list-table',
+  selector: 'ahr-job-application-list-table',
   template: `
     <ahr2-table-data
       [dataSource]="tableDataSource$"
@@ -16,7 +18,7 @@ import { JobApplicationModel } from '../../models/job-application.model';
     </ahr2-table-data>
   `,
 })
-export class JobApplicationsListTableComponent implements OnInit {
+export class JobApplicationListTableComponent implements OnInit {
   @Input()
   tableDataSource$: Observable<JobApplicationModel[]>;
 
@@ -27,29 +29,37 @@ export class JobApplicationsListTableComponent implements OnInit {
   ngOnInit() {}
 
   onRowClicked(entityRow: any) {
-    this.router.navigate(['job-application', entityRow.id]);
+    this.router.navigate(['job-board', 'applications', entityRow.id]);
   }
 }
 
 const JA_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
   {
-    key: 'candidate',
-    title: 'Candidate name',
-    objectProp: 'lastname',
+    key: 'jobId',
+    title: 'Job ID',
+    objectProp: 'title',
+    viewType: 'component',
+    component: {
+      key: JobidBadgeComponent,
+    },
     sortable: false,
     headerStyle: {
       'min-width': '80px',
     },
   },
-  // {
-  //   key: 'candidate',
-  //   title: 'Firstname',
-  //   objectProp: 'firstname',
-  //   sortable: false,
-  //   headerStyle: {
-  //     'min-width': '80px',
-  //   },
-  // },
+  {
+    key: 'candidate',
+    title: 'Candidate name',
+    viewType: 'component',
+    component: {
+      key: CandidateIdBadgeComponent,
+    },
+    sortable: false,
+    headerStyle: {
+      'min-width': '80px',
+    },
+  },
+
   {
     key: 'status',
     title: 'Status',

@@ -3,18 +3,20 @@ import { map, Observable } from 'rxjs';
 import { JobsApplicationsCollection } from '../../models/job-application.collection';
 
 import { JobApplicationModel } from '../../models/job-application.model';
-import { JobIdModel } from '../../models/job-id.model';
+import { JobIdModel } from '../../models/jobid.model';
 import { JobApplicationsService } from '../../services/job-applications.service';
 
 @Component({
-  selector: 'ahr-job-board-applications-list',
+  selector: 'ahr-job-application-list',
   template: `
-    <ahr-job-applications-list-table
-      [tableDataSource$]="tableDataSource$"
-    ></ahr-job-applications-list-table>
+    <div class="container-list">
+      <ahr-job-application-list-table
+        [tableDataSource$]="tableDataSource$"
+      ></ahr-job-application-list-table>
+    </div>
   `,
 })
-export class JobBoardApplicationsListComponent implements OnInit {
+export class JobApplicationListComponent implements OnInit {
   @Input()
   jobId: JobIdModel;
 
@@ -25,6 +27,7 @@ export class JobBoardApplicationsListComponent implements OnInit {
   ngOnInit(): void {
     this.tableDataSource$ = this._dataService.findAll().pipe(
       map<JobsApplicationsCollection, JobApplicationModel[]>((collection) => {
+        console.log(collection);
         return collection.getItems();
       })
     );
