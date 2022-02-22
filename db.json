@@ -3,142 +3,261 @@
     {
       "id": 1,
       "type": "recruitingRoles",
-      "value": "hiring-manager"
+      "key": "hiring-manager",
+      "value": "Hiring Manager",
+      "order": 1
     },
     {
       "id": 12,
       "type": "recruitingRoles",
-      "value": "interviewer"
+      "key": "interviewer",
+      "value": "Interviewer",
+      "order": 1
     },
     {
       "id": 13,
       "type": "recruitingRoles",
-      "value": "recruiter"
+      "key": "recruiter",
+      "value": "Recruiter",
+      "order": 1
     },
     {
       "id": 14,
       "type": "recruitingRoles",
-      "value": "guest"
+      "key": "guest",
+      "value": "Guest",
+      "order": 1
     },
     {
       "id": 3,
       "type": "companyLevels",
-      "value": "Manager"
+      "key": "manager",
+      "value": "Manager",
+      "order": 1
     },
     {
       "id": 31,
       "type": "companyLevels",
-      "value": "Team Lead"
+      "key": "team-lead",
+      "value": "Team Lead",
+      "order": 1
     },
     {
       "id": 32,
       "type": "companyLevels",
-      "value": "Specialist"
+      "key": "specialist",
+      "value": "Specialist",
+      "order": 1
     },
     {
       "id": 4,
       "type": "business-unit",
-      "value": "Alpha Product"
+      "key": "alpha-product",
+      "value": "Alpha Product",
+      "order": 1
     },
     {
       "id": 41,
       "type": "business-unit",
-      "value": "Beta Product"
+      "key": "beta-product",
+      "value": "Beta Product",
+      "order": 1
     },
     {
       "id": 42,
       "type": "business-unit",
-      "value": "Delta Product"
+      "key": "delta-product",
+      "value": "Delta Product",
+      "order": 1
     },
     {
       "id": 5,
       "type": "role-level",
-      "value": "Junior"
+      "key": "junior",
+      "value": "Junior",
+      "order": 1
     },
     {
       "id": 51,
       "type": "role-level",
-      "value": "Middle"
+      "key": "middle",
+      "value": "Middle",
+      "order": 1
     },
     {
       "id": 52,
       "type": "role-level",
-      "value": "Senior"
+      "key": "senior",
+      "value": "Senior",
+      "order": 1
     },
     {
       "id": 6,
       "type": "job-location-type",
-      "value": "Full Remote"
+      "key": "full-remote",
+      "value": "Full Remote",
+      "order": 1
     },
     {
       "id": 61,
       "type": "job-location-type",
-      "value": "Presential"
+      "key": "presential",
+      "value": "Presential",
+      "order": 1
     },
     {
       "id": 62,
       "type": "job-location-type",
-      "value": "Remote/Presential"
+      "key": "remote-presential",
+      "value": "Remote/Presential",
+      "order": 1
     },
     {
       "id": 7,
       "type": "employment-status",
-      "value": "Part-time"
+      "key": "part-time",
+      "value": "Part-time",
+      "order": 1
     },
     {
       "id": 71,
       "type": "employment-status",
-      "value": "Full-time employment"
+      "key": "full-time-employment",
+      "value": "Full-time employment",
+      "order": 1
     },
     {
       "id": 8,
       "type": "rth-working-status",
-      "value": "new"
+      "key": "new",
+      "value": "New",
+      "order": 1
     },
     {
       "id": 81,
       "type": "rth-working-status",
-      "value": "backlog"
+      "key": "backlog",
+      "value": "Backlog",
+      "order": 2
     },
     {
       "id": 82,
       "type": "rth-working-status",
-      "value": "in progress"
+      "key": "in-progress",
+      "value": "In Progress",
+      "order": 3
     },
     {
       "id": 83,
       "type": "rth-working-status",
-      "value": "pending"
+      "key": "pending",
+      "value": "Pending",
+      "order": 4
     },
     {
       "id": 84,
       "type": "rth-working-status",
-      "value": "done"
+      "key": "done",
+      "value": "Done",
+      "order": 5
     },
     {
       "id": 9,
       "type": "yesno",
-      "value": "Yes"
+      "key": "yes",
+      "value": "Yes",
+      "order": 1
     },
     {
       "id": 91,
       "type": "yesno",
-      "value": "No"
+      "key": "no",
+      "value": "No",
+      "order": 2
     },
     {
       "id": 10,
       "type": "jobid-working-status",
-      "value": "draft"
+      "key": "draft",
+      "value": "Draft",
+      "order": 1
     },
     {
       "id": 101,
       "type": "jobid-working-status",
-      "value": "published"
+      "key": "published",
+      "value": "Published",
+      "order": 2
     },
     {
       "id": 102,
       "type": "jobid-working-status",
-      "value": "closed"
+      "key": "closed",
+      "value": "Closed",
+      "order": 3
+    },
+    {
+      "id": 11,
+      "type": "jobapplication-working-status",
+      "key": "available",
+      "value": "Available",
+      "order": 1
+    },
+    {
+      "id": 111,
+      "type": "jobapplication-working-status",
+      "key": "under-review",
+      "value": "Under review",
+      "order": 2
+    },
+    {
+      "id": 112,
+      "type": "jobapplication-working-status",
+      "key": "applicants-being-selected",
+      "value": "Applicants being selected",
+      "order": 3
+    },
+    {
+      "id": 113,
+      "type": "jobapplication-working-status",
+      "key": "referred-to-hiring-manager",
+      "value": "Referred to hiring manager",
+      "order": 4
+    },
+    {
+      "id": 114,
+      "type": "jobapplication-working-status",
+      "key": "in-progress",
+      "value": "In Progress",
+      "order": 5
+    },
+    {
+      "id": 115,
+      "type": "jobapplication-working-status",
+      "key": "incomplete-application",
+      "value": "Incomplete application",
+      "order": 6
+    },
+    {
+      "id": 116,
+      "type": "jobapplication-working-status",
+      "key": "second-group",
+      "value": "Second group",
+      "order": 7
+    },
+    {
+      "id": 117,
+      "type": "jobapplication-working-status",
+      "key": "position-closed",
+      "value": "Position closed",
+      "order": 8
+    },
+    {
+      "id": 118,
+      "type": "jobapplication-working-status",
+      "key": "vacancy-filled",
+      "value": "Vacancy filled",
+      "order": 9
     }
   ],
   "departments": [
@@ -152,10 +271,7 @@
       "id": 2,
       "name": "Front-end Developers",
       "managerId": 1,
-      "teamLeads": [
-        71,
-        72
-      ]
+      "teamLeads": [71, 72]
     },
     {
       "id": 3,
@@ -233,11 +349,7 @@
       "id": 1,
       "name": "Front-end Developer",
       "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
-      "details": [
-        1,
-        2,
-        3
-      ]
+      "details": [1, 2, 3]
     },
     {
       "id": 11,
@@ -295,11 +407,11 @@
     },
     {
       "id": 2,
-      "title": "New Front-end Developer 12",
-      "departmentsId": 1,
+      "title": "New Back-end Developer 12",
+      "departmentsId": 3,
       "businessUnit": 4,
       "usersId": 1,
-      "jobrolesId": 1,
+      "jobrolesId": 2,
       "roleTaskDescription": "dsafdas",
       "roleLevel": 51,
       "highPriority": null,
@@ -333,10 +445,13 @@
       "id": 1,
       "requestsId": 1,
       "boardtemplatesId": 1,
-      "title": "New Front-end Developer 4",
+      "title": "New Front-end Developer 45",
+      "departmentsId": 2,
+      "businessUnit": 4,
+      "usersId": 7,
       "jobrolesId": 1,
-      "roleTaskDescription": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "roleLevel": 5,
+      "roleTaskDescription": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "jobLocationType": 6,
       "branchesId": 1,
       "employmentStatus": 71,
@@ -344,16 +459,117 @@
       "preferredQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "benefits": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
       "specialCategoriesOpened": 91,
-      "status": 10,
+      "status": 101,
       "createdAt": "2020-01-01T00:00:00.000Z",
-      "updatedAt": "2022-02-16T14:33:15.092Z"
+      "updatedAt": "2022-02-21T22:31:08.322Z",
+      "boardtemplates": {},
+      "requests": {},
+      "users": {},
+      "departments": {},
+      "jobroles": {},
+      "branches": {}
+    },
+    {
+      "id": 2,
+      "requestsId": 2,
+      "boardtemplatesId": 1,
+      "title": "New Back-End Developer 45",
+      "departmentsId": 3,
+      "businessUnit": 4,
+      "usersId": 1,
+      "jobrolesId": 2,
+      "roleLevel": 5,
+      "roleTaskDescription": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "jobLocationType": 6,
+      "branchesId": 1,
+      "employmentStatus": 71,
+      "minimumQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "preferredQualifications": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "benefits": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem",
+      "specialCategoriesOpened": 91,
+      "status": 101,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-21T22:31:08.322Z",
+      "boardtemplates": {},
+      "requests": {},
+      "users": {},
+      "departments": {},
+      "jobroles": {},
+      "branches": {}
     }
   ],
-  "jobboardapplications": [
+  "jaworkingstatuses": [
+    {
+      "id": 111,
+      "picklistsId": 111,
+      "description": "Your application is being screened by human resources or the hiring manager",
+      "order": 2,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 112,
+      "picklistsId": 112,
+      "description": "Hiring Managers are selecting candidates for interviews",
+      "order": 3,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 113,
+      "picklistsId": 113,
+      "description": "Your application has passed initial HR screening",
+      "order": 4,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 114,
+      "picklistsId": 114,
+      "description": "Your application is currently being processed.",
+      "order": 5,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 115,
+      "picklistsId": 115,
+      "description": "The company wants additional materials from you",
+      "order": 6,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 116,
+      "picklistsId": 116,
+      "description": "Candidate wasn't included in the first round of interviews",
+      "order": 7,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 117,
+      "picklistsId": 117,
+      "description": "Candidate wasn't included in the first round of interviews",
+      "order": 8,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 118,
+      "picklistsId": 118,
+      "description": "Someone has been offered the job and that person accepted",
+      "order": 9,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    }
+  ],
+  "jobsapplications": [
     {
       "id": 1,
       "jobsId": 1,
       "candidatesId": 1,
+      "jaworkingstatusesId": 111,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-01-16T14:33:15.092Z"
     },
@@ -361,15 +577,25 @@
       "id": 2,
       "jobsId": 1,
       "candidatesId": 2,
+      "jaworkingstatusesId": 111,
       "createdAt": "2020-02-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     },
     {
       "id": 3,
-      "jobsId": 1,
+      "jobsId": 2,
       "candidatesId": 4,
+      "jaworkingstatusesId": 111,
       "createdAt": "2020-03-04T00:00:00.000Z",
       "updatedAt": "2022-03-16T14:33:15.092Z"
+    },
+    {
+      "id": 4,
+      "jobsId": 2,
+      "candidatesId": 3,
+      "jaworkingstatusesId": 111,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
     }
   ],
   "candidates": [
@@ -377,43 +603,57 @@
       "id": 1,
       "firstname": "Leanne",
       "lastname": "Graham",
-      "email": "leanne.graham@gmail.com"
+      "email": "leanne.graham@gmail.com",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
     },
     {
       "id": 2,
       "firstname": "Ervin",
       "lastname": "Howell",
-      "email": "ervin.howell@gmail.com"
+      "email": "ervin.howell@gmail.com",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
     },
     {
       "id": 3,
       "firstname": "Clementine",
       "lastname": "Bauch",
-      "email": "clementine.bauch@gmail.com"
+      "email": "clementine.bauch@gmail.com",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
     },
     {
       "id": 4,
       "firstname": "Patricia",
       "lastname": "Lebsack",
-      "email": "patricia.lebsack@gmail.com"
+      "email": "patricia.lebsack@gmail.com",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
     },
     {
       "id": 5,
       "firstname": "Chelsey",
       "lastname": "Dietrich",
-      "email": "chelsey.dietrich@gmail.com"
+      "email": "chelsey.dietrich@gmail.com",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
     },
     {
       "id": 6,
       "firstname": "Mrs. Dennis",
       "lastname": "Russel",
-      "email": "dennis.russel@gmail.com"
+      "email": "dennis.russel@gmail.com",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
     },
     {
       "id": 7,
       "firstname": "Kurtis",
       "lastname": "Weissnat",
-      "email": "kurstis.weissnat@gmail.com"
+      "email": "kurstis.weissnat@gmail.com",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
     }
   ],
   "users": [
