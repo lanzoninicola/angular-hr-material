@@ -19,6 +19,7 @@ import { LoadingSpinnerComponent } from './components/loading-spinner/loading-sp
 import { LogoComponent } from './components/logo/logo.component';
 import { SearchControlComponent } from './components/search-control/search-control.component';
 import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
+import { ProfileBadgeComponent } from './components/profile-badge/profile-badge.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SectionToolbarComponent } from './components/section-toolbar/section-to
     LoadingSpinnerComponent,
     IconComponent,
     ChipComponent,
+    ProfileBadgeComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +59,7 @@ import { SectionToolbarComponent } from './components/section-toolbar/section-to
     LoadingSpinnerComponent,
     IconComponent,
     ChipComponent,
+    ProfileBadgeComponent,
   ],
 })
 export class SharedModule {}
