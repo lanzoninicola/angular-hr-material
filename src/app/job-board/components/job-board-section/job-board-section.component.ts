@@ -21,13 +21,13 @@ export class JobBoardSectionComponent implements OnInit {
   constructor(private router: Router, private _dataService: JobBoardService) {}
 
   addNewRequest() {
-    this.router.navigate(['job-board', 'new']);
+    this.router.navigate(['job-board', 'jobid', 'new']);
     this.pageTitle = 'New Job Id';
     this._dataService.store.currentJobIdReset();
   }
 
   ngOnInit(): void {
-    this.router.navigate(['job-board', 'list']);
+    this.router.navigate(['job-board', 'jobid', 'list']);
     this.pageTitle = 'Job Board';
   }
 }
