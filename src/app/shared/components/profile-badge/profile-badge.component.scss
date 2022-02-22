@@ -1,0 +1,23 @@
+@import "variables.scss";
+
+.profile-badge {
+  display: flex;
+  flex-direction: column;
+}
+
+.identity-info {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+
+  span {
+    font-weight: 500;
+  }
+}
+
+.biz-info {
+  span {
+    color: $grey;
+    font-size: 85%;
+  }
+}
