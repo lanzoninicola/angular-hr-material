@@ -5,11 +5,28 @@
     [icon]="'dashboard'"
   ></ahr-nav-list-item>
 
-  <ahr-nav-list-item
-    [title]="'Job Board'"
-    [route]="'job-board/list'"
-    [icon]="'developer_board'"
-  ></ahr-nav-list-item>
+  <mat-accordion multi>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon aria-label="dashboard">dashboard</mat-icon>
+          <span>Job Board</span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <ahr-nav-list-item
+        [title]="'Jobs ID'"
+        [route]="'job-board/jobid/list'"
+        [icon]="'developer_board'"
+      ></ahr-nav-list-item>
+
+      <ahr-nav-list-item
+        [title]="'Applications'"
+        [route]="'job-board/applications/list'"
+        [icon]="'developer_board'"
+      ></ahr-nav-list-item>
+    </mat-expansion-panel>
+  </mat-accordion>
 
   <ahr-nav-list-item
     [title]="'Request to Hire'"
@@ -23,7 +40,7 @@
     [icon]="'supervised_user_circle'"
   ></ahr-nav-list-item>
 
-  <mat-accordion class="example-headers-align" multi>
+  <mat-accordion multi>
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title>

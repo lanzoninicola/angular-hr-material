@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { JobBoardListComponent } from '../components/job-board-list/job-board-list.component';
+import { JobidListComponent } from '../components/jobid-list/jobid-list.component';
 import { JobBoardSectionComponent } from '../components/job-board-section/job-board-section.component';
 import { JobidEditComponent } from '../components/jobid-edit/jobid-edit.component';
 import { JobidEditResolver } from './jobid-edit.resolver';
 import { JobidFormResolver } from './jobid-form.resolver';
 import { JobidNewResolver } from './jobid-new.resolver';
+import { JobApplicationListComponent } from '../components/job-application-list/job-application-list.component';
 
 const moduleRoutes: Routes = [
   {
@@ -14,11 +15,11 @@ const moduleRoutes: Routes = [
     component: JobBoardSectionComponent,
     children: [
       {
-        path: 'list',
-        component: JobBoardListComponent,
+        path: 'jobid/list',
+        component: JobidListComponent,
       },
       {
-        path: 'new',
+        path: 'jobid/new',
         component: JobidEditComponent,
         resolve: {
           newEntity: JobidNewResolver,
@@ -26,13 +27,33 @@ const moduleRoutes: Routes = [
         },
       },
       {
-        path: ':id',
+        path: 'jobid/:id',
         component: JobidEditComponent,
         resolve: {
           entity: JobidEditResolver,
           formControlsData: JobidFormResolver,
         },
       },
+      {
+        path: 'applications/list',
+        component: JobApplicationListComponent,
+      },
+      // {
+      //   path: 'jobid/new',
+      //   component: JobidEditComponent,
+      //   resolve: {
+      //     newEntity: JobidNewResolver,
+      //     formControlsData: JobidFormResolver,
+      //   },
+      // },
+      // {
+      //   path: 'jobid/:id',
+      //   component: JobidEditComponent,
+      //   resolve: {
+      //     entity: JobidEditResolver,
+      //     formControlsData: JobidFormResolver,
+      //   },
+      // },
     ],
   },
 ];
