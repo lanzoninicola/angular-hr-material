@@ -12,7 +12,7 @@ export interface JobIdDTO {
   roleLevel: number;
   roleTaskDescription: string;
   jobLocationType: number;
-  jobLocation: number;
+  branchesId: number;
   employmentStatus: number;
   minimumQualifications: string;
   preferredQualifications: string;
