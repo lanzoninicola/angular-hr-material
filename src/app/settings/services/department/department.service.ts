@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
 
 import { DepartmentDTO, DepartmentModel } from '../../models/department.model';
+import { DepartmentsCollection } from '../../models/departments.collection';
 import { DepartmentHttpService } from './department-http.service';
 import { DepartmentSerializerService } from './department-serializer.service';
 
@@ -14,10 +15,13 @@ export class DepartmentService {
     private _serializer: DepartmentSerializerService
   ) {}
 
-  findAll(): Observable<DepartmentModel[]> {
+  findAll(): Observable<DepartmentsCollection> {
     return this._httpService.findAll().pipe(
-      map<DepartmentDTO[], DepartmentModel[]>((dtos) => {
-        return dtos.map((dto) => this._serializer.deserialize(dto));
+      map<DepartmentDTO[], DepartmentsCollection>((dtos) => {
+        const departments = dtos.map((dto) =>
+          this._serializer.deserialize(dto)
+        );
+        return new DepartmentsCollection(departments);
       })
     );
   }

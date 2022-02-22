@@ -5,6 +5,8 @@ import { HttpRequestOptionsService } from 'src/app/core/services/http-request-op
 import { environment } from 'src/environments/environment';
 
 import { UserModel } from '../models/user.model';
+import { UsersCollection } from '../models/users.collection';
+import { UserDTO } from '../types/user.type';
 
 import { UsersStoreService } from './user-store.service';
 
@@ -18,27 +20,28 @@ export class UsersService {
     private _store: UsersStoreService
   ) {}
 
-  findAll(): Observable<UserModel[]> {
+  findAll(): Observable<UsersCollection> {
     return this.http
-      .get<UserModel[]>(
+      .get<UserDTO[]>(
         `${environment.API}/users`,
         this._httpOptions.isBackendRequest()
       )
       .pipe(
-        map((userData) => {
-          return userData.map(
-            (user) =>
-              new UserModel(
-                user['id'],
-                user['firstname'],
-                user['lastname'],
-                user['email'],
-                user['recruitingRole'],
-                user['department'],
-                user['companyRoleLevel'],
-                user['isAdmin']
-              )
-          );
+        map<UserDTO[], UsersCollection>((usersData) => {
+          const users = usersData.map((user) => {
+            return new UserModel(
+              user['id'],
+              user['firstname'],
+              user['lastname'],
+              user['email'],
+              user['recruitingRole'],
+              user['department'],
+              user['companyRoleLevel'],
+              user['isAdmin']
+            );
+          });
+
+          return new UsersCollection(users);
         })
       );
   }
