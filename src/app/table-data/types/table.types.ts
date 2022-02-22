@@ -10,7 +10,7 @@ export interface TableColumnConfig {
   title: ColumnTitle;
   type?: string;
   viewType?: ComponentType;
-  objectProp?: string;
+  objectProp?: string | string[];
   component?: {
     key: Type<any>;
     inputs?: {}[];
