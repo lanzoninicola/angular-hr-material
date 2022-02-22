@@ -10,7 +10,7 @@ import {
   SelectOptionConfig,
 } from 'src/app/dynamic-form/types/form-control.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
-import { JobIdModel } from 'src/app/job-board/models/job-id.model';
+import { JobIdModel } from 'src/app/job-board/models/jobid.model';
 
 @Component({
   selector: 'ahr-jobid-edit-form-main',
@@ -109,6 +109,16 @@ export class JobidEditFormMainComponent implements OnInit {
         syncValidators: [Validators.required],
       },
       {
+        key: 'requester',
+        type: 'select',
+        label: 'Requester',
+        placeholder: '',
+        whatToSelect: 'requester',
+        options: this._route.data.pipe(
+          map((data) => data['formControlsData']['requester'])
+        ),
+      },
+      {
         type: 'input',
         placeholder: '',
         label: 'Created At',
@@ -157,6 +167,28 @@ export class JobidEditFormMainComponent implements OnInit {
         whatToSelect: 'Role Level',
         options: this._route.data.pipe(
           map((data) => data['formControlsData']['picklist']['roleLevel'])
+        ),
+        syncValidators: [Validators.required],
+      },
+      {
+        key: 'department',
+        type: 'select',
+        label: 'Department',
+        placeholder: '',
+        whatToSelect: 'department',
+        options: this._route.data.pipe(
+          map((data) => data['formControlsData']['departments'])
+        ),
+        syncValidators: [Validators.required],
+      },
+      {
+        type: 'select',
+        key: 'businessUnit',
+        label: 'Business Unit',
+        placeholder: '',
+        whatToSelect: 'Business Unit',
+        options: this._route.data.pipe(
+          map((data) => data['formControlsData']['picklist']['businessUnit'])
         ),
         syncValidators: [Validators.required],
       },

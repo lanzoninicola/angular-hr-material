@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModuleStoreService } from 'src/app/core/services/module-store.service';
 import { EntityState } from 'src/app/core/types/entityState.type';
-import { JobIdModel } from '../models/job-id.model';
+import { JobIdModel } from '../models/jobid.model';
 
 @Injectable({
   providedIn: 'root',

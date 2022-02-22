@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 
-import { JobIdModel } from '../../models/job-id.model';
+import { JobIdModel } from '../../models/jobid.model';
 import { JobBoardService } from '../../services/job-board.service';
 import { JobIdFormData } from '../../types/jobid.form.type';
 

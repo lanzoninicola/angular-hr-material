@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, tap } from 'rxjs';
 
-import { JobIdModel } from '../models/job-id.model';
+import { JobIdModel } from '../models/jobid.model';
 import { JobBoardStoreService } from '../services/job-board-store.service';
 import { JobBoardService } from '../services/job-board.service';
 

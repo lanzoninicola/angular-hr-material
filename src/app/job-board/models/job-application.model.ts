@@ -1,6 +1,6 @@
 import { CandidateModel } from 'src/app/candidates/models/candidate.model';
 import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
-import { JobIdModel } from './job-id.model';
+import { JobIdModel } from './jobid.model';
 
 export class JobApplicationModel {
   id: number;

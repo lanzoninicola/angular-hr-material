@@ -1,4 +1,4 @@
-import { JobIdModel } from './job-id.model';
+import { JobIdModel } from './jobid.model';
 
 export class JobsCollection {
   items: JobIdModel[];

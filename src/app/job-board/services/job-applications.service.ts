@@ -9,7 +9,7 @@ import { JobApplicationWorkingStatusCollection } from '../models/ja-working-stat
 import { JobApplicationWorkingStatusModel } from '../models/ja-working-status.model';
 import { JobsApplicationsCollection } from '../models/job-application.collection';
 import { JobApplicationModel } from '../models/job-application.model';
-import { JobIdModel } from '../models/job-id.model';
+import { JobIdModel } from '../models/jobid.model';
 import { JobsCollection } from '../models/jobs.collection';
 import { JobApplicationDTO } from '../types/job-application.dto.type';
 import { JobApplicationWorkingStatusService } from './ja-working-status.service';

@@ -6,7 +6,7 @@ import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.s
 import { FormModelBuilder } from 'src/app/dynamic-form/services/form-model-builder';
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
-import { JobIdModel } from 'src/app/job-board/models/job-id.model';
+import { JobIdModel } from 'src/app/job-board/models/jobid.model';
 
 @Component({
   selector: 'ahr-jobid-edit-form-details',
