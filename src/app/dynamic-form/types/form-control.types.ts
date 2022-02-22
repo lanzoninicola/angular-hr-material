@@ -47,11 +47,13 @@ export interface SelectConfig {
   asyncValidators?: [];
   disabled?: boolean;
   hidden?: boolean;
+  showOptionDescription?: boolean;
 }
 
 export interface SelectOptionConfig {
   value: number | object;
   textContext: string;
+  description?: string;
 }
 
 type FormControlTypeSelect = 'select';

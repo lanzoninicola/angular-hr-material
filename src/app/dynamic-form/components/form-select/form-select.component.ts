@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 
@@ -22,6 +28,8 @@ export class FormSelectComponent implements OnInit, OnDestroy {
 
   selectOptions$: Observable<SelectOptionConfig[]>;
 
+  optionDescription: string | null = null;
+
   constructor(private _dynamicForm: DynamicFormService) {}
 
   ngOnInit(): void {
@@ -44,6 +52,16 @@ export class FormSelectComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
+
+  onSelectionChange(event: any) {
+    if (event.value instanceof Object === false) {
+      return;
+    }
+
+    if (event.value.hasOwnProperty('description')) {
+      this.optionDescription = event.value.description;
+    }
+  }
 }
 
 // controlConfig['key']

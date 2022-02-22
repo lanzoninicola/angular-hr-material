@@ -6,6 +6,7 @@
       placeholder="{{ controlConfig['label'] }}"
       [formControlName]="controlConfig['key']"
       [compareWith]="objectComparisonFunction"
+      (selectionChange)="onSelectionChange($event)"
     >
       <mat-option selected="true">
         Please select {{ controlConfig["whatToSelect"] }}</mat-option
@@ -13,12 +14,23 @@
       <mat-option
         *ngFor="let selectOption of selectOptions$ | async"
         [value]="selectOption.value"
-        >{{ selectOption.textContext }}</mat-option
       >
+        {{ selectOption.textContext }}
+      </mat-option>
     </mat-select>
 
     <!-- <mat-error *ngIf="!control.valid && control.touched"
     >{{ dataSource.label }} is not valid!</mat-error
   > -->
   </mat-form-field>
+  <!-- To hold the option description the option item 
+    must be an object with a field name "description" -->
+  <div
+    *ngIf="controlConfig['showOptionDescription'] && optionDescription !== null"
+    class="option-inline-definition"
+  >
+    <span class="opt-inline-description"
+      ><strong>Description: </strong>{{ optionDescription }}</span
+    >
+  </div>
 </div>
