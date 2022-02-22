@@ -6,9 +6,9 @@ import { CoreModule } from '../core/core.module';
 import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { SharedModule } from '../shared/shared.module';
 import { TableDataModule } from '../table-data/table-data.module';
-import { JobApplicationsListTableComponent } from './components/job-applications-list-table/job-applications-list-table.component';
-import { JobBoardApplicationsListComponent } from './components/job-board-applications-list/job-board-applications-list.component';
-import { JobBoardListComponent } from './components/job-board-list/job-board-list.component';
+import { JobApplicationListTableComponent } from './components/job-application-list-table/job-application-list-table.component';
+import { JobApplicationListComponent } from './components/job-application-list/job-application-list.component';
+import { JobidListComponent } from './components/jobid-list/jobid-list.component';
 import { JobBoardSectionComponent } from './components/job-board-section/job-board-section.component';
 import { JobidApplicationsComponent } from './components/jobid-edit/jobid-applications/jobid-applications.component';
 import { JobidEditFormDetailsComponent } from './components/jobid-edit/jobid-edit-form-details/jobid-edit-form-details.component';
@@ -17,19 +17,23 @@ import { JobidEditFormComponent } from './components/jobid-edit/jobid-edit-form/
 import { JobidEditComponent } from './components/jobid-edit/jobid-edit.component';
 import { JobidStatusChipComponent } from './components/jobid-status-chip/jobid-status-chip.component';
 import { JobBoardRoutingModule } from './routing/job-board-routing.module';
+import { CandidateIdBadgeComponent } from './components/candidate-id-badge/candidate-id-badge.component';
+import { JobidBadgeComponent } from './components/jobid-badge/jobid-badge.component';
 
 @NgModule({
   declarations: [
     JobBoardSectionComponent,
-    JobBoardListComponent,
+    JobidListComponent,
     JobidStatusChipComponent,
     JobidEditComponent,
     JobidEditFormComponent,
     JobidApplicationsComponent,
-    JobApplicationsListTableComponent,
-    JobBoardApplicationsListComponent,
+    JobApplicationListTableComponent,
+    JobApplicationListComponent,
     JobidEditFormMainComponent,
     JobidEditFormDetailsComponent,
+    CandidateIdBadgeComponent,
+    JobidBadgeComponent,
   ],
   imports: [
     CoreModule,
