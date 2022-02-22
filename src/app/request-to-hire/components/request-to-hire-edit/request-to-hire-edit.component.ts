@@ -48,8 +48,6 @@ export class RequestToHireEditComponent implements OnInit {
   }
 
   onSaveButtonClicked() {
-    console.log(this.formData);
-
     this.currentRequest = this._dataService.getEntityModelFromFormData(
       this.formData
     );
