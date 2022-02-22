@@ -5,7 +5,7 @@ export interface JobApplicationDTO {
   id: number;
   jobsId: number;
   candidatesId: number;
-  status: number;
+  jaworkingstatusesId: number;
   createdAt: string;
   updatedAt: string;
   jobs: JobIdDTO | null;
