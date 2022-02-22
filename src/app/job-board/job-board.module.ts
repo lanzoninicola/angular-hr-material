@@ -19,6 +19,9 @@ import { JobidStatusChipComponent } from './components/jobid-status-chip/jobid-s
 import { JobBoardRoutingModule } from './routing/job-board-routing.module';
 import { CandidateIdBadgeComponent } from './components/candidate-id-badge/candidate-id-badge.component';
 import { JobidBadgeComponent } from './components/jobid-badge/jobid-badge.component';
+import { JobApplicationEditComponent } from './components/job-application-edit/job-application-edit.component';
+import { JobApplicationEditFormComponent } from './components/job-application-edit/job-application-edit-form/job-application-edit-form.component';
+import { JobApplicationCandidateComponent } from './components/job-application-edit/job-application-candidate/job-application-candidate.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,9 @@ import { JobidBadgeComponent } from './components/jobid-badge/jobid-badge.compon
     JobidEditFormDetailsComponent,
     CandidateIdBadgeComponent,
     JobidBadgeComponent,
+    JobApplicationEditComponent,
+    JobApplicationEditFormComponent,
+    JobApplicationCandidateComponent,
   ],
   imports: [
     CoreModule,

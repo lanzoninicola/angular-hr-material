@@ -8,6 +8,9 @@ import { JobidEditResolver } from './jobid-edit.resolver';
 import { JobidFormResolver } from './jobid-form.resolver';
 import { JobidNewResolver } from './jobid-new.resolver';
 import { JobApplicationListComponent } from '../components/job-application-list/job-application-list.component';
+import { JobApplicationEditComponent } from '../components/job-application-edit/job-application-edit.component';
+import { JobApplicationEditResolver } from './job-application-edit.resolver';
+import { JobApplicationFormResolver } from './job-application-form.resolver';
 
 const moduleRoutes: Routes = [
   {
@@ -46,14 +49,14 @@ const moduleRoutes: Routes = [
       //     formControlsData: JobidFormResolver,
       //   },
       // },
-      // {
-      //   path: 'jobid/:id',
-      //   component: JobidEditComponent,
-      //   resolve: {
-      //     entity: JobidEditResolver,
-      //     formControlsData: JobidFormResolver,
-      //   },
-      // },
+      {
+        path: 'applications/:id',
+        component: JobApplicationEditComponent,
+        resolve: {
+          entity: JobApplicationEditResolver,
+          formControlsData: JobApplicationFormResolver,
+        },
+      },
     ],
   },
 ];

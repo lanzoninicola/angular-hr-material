@@ -16,20 +16,20 @@ const routes: Routes = [
   //       return m.UsersModule;
   //     }),
   // },
-  {
-    path: 'candidates',
-    loadChildren: () =>
-      import('./candidates/candidates.module').then((m) => {
-        return m.CandidatesModule;
-      }),
-  },
-  {
-    path: 'request-to-hire',
-    loadChildren: () =>
-      import('./request-to-hire/request-to-hire.module').then((m) => {
-        return m.RequestToHireModule;
-      }),
-  },
+  // {
+  //   path: 'candidates',
+  //   loadChildren: () =>
+  //     import('./candidates/candidates.module').then((m) => {
+  //       return m.CandidatesModule;
+  //     }),
+  // },
+  // {
+  //   path: 'request-to-hire',
+  //   loadChildren: () =>
+  //     import('./request-to-hire/request-to-hire.module').then((m) => {
+  //       return m.RequestToHireModule;
+  //     }),
+  // },
   {
     path: 'job-board',
     loadChildren: () =>

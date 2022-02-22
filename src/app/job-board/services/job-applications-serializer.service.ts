@@ -27,7 +27,7 @@ export class JobApplicationsSerializerService {
       dto.id,
       jobId,
       candidate,
-      workingStatus.getStatus(),
+      workingStatus,
       this._dateService.ISOToFullDate(dto.createdAt),
       this._dateService.ISOToFullDate(dto.updatedAt)
     );

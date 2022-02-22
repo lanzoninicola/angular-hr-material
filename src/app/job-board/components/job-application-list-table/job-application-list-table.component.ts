@@ -63,7 +63,7 @@ const JA_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
   {
     key: 'status',
     title: 'Status',
-    objectProp: 'value',
+    objectProp: ['status', 'value'],
     sortable: false,
     headerStyle: {
       'min-width': '80px',

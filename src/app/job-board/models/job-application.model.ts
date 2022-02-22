@@ -1,12 +1,14 @@
 import { CandidateModel } from 'src/app/candidates/models/candidate.model';
 import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
+
+import { JobApplicationWorkingStatusModel } from './ja-working-status.model';
 import { JobIdModel } from './jobid.model';
 
 export class JobApplicationModel {
   id: number;
   jobId: JobIdModel;
   candidate: CandidateModel;
-  status: PicklistItemModel;
+  status: JobApplicationWorkingStatusModel;
   createdAt: Date;
   updatedAt: Date;
 
@@ -14,7 +16,7 @@ export class JobApplicationModel {
     id: number,
     jobId: JobIdModel,
     candidate: CandidateModel,
-    status: PicklistItemModel,
+    status: JobApplicationWorkingStatusModel,
     createdAt: Date,
     updatedAt: Date
   ) {
@@ -38,7 +40,7 @@ export class JobApplicationModel {
     return this.candidate;
   }
 
-  getStatus(): PicklistItemModel {
+  getStatus(): JobApplicationWorkingStatusModel {
     return this.status;
   }
 

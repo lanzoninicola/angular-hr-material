@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ModuleStoreService } from 'src/app/core/services/module-store.service';
 import { EntityState } from 'src/app/core/types/entityState.type';
+import { JobApplicationModel } from '../models/job-application.model';
 import { JobIdModel } from '../models/jobid.model';
 
 @Injectable({
@@ -18,15 +19,27 @@ export class JobBoardStoreService extends ModuleStoreService {
   }
 
   set currentJobId(currentEntity: JobIdModel) {
-    this.set(`${this.PREFIX}_CURRENT_REQUEST`, currentEntity);
+    this.set(`${this.PREFIX}_CURRENT_JOBID`, currentEntity);
   }
 
   get currentJobId(): JobIdModel {
-    return this.get(`${this.PREFIX}_CURRENT_REQUEST`);
+    return this.get(`${this.PREFIX}_CURRENT_JOBID`);
   }
 
   currentJobIdReset() {
-    this.reset(`${this.PREFIX}_CURRENT_REQUEST`);
+    this.reset(`${this.PREFIX}_CURRENT_JOBID`);
+  }
+
+  set currentApplication(currentEntity: JobApplicationModel) {
+    this.set(`${this.PREFIX}_CURRENT_APPLICATION`, currentEntity);
+  }
+
+  get currentApplication(): JobApplicationModel {
+    return this.get(`${this.PREFIX}_CURRENT_APPLICATION`);
+  }
+
+  currentApplicationReset() {
+    this.reset(`${this.PREFIX}_CURRENT_APPLICATION`);
   }
 
   get entityState(): EntityState {

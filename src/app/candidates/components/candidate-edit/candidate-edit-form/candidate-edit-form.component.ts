@@ -4,7 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { CandidateService } from 'src/app/candidates/services/candidate.service';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
-import { FormModelBuilderService } from 'src/app/dynamic-form/services/form-model-builder.service';
+import { FormModelBuilder } from 'src/app/dynamic-form/services/form-model-builder';
+
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
 
 @Component({
@@ -34,7 +35,7 @@ export class CandidateEditFormComponent implements OnInit {
 
   PERSONAL_INFO_CONTROLS: FormControlConfig[] = [];
 
-  candidateEditForm: FormModelBuilderService;
+  candidateEditForm: FormModelBuilder;
 
   constructor(
     private _dynamicForm: DynamicFormService,
@@ -42,7 +43,7 @@ export class CandidateEditFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.candidateEditForm = new FormModelBuilderService();
+    this.candidateEditForm = new FormModelBuilder();
     this._setFormControlsConfig();
     this._setupForm();
     this._handleForms();

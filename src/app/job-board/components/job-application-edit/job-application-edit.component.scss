@@ -1,0 +1,20 @@
+.form-header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.tab-content-wrapper {
+  padding: 1.5rem 0;
+  min-height: 50vh;
+
+  & .container-list {
+    margin: 0;
+  }
+}
+
+h3 {
+  font-weight: 500;
+}

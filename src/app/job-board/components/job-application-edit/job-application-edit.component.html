@@ -1,0 +1,60 @@
+<ahr-edit-form-toolbar [disabled]="(formState$ | async) === 'submitted'">
+  <ahr-edit-action-button
+    left
+    [disabled]="
+      (formStatus$ | async) === 'invalid' ||
+      (formState$ | async) === 'submitted' ||
+      (formState$ | async) === 'idle'
+    "
+    [action]="'save'"
+    (actionEvent)="onSaveButtonClicked()"
+  ></ahr-edit-action-button>
+  <ahr-navigation-action-button
+    right
+    [action]="'goback'"
+  ></ahr-navigation-action-button>
+</ahr-edit-form-toolbar>
+<div class="container-form">
+  <div class="form-header" *ngIf="currentApplication">
+    <span><strong>Application ID:</strong> #{{ currentApplication.id }} </span>
+    <span
+      ><strong>Created at:</strong>
+      {{ currentApplication.createdAt | date: "dd/MM/yyyy HH:mm" }}</span
+    >
+    <span
+      ><strong>Last Update:</strong>
+      {{ currentApplication.updatedAt | date: "dd/MM/yyyy HH:mm" }}</span
+    >
+  </div>
+  <div class="wrapper-form">
+    <ahr-job-application-edit-form
+      [currentApplication]="currentApplication"
+      [entityState]="entityState"
+      [showSpinner]="(formState$ | async) === 'submitted'"
+      (formStateChanges)="onStateChanges($event)"
+      (valueChanges)="onValueChanges($event)"
+      (statusChanges)="onStatusChanges($event)"
+    ></ahr-job-application-edit-form>
+
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Candidate">
+        <div class="tab-content-wrapper">
+          <ahr-job-application-candidate
+            [currentApplication]="currentApplication"
+          ></ahr-job-application-candidate>
+        </div>
+      </mat-tab>
+      <mat-tab label="Activities">
+        <div class="tab-content-wrapper">
+          <!-- component with list of activities -->
+        </div>
+      </mat-tab>
+      <mat-tab label="Interviews">
+        <div class="tab-content-wrapper">
+          <h3>Applications</h3>
+          <!-- component with list of interviews -->
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
