@@ -12,7 +12,8 @@ import { FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Data } from '@angular/router';
 import { map, Observable } from 'rxjs';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
-import { FormModelBuilderService } from 'src/app/dynamic-form/services/form-model-builder.service';
+import { FormModelBuilder } from 'src/app/dynamic-form/services/form-model-builder';
+
 import {
   FormControlConfig,
   SelectOptionConfig,
@@ -52,7 +53,7 @@ export class RequestToHireEditFormComponent implements OnInit {
   RTH_POSITION_DETAILS: FormControlConfig[] = [];
   RTH_POSITION_OTHER: FormControlConfig[] = [];
 
-  requestToHireEditForm: FormModelBuilderService;
+  requestToHireEditForm: FormModelBuilder;
 
   constructor(
     private _route: ActivatedRoute,
@@ -61,7 +62,7 @@ export class RequestToHireEditFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.requestToHireEditForm = new FormModelBuilderService();
+    this.requestToHireEditForm = new FormModelBuilder();
     this._setFormControlsConfig();
     this._setupForm();
     this._handleForm();
