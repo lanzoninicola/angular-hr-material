@@ -56,7 +56,9 @@ export class JobApplicationsService {
         const jobApplication = records.map((record) => {
           const jobId = jobs.findItemById(record.jobsId);
           const candidate = candidates.findItemById(record.candidatesId);
-          const workingStatus = workingStatuses.findItemById(record.status);
+          const workingStatus = workingStatuses.findItemById(
+            record.jaworkingstatusesId
+          );
 
           return this._serializationService.deserialize(record, {
             jobId,
@@ -93,7 +95,7 @@ export class JobApplicationsService {
     const workingStatus$: Observable<JobApplicationWorkingStatusModel> =
       record$.pipe(
         switchMap((record) => {
-          return this._jaWorkingStatus.findById(record.status);
+          return this._jaWorkingStatus.findById(record.jaworkingstatusesId);
         })
       );
 
@@ -122,7 +124,9 @@ export class JobApplicationsService {
       map(([records, candidates, workingStatuses]) => {
         const jobApplication = records.map((record) => {
           const candidate = candidates.findItemById(record.candidatesId);
-          const workingStatus = workingStatuses.findItemById(record.status);
+          const workingStatus = workingStatuses.findItemById(
+            record.jaworkingstatusesId
+          );
 
           return this._serializationService.deserialize(record, {
             jobId,
@@ -151,7 +155,9 @@ export class JobApplicationsService {
       map(([records, jobs, workingStatuses]) => {
         const jobApplication = records.map((record) => {
           const jobId = jobs.findItemById(record.candidatesId);
-          const workingStatus = workingStatuses.findItemById(record.status);
+          const workingStatus = workingStatuses.findItemById(
+            record.jaworkingstatusesId
+          );
 
           return this._serializationService.deserialize(record, {
             jobId,

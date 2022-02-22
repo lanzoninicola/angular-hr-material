@@ -8,14 +8,12 @@ import { JobApplicationModel } from '../../models/job-application.model';
 @Component({
   selector: 'ahr-job-applications-list-table',
   template: `
-    <div class="container-list">
-      <ahr2-table-data
-        [dataSource]="tableDataSource$"
-        [columns]="columns"
-        (onRowClicked)="onRowClicked($event)"
-      >
-      </ahr2-table-data>
-    </div>
+    <ahr2-table-data
+      [dataSource]="tableDataSource$"
+      [columns]="columns"
+      (onRowClicked)="onRowClicked($event)"
+    >
+    </ahr2-table-data>
   `,
 })
 export class JobApplicationsListTableComponent implements OnInit {
@@ -35,33 +33,30 @@ export class JobApplicationsListTableComponent implements OnInit {
 
 const JA_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
   {
-    key: 'candidatesId',
-    title: 'Lastname',
+    key: 'candidate',
+    title: 'Candidate name',
     objectProp: 'lastname',
     sortable: false,
     headerStyle: {
       'min-width': '80px',
-      'text-align': 'center',
     },
   },
+  // {
+  //   key: 'candidate',
+  //   title: 'Firstname',
+  //   objectProp: 'firstname',
+  //   sortable: false,
+  //   headerStyle: {
+  //     'min-width': '80px',
+  //   },
+  // },
   {
-    key: 'candidatesId',
-    title: 'Firstname',
-    objectProp: 'firstname',
-    sortable: false,
-    headerStyle: {
-      'min-width': '80px',
-      'text-align': 'center',
-    },
-  },
-  {
-    key: 'jaworkingstatusesId',
+    key: 'status',
     title: 'Status',
     objectProp: 'value',
     sortable: false,
     headerStyle: {
       'min-width': '80px',
-      'text-align': 'center',
     },
   },
   {

@@ -1,46 +1,31 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { JobBoardService } from 'src/app/job-board/services/job-board.service';
-import { TableColumnConfig } from 'src/app/table-data/types/table.types';
+import { Component, Input, OnInit } from '@angular/core';
+import { map, Observable } from 'rxjs';
+import { JobsApplicationsCollection } from 'src/app/job-board/models/job-application.collection';
+import { JobApplicationModel } from 'src/app/job-board/models/job-application.model';
+import { JobIdModel } from 'src/app/job-board/models/job-id.model';
+import { JobApplicationsService } from 'src/app/job-board/services/job-applications.service';
 
 @Component({
-  selector: 'app-jobid-applications',
+  selector: 'ahr-jobid-applications',
   template: `
-    <div class="container-list">
-      <ahr2-table-data
-        [dataSource]="tableDataSource$"
-        [columns]="columns"
-        (onRowClicked)="onRowClicked($event)"
-      >
-      </ahr2-table-data>
-    </div>
+    <ahr-job-applications-list-table
+      [tableDataSource$]="tableDataSource$"
+    ></ahr-job-applications-list-table>
   `,
 })
 export class JobidApplicationsComponent implements OnInit {
-  tableDataSource$: Observable<any>;
+  @Input()
+  jobId: JobIdModel;
 
-  columns = JBA_LIST_TABLE_COLUMNS;
+  tableDataSource$: Observable<JobApplicationModel[]>;
 
-  constructor(private _dataService: JobBoardService, private router: Router) {}
+  constructor(private _dataService: JobApplicationsService) {}
 
-  ngOnInit() {
-    this.tableDataSource$ = this._dataService.findAll();
-  }
-
-  onRowClicked(entityRow: any) {
-    // TODO: navigatio to ... ???
-    //this.router.navigate(['job-board', entityRow.id]);
+  ngOnInit(): void {
+    this.tableDataSource$ = this._dataService.findByJobId(this.jobId).pipe(
+      map<JobsApplicationsCollection, JobApplicationModel[]>((collection) => {
+        return collection.getItems();
+      })
+    );
   }
 }
-
-const JBA_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
-  {
-    key: 'title',
-    title: 'Title',
-    sortable: false,
-    headerStyle: {
-      'min-width': '180px',
-    },
-  },
-];
