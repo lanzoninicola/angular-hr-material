@@ -3,7 +3,7 @@ import { FormControl, FormControlStatus, FormGroup } from '@angular/forms';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 
 import { FormState } from '../types/form-state.types';
-import { FormModelBuilderService } from './form-model-builder.service';
+import { FormModelBuilder } from './form-model-builder';
 
 @Injectable({
   providedIn: 'root',
@@ -53,7 +53,9 @@ export class DynamicFormService {
    * }
    */
   get formStatus$(): Observable<string> {
-    return this._getFormStatus();
+    return this._formModel.statusChanges.pipe(
+      map((formStatus: FormControlStatus) => formStatus.toLowerCase())
+    );
   }
 
   /**
@@ -72,7 +74,14 @@ export class DynamicFormService {
    * }
    */
   get formData$(): Observable<any> {
-    return this._getFormData();
+    return this._formModel.valueChanges.pipe(
+      map((formData: { [key: string]: {} }) => {
+        this._flattingFormData(formData);
+
+        return this._flatFormData;
+      }),
+      tap(() => this.changed())
+    );
   }
 
   constructor() {}
@@ -84,7 +93,7 @@ export class DynamicFormService {
    * @param children - {key: name of the form group, value: FormModelBuilderService}
    *
    */
-  load(children: FormModelBuilderService) {
+  load(children: FormModelBuilder) {
     const DEFAULT_FORMGROUP_KEY = 'main';
     this._formModel.addControl(DEFAULT_FORMGROUP_KEY, children.model);
     this._getAllControls(this._formModel);
@@ -104,7 +113,7 @@ export class DynamicFormService {
    * children = { key: name of the form group, value: FormModelBuilderService }
    *
    */
-  mergeAll(childrens: { [key: string]: FormModelBuilderService }[]) {
+  mergeAll(childrens: { [key: string]: FormModelBuilder }[]) {
     childrens.forEach((children) => {
       const [formGroupName] = Object.keys(children);
       this._formModel.addControl(formGroupName, children[formGroupName].model);
@@ -196,39 +205,6 @@ export class DynamicFormService {
     this._formModel = new FormGroup({});
     this._formControls.clear();
     this._formGroups.clear();
-  }
-
-  /**
-   * @description This returns an Observable that emits the value of Change status of control
-   * This value will be emit as @Output() of the Presentation Component that renders the form
-   *
-   * @see FormControlStatus
-   *
-   * @returns
-   */
-  private _getFormStatus(): Observable<string> {
-    return this._formModel.statusChanges.pipe(
-      map((formStatus: FormControlStatus) => formStatus.toLowerCase())
-    );
-  }
-
-  /**
-   *
-   * @description
-   * A multicasting observable that emits an event every time
-   * the value of the control changes, in the UI or programmatically.
-   *
-   * @return an Observable that emits the values of the form
-   */
-  private _getFormData(): Observable<any> {
-    return this._formModel.valueChanges.pipe(
-      map((formData: { [key: string]: {} }) => {
-        this._flattingFormData(formData);
-
-        return this._flatFormData;
-      }),
-      tap(() => this.changed())
-    );
   }
 
   /**

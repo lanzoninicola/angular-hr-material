@@ -21,7 +21,7 @@ import { FormSettings } from '../types/template.types';
 /**
  *  Responsible to build the Reactive Form Model starting by a configuration
  */
-export class FormModelBuilderService {
+export class FormModelBuilder {
   private _formSettings: FormSettings = new Map();
 
   private _formModel: FormGroup;
