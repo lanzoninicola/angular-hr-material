@@ -2,9 +2,10 @@
   <ahr-edit-action-button
     left
     [disabled]="
-      (formState$ | async) === 'idle' ||
+      (detailsFormStatus$ | async) === 'invalid' ||
+      (mainFormStatus$ | async) === 'invalid' ||
       (formState$ | async) === 'submitted' ||
-      (formStatus$ | async) === 'invalid'
+      (formState$ | async) === 'idle'
     "
     [action]="'save'"
     (actionEvent)="onSaveButtonClicked()"
@@ -31,9 +32,42 @@
       {{ currentJobId.updatedAt | date: "dd/MM/yyyy HH:mm" }}</span
     >
   </div>
-  <app-jobid-edit-form
+  <!-- <app-jobid-edit-form
     [showSpinner]="(formState$ | async) === 'submitted'"
     (valueChanges)="onValueChanges($event)"
     (statusChanges)="onStatusChanges($event)"
-  ></app-jobid-edit-form>
+  ></app-jobid-edit-form> -->
+  <div class="wrapper-form">
+    <ahr-jobid-edit-form-main
+      [currentJobId]="currentJobId"
+      [entityState]="entityState"
+      [showSpinner]="(formState$ | async) === 'submitted'"
+      (formStateChanges)="onFormMainFormStateChanges($event)"
+      (valueChanges)="onFormMainValueChanges($event)"
+      (statusChanges)="onFormMainStatusChanges($event)"
+    ></ahr-jobid-edit-form-main>
+
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Details">
+        <div class="tab-content-wrapper">
+          <ahr-jobid-edit-form-details
+            [currentJobId]="currentJobId"
+            [entityState]="entityState"
+            [showSpinner]="(formState$ | async) === 'submitted'"
+            (formStateChanges)="onFormDetailsFormStateChanges($event)"
+            (valueChanges)="onFormDetailsValueChanges($event)"
+            (statusChanges)="onFormDetailsStatusChanges($event)"
+          ></ahr-jobid-edit-form-details>
+        </div>
+      </mat-tab>
+      <mat-tab label="Applications">
+        <div class="tab-content-wrapper">
+          <h3>Applications</h3>
+          <ahr-jobid-applications
+            [jobId]="currentJobId"
+          ></ahr-jobid-applications>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </div>

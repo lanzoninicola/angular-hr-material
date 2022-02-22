@@ -84,7 +84,7 @@ export class JobBoardSerializerService {
       roleLevel: model.getRoleLevel().getId(),
       roleTaskDescription: model.getRoleTaskDescription(),
       jobLocationType: model.getJobLocationType().getId(),
-      jobLocation: model.getJobLocation().getId(),
+      branchesId: model.getJobLocation().getId(),
       employmentStatus: model.getEmploymentStatus().getId(),
       minimumQualifications: model.getMinimumQualifications(),
       preferredQualifications: model.getPreferredQualifications(),

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
-import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
+import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+
 import { JobIdModel } from '../../models/job-id.model';
 import { JobBoardService } from '../../services/job-board.service';
 import { JobIdFormData } from '../../types/jobid.form.type';
@@ -16,14 +17,17 @@ export class JobidEditComponent implements OnInit {
   currentJobId: JobIdModel;
   entityState: EntityState = 'create';
 
-  formState$ = this._dynamicForm.formState$;
-  formStatus$: Observable<any>;
+  formState$: BehaviorSubject<FormState> = new BehaviorSubject<FormState>(
+    'idle'
+  );
+  mainFormStatus$: Observable<any>;
+  detailsFormStatus$: Observable<any>;
   formData: JobIdFormData;
 
-  constructor(
-    private _dynamicForm: DynamicFormService,
-    private _dataService: JobBoardService
-  ) {}
+  mainFormValueChanges$: Observable<any>;
+  detailFormValueChanges$: Observable<any>;
+
+  constructor(private _dataService: JobBoardService) {}
 
   ngOnInit() {
     this.entityState = this._dataService.store.entityState;
@@ -34,28 +38,56 @@ export class JobidEditComponent implements OnInit {
     this.subs.unsubscribe();
   }
 
-  onValueChanges(valueChanges: Observable<any>) {
+  onFormMainValueChanges(valueChanges$: Observable<any>) {
     this.subs.add(
-      valueChanges.subscribe((formData: JobIdFormData) => {
-        this.formData = formData;
+      valueChanges$.subscribe((formData: JobIdFormData) => {
+        let nextFormData = { ...this.currentJobId };
+        nextFormData = { ...nextFormData, ...formData };
+        this.formData = nextFormData;
       })
     );
   }
 
-  onStatusChanges(statusChanges: Observable<any>) {
-    this.formStatus$ = statusChanges;
+  onFormDetailsValueChanges(valueChanges$: Observable<any>) {
+    this.subs.add(
+      valueChanges$.subscribe((formData: JobIdFormData) => {
+        let nextFormData = { ...this.currentJobId };
+        nextFormData = { ...nextFormData, ...formData };
+        this.formData = nextFormData;
+      })
+    );
+  }
+
+  onFormMainStatusChanges(statusChanges$: Observable<any>) {
+    this.mainFormStatus$ = statusChanges$;
+  }
+
+  onFormDetailsStatusChanges(statusChanges$: Observable<any>) {
+    this.detailsFormStatus$ = statusChanges$;
+  }
+
+  onFormMainFormStateChanges(formState$: BehaviorSubject<FormState>) {
+    if (formState$.value !== 'idle') {
+      this.formState$ = formState$;
+    }
+  }
+
+  onFormDetailsFormStateChanges(formState$: BehaviorSubject<FormState>) {
+    if (formState$.value !== 'idle') {
+      this.formState$ = formState$;
+    }
   }
 
   onSaveButtonClicked() {
-    this.currentJobId = this._dataService.getEntityModelFromFormData(
+    const currentJobId = this._dataService.getEntityModelFromFormData(
       this.formData
     );
 
     if (this.entityState === 'create') {
-      this._dataService.save(this.currentJobId);
+      this._dataService.save(currentJobId);
     }
     if (this.entityState === 'update') {
-      this._dataService.update(this.currentJobId);
+      this._dataService.update(currentJobId);
     }
   }
 

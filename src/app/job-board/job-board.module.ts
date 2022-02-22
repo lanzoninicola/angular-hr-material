@@ -7,15 +7,16 @@ import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { SharedModule } from '../shared/shared.module';
 import { TableDataModule } from '../table-data/table-data.module';
 import { JobApplicationsListTableComponent } from './components/job-applications-list-table/job-applications-list-table.component';
-import { JobApplicationsListComponent } from './components/job-applications-list/job-applications-list.component';
+import { JobBoardApplicationsListComponent } from './components/job-board-applications-list/job-board-applications-list.component';
 import { JobBoardListComponent } from './components/job-board-list/job-board-list.component';
 import { JobBoardSectionComponent } from './components/job-board-section/job-board-section.component';
 import { JobidApplicationsComponent } from './components/jobid-edit/jobid-applications/jobid-applications.component';
+import { JobidEditFormDetailsComponent } from './components/jobid-edit/jobid-edit-form-details/jobid-edit-form-details.component';
+import { JobidEditFormMainComponent } from './components/jobid-edit/jobid-edit-form-main/jobid-edit-form-main.component';
 import { JobidEditFormComponent } from './components/jobid-edit/jobid-edit-form/jobid-edit-form.component';
 import { JobidEditComponent } from './components/jobid-edit/jobid-edit.component';
 import { JobidStatusChipComponent } from './components/jobid-status-chip/jobid-status-chip.component';
 import { JobBoardRoutingModule } from './routing/job-board-routing.module';
-import { JobBoardApplicationsListComponent } from './components/job-board-applications-list/job-board-applications-list.component';
 
 @NgModule({
   declarations: [
@@ -25,9 +26,10 @@ import { JobBoardApplicationsListComponent } from './components/job-board-applic
     JobidEditComponent,
     JobidEditFormComponent,
     JobidApplicationsComponent,
-    JobApplicationsListComponent,
     JobApplicationsListTableComponent,
     JobBoardApplicationsListComponent,
+    JobidEditFormMainComponent,
+    JobidEditFormDetailsComponent,
   ],
   imports: [
     CoreModule,
