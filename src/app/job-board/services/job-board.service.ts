@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, map, Observable, of, shareReplay } from 'rxjs';
+import { DepartmentsCollection } from 'src/app/settings/models/departments.collection';
 import { PicklistModel } from 'src/app/settings/models/picklist.model';
+import { DepartmentService } from 'src/app/settings/services/department/department.service';
 import { PicklistService } from 'src/app/settings/services/picklist/picklist.service';
 import { PicklistType } from 'src/app/settings/types/picklist-item.type';
-import { JobIdModel } from '../models/job-id.model';
+import { UsersCollection } from 'src/app/users/models/users.collection';
+import { UsersService } from 'src/app/users/services/users.service';
+
+import { JobIdModel } from '../models/jobid.model';
 import { JobsCollection } from '../models/jobs.collection';
 import { JobIdDTO } from '../types/jobid.dto.type';
 import { JobIdFormData } from '../types/jobid.form.type';
-import { JobApplicationsHttpService } from './job-applications-http.service';
 import { JobBoardHttpService } from './job-board-http.service';
 import { JobBoardSerializerService } from './job-board-serializer.service';
 import { JobBoardStoreService } from './job-board-store.service';
@@ -17,6 +21,7 @@ import { JobBoardStoreService } from './job-board-store.service';
 })
 export class JobBoardService {
   requiredPicklistTypes: PicklistType[] = [
+    'business-unit',
     'role-level',
     'job-location-type',
     'employment-status',
@@ -26,7 +31,10 @@ export class JobBoardService {
   constructor(
     private _httpService: JobBoardHttpService,
     private _picklistService: PicklistService,
+    private _userService: UsersService,
+    private _departmentService: DepartmentService,
     private _serializationService: JobBoardSerializerService,
+
     private _store: JobBoardStoreService
   ) {}
 
@@ -35,13 +43,26 @@ export class JobBoardService {
   }
 
   findAll(): Observable<JobsCollection> {
-    const records: Observable<JobIdDTO[]> = this._httpService.findAll();
-    const picklist: Observable<PicklistModel> = this.loadRequiredPicklist();
+    const jobs$: Observable<JobIdDTO[]> = this._httpService.findAll();
 
-    return forkJoin([records, picklist]).pipe(
-      map(([records, picklist]) => {
-        const items = records.map((record) => {
-          return this._serializationService.deserialize(record, picklist);
+    const users$: Observable<UsersCollection> = this._userService.findAll();
+
+    const departments$: Observable<DepartmentsCollection> =
+      this._departmentService.findAll();
+
+    const picklist$: Observable<PicklistModel> = this.loadRequiredPicklist();
+
+    return forkJoin([jobs$, users$, departments$, picklist$]).pipe(
+      map(([jobs, users, departments, picklist]) => {
+        const items = jobs.map((record) => {
+          const user = users.findItemById(record.requestsId);
+          const department = departments.findItemById(record.departmentsId);
+
+          return this._serializationService.deserialize(record, {
+            user,
+            department,
+            picklist,
+          });
         });
 
         return new JobsCollection(items);
@@ -55,23 +76,29 @@ export class JobBoardService {
       return of(this._currentCached());
     }
 
-    const record: Observable<JobIdDTO> = this._httpService.findById(id);
-    const picklist: Observable<PicklistModel> = this.loadRequiredPicklist();
+    const record$: Observable<JobIdDTO> = this._httpService.findById(id);
 
-    return forkJoin([record, picklist]).pipe(
-      map(([record, picklist]) => {
-        return this._serializationService.deserialize(record, picklist);
+    const users$: Observable<UsersCollection> = this._userService.findAll();
+
+    const departments$: Observable<DepartmentsCollection> =
+      this._departmentService.findAll();
+
+    const picklist$: Observable<PicklistModel> = this.loadRequiredPicklist();
+
+    return forkJoin([record$, users$, departments$, picklist$]).pipe(
+      map(([record, users, departments, picklist]) => {
+        const user = users.findItemById(record.requestsId);
+        const department = departments.findItemById(record.departmentsId);
+
+        return this._serializationService.deserialize(record, {
+          user,
+          department,
+          picklist,
+        });
       }),
       shareReplay(1)
     );
   }
-
-  // findApplicationsByJobId(
-  //   id: number,
-  //   options?: { withRelations: boolean; relations: [] }
-  // ): Observable<any> {
-  //   return this._httpJobApplicationsService.findByJobId(id, options);
-  // }
 
   save(model: JobIdModel) {
     const dto = this._serializationService.serialize(model);
@@ -102,6 +129,9 @@ export class JobBoardService {
       formData.requestToHire,
       formData.boardTemplate,
       formData.title,
+      formData.department,
+      formData.businessUnit,
+      formData.requester,
       formData.jobRole,
       formData.roleLevel,
       formData.roleTaskDescription,

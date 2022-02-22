@@ -3,15 +3,25 @@ import { DateService } from 'src/app/core/services/date.service';
 import { RequestToHireSerializerService } from 'src/app/request-to-hire/services/request-to-hire-serializer.service';
 import { RequestToHireDTO } from 'src/app/request-to-hire/types/request-to-hire.dto.type';
 import { BranchDTO } from 'src/app/settings/models/branch.model';
+import {
+  DepartmentDTO,
+  DepartmentModel,
+} from 'src/app/settings/models/department.model';
 import { PicklistModel } from 'src/app/settings/models/picklist.model';
 import { BoardTemplateSerializerService } from 'src/app/settings/services/board-template/board-template-serializer.service';
 import { BranchSerializerService } from 'src/app/settings/services/branch/branch-serializer.service';
+import { DepartmentSerializerService } from 'src/app/settings/services/department/department-serializer.service';
 import { JobRoleSerializerService } from 'src/app/settings/services/job-role/job-role-serializer.service';
 import { PicklistService } from 'src/app/settings/services/picklist/picklist.service';
 import { BoardTemplateDTO } from 'src/app/settings/types/board-template.types';
 import { JobRoleDTO } from 'src/app/settings/types/job-role.type';
-import { JobIdModel } from '../models/job-id.model';
+import { UserModel } from 'src/app/users/models/user.model';
+import { UserSerializerService } from 'src/app/users/services/user-serializer.service';
+import { UserDTO } from 'src/app/users/types/user.type';
+import { JobIdModel } from '../models/jobid.model';
 import { JobIdDTO } from '../types/jobid.dto.type';
+
+// TODO: Update with related models
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +38,16 @@ export class JobBoardSerializerService {
     private _picklistService: PicklistService
   ) {}
 
-  deserialize(dto: JobIdDTO, picklist: PicklistModel): JobIdModel {
+  deserialize(
+    dto: JobIdDTO,
+    relatedModels: {
+      user: UserModel;
+      department: DepartmentModel;
+      picklist: PicklistModel;
+    }
+  ): JobIdModel {
+    const { user, department, picklist } = relatedModels;
+
     this.picklist = picklist;
 
     return new JobIdModel(
@@ -36,6 +55,9 @@ export class JobBoardSerializerService {
       this.getRequest(dto.requests),
       this.getBoardTemplate(dto.boardtemplates),
       dto.title,
+      department,
+      this.getPicklistModelById(dto.businessUnit),
+      user,
       this.getJobRole(dto.jobroles),
       this.getPicklistModelById(dto.roleLevel),
       dto.roleTaskDescription,
@@ -69,9 +91,7 @@ export class JobBoardSerializerService {
   }
 
   getPicklistModelById(id: number) {
-    return this.picklist
-      ? this.picklist.findItemById(id)
-      : this._picklistService.EMPTY_PICKLIST_ITEM;
+    return this.picklist.findItemById(id);
   }
 
   serialize(model: JobIdModel): JobIdDTO {
@@ -80,6 +100,9 @@ export class JobBoardSerializerService {
       requestsId: model.requestToHire.getId(),
       boardtemplatesId: model.boardTemplate.getId(),
       title: model.getTitle(),
+      departmentsId: model.getDepartment().getId(),
+      businessUnit: model.getBusinessUnit().getId(),
+      usersId: model.getRequester().getId(),
       jobrolesId: model.getJobRole().getId(),
       roleLevel: model.getRoleLevel().getId(),
       roleTaskDescription: model.getRoleTaskDescription(),
@@ -95,6 +118,8 @@ export class JobBoardSerializerService {
       updatedAt: this._dateService.dateToISOString(model.updatedAt),
       boardtemplates: {} as BoardTemplateDTO,
       requests: {} as RequestToHireDTO,
+      users: {} as UserDTO,
+      departments: {} as DepartmentDTO,
       jobroles: {} as JobRoleDTO,
       branches: {} as BranchDTO,
     };
