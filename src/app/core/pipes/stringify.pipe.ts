@@ -12,7 +12,7 @@ export class StringifyPipe implements PipeTransform {
    * @param args
    * @returns
    */
-  transform(value: any, fieldname?: string): any {
+  transform(value: any, fieldname?: string | string[]): any {
     if (value instanceof Date) {
       return value;
     }
@@ -24,7 +24,15 @@ export class StringifyPipe implements PipeTransform {
         throw `StringifyPipe - The field name '${fieldname}' to stringify is missing. What is the name of the column configuration that indicates the name of model prop to display? Now is ${value}`;
       }
 
-      return value[fieldname];
+      if (typeof fieldname === 'string') {
+        return value[fieldname];
+      }
+
+      if (Array.isArray(fieldname)) {
+        return fieldname.reduce((acc, curr) => {
+          return acc[curr];
+        }, value);
+      }
     }
 
     return value;
