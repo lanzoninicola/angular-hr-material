@@ -258,6 +258,20 @@
       "key": "vacancy-filled",
       "value": "Vacancy filled",
       "order": 9
+    },
+    {
+      "id": 12,
+      "type": "jobapplication-activity-type",
+      "key": "generic",
+      "value": "Generic Activity",
+      "order": 1
+    },
+    {
+      "id": 13,
+      "type": "jobapplication-activity-type",
+      "key": "phone-call",
+      "value": "Phone Call",
+      "order": 2
     }
   ],
   "departments": [
@@ -271,7 +285,10 @@
       "id": 2,
       "name": "Front-end Developers",
       "managerId": 1,
-      "teamLeads": [71, 72]
+      "teamLeads": [
+        71,
+        72
+      ]
     },
     {
       "id": 3,
@@ -349,7 +366,11 @@
       "id": 1,
       "name": "Front-end Developer",
       "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
-      "details": [1, 2, 3]
+      "details": [
+        1,
+        2,
+        3
+      ]
     },
     {
       "id": 11,
@@ -500,47 +521,47 @@
   ],
   "jaworkingstatuses": [
     {
-      "id": 111,
-      "picklistsId": 111,
-      "description": "Your application is being screened by human resources or the hiring manager",
+      "id": 1,
+      "picklistsId": 11,
+      "description": "Application is added to the queue and will be reviewed by our team.",
       "order": 2,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-01-16T14:33:15.092Z"
     },
     {
-      "id": 112,
+      "id": 2,
+      "picklistsId": 111,
+      "description": "Application is being screened by human resources",
+      "order": 2,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 3,
       "picklistsId": 112,
-      "description": "Hiring Managers are selecting candidates for interviews",
+      "description": "Team are selecting candidates for interviews",
       "order": 3,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-01-16T14:33:15.092Z"
     },
     {
-      "id": 113,
+      "id": 4,
       "picklistsId": 113,
-      "description": "Your application has passed initial HR screening",
+      "description": "The application has passed initial HR screening",
       "order": 4,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-01-16T14:33:15.092Z"
     },
     {
-      "id": 114,
+      "id": 5,
       "picklistsId": 114,
-      "description": "Your application is currently being processed.",
+      "description": "The application is currently being processed.",
       "order": 5,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-01-16T14:33:15.092Z"
     },
     {
-      "id": 115,
-      "picklistsId": 115,
-      "description": "The company wants additional materials from you",
-      "order": 6,
-      "createdAt": "2020-01-01T00:00:00.000Z",
-      "updatedAt": "2022-01-16T14:33:15.092Z"
-    },
-    {
-      "id": 116,
+      "id": 6,
       "picklistsId": 116,
       "description": "Candidate wasn't included in the first round of interviews",
       "order": 7,
@@ -548,18 +569,10 @@
       "updatedAt": "2022-01-16T14:33:15.092Z"
     },
     {
-      "id": 117,
+      "id": 7,
       "picklistsId": 117,
-      "description": "Candidate wasn't included in the first round of interviews",
+      "description": "Position is closed. No further applications are accepted.",
       "order": 8,
-      "createdAt": "2020-01-01T00:00:00.000Z",
-      "updatedAt": "2022-01-16T14:33:15.092Z"
-    },
-    {
-      "id": 118,
-      "picklistsId": 118,
-      "description": "Someone has been offered the job and that person accepted",
-      "order": 9,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-01-16T14:33:15.092Z"
     }
@@ -569,15 +582,17 @@
       "id": 1,
       "jobsId": 1,
       "candidatesId": 1,
-      "jaworkingstatusesId": 111,
+      "jaworkingstatusesId": 2,
       "createdAt": "2020-01-01T00:00:00.000Z",
-      "updatedAt": "2022-01-16T14:33:15.092Z"
+      "updatedAt": "2022-02-23T18:03:23.678Z",
+      "jobs": null,
+      "candidates": null
     },
     {
       "id": 2,
       "jobsId": 1,
       "candidatesId": 2,
-      "jaworkingstatusesId": 111,
+      "jaworkingstatusesId": 1,
       "createdAt": "2020-02-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     },
@@ -585,7 +600,7 @@
       "id": 3,
       "jobsId": 2,
       "candidatesId": 4,
-      "jaworkingstatusesId": 111,
+      "jaworkingstatusesId": 2,
       "createdAt": "2020-03-04T00:00:00.000Z",
       "updatedAt": "2022-03-16T14:33:15.092Z"
     },
@@ -593,9 +608,32 @@
       "id": 4,
       "jobsId": 2,
       "candidatesId": 3,
-      "jaworkingstatusesId": 111,
+      "jaworkingstatusesId": 1,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-01-16T14:33:15.092Z"
+    }
+  ],
+  "jobsapplicationsactivities": [
+    {
+      "id": 1,
+      "jobsapplicationsId": 1,
+      "picklistsId": 12,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-01-16T14:33:15.092Z"
+    },
+    {
+      "id": 2,
+      "jobsapplicationsId": 1,
+      "picklistsId": 13,
+      "createdAt": "2020-02-01T00:00:00.000Z",
+      "updatedAt": "2022-02-16T14:33:15.092Z"
+    },
+    {
+      "id": 3,
+      "jobsapplicationsId": 2,
+      "picklistsId": 12,
+      "createdAt": "2020-03-04T00:00:00.000Z",
+      "updatedAt": "2022-03-16T14:33:15.092Z"
     }
   ],
   "candidates": [
@@ -604,6 +642,12 @@
       "firstname": "Leanne",
       "lastname": "Graham",
       "email": "leanne.graham@gmail.com",
+      "phoneNumber": "1-770-736-8031 x56442",
+      "address": "Hoeger Mall",
+      "city": "South Elvis",
+      "state": "MN",
+      "zipCode": "53919-4257",
+      "country": "USA",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     },
@@ -612,6 +656,12 @@
       "firstname": "Ervin",
       "lastname": "Howell",
       "email": "ervin.howell@gmail.com",
+      "phoneNumber": "1-770-736-8031 x56442",
+      "address": "Hoeger Mall",
+      "city": "South Elvis",
+      "state": "MN",
+      "zipCode": "53919-4257",
+      "country": "USA",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     },
@@ -620,6 +670,12 @@
       "firstname": "Clementine",
       "lastname": "Bauch",
       "email": "clementine.bauch@gmail.com",
+      "phoneNumber": "1-770-736-8031 x56442",
+      "address": "Hoeger Mall",
+      "city": "South Elvis",
+      "state": "MN",
+      "zipCode": "53919-4257",
+      "country": "USA",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     },
@@ -628,6 +684,12 @@
       "firstname": "Patricia",
       "lastname": "Lebsack",
       "email": "patricia.lebsack@gmail.com",
+      "phoneNumber": "1-770-736-8031 x56442",
+      "address": "Hoeger Mall",
+      "city": "South Elvis",
+      "state": "MN",
+      "zipCode": "53919-4257",
+      "country": "USA",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     },
@@ -636,6 +698,12 @@
       "firstname": "Chelsey",
       "lastname": "Dietrich",
       "email": "chelsey.dietrich@gmail.com",
+      "phoneNumber": "1-770-736-8031 x56442",
+      "address": "Hoeger Mall",
+      "city": "South Elvis",
+      "state": "MN",
+      "zipCode": "53919-4257",
+      "country": "USA",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     },
@@ -644,6 +712,12 @@
       "firstname": "Mrs. Dennis",
       "lastname": "Russel",
       "email": "dennis.russel@gmail.com",
+      "phoneNumber": "1-770-736-8031 x56442",
+      "address": "Hoeger Mall",
+      "city": "South Elvis",
+      "state": "MN",
+      "zipCode": "53919-4257",
+      "country": "USA",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     },
@@ -652,6 +726,12 @@
       "firstname": "Kurtis",
       "lastname": "Weissnat",
       "email": "kurstis.weissnat@gmail.com",
+      "phoneNumber": "1-770-736-8031 x56442",
+      "address": "Hoeger Mall",
+      "city": "South Elvis",
+      "state": "MN",
+      "zipCode": "53919-4257",
+      "country": "USA",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-16T14:33:15.092Z"
     }
