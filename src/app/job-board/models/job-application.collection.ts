@@ -11,7 +11,10 @@ export class JobsApplicationsCollection {
     return this.items;
   }
 
-  findItemById(id: number): JobApplicationModel | null {
-    return this.items.find((item) => item.getId() === id) || null;
+  findItemById(id: number): JobApplicationModel {
+    return (
+      this.items.find((item) => item.getId() === id) ||
+      ({} as JobApplicationModel)
+    );
   }
 }

@@ -29,7 +29,6 @@ export class JobidListComponent implements OnInit {
   ngOnInit() {
     this.tableDataSource$ = this._dataService.findAll().pipe(
       map((jobBoard) => {
-        console.log(jobBoard);
         return jobBoard.getItems();
       })
     );

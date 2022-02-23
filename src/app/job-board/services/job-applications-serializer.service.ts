@@ -33,17 +33,17 @@ export class JobApplicationsSerializerService {
     );
   }
 
-  serialize(model: JobApplicationModel): void {
-    // return {
-    //   id: model.id,
-    //   jobsId: model.jobId.getId(),
-    //   candidatesId: model.candidate.getId(),
-    //   status: model.status.getId(),
-    //   createdAt: this._dateService.dateToISOString(model.createdAt),
-    //   updatedAt: this._dateService.dateToISOString(model.updatedAt),
-    //   jobs: null,
-    //   candidates: null,
-    // };
+  serialize(model: JobApplicationModel): JobApplicationDTO {
+    return {
+      id: model.id,
+      jobsId: model.jobId.getId(),
+      candidatesId: model.candidate.getId(),
+      jaworkingstatusesId: model.getStatus().getId(),
+      createdAt: this._dateService.dateToISOString(model.createdAt),
+      updatedAt: this._dateService.dateToISOString(model.updatedAt),
+      jobs: null,
+      candidates: null,
+    };
   }
 
   // getJobId(dto: JobIdDTO): number {

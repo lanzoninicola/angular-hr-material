@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Resolve } from '@angular/router';
 import { map, Observable } from 'rxjs';
+import { JobApplicationWorkingStatusModel } from '../models/ja-working-status.model';
 
 import { JobApplicationWorkingStatusService } from '../services/ja-working-status.service';
 import { JobApplicationFormControlsData } from '../types/job-application.form.type';
@@ -22,13 +23,14 @@ export class JobApplicationFormResolver
       map((workingStatusCollection) => {
         const workingStatusItem = workingStatusCollection.getItems();
 
-        return workingStatusItem.map((item) => {
-          return {
-            value: item,
-            textContext: item.status.getValue(),
-            definition: item.getDescription(),
-          };
-        });
+        return workingStatusItem.map(
+          (item: JobApplicationWorkingStatusModel) => {
+            return {
+              value: item,
+              textContext: item.getStatusValue(),
+            };
+          }
+        );
       }),
       map((formControlContent) => {
         return {

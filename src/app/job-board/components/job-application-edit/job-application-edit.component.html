@@ -9,6 +9,12 @@
     [action]="'save'"
     (actionEvent)="onSaveButtonClicked()"
   ></ahr-edit-action-button>
+  <ahr-edit-action-button
+    left
+    [label]="showJobIdDetails ? 'Hide JobId' : 'Show JobId'"
+    [icon]="'work'"
+    (actionEvent)="onShowJobIdDetails()"
+  ></ahr-edit-action-button>
   <ahr-navigation-action-button
     right
     [action]="'goback'"
@@ -27,21 +33,30 @@
     >
   </div>
   <div class="wrapper-form">
-    <ahr-job-application-edit-form
+    <ahr-job-application-status-form
       [currentApplication]="currentApplication"
       [entityState]="entityState"
       [showSpinner]="(formState$ | async) === 'submitted'"
       (formStateChanges)="onStateChanges($event)"
       (valueChanges)="onValueChanges($event)"
       (statusChanges)="onStatusChanges($event)"
-    ></ahr-job-application-edit-form>
+    ></ahr-job-application-status-form>
+
+    <ahr-job-application-jobid-form
+      *ngIf="showJobIdDetails"
+      [currentApplication]="currentApplication"
+      [entityState]="entityState"
+      [showSpinner]="(formState$ | async) === 'submitted'"
+    ></ahr-job-application-jobid-form>
 
     <mat-tab-group animationDuration="0ms">
       <mat-tab label="Candidate">
         <div class="tab-content-wrapper">
-          <ahr-job-application-candidate
-            [currentApplication]="currentApplication"
-          ></ahr-job-application-candidate>
+          <ahr-candidate-contact-form
+            [currentCandidate]="currentApplication.candidate"
+            [entityState]="entityState"
+            [forceReadonly]="true"
+          ></ahr-candidate-contact-form>
         </div>
       </mat-tab>
       <mat-tab label="Activities">

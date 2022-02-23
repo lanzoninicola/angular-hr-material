@@ -64,4 +64,14 @@ export class JobApplicationWorkingStatusService {
       })
     );
   }
+
+  save(model: JobApplicationWorkingStatusModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService.save(dto).subscribe();
+  }
+
+  update(model: JobApplicationWorkingStatusModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService.update(dto).subscribe();
+  }
 }

@@ -1,25 +1,26 @@
 import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
+import { JobApplicationModel } from './job-application.model';
 
-export class JobApplicationWorkingStatusModel {
+export class JobApplicationActivityModel {
   id: number;
-  status: PicklistItemModel;
+  jobsapplicationsId: JobApplicationModel;
+  type: PicklistItemModel;
   description: string;
-  order: number;
   createdAt: Date;
   updatedAt: Date;
 
   constructor(
     id: number,
-    status: PicklistItemModel,
+    jobsapplicationsId: JobApplicationModel,
+    type: PicklistItemModel,
     description: string,
-    order: number,
     createdAt: Date,
     updatedAt: Date
   ) {
     this.id = id;
-    this.status = status;
+    this.jobsapplicationsId = jobsapplicationsId;
+    this.type = type;
     this.description = description;
-    this.order = order;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -28,12 +29,12 @@ export class JobApplicationWorkingStatusModel {
     return this.id;
   }
 
-  getStatus(): PicklistItemModel {
-    return this.status;
+  getJobsapplicationsId(): JobApplicationModel {
+    return this.jobsapplicationsId;
   }
 
-  getStatusValue(): string {
-    return this.status.getValue();
+  getType(): PicklistItemModel {
+    return this.type;
   }
 
   getDescription(): string {

@@ -10,7 +10,7 @@ import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { JobApplicationModel } from 'src/app/job-board/models/job-application.model';
 
 @Component({
-  selector: 'ahr-job-application-edit-form',
+  selector: 'ahr-job-application-jobid-form',
   template: `
     <ahr-dynamic-form
       [model]="form.model"
@@ -20,7 +20,7 @@ import { JobApplicationModel } from 'src/app/job-board/models/job-application.mo
   `,
   providers: [DynamicFormService],
 })
-export class JobApplicationEditFormComponent implements OnInit {
+export class JobApplicationJobidFormComponent implements OnInit {
   @Input()
   currentApplication: JobApplicationModel;
 
@@ -32,22 +32,6 @@ export class JobApplicationEditFormComponent implements OnInit {
 
   sub = new Subscription();
 
-  @Output('formStateChanges')
-  formStateEvent: EventEmitter<BehaviorSubject<FormState>> = new EventEmitter<
-    BehaviorSubject<FormState>
-  >();
-
-  @Output('valueChanges')
-  valueChangesEvent: EventEmitter<Observable<any>> = new EventEmitter<
-    Observable<any>
-  >();
-
-  @Output('statusChanges')
-  statusChangesEvent: EventEmitter<Observable<any>> = new EventEmitter<
-    Observable<any>
-  >();
-
-  JA_MAIN_INFO: FormControlConfig[] = [];
   JA_JOB_INFO: FormControlConfig[] = [];
 
   form: FormModelBuilder;
@@ -58,8 +42,6 @@ export class JobApplicationEditFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const { formState$, formData$, formStatus$ } = this._dynamicForm;
-
     this.form = new FormModelBuilder();
     this._setFormControlsConfig();
     this._setupForm();
@@ -72,12 +54,6 @@ export class JobApplicationEditFormComponent implements OnInit {
     if (this.entityState === 'update') {
       this._initFormValuesEntityUpdate();
     }
-
-    this.sub.add(
-      formState$.subscribe(() => this.formStateEvent.emit(formState$))
-    );
-    this.valueChangesEvent.emit(formData$);
-    this.statusChangesEvent.emit(formStatus$);
   }
 
   ngOnDestroy() {
@@ -86,21 +62,6 @@ export class JobApplicationEditFormComponent implements OnInit {
   }
 
   private _setFormControlsConfig() {
-    this.JA_MAIN_INFO = [
-      {
-        type: 'select',
-        key: 'status',
-        label: 'Application Status',
-        placeholder: '',
-        whatToSelect: 'Status',
-        options: this._route.data.pipe(
-          map((data) => data['formControlsData']['workingStatus'])
-        ),
-        syncValidators: [Validators.required],
-        showOptionDescription: true,
-      },
-    ];
-
     this.JA_JOB_INFO = [
       {
         type: 'input',
@@ -151,8 +112,6 @@ export class JobApplicationEditFormComponent implements OnInit {
   private _setupForm() {
     const { form } = this;
 
-    form.setup({ key: 'jaMainInfo', title: 'Main' }, this.JA_MAIN_INFO);
-
     form.setup(
       { key: 'jaJobInfo', title: 'JobId Information' },
       this.JA_JOB_INFO
@@ -165,11 +124,9 @@ export class JobApplicationEditFormComponent implements OnInit {
 
   private _initFormValuesEntityUpdate() {
     const { currentApplication } = this;
-    console.log(currentApplication);
 
     this._dynamicForm.setControlsValue({
       id: currentApplication.id,
-      status: currentApplication.status.status,
       title: currentApplication.jobId.getTitle(),
       department: currentApplication.jobId.getDepartment().getName(),
       jobRole: currentApplication.jobId.getJobRole().getName(),

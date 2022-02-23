@@ -27,7 +27,6 @@ export class JobApplicationListComponent implements OnInit {
   ngOnInit(): void {
     this.tableDataSource$ = this._dataService.findAll().pipe(
       map<JobsApplicationsCollection, JobApplicationModel[]>((collection) => {
-        console.log(collection);
         return collection.getItems();
       })
     );

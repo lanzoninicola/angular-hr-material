@@ -62,7 +62,7 @@ export class JobApplicationsHttpService {
       this._httpOptions.isBackendRequest()
     );
   }
-  /*
+
   save(dto: JobApplicationDTO): Observable<JobApplicationDTO> {
     return this.http.post<JobApplicationDTO>(
       this.baseURL,
@@ -77,7 +77,7 @@ export class JobApplicationsHttpService {
       dto,
       this._httpOptions.isFormSubmission()
     );
-  }*/
+  }
 
   /**
    *

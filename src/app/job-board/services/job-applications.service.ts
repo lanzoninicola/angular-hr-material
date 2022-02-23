@@ -12,6 +12,10 @@ import { JobApplicationModel } from '../models/job-application.model';
 import { JobIdModel } from '../models/jobid.model';
 import { JobsCollection } from '../models/jobs.collection';
 import { JobApplicationDTO } from '../types/job-application.dto.type';
+import {
+  JobApplicationEditFormData,
+  JobApplicationFormControlsData,
+} from '../types/job-application.form.type';
 import { JobApplicationWorkingStatusService } from './ja-working-status.service';
 import { JobApplicationsHttpService } from './job-applications-http.service';
 import { JobApplicationsSerializerService } from './job-applications-serializer.service';
@@ -168,6 +172,33 @@ export class JobApplicationsService {
 
         return new JobsApplicationsCollection(jobApplication);
       })
+    );
+  }
+
+  save(model: JobApplicationModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService.save(dto).subscribe();
+  }
+
+  update(model: JobApplicationModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService.update(dto).subscribe();
+  }
+
+  getEntityModelFromFormData(
+    formData: JobApplicationEditFormData
+  ): JobApplicationModel {
+    const createdAt =
+      this.store.entityState === 'update' ? formData.createdAt : new Date();
+    const updatedAt = new Date();
+
+    return new JobApplicationModel(
+      formData.id,
+      formData.jobId,
+      formData.candidate,
+      formData.status,
+      createdAt,
+      updatedAt
     );
   }
 }
