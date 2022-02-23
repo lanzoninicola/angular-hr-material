@@ -88,6 +88,12 @@ export class CandidateService {
       formData.firstname,
       formData.lastname,
       formData.email,
+      formData.phoneNumber,
+      formData.address,
+      formData.city,
+      formData.state,
+      formData.zipCode,
+      formData.country,
       createdAt,
       updatedAt
     );
