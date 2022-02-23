@@ -14,20 +14,17 @@
     [action]="'disable'"
     (actionEvent)="onDisableButtonClicked()"
   ></ahr-edit-action-button>
-  <ahr-edit-action-button
-    left
-    [action]="'remove'"
-    (actionEvent)="onRemoveButtonClicked()"
-  ></ahr-edit-action-button>
   <ahr-navigation-action-button
     right
     [action]="'goback'"
   ></ahr-navigation-action-button>
 </ahr-edit-form-toolbar>
 <div class="container-form">
-  <ahr-candidate-edit-form
+  <ahr-candidate-contact-form
+    [currentCandidate]="currentCandidate"
+    [entityState]="entityState"
     [showSpinner]="(formState$ | async) === 'submitted'"
     (valueChanges)="onValueChanges($event)"
     (statusChanges)="onStatusChanges($event)"
-  ></ahr-candidate-edit-form>
+  ></ahr-candidate-contact-form>
 </div>
