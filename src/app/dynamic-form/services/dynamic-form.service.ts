@@ -216,11 +216,13 @@ export class DynamicFormService {
   private _flattingFormData(obj: any) {
     Object.keys(obj).forEach((key) => {
       const isFormControl = this._formControls.has(key);
+      const isFormGroup = this._formGroups.has(key);
+
       if (isFormControl) {
         this._flatFormData = { ...this._flatFormData, ...{ [key]: obj[key] } };
       }
 
-      if (typeof obj[key] === 'object' && obj[key] !== null) {
+      if (typeof obj[key] === 'object' && obj[key] !== null && isFormGroup) {
         this._flattingFormData(obj[key]);
       }
     });
