@@ -23,9 +23,11 @@ $button-border-radius: 5px;
 
   span.button-label {
     font-size: 0.5rem;
-    font-weight: 600;
+    font-weight: 500;
     color: $grey-dark;
-    line-height: 1;
+    line-height: 1.2;
+    text-align: center;
+    text-transform: uppercase;
   }
 
   &:hover {

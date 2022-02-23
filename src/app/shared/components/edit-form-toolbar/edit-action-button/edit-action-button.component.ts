@@ -28,25 +28,40 @@ export class EditActionButtonComponent implements OnInit {
   action: string;
 
   @Input()
+  label: string;
+
+  @Input('icon')
+  matIcon: string;
+
+  @Input()
   disabled: boolean;
 
   @Output()
   actionEvent: EventEmitter<any> = new EventEmitter();
 
   basicActions: { [key: string]: ActionButton } = { ...EDIT_ACTIONS };
-  label: string;
-  matIcon: string;
 
   constructor() {}
 
   ngOnInit(): void {
-    if (!this.basicActions.hasOwnProperty(this.action)) {
-      throw `EditActionButtonComponent - No button found with the action ${this.action}`;
+    if (this.action) {
+      this.label = this.basicActions[this.action]['label'];
+      this.matIcon = this.basicActions[this.action]['matIcon'];
     }
 
-    const buttonData = this.basicActions[this.action];
-    this.label = buttonData.label;
-    this.matIcon = buttonData.matIcon;
+    if (!this.action) {
+      if (!this.label) {
+        throw new Error(
+          'EditActionButtonComponent - "label" is required or "action" must be provided'
+        );
+      }
+
+      if (!this.matIcon) {
+        throw new Error(
+          'EditActionButtonComponent - "icon" is required or "action" must be provided'
+        );
+      }
+    }
   }
 
   onClick() {
