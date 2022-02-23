@@ -20,8 +20,14 @@ export class StringifyPipe implements PipeTransform {
     if (typeof value === 'object') {
       // fieldname => The entity-model property name that contains the information to render inside the cell
 
+      if (Object.keys(value).length === 0) {
+        throw `StringifyPipe - The object passed to stringify pipe is empty. Object '${JSON.stringify(
+          value
+        )}'`;
+      }
+
       if (fieldname === undefined) {
-        throw `StringifyPipe - The field name '${fieldname}' to stringify is missing. What is the name of the column configuration that indicates the name of model prop to display? Now is ${value}`;
+        throw `StringifyPipe - The field name '${fieldname}' is missing. What is the name of the column configuration that indicates the name of model prop to display? Now is ${value}`;
       }
 
       if (typeof fieldname === 'string') {
