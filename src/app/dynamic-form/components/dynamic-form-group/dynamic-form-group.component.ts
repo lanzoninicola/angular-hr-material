@@ -13,7 +13,7 @@ import { FormControlConfig } from '../../types/form-control.types';
         <ng-content *dynamicFields="childrenControls; parentGroupName: name">
         </ng-content>
       </div>
-      <mat-divider></mat-divider>
+      <mat-divider *ngIf="divider"></mat-divider>
     </div>
   `,
   styleUrls: ['./dynamic-form-group.component.scss'],
@@ -27,6 +27,9 @@ export class DynamicFormGroupComponent implements OnInit {
     key: { key: '', title: '' },
     value: [],
   };
+
+  @Input()
+  divider: boolean = true;
 
   name: string = '';
   title: string | undefined = '';
