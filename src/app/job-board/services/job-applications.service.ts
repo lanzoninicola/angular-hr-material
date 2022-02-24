@@ -182,7 +182,7 @@ export class JobApplicationsService {
 
   update(model: JobApplicationModel) {
     const dto = this._serializationService.serialize(model);
-    return this._httpService.update(dto).subscribe();
+    return this._httpService.update(dto);
   }
 
   getEntityModelFromFormData(

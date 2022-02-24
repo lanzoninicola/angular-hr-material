@@ -11,8 +11,9 @@ $button-border-radius: 5px;
   cursor: pointer;
   padding-block: 0.25rem;
   border-radius: $button-border-radius;
-  min-width: 45px;
-  max-width: 45px;
+  width: 45px;
+  min-height: 50px;
+  border: 1px solid $grey-light;
 
   button {
     color: $grey-dark;

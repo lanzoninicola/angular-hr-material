@@ -1,11 +1,6 @@
 <ahr-edit-form-toolbar [disabled]="(formState$ | async) === 'submitted'">
   <ahr-edit-action-button
     left
-    [disabled]="
-      (formStatus$ | async) === 'invalid' ||
-      (formState$ | async) === 'submitted' ||
-      (formState$ | async) === 'idle'
-    "
     [action]="'save'"
     (actionEvent)="onSaveButtonClicked()"
   ></ahr-edit-action-button>
@@ -62,6 +57,13 @@
       <mat-tab label="Activities">
         <div class="tab-content-wrapper">
           <!-- component with list of activities -->
+          <ahr-job-application-activity-new
+            [currentApplication]="currentApplication"
+            [entityState]="entityState"
+            (formStateChanges)="onStateChanges($event)"
+            (valueChanges)="onActivitiesValueChanges($event)"
+            (statusChanges)="onActivitiesStatusChanges($event)"
+          ></ahr-job-application-activity-new>
         </div>
       </mat-tab>
       <mat-tab label="Interviews">

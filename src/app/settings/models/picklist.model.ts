@@ -7,6 +7,10 @@ export class PicklistModel {
     this.items = picklistItems;
   }
 
+  getItems(): PicklistItemModel[] {
+    return this.items;
+  }
+
   findItemById(id: number): PicklistItemModel {
     return (
       this.items.find((item) => item.getId() === id) ||

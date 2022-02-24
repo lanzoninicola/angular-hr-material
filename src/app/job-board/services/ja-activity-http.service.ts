@@ -3,13 +3,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
-import { JobApplicationActivityDTO } from '../types/ja-activity.dto.types';
+import { JobApplicationActivityDTO } from '../types/ja-activity.dto.type';
 
 @Injectable({
   providedIn: 'root',
 })
 export class JobApplicationActivityHttpService {
-  baseURL = `${environment.API}/jaworkingstatuses`;
+  baseURL = `${environment.API}/jobsapplicationsactivities`;
   parentRelations: string[] = [];
 
   constructor(
@@ -40,6 +40,15 @@ export class JobApplicationActivityHttpService {
 
     return this.http.get<JobApplicationActivityDTO>(
       options.withRelations ? this._getURLwithRelations(url) : url,
+      this._httpOptions.isBackendRequest()
+    );
+  }
+
+  findByParam(param: string, value: string) {
+    const url = `${this.baseURL}?${param}=${value}`;
+
+    return this.http.get<JobApplicationActivityDTO[]>(
+      url,
       this._httpOptions.isBackendRequest()
     );
   }

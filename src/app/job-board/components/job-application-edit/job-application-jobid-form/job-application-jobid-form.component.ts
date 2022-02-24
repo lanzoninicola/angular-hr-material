@@ -1,12 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject, map, Observable, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormModelBuilder } from 'src/app/dynamic-form/services/form-model-builder';
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
-import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { JobApplicationModel } from 'src/app/job-board/models/job-application.model';
 
 @Component({

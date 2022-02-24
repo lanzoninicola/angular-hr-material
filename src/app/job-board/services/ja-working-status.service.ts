@@ -6,7 +6,7 @@ import { PicklistService } from 'src/app/settings/services/picklist/picklist.ser
 
 import { JobApplicationWorkingStatusCollection } from '../models/ja-working-status.collection';
 import { JobApplicationWorkingStatusModel } from '../models/ja-working-status.model';
-import { JobApplicationWorkingStatusDTO } from '../types/ja-working-status.dto.types';
+import { JobApplicationWorkingStatusDTO } from '../types/ja-working-status.dto.type';
 import { JobApplicationWorkingStatusHttpService } from './ja-working-status-http.service';
 import { JobApplicationWorkingStatusSerializerService } from './ja-working-status-serializer.service';
 

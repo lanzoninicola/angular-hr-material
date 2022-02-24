@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
 
-import { JobApplicationWorkingStatusDTO } from '../types/ja-working-status.dto.types';
+import { JobApplicationWorkingStatusDTO } from '../types/ja-working-status.dto.type';
 
 @Injectable({
   providedIn: 'root',

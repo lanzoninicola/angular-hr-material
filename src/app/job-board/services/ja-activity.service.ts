@@ -8,7 +8,8 @@ import { JobApplicationActivityCollection } from '../models/ja-activity.collecti
 import { JobApplicationActivityModel } from '../models/ja-activity.model';
 import { JobsApplicationsCollection } from '../models/job-application.collection';
 import { JobApplicationModel } from '../models/job-application.model';
-import { JobApplicationActivityDTO } from '../types/ja-activity.dto.types';
+import { JobApplicationActivityDTO } from '../types/ja-activity.dto.type';
+import { JobApplicationActivityFormData } from '../types/ja-activity.form.type';
 import { JobApplicationActivityHttpService } from './ja-activity-http.service';
 import { JobApplicationActivitySerializerService } from './ja-activity-serializer.service';
 import { JobApplicationsService } from './job-applications.service';
@@ -32,7 +33,7 @@ export class JobApplicationActivityService {
       this._jobApplicationService.findAll();
 
     const picklist$: Observable<PicklistModel> =
-      this._picklistService.findByType('jobapplication-working-status');
+      this._picklistService.findByType('jobapplication-activity-type');
 
     return forkJoin([records$, jobApplications$, picklist$]).pipe(
       map(([records, jobApplications, picklist]) => {
@@ -83,6 +84,34 @@ export class JobApplicationActivityService {
     );
   }
 
+  findByJobApplication(
+    jobApplication: JobApplicationModel
+  ): Observable<JobApplicationActivityCollection> {
+    const records$: Observable<JobApplicationActivityDTO[]> =
+      this._httpService.findByParam(
+        'jobsapplicationsId',
+        String(jobApplication.getId())
+      );
+
+    const picklist$: Observable<PicklistModel> =
+      this._picklistService.findByType('jobapplication-activity-type');
+
+    return forkJoin([records$, picklist$]).pipe(
+      map(([records, picklist]) => {
+        const activities = records.map((record) => {
+          const picklistItem = picklist.findItemById(record.type);
+
+          return this._serializationService.deserialize(record, {
+            jobApplication,
+            picklistItem,
+          });
+        });
+
+        return new JobApplicationActivityCollection(activities);
+      })
+    );
+  }
+
   save(model: JobApplicationActivityModel) {
     const dto = this._serializationService.serialize(model);
     return this._httpService.save(dto).subscribe();
@@ -91,5 +120,20 @@ export class JobApplicationActivityService {
   update(model: JobApplicationActivityModel) {
     const dto = this._serializationService.serialize(model);
     return this._httpService.update(dto).subscribe();
+  }
+
+  getEntityModelFromFormData(
+    formData: JobApplicationActivityFormData
+  ): JobApplicationActivityModel {
+    console.log(formData);
+
+    return new JobApplicationActivityModel(
+      formData.id,
+      formData.jobsapplicationsId,
+      formData.type,
+      formData.description,
+      formData.createdAt,
+      formData.updatedAt
+    );
   }
 }

@@ -3,7 +3,7 @@ import { DateService } from 'src/app/core/services/date.service';
 import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
 import { JobApplicationActivityModel } from '../models/ja-activity.model';
 import { JobApplicationModel } from '../models/job-application.model';
-import { JobApplicationActivityDTO } from '../types/ja-activity.dto.types';
+import { JobApplicationActivityDTO } from '../types/ja-activity.dto.type';
 
 @Injectable({
   providedIn: 'root',

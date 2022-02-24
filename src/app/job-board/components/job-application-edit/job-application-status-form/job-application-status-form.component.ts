@@ -33,19 +33,13 @@ export class JobApplicationStatusFormComponent implements OnInit {
   sub = new Subscription();
 
   @Output('formStateChanges')
-  formStateEvent: EventEmitter<BehaviorSubject<FormState>> = new EventEmitter<
-    BehaviorSubject<FormState>
-  >();
+  formStateEvent: EventEmitter<FormState> = new EventEmitter<FormState>();
 
   @Output('valueChanges')
-  valueChangesEvent: EventEmitter<Observable<any>> = new EventEmitter<
-    Observable<any>
-  >();
+  valueChangesEvent: EventEmitter<any> = new EventEmitter<any>();
 
   @Output('statusChanges')
-  statusChangesEvent: EventEmitter<Observable<any>> = new EventEmitter<
-    Observable<any>
-  >();
+  statusChangesEvent: EventEmitter<string> = new EventEmitter<string>();
 
   JA_MAIN_INFO: FormControlConfig[] = [];
 
@@ -73,10 +67,18 @@ export class JobApplicationStatusFormComponent implements OnInit {
     }
 
     this.sub.add(
-      formState$.subscribe(() => this.formStateEvent.emit(formState$))
+      formState$.subscribe((formState) => this.formStateEvent.emit(formState))
     );
-    this.valueChangesEvent.emit(formData$);
-    this.statusChangesEvent.emit(formStatus$);
+
+    this.sub.add(
+      formData$.subscribe((formData) => this.valueChangesEvent.emit(formData))
+    );
+
+    this.sub.add(
+      formStatus$.subscribe((formStatus) =>
+        this.statusChangesEvent.emit(formStatus)
+      )
+    );
   }
 
   ngOnDestroy() {

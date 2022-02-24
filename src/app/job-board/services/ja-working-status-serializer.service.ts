@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { DateService } from 'src/app/core/services/date.service';
 import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
 import { JobApplicationWorkingStatusModel } from '../models/ja-working-status.model';
-import { JobApplicationWorkingStatusDTO } from '../types/ja-working-status.dto.types';
+import { JobApplicationWorkingStatusDTO } from '../types/ja-working-status.dto.type';
 
 @Injectable({
   providedIn: 'root',
