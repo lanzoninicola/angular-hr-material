@@ -1,0 +1,46 @@
+@import "variables.scss";
+
+.container-activities {
+  margin-top: 1.5rem;
+}
+
+.activity-item {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid $grey;
+  border-radius: 5px;
+  justify-content: space-between;
+
+  .activity-data {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1.5rem;
+
+    .activity-dates {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      min-width: 150px;
+    }
+
+    .activity-details {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      width: 100%;
+
+      span:nth-child(1) {
+        min-width: 200px;
+      }
+    }
+  }
+}
+
+.activity-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
