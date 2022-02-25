@@ -615,25 +615,64 @@
   ],
   "jobsapplicationsactivities": [
     {
-      "id": 1,
-      "jobsapplicationsId": 1,
-      "picklistsId": 12,
-      "createdAt": "2020-01-01T00:00:00.000Z",
-      "updatedAt": "2022-01-16T14:33:15.092Z"
+      "id": 1
     },
     {
-      "id": 2,
-      "jobsapplicationsId": 1,
-      "picklistsId": 13,
-      "createdAt": "2020-02-01T00:00:00.000Z",
-      "updatedAt": "2022-02-16T14:33:15.092Z"
+      "id": 2
     },
     {
       "id": 3,
       "jobsapplicationsId": 2,
-      "picklistsId": 12,
+      "date": "2020-01-01T00:00:00.000Z",
+      "type": 12,
+      "description": "lorem ipsum",
       "createdAt": "2020-03-04T00:00:00.000Z",
       "updatedAt": "2022-03-16T14:33:15.092Z"
+    },
+    {
+      "id": 90
+    },
+    {
+      "id": 53
+    },
+    {
+      "id": 88
+    },
+    {
+      "id": 75,
+      "jobsapplicationsId": 1,
+      "date": "2022-02-25T19:01:10.456Z",
+      "type": 13,
+      "description": "lanzoni nicola",
+      "createdAt": "2022-02-25T19:01:10.456Z",
+      "updatedAt": "2022-02-25T19:01:10.456Z"
+    },
+    {
+      "id": 56,
+      "jobsapplicationsId": 1,
+      "date": "2022-02-25T19:23:09.991Z",
+      "type": 12,
+      "description": "sdsssssssssssssssssssssssssssssssssssssssssss",
+      "createdAt": "2022-02-25T19:23:09.991Z",
+      "updatedAt": "2022-02-25T19:23:09.991Z"
+    },
+    {
+      "id": 94,
+      "jobsapplicationsId": 1,
+      "date": "2022-02-25T20:49:43.899Z",
+      "type": 12,
+      "description": "lanzoni",
+      "createdAt": "2022-02-25T20:49:43.899Z",
+      "updatedAt": "2022-02-25T20:49:43.899Z"
+    },
+    {
+      "id": 44,
+      "jobsapplicationsId": 1,
+      "date": "2022-02-25T20:59:39.530Z",
+      "type": 13,
+      "description": "Scheduled Phone call 17/03/2010",
+      "createdAt": "2022-02-25T20:59:39.530Z",
+      "updatedAt": "2022-02-25T20:59:39.530Z"
     }
   ],
   "candidates": [
