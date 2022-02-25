@@ -71,6 +71,14 @@ export class JobApplicationActivityHttpService {
     );
   }
 
+  delete(id: number): Observable<JobApplicationActivityDTO> {
+    return this.http.put<JobApplicationActivityDTO>(
+      `${this.baseURL}/${id}`,
+      null,
+      this._httpOptions.isFormSubmission()
+    );
+  }
+
   /**
    *
    * @description

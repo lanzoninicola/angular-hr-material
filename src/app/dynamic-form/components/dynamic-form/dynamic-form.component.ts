@@ -6,13 +6,13 @@ import { FormSettings } from '../../types/template.types';
 @Component({
   selector: 'ahr-dynamic-form',
   template: `
-    <form [formGroup]="model">
+    <div [formGroup]="model">
       <ahr-loading-spinner *ngIf="showSpinner"></ahr-loading-spinner>
       <div *ngFor="let groupConfig of formSettings | keyvalue">
         <ahr-dynamic-form-group [viewConfig]="groupConfig" [divider]="divider">
         </ahr-dynamic-form-group>
       </div>
-    </form>
+    </div>
   `,
   styleUrls: ['./dynamic-form.component.scss'],
 })

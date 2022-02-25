@@ -145,7 +145,11 @@ export class DynamicFormService {
    */
   findFormControlByName(name: string): FormControl {
     if (!this._formControls.has(name)) {
-      throw new Error(`FormControl with name ${name} not found`);
+      throw new Error(
+        `FormControl with name ${name} not found. Current form controls: ${Array.from(
+          this._formControls.keys()
+        )}`
+      );
     }
 
     return this._formControls.get(name) as FormControl;

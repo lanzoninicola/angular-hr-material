@@ -7,16 +7,18 @@ import {
   ViewContainerRef,
 } from '@angular/core';
 import { FormCheckboxComponent } from '../components/form-checkbox/form-checkbox.component';
+import { FormDatePickerComponent } from '../components/form-date-picker/form-date-picker.component';
 
 import { FormInputComponent } from '../components/form-input/form-input.component';
 import { FormSelectComponent } from '../components/form-select/form-select.component';
 import { FormTextAreaComponent } from '../components/form-textarea/form-textarea.component';
 
-const components: { [type: string]: Type<any> } = {
+const COMPONENTS: { [type: string]: Type<any> } = {
   input: FormInputComponent,
   textarea: FormTextAreaComponent,
   checkbox: FormCheckboxComponent,
   select: FormSelectComponent,
+  date: FormDatePickerComponent,
 };
 
 /**
@@ -39,7 +41,7 @@ export class DynamicFieldsDirective implements OnInit {
 
   ngOnInit() {
     this.controlsConfig.forEach((config) => {
-      const componentToRender = components[config.type];
+      const componentToRender = COMPONENTS[config.type];
 
       if (!componentToRender) {
         throw 'DynamicFieldsDirective: Component template not found.';

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, switchMap } from 'rxjs';
+import { EntityState } from 'src/app/core/types/entityState.type';
 import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
 import { PicklistModel } from 'src/app/settings/models/picklist.model';
 import { PicklistService } from 'src/app/settings/services/picklist/picklist.service';
@@ -18,6 +19,11 @@ import { JobApplicationsService } from './job-applications.service';
   providedIn: 'root',
 })
 export class JobApplicationActivityService {
+  stateActivities$ = new BehaviorSubject<JobApplicationActivityModel[]>([]);
+  stateEntityState$ = new BehaviorSubject<EntityState>('idle');
+  stateShowEditForm$ = new BehaviorSubject<boolean>(false);
+  stateActivityEditable$ = new BehaviorSubject<number | null>(null);
+
   constructor(
     private _httpService: JobApplicationActivityHttpService,
     private _jobApplicationService: JobApplicationsService,
@@ -114,12 +120,16 @@ export class JobApplicationActivityService {
 
   save(model: JobApplicationActivityModel) {
     const dto = this._serializationService.serialize(model);
-    return this._httpService.save(dto).subscribe();
+    return this._httpService.save(dto);
   }
 
   update(model: JobApplicationActivityModel) {
     const dto = this._serializationService.serialize(model);
-    return this._httpService.update(dto).subscribe();
+    return this._httpService.update(dto);
+  }
+
+  delete(id: number) {
+    return this._httpService.delete(id);
   }
 
   getEntityModelFromFormData(
@@ -130,6 +140,7 @@ export class JobApplicationActivityService {
     return new JobApplicationActivityModel(
       formData.id,
       formData.jobsapplicationsId,
+      formData.date,
       formData.type,
       formData.description,
       formData.createdAt,

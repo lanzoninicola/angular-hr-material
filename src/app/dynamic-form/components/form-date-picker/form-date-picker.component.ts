@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
-
 import { DynamicFormService } from '../../services/dynamic-form.service';
-import { InputTextConfig } from '../../types/form-control.types';
+import { InputDateConfig } from '../../types/form-control.types';
 
 @Component({
-  selector: 'ahr-form-input',
+  selector: 'app-form-date-picker',
   template: `
     <div
       [formGroup]="parentFormGroupModel"
@@ -16,23 +15,25 @@ import { InputTextConfig } from '../../types/form-control.types';
         <input
           matInput
           placeholder="{{ controlConfig['label'] }}"
+          [matDatepicker]="picker"
           [readonly]="controlConfig['readonly']"
           [formControlName]="controlConfig['key']"
-          [type]="controlConfig['format'] || 'text'"
         />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
         <!-- <mat-error *ngIf="!control.valid && control.touched"
           >{{ controlConfig['label'] }} is not valid!</mat-error
         > -->
       </mat-form-field>
     </div>
   `,
-  styleUrls: ['./form-input.component.scss'],
+  styleUrls: ['./form-date-picker.component.scss'],
 })
-export class FormInputComponent implements OnInit {
+export class FormDatePickerComponent implements OnInit {
   /**
    * Inputs from directive: DynamicFields
    */
-  controlConfig: InputTextConfig;
+  controlConfig: InputDateConfig;
   parentGroupName: string;
 
   control: AbstractControl;

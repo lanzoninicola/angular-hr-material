@@ -6,11 +6,13 @@ export type FormControlConfigKey = string;
 export type FormControlConfig =
   | InputTextConfig
   | InputCheckboxConfig
-  | SelectConfig;
+  | SelectConfig
+  | InputDateConfig;
 
 export interface InputTextConfig {
   key: string;
   type: FormControlTypeInput;
+  format?: FormControlInputFormat;
   label: string;
   placeholder: string;
   syncValidators?: any[];
@@ -22,6 +24,18 @@ export interface InputTextConfig {
 }
 
 type FormControlTypeInput = 'input' | 'textarea';
+type FormControlInputFormat =
+  | 'text'
+  | 'color'
+  | 'email'
+  | 'month'
+  | 'number'
+  | 'password'
+  | 'search'
+  | 'tel'
+  | 'time'
+  | 'url'
+  | 'week';
 
 export interface InputCheckboxConfig {
   key: string;
@@ -35,6 +49,21 @@ export interface InputCheckboxConfig {
 }
 
 type FormControlTypeCheckbox = 'checkbox';
+
+export interface InputDateConfig {
+  key: string;
+  type: FormControlTypeDate;
+  label: string;
+  placeholder: string;
+  syncValidators?: any[];
+  asyncValidators?: any[];
+  disabled?: boolean;
+  readonly?: boolean;
+  style?: { [klass: string]: any };
+  hidden?: boolean;
+}
+
+type FormControlTypeDate = 'date';
 
 export interface SelectConfig {
   key: string;

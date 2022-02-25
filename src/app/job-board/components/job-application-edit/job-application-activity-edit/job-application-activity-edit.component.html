@@ -1,0 +1,32 @@
+<div class="activity-edit-container">
+  <div class="activity-edit-content">
+    <div class="activity-edit-form">
+      <ahr-job-application-activity-form
+        [currentApplication]="currentApplication"
+        [entityState]="entityState"
+        (formStateChanges)="onStateChanges($event)"
+        (valueChanges)="onValueChanges($event)"
+        (statusChanges)="onStatusChanges($event)"
+      ></ahr-job-application-activity-form>
+    </div>
+    <div class="activity-edit-footer">
+      <button
+        mat-flat-button
+        color="primary"
+        (click)="saveActivity()"
+        [disabled]="
+          formStatus === 'invalid' ||
+          formState === 'submitted' ||
+          formState === 'idle'
+        "
+      >
+        <mat-icon>save</mat-icon>
+        Save
+      </button>
+      <button mat-flat-button color="secondary" (click)="close()">
+        <mat-icon>close</mat-icon>
+        Close
+      </button>
+    </div>
+  </div>
+</div>

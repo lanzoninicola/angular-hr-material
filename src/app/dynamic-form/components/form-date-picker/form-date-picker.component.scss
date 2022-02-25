@@ -1,0 +1,14 @@
+@import "variables.scss";
+
+mat-form-field {
+  flex: 1;
+  margin-right: 1rem;
+
+  input:read-only {
+    color: $grey-dark;
+  }
+}
+
+.hidden {
+  display: none;
+}
