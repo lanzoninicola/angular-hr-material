@@ -4,6 +4,7 @@ import { JobApplicationModel } from './job-application.model';
 export class JobApplicationActivityModel {
   id: number;
   jobsapplicationsId: JobApplicationModel;
+  date: Date;
   type: PicklistItemModel;
   description: string;
   createdAt: Date;
@@ -12,6 +13,7 @@ export class JobApplicationActivityModel {
   constructor(
     id: number,
     jobsapplicationsId: JobApplicationModel,
+    date: Date,
     type: PicklistItemModel,
     description: string,
     createdAt: Date,
@@ -19,6 +21,7 @@ export class JobApplicationActivityModel {
   ) {
     this.id = id;
     this.jobsapplicationsId = jobsapplicationsId;
+    this.date = date;
     this.type = type;
     this.description = description;
     this.createdAt = createdAt;
@@ -31,6 +34,10 @@ export class JobApplicationActivityModel {
 
   getJobsapplicationsId(): JobApplicationModel {
     return this.jobsapplicationsId;
+  }
+
+  getDate(): Date {
+    return this.date;
   }
 
   getType(): PicklistItemModel {

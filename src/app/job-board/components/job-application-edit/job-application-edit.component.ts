@@ -38,6 +38,8 @@ export class JobApplicationEditComponent implements OnInit {
     new BehaviorSubject<null | JobApplicationEditFormData>(null);
 
   activitiesFormState$ = new BehaviorSubject<FormState>('idle');
+
+  // TODO: remove the two lines below
   activitiesFormStatus$ = new BehaviorSubject('valid');
   activitiesValueChanges$: BehaviorSubject<
     null | JobApplicationActivityFormData[]

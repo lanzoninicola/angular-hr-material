@@ -1,1 +1,60 @@
-<p>job-application-activity-list works!</p>
+<div>
+  <button mat-flat-button color="primary" (click)="addActivity()">
+    Add Activity
+  </button>
+  <div *ngIf="showEditForm">
+    <ahr-job-application-activity-edit
+      [currentApplication]="currentApplication"
+    ></ahr-job-application-activity-edit>
+  </div>
+  <div class="container-activities">
+    <div
+      class="activity-items"
+      *ngFor="let activity of activities; let i = index"
+    >
+      <div class="activity-item">
+        <div class="activity-data">
+          <div class="activity-dates">
+            <span
+              ><strong>Date </strong><br />{{
+                activity.date | date: "dd/MM/yyyy"
+              }}</span
+            >
+            <span
+              ><strong>Last Update </strong><br />{{
+                activity.createdAt | date: "dd/MM/yyyy HH:mm"
+              }}</span
+            >
+          </div>
+          <div class="activity-details">
+            <span><strong>Type</strong><br />{{ activity.type.value }}</span>
+            <span
+              ><strong>Description</strong><br />{{
+                activity.description
+              }}</span
+            >
+          </div>
+        </div>
+
+        <div class="activity-actions">
+          <button
+            mat-mini-fab
+            color="primary"
+            aria-label="Example icon button with a filter list icon"
+            (click)="editActivity(i)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="primary"
+            aria-label="Example icon button with a filter list icon"
+            (click)="deleteActivity(i)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

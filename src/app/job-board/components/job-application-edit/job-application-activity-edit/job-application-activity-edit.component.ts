@@ -1,56 +1,135 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { state } from '@angular/animations';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subscription, tap } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+import { JobApplicationActivityModel } from 'src/app/job-board/models/ja-activity.model';
 import { JobApplicationModel } from 'src/app/job-board/models/job-application.model';
+import { JobApplicationActivityService } from 'src/app/job-board/services/ja-activity.service';
+import { JobApplicationActivityFormData } from 'src/app/job-board/types/ja-activity.form.type';
 
 @Component({
   selector: 'ahr-job-application-activity-edit',
-  template: `
-    <div class="activity-edit-container">
-      <div class="activity-edit-content">
-        <div class="activity-edit-form">
-          <ahr-job-application-activity-form
-            (formStateChanges)="onStateChanges($event)"
-            (valueChanges)="onValueChanges($event)"
-            (statusChanges)="onStatusChanges($event)"
-          ></ahr-job-application-activity-form>
-        </div>
-        <div class="activity-edit-footer">
-          <button mat-flat-button color="secondary" (click)="deleteActivity()">
-            <mat-icon>delete</mat-icon>
-            Remove
-          </button>
-          <button mat-flat-button color="primary" (click)="close()">
-            <mat-icon>close</mat-icon>
-            Close
-          </button>
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: './job-application-activity-edit.component.html',
   styleUrls: ['./job-application-activity-edit.component.scss'],
 })
-export class JobApplicationActivityEditComponent implements OnInit {
+export class JobApplicationActivityEditComponent implements OnInit, OnDestroy {
   @Input()
   currentApplication: JobApplicationModel;
 
-  @Input()
   entityState: EntityState;
 
-  constructor() {}
+  activities: JobApplicationActivityModel[] = [];
 
-  ngOnInit(): void {}
+  formState: FormState = 'idle';
+  formData: JobApplicationActivityFormData;
+  formStatus: string = 'invalid';
 
-  addActivity() {}
+  currentActivityIdx: number | null;
 
-  deleteActivity() {}
+  sub = new Subscription();
 
-  close() {}
+  constructor(private _dataService: JobApplicationActivityService) {}
 
-  onStateChanges(event: FormState) {}
+  ngOnInit(): void {
+    this._subscribeState();
+  }
 
-  onValueChanges(event: any) {}
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
 
-  onStatusChanges(event: any) {}
+  saveActivity() {
+    const { entityState } = this;
+    const { stateActivities$, stateShowEditForm$, stateEntityState$ } =
+      this._dataService;
+
+    const activityModel = this._dataService.getEntityModelFromFormData(
+      this.formData
+    );
+
+    if (entityState === 'create') {
+      this._dataService
+        .save(activityModel)
+        .pipe(
+          tap(() => {
+            const nextActivities = [...this.activities];
+            nextActivities.splice(0, 0, activityModel);
+
+            stateActivities$.next(nextActivities);
+            stateShowEditForm$.next(false);
+            stateEntityState$.next('idle');
+          })
+        )
+        .subscribe();
+    }
+
+    if (entityState === 'update') {
+      this._dataService
+        .update(activityModel)
+        .pipe(
+          tap(() => {
+            const nextActivities = this.activities.map((activity) => {
+              if (activity.id === activityModel.id) {
+                return activityModel;
+              }
+
+              return activity;
+            });
+
+            stateActivities$.next(nextActivities);
+            stateShowEditForm$.next(false);
+            stateEntityState$.next('idle');
+          })
+        )
+        .subscribe();
+    }
+  }
+
+  close() {
+    const { stateShowEditForm$, stateEntityState$ } = this._dataService;
+
+    stateShowEditForm$.next(false);
+    stateEntityState$.next('idle');
+  }
+
+  onStateChanges(formState: FormState) {
+    this.formState = formState;
+  }
+
+  onValueChanges(formData: JobApplicationActivityFormData) {
+    this.formData = formData;
+  }
+
+  onStatusChanges(formStatus: string) {
+    console.log(formStatus);
+    this.formStatus = formStatus;
+  }
+
+  private _subscribeState() {
+    const {
+      stateActivities$,
+      stateEntityState$,
+      stateShowEditForm$,
+      stateActivityEditable$,
+    } = this._dataService;
+
+    this.sub.add(
+      stateActivities$.subscribe((activities) => {
+        this.activities = [...activities];
+      })
+    );
+    this.sub.add(
+      stateEntityState$.subscribe((entityState) => {
+        this.entityState = entityState;
+      })
+    );
+    this.sub.add(stateShowEditForm$.subscribe());
+
+    this.sub.add(
+      stateActivityEditable$.subscribe(
+        (activityIdx) => (this.currentActivityIdx = activityIdx)
+      )
+    );
+  }
 }

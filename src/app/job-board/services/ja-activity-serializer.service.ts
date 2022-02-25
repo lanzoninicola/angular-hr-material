@@ -21,6 +21,7 @@ export class JobApplicationActivitySerializerService {
     return new JobApplicationActivityModel(
       dto.id,
       relations.jobApplication,
+      this._dateService.ISOToFullDate(dto.date),
       relations.picklistItem,
       dto.description,
       this._dateService.ISOToFullDate(dto.createdAt),
@@ -32,6 +33,7 @@ export class JobApplicationActivitySerializerService {
     return {
       id: model.id,
       jobsapplicationsId: model.jobsapplicationsId.id,
+      date: this._dateService.dateToISOString(model.date),
       type: model.type.getId(),
       description: model.description,
       createdAt: this._dateService.dateToISOString(model.createdAt),

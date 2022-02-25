@@ -1,112 +1,115 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { map, tap } from 'rxjs';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
+import { map, Subscription, tap } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
+import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { JobApplicationActivityModel } from 'src/app/job-board/models/ja-activity.model';
 import { JobApplicationModel } from 'src/app/job-board/models/job-application.model';
 import { JobApplicationActivityService } from 'src/app/job-board/services/ja-activity.service';
+import { JobBoardService } from 'src/app/job-board/services/job-board.service';
 
 @Component({
   selector: 'ahr-job-application-activity-list',
-  template: `
-    <div>
-      <button mat-flat-button color="primary" (click)="addActivity()">
-        Add Activity
-      </button>
-      <div *ngIf="showEditForm">
-        <ahr-job-application-activity-edit></ahr-job-application-activity-edit>
-      </div>
-      <div class="container-activities">
-        <div class="activity-items" *ngFor="let activity of activities">
-          <div class="activity-item">
-            <div class="activity-data">
-              <div class="activity-dates">
-                <span
-                  ><strong>Created </strong><br />{{
-                    activity.createdAt | date: 'dd/MM/yyyy'
-                  }}</span
-                >
-                <span
-                  ><strong>Last Update </strong><br />{{
-                    activity.createdAt | date: 'dd/MM/yyyy HH:mm'
-                  }}</span
-                >
-              </div>
-              <div class="activity-details">
-                <span
-                  ><strong>Type</strong><br />{{ activity.type.value }}</span
-                >
-                <span
-                  ><strong>Description</strong><br />{{
-                    activity.description
-                  }}</span
-                >
-              </div>
-            </div>
-
-            <div class="activity-actions">
-              <button
-                mat-mini-fab
-                color="primary"
-                aria-label="Example icon button with a filter list icon"
-                (click)="editActivity()"
-              >
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button
-                mat-mini-fab
-                color="primary"
-                aria-label="Example icon button with a filter list icon"
-                (click)="deleteActivity()"
-              >
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  `,
+  templateUrl: './job-application-activity-list.component.html',
   styleUrls: ['./job-application-activity-list.component.scss'],
 })
-export class JobApplicationActivityListComponent implements OnInit {
-  @Input()
+export class JobApplicationActivityListComponent implements OnInit, OnDestroy {
   currentApplication: JobApplicationModel;
 
-  entityState: EntityState;
+  entityState: EntityState = 'idle';
 
   showEditForm: boolean = false;
 
   activities: JobApplicationActivityModel[] = [];
 
-  constructor(private _dataService: JobApplicationActivityService) {}
+  sub: Subscription = new Subscription();
+
+  constructor(
+    private _jobBoardService: JobBoardService,
+    private _dataService: JobApplicationActivityService
+  ) {}
 
   ngOnInit(): void {
-    this._dataService.jobApplicationActivities$.subscribe((activities) => {
-      this.activities = [...activities];
-    });
+    this.currentApplication = this._jobBoardService.store.currentApplication;
+
+    this._subscribeState();
 
     this._loadData();
-
-    console.log(this.activities);
   }
 
-  addActivity() {}
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
+  addActivity() {
+    const { stateEntityState$, stateShowEditForm$ } = this._dataService;
+
+    stateShowEditForm$.next(true);
+    stateEntityState$.next('create');
+  }
+
+  private _subscribeState() {
+    const { stateActivities$, stateEntityState$, stateShowEditForm$ } =
+      this._dataService;
+
+    this.sub.add(
+      stateActivities$.subscribe((activities) => {
+        this.activities = [...activities];
+      })
+    );
+    this.sub.add(
+      stateEntityState$.subscribe((entityState) => {
+        this.entityState = entityState;
+      })
+    );
+    this.sub.add(
+      stateShowEditForm$.subscribe((showEditForm) => {
+        this.showEditForm = showEditForm;
+      })
+    );
+  }
 
   private _loadData() {
+    const { stateActivities$ } = this._dataService;
+
     this._dataService
       .findByJobApplication(this.currentApplication)
       .pipe(
         map((activityCollection) => {
           return activityCollection.getItems().map((activity) => activity);
         }),
-        tap((activities) =>
-          this._dataService.jobApplicationActivities$.next(activities)
-        )
+        tap((activities) => stateActivities$.next(activities))
       )
       .subscribe();
   }
 
-  deleteActivity() {}
+  deleteActivity(index: number) {
+    const { id } = this.activities[index];
+    const { stateActivities$, stateEntityState$ } = this._dataService;
 
-  editActivity() {}
+    this._dataService
+      .delete(id)
+      .pipe(
+        tap(() => {
+          this.activities.splice(index, 1);
+          stateActivities$.next(this.activities);
+          stateEntityState$.next('idle');
+        })
+      )
+      .subscribe();
+  }
+
+  editActivity(index: number) {
+    const { stateEntityState$, stateShowEditForm$, stateActivityEditable$ } =
+      this._dataService;
+
+    stateShowEditForm$.next(true);
+    stateEntityState$.next('update');
+    stateActivityEditable$.next(index);
+  }
 }

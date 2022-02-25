@@ -1,13 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { map, Subscription } from 'rxjs';
+import { map, of, Subscription, switchMap, tap } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormModelBuilder } from 'src/app/dynamic-form/services/form-model-builder';
 import { FormControlConfig } from 'src/app/dynamic-form/types/form-control.types';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+import { JobApplicationActivityModel } from 'src/app/job-board/models/ja-activity.model';
 import { JobApplicationModel } from 'src/app/job-board/models/job-application.model';
+import { JobApplicationActivityService } from 'src/app/job-board/services/ja-activity.service';
 import { JobApplicationActivityFormData } from 'src/app/job-board/types/ja-activity.form.type';
 
 @Component({
@@ -20,8 +29,9 @@ import { JobApplicationActivityFormData } from 'src/app/job-board/types/ja-activ
       [divider]="false"
     ></ahr-dynamic-form>
   `,
+  providers: [DynamicFormService],
 })
-export class JobApplicationActivityFormComponent implements OnInit {
+export class JobApplicationActivityFormComponent implements OnInit, OnDestroy {
   @Input()
   currentApplication: JobApplicationModel;
 
@@ -49,6 +59,12 @@ export class JobApplicationActivityFormComponent implements OnInit {
         key: 'jobsapplicationsId',
         readonly: true,
         hidden: true,
+      },
+      {
+        type: 'date',
+        placeholder: '',
+        label: 'Date',
+        key: 'date',
       },
       {
         type: 'select',
@@ -100,21 +116,28 @@ export class JobApplicationActivityFormComponent implements OnInit {
   formStateEvent: EventEmitter<FormState> = new EventEmitter<FormState>();
 
   @Output('valueChanges')
-  valueChangesEvent: EventEmitter<JobApplicationActivityFormData[]> =
-    new EventEmitter<JobApplicationActivityFormData[]>();
+  valueChangesEvent: EventEmitter<JobApplicationActivityFormData> = new EventEmitter<JobApplicationActivityFormData>();
 
   @Output('statusChanges')
   statusChangesEvent: EventEmitter<string> = new EventEmitter<string>();
 
+  currentActivity: JobApplicationActivityModel | null;
+
   constructor(
     private _route: ActivatedRoute,
-    private _dynamicForm: DynamicFormService
+    private _dynamicForm: DynamicFormService,
+    private _dataService: JobApplicationActivityService
   ) {}
 
   ngOnInit(): void {
+    this._subscribeState();
     this._setupForm();
     this._initFormValues();
     this._handleFormEvents();
+  }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
   }
 
   private _setupForm() {
@@ -126,6 +149,16 @@ export class JobApplicationActivityFormComponent implements OnInit {
   }
 
   private _initFormValues() {
+    if (this.entityState === 'create') {
+      this._onCreateInitFormValues();
+    }
+
+    if (this.entityState === 'update') {
+      this._onUpdateInitFormValues();
+    }
+  }
+
+  private _onCreateInitFormValues() {
     const { currentApplication } = this;
 
     const activityId = Math.floor(Math.random() * 100);
@@ -133,8 +166,25 @@ export class JobApplicationActivityFormComponent implements OnInit {
     this._dynamicForm.setControlsValue({
       id: activityId,
       jobsapplicationsId: currentApplication,
-      createdAt: currentApplication.createdAt,
+      date: new Date(),
+      createdAt: new Date(),
       updatedAt: new Date(),
+    });
+  }
+
+  private _onUpdateInitFormValues() {
+    const { currentActivity } = this;
+
+    console.log(currentActivity);
+
+    this._dynamicForm.setControlsValue({
+      id: currentActivity?.getId(),
+      jobsapplicationsId: currentActivity?.getJobsapplicationsId(),
+      type: currentActivity?.getType(),
+      date: currentActivity?.getDate(),
+      description: currentActivity?.getDescription(),
+      createdAt: currentActivity?.getCreatedAt(),
+      updatedAt: currentActivity?.getUpdatedAt(),
     });
   }
 
@@ -155,6 +205,26 @@ export class JobApplicationActivityFormComponent implements OnInit {
       formStatus$.subscribe((formStatus) => {
         this.statusChangesEvent.emit(formStatus);
       })
+    );
+  }
+
+  private _subscribeState() {
+    const { stateActivityEditable$, stateActivities$ } = this._dataService;
+
+    this.sub.add(
+      stateActivityEditable$
+        .pipe(
+          switchMap((activityIdx) => {
+            if (activityIdx === null) {
+              return of(null);
+            }
+
+            return stateActivities$.pipe(
+              map((activities) => activities[activityIdx])
+            );
+          })
+        )
+        .subscribe((activity) => (this.currentActivity = activity))
     );
   }
 }
