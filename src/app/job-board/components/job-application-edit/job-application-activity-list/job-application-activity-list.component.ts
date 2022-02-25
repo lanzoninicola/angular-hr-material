@@ -1,13 +1,6 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { map, Subscription, tap } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
-import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { JobApplicationActivityModel } from 'src/app/job-board/models/ja-activity.model';
 import { JobApplicationModel } from 'src/app/job-board/models/job-application.model';
 import { JobApplicationActivityService } from 'src/app/job-board/services/ja-activity.service';

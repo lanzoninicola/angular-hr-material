@@ -1,6 +1,5 @@
-import { state } from '@angular/animations';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { BehaviorSubject, Subscription, tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 import { JobApplicationActivityModel } from 'src/app/job-board/models/ja-activity.model';
