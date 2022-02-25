@@ -18,7 +18,7 @@ import { InputTextConfig } from '../../types/form-control.types';
           placeholder="{{ controlConfig['label'] }}"
           [readonly]="controlConfig['readonly']"
           [formControlName]="controlConfig['key']"
-          [type]="controlConfig['type']"
+          [type]="controlConfig['format'] || 'text'"
         />
         <!-- <mat-error *ngIf="!control.valid && control.touched"
           >{{ controlConfig['label'] }} is not valid!</mat-error
