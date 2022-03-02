@@ -24,11 +24,13 @@
             {{ row[columnConfig.key] | date: "dd/MM/yy" }}
           </ng-container>
         </ng-container>
+
         <ng-container *ngIf="columnConfig['viewType'] === 'component'">
           <ng-container
             *componentOutlet="
               row[columnConfig.key];
-              config: columnConfig['component']
+              config: columnConfig['component'];
+              objectProp: columnConfig['objectProp']
             "
           ></ng-container>
         </ng-container>
