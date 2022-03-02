@@ -11,6 +11,10 @@ import { DynamicFormModule } from '../dynamic-form/dynamic-form.module';
 import { SharedModule } from '../shared/shared.module';
 import { TableDataModule } from '../table-data/table-data.module';
 import { CandidateIdBadgeComponent } from './components/candidate-id-badge/candidate-id-badge.component';
+import { InterviewEditComponent } from './components/interview-edit/interview-edit.component';
+import { InterviewStatusFormComponent } from './components/interview-edit/interview-status-form/interview-status-form.component';
+import { InterviewListTableComponent } from './components/interview-list-table/interview-list-table.component';
+import { InterviewListComponent } from './components/interview-list/interview-list.component';
 import { JobApplicationActivityEditComponent } from './components/job-application-edit/job-application-activity-edit/job-application-activity-edit.component';
 import { JobApplicationActivityFormComponent } from './components/job-application-edit/job-application-activity-edit/job-application-activity-form/job-application-activity-form.component';
 import { JobApplicationActivityListComponent } from './components/job-application-edit/job-application-activity-list/job-application-activity-list.component';
@@ -50,6 +54,10 @@ import { JobBoardRoutingModule } from './routing/job-board-routing.module';
     JobApplicationActivityFormComponent,
     JobApplicationActivityEditComponent,
     JobApplicationActivityListComponent,
+    InterviewListComponent,
+    InterviewEditComponent,
+    InterviewListTableComponent,
+    InterviewStatusFormComponent,
   ],
   imports: [
     CoreModule,

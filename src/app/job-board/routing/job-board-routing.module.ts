@@ -11,6 +11,8 @@ import { JobApplicationListComponent } from '../components/job-application-list/
 import { JobApplicationEditComponent } from '../components/job-application-edit/job-application-edit.component';
 import { JobApplicationEditResolver } from './job-application-edit.resolver';
 import { JobApplicationFormResolver } from './job-application-form.resolver';
+import { InterviewListComponent } from '../components/interview-list/interview-list.component';
+import { InterviewEditComponent } from '../components/interview-edit/interview-edit.component';
 
 const moduleRoutes: Routes = [
   {
@@ -56,6 +58,15 @@ const moduleRoutes: Routes = [
           entity: JobApplicationEditResolver,
           formControlsData: JobApplicationFormResolver,
         },
+      },
+      {
+        path: 'interviews/list',
+        component: InterviewListComponent,
+      },
+
+      {
+        path: 'interviews/:id',
+        component: InterviewEditComponent,
       },
     ],
   },
