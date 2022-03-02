@@ -135,8 +135,6 @@ export class JobApplicationActivityService {
   getEntityModelFromFormData(
     formData: JobApplicationActivityFormData
   ): JobApplicationActivityModel {
-    console.log(formData);
-
     return new JobApplicationActivityModel(
       formData.id,
       formData.jobsapplicationsId,
