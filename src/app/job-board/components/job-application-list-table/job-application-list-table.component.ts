@@ -37,7 +37,6 @@ const JA_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
   {
     key: 'jobId',
     title: 'Job ID',
-    objectProp: 'title',
     viewType: 'component',
     component: {
       key: JobidBadgeComponent,
