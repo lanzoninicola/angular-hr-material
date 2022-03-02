@@ -101,7 +101,6 @@ export class JobApplicationActivityEditComponent implements OnInit, OnDestroy {
   }
 
   onStatusChanges(formStatus: string) {
-    console.log(formStatus);
     this.formStatus = formStatus;
   }
 
