@@ -177,7 +177,7 @@ export class JobApplicationsService {
 
   save(model: JobApplicationModel) {
     const dto = this._serializationService.serialize(model);
-    return this._httpService.save(dto).subscribe();
+    return this._httpService.save(dto);
   }
 
   update(model: JobApplicationModel) {
