@@ -1,0 +1,53 @@
+<ahr-edit-form-toolbar [disabled]="(formState$ | async) === 'submitted'">
+  <ahr-edit-action-button
+    left
+    [action]="'save'"
+    [disabled]="
+      (formStatus$ | async) === 'invalid' ||
+      (formState$ | async) === 'submitted' ||
+      (formState$ | async) === 'idle'
+    "
+    (actionEvent)="onSaveButtonClicked()"
+  ></ahr-edit-action-button>
+
+  <ahr-navigation-action-button
+    right
+    [action]="'goback'"
+  ></ahr-navigation-action-button>
+</ahr-edit-form-toolbar>
+<div class="container-form">
+  <div class="form-header" *ngIf="currentInterview">
+    <span><strong>Application ID:</strong> #{{ currentInterview.id }} </span>
+    <span
+      ><strong>Created at:</strong>
+      {{ currentInterview.createdAt | date: "dd/MM/yyyy HH:mm" }}</span
+    >
+    <span
+      ><strong>Last Update:</strong>
+      {{ currentInterview.updatedAt | date: "dd/MM/yyyy HH:mm" }}</span
+    >
+  </div>
+  <div class="wrapper-form">
+    <ahr-interview-status-form
+      [currentInterview]="currentInterview"
+      [entityState]="entityState"
+      [showSpinner]="(formState$ | async) === 'submitted'"
+      (formStateChanges)="onStateChanges($event)"
+      (valueChanges)="onValueChanges($event)"
+      (statusChanges)="onStatusChanges($event)"
+    ></ahr-interview-status-form>
+
+    <mat-tab-group animationDuration="0ms">
+      <mat-tab label="Technical Q&A">
+        <div class="tab-content-wrapper">
+          <!-- content first tab -->
+        </div>
+      </mat-tab>
+      <mat-tab label="Internal Notes">
+        <div class="tab-content-wrapper">
+          <!-- content second tab -->
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</div>
