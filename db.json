@@ -272,6 +272,34 @@
       "key": "phone-call",
       "value": "Phone Call",
       "order": 2
+    },
+    {
+      "id": 14,
+      "type": "jobinterview-status",
+      "key": "scheduled",
+      "value": "Scheduled",
+      "order": 1
+    },
+    {
+      "id": 14,
+      "type": "jobinterview-status",
+      "key": "in-progress",
+      "value": "In progress",
+      "order": 2
+    },
+    {
+      "id": 14,
+      "type": "jobinterview-status",
+      "key": "done",
+      "value": "Closed",
+      "order": 3
+    },
+    {
+      "id": 140,
+      "type": "jobinterview-status",
+      "key": "interviewer-declined",
+      "value": "Interviewer declined",
+      "order": 4
     }
   ],
   "departments": [
@@ -285,10 +313,7 @@
       "id": 2,
       "name": "Front-end Developers",
       "managerId": 1,
-      "teamLeads": [
-        71,
-        72
-      ]
+      "teamLeads": [71, 72]
     },
     {
       "id": 3,
@@ -366,11 +391,7 @@
       "id": 1,
       "name": "Front-end Developer",
       "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
-      "details": [
-        1,
-        2,
-        3
-      ]
+      "details": [1, 2, 3]
     },
     {
       "id": 11,
@@ -582,9 +603,9 @@
       "id": 1,
       "jobsId": 1,
       "candidatesId": 1,
-      "jaworkingstatusesId": 2,
+      "jaworkingstatusesId": 3,
       "createdAt": "2020-01-01T00:00:00.000Z",
-      "updatedAt": "2022-02-23T18:03:23.678Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z",
       "jobs": null,
       "candidates": null
     },
@@ -639,40 +660,89 @@
       "id": 88
     },
     {
-      "id": 75,
-      "jobsapplicationsId": 1,
-      "date": "2022-02-25T19:01:10.456Z",
-      "type": 13,
-      "description": "lanzoni nicola",
-      "createdAt": "2022-02-25T19:01:10.456Z",
-      "updatedAt": "2022-02-25T19:01:10.456Z"
+      "id": 75
     },
     {
-      "id": 56,
+      "id": 56
+    },
+    {
+      "id": 94
+    },
+    {
+      "id": 44
+    },
+    {
+      "id": 48
+    },
+    {
+      "id": 36
+    },
+    {
+      "id": 32
+    },
+    {
+      "id": 71
+    },
+    {
+      "id": 61,
       "jobsapplicationsId": 1,
-      "date": "2022-02-25T19:23:09.991Z",
+      "date": "2022-02-25T21:19:07.632Z",
       "type": 12,
-      "description": "sdsssssssssssssssssssssssssssssssssssssssssss",
-      "createdAt": "2022-02-25T19:23:09.991Z",
-      "updatedAt": "2022-02-25T19:23:09.991Z"
+      "description": "aqw",
+      "createdAt": "2022-02-25T21:19:07.632Z",
+      "updatedAt": "2022-02-25T21:19:07.632Z"
     },
     {
-      "id": 94,
+      "id": 41,
       "jobsapplicationsId": 1,
-      "date": "2022-02-25T20:49:43.899Z",
+      "date": "2022-02-25T21:34:16.679Z",
       "type": 12,
-      "description": "lanzoni",
-      "createdAt": "2022-02-25T20:49:43.899Z",
-      "updatedAt": "2022-02-25T20:49:43.899Z"
+      "description": "sd",
+      "createdAt": "2022-02-25T21:34:16.679Z",
+      "updatedAt": "2022-02-25T21:34:16.679Z"
+    }
+  ],
+  "interviews": [
+    {
+      "id": 1,
+      "jobsapplicationsId": 1,
+      "status": 14,
+      "rating": 2,
+      "scheduledAt": "2022-04-19T08:00:00.000Z",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
     },
     {
-      "id": 44,
-      "jobsapplicationsId": 1,
-      "date": "2022-02-25T20:59:39.530Z",
-      "type": 13,
-      "description": "Scheduled Phone call 17/03/2010",
-      "createdAt": "2022-02-25T20:59:39.530Z",
-      "updatedAt": "2022-02-25T20:59:39.530Z"
+      "id": 2,
+      "jobsapplicationsId": 2,
+      "status": 14,
+      "rating": 2,
+      "scheduledAt": "2022-04-19T08:00:00.000Z",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
+    }
+  ],
+  "interviewsattendees": [
+    {
+      "id": 1,
+      "interviewsId": 1,
+      "attendeesId": 4,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
+    },
+    {
+      "id": 1,
+      "interviewsId": 1,
+      "attendeesId": 7,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
+    },
+    {
+      "id": 1,
+      "interviewsId": 1,
+      "attendeesId": 71,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
     }
   ],
   "candidates": [
