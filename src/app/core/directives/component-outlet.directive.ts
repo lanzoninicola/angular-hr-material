@@ -17,6 +17,9 @@ export class ComponentOutletDirective implements OnInit {
   @Input('componentOutlet')
   payload: any;
 
+  @Input('componentOutletObjectProp')
+  objectProp: string | string[] | undefined;
+
   componentRef: ComponentRef<any>;
 
   constructor(
@@ -61,6 +64,22 @@ export class ComponentOutletDirective implements OnInit {
    *
    */
   private _passingPayloadToComponent() {
-    this.componentRef.instance['payload'] = this.payload;
+    const { payload, objectProp } = this;
+
+    if (objectProp === undefined) {
+      this.componentRef.instance['payload'] = this.payload;
+    }
+
+    if (objectProp) {
+      if (Array.isArray(objectProp)) {
+        const nextPayload = objectProp.reduce((acc, curr) => {
+          return acc[curr];
+        }, payload);
+
+        this.componentRef.instance['payload'] = nextPayload;
+      } else {
+        this.componentRef.instance['payload'] = payload[objectProp];
+      }
+    }
   }
 }
