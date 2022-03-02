@@ -51,7 +51,6 @@ const JB_LIST_TABLE_COLUMNS: TableColumnConfig[] = [
   {
     key: 'status',
     title: 'Status',
-    objectProp: 'value',
     viewType: 'component',
     component: {
       key: JobidStatusChipComponent,
