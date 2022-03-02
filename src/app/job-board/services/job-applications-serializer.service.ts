@@ -34,6 +34,8 @@ export class JobApplicationsSerializerService {
   }
 
   serialize(model: JobApplicationModel): JobApplicationDTO {
+    console.log(model);
+
     return {
       id: model.id,
       jobsId: model.jobId.getId(),
