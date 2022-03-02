@@ -17,9 +17,6 @@ import { JobApplicationsService } from '../../services/job-applications.service'
   `,
 })
 export class JobApplicationListComponent implements OnInit {
-  @Input()
-  jobId: JobIdModel;
-
   tableDataSource$: Observable<JobApplicationModel[]>;
 
   constructor(private _dataService: JobApplicationsService) {}
