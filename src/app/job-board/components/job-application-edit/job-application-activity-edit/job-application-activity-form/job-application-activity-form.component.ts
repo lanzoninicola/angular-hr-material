@@ -175,8 +175,6 @@ export class JobApplicationActivityFormComponent implements OnInit, OnDestroy {
   private _onUpdateInitFormValues() {
     const { currentActivity } = this;
 
-    console.log(currentActivity);
-
     this._dynamicForm.setControlsValue({
       id: currentActivity?.getId(),
       jobsapplicationsId: currentActivity?.getJobsapplicationsId(),
