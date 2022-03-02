@@ -58,10 +58,6 @@ export class JobApplicationStatusFormComponent implements OnInit {
     this._setupForm();
     this._handleForms();
 
-    if (this.entityState === 'create') {
-      this._initFormValuesEntityCreate();
-    }
-
     if (this.entityState === 'update') {
       this._initFormValuesEntityUpdate();
     }
@@ -93,6 +89,23 @@ export class JobApplicationStatusFormComponent implements OnInit {
         placeholder: '',
         label: 'id',
         key: 'id',
+        readonly: true,
+        hidden: true,
+      },
+      {
+        type: 'input',
+        placeholder: '',
+        label: 'candidate',
+        key: 'candidate',
+        readonly: true,
+        hidden: true,
+      },
+
+      {
+        type: 'input',
+        placeholder: '',
+        label: 'jobId',
+        key: 'jobId',
         readonly: true,
         hidden: true,
       },
@@ -148,9 +161,9 @@ export class JobApplicationStatusFormComponent implements OnInit {
     this._dynamicForm.setControlsValue({
       id: currentApplication.id,
       status: currentApplication.status,
+      candidate: currentApplication.candidate,
+      jobId: currentApplication.jobId,
       createdAt: currentApplication.createdAt,
     });
   }
-
-  private _initFormValuesEntityCreate() {}
 }

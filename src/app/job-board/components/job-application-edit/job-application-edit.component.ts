@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControlStatus } from '@angular/forms';
 import {
   BehaviorSubject,
   combineLatest,
@@ -11,10 +10,8 @@ import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
 
 import { JobApplicationModel } from '../../models/job-application.model';
-import { JobApplicationActivityService } from '../../services/ja-activity.service';
 import { JobApplicationsService } from '../../services/job-applications.service';
 import { JobBoardService } from '../../services/job-board.service';
-import { JobApplicationActivityFormData } from '../../types/ja-activity.form.type';
 import { JobApplicationEditFormData } from '../../types/job-application.form.type';
 
 // TODO: sub-routing navigating through the tabs (Activities, Interviews)
@@ -37,22 +34,13 @@ export class JobApplicationEditComponent implements OnInit {
   mainValueChanges$: BehaviorSubject<null | JobApplicationEditFormData> =
     new BehaviorSubject<null | JobApplicationEditFormData>(null);
 
-  activitiesFormState$ = new BehaviorSubject<FormState>('idle');
-
-  // TODO: remove the two lines below
-  activitiesFormStatus$ = new BehaviorSubject('valid');
-  activitiesValueChanges$: BehaviorSubject<
-    null | JobApplicationActivityFormData[]
-  > = new BehaviorSubject<null | JobApplicationActivityFormData[]>(null);
-
   formData: any;
 
-  private subs = new Subscription();
+  private sub = new Subscription();
 
   constructor(
     private _dataService: JobBoardService,
-    private _jaService: JobApplicationsService,
-    private _jaActivityService: JobApplicationActivityService
+    private _jaService: JobApplicationsService
   ) {}
 
   ngOnInit(): void {
@@ -64,15 +52,9 @@ export class JobApplicationEditComponent implements OnInit {
   }
 
   private _getGlobalFormStatus() {
-    return combineLatest([
-      this.mainFormStatus$,
-      this.activitiesFormStatus$,
-    ]).pipe(
-      map(([mainFormStatus, activitiesFormStatus]) => {
-        if (
-          mainFormStatus.toLowerCase() === 'invalid' ||
-          activitiesFormStatus.toLowerCase() === 'invalid'
-        ) {
+    return combineLatest([this.mainFormStatus$]).pipe(
+      map(([mainFormStatus]) => {
+        if (mainFormStatus.toLowerCase() === 'invalid') {
           return 'invalid';
         }
 
@@ -82,16 +64,13 @@ export class JobApplicationEditComponent implements OnInit {
   }
 
   private _getGlobalFormState() {
-    return combineLatest([this.mainFormState$, this.activitiesFormState$]).pipe(
-      map(([mainFormState, activitiesFormState]) => {
-        if (mainFormState === 'changed' || activitiesFormState === 'changed') {
+    return combineLatest([this.mainFormState$]).pipe(
+      map(([mainFormState]) => {
+        if (mainFormState === 'changed') {
           return 'changed';
         }
 
-        if (
-          mainFormState === 'submitted' ||
-          activitiesFormState === 'submitted'
-        ) {
+        if (mainFormState === 'submitted') {
           return 'submitted';
         }
 
@@ -101,11 +80,10 @@ export class JobApplicationEditComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.subs.unsubscribe();
+    this.sub.unsubscribe();
   }
 
   onValueChanges(valueChanges: JobApplicationEditFormData) {
-    console.log(valueChanges);
     this.mainValueChanges$.next(valueChanges);
   }
 
@@ -117,34 +95,15 @@ export class JobApplicationEditComponent implements OnInit {
     this.mainFormState$.next(formState);
   }
 
-  onActivitiesFormStateChanged(formState: FormState) {
-    this.activitiesFormState$.next(formState);
-  }
-
-  onActivitiesValueChanges(valueChanges: JobApplicationActivityFormData[]) {
-    this.activitiesValueChanges$.next(valueChanges);
-  }
-
-  onActivitiesStatusChanges(formStatus: FormControlStatus) {
-    this.activitiesFormStatus$.next(formStatus);
-  }
-
   onSaveButtonClicked() {
     if (this.mainValueChanges$.value) {
       const currentApplication = this._jaService.getEntityModelFromFormData(
         this.mainValueChanges$.value
       );
 
-      this._jaService.update(currentApplication);
-    }
-
-    if (this.activitiesValueChanges$.value) {
-      this.activitiesValueChanges$.value.forEach((activity) => {
-        const activityModel =
-          this._jaActivityService.getEntityModelFromFormData(activity);
-
-        this._jaActivityService.save(activityModel);
-      });
+      this._jaService
+        .update(currentApplication)
+        .subscribe(() => (this.currentApplication = currentApplication));
     }
   }
 
