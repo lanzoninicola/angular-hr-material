@@ -275,28 +275,35 @@
     },
     {
       "id": 14,
-      "type": "jobinterview-status",
+      "type": "interview-stage",
       "key": "scheduled",
       "value": "Scheduled",
       "order": 1
     },
     {
       "id": 14,
-      "type": "jobinterview-status",
+      "type": "interview-stage",
       "key": "in-progress",
       "value": "In progress",
       "order": 2
     },
     {
       "id": 14,
-      "type": "jobinterview-status",
+      "type": "interview-stage",
       "key": "done",
       "value": "Closed",
       "order": 3
     },
     {
       "id": 140,
-      "type": "jobinterview-status",
+      "type": "interview-stage",
+      "key": "interviewer-declined",
+      "value": "Interviewer declined",
+      "order": 4
+    },
+    {
+      "id": 15,
+      "type": "interview-stage",
       "key": "interviewer-declined",
       "value": "Interviewer declined",
       "order": 4
@@ -360,6 +367,38 @@
       "timezone": "GMT-3"
     }
   ],
+  "jobroles": [
+    {
+      "id": 1,
+      "name": "Front-end Developer",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+    },
+    {
+      "id": 11,
+      "name": "Front-end Developer Team Lead",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+    },
+    {
+      "id": 2,
+      "name": "Back-end Developer",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+    },
+    {
+      "id": 21,
+      "name": "Back-end Developer Team Lead",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+    },
+    {
+      "id": 3,
+      "name": "Project Manager",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+    },
+    {
+      "id": 31,
+      "name": "Project Manager Team Lead",
+      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+    }
+  ],
   "jobrolesdetails": [
     {
       "id": 1,
@@ -386,37 +425,36 @@
       "preferredQualification": "Lorem Ipsum advocate vostrar rivoltuma vos eternus dolorem"
     }
   ],
-  "jobroles": [
+  "jobrolesinterviewquestions": [
     {
       "id": 1,
-      "name": "Front-end Developer",
-      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware.",
-      "details": [1, 2, 3]
-    },
-    {
-      "id": 11,
-      "name": "Front-end Developer Team Lead",
-      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+      "jobrolesId": 1,
+      "roleLevel": 5,
+      "question": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
     },
     {
       "id": 2,
-      "name": "Back-end Developer",
-      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
-    },
-    {
-      "id": 21,
-      "name": "Back-end Developer Team Lead",
-      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+      "jobrolesId": 1,
+      "roleLevel": 5,
+      "question": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
     },
     {
       "id": 3,
-      "name": "Project Manager",
-      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+      "jobrolesId": 1,
+      "roleLevel": 5,
+      "question": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
     },
     {
-      "id": 31,
-      "name": "Project Manager Team Lead",
-      "roleAbout": "The Google Cloud Platform team helps customers transform and build what's next for their business — all with technology built in the cloud. Our products are engineered for security, reliability and scalability, running the full stack from infrastructure to applications to devices and hardware."
+      "id": 4,
+      "jobrolesId": 1,
+      "roleLevel": 51,
+      "question": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
+    },
+    {
+      "id": 5,
+      "jobrolesId": 1,
+      "roleLevel": 51,
+      "question": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
     }
   ],
   "requests": [
@@ -706,41 +744,78 @@
     {
       "id": 1,
       "jobsapplicationsId": 1,
-      "status": 14,
-      "rating": 2,
-      "scheduledAt": "2022-04-19T08:00:00.000Z",
+      "stage": 14,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     },
     {
       "id": 2,
       "jobsapplicationsId": 2,
-      "status": 14,
-      "rating": 2,
-      "scheduledAt": "2022-04-19T08:00:00.000Z",
+      "stage": 14,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     }
   ],
-  "interviewsattendees": [
+  "interviewrounds": [
     {
       "id": 1,
       "interviewsId": 1,
-      "attendeesId": 4,
+      "round": 1,
+      "rating": 5,
+      "passed": true,
+      "scheduledAt": "2022-04-19T08:00:00.000Z",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     },
     {
-      "id": 1,
+      "id": 2,
       "interviewsId": 1,
-      "attendeesId": 7,
+      "round": 2,
+      "rating": 1,
+      "passed": true,
+      "scheduledAt": "2022-04-28T08:00:00.000Z",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     },
     {
+      "id": 3,
+      "interviewsId": 2,
+      "round": 1,
+      "rating": 4,
+      "passed": true,
+      "scheduledAt": "2022-04-28T08:00:00.000Z",
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
+    }
+  ],
+  "interviewattendees": [
+    {
       "id": 1,
-      "interviewsId": 1,
-      "attendeesId": 71,
+      "interviewsroundsId": 1,
+      "attendeeId": 4,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
+    },
+    {
+      "id": 2,
+      "interviewsroundsId": 1,
+      "attendeeId": 7,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
+    },
+    {
+      "id": 3,
+      "interviewsroundsId": 2,
+      "attendeeId": 71,
+      "createdAt": "2020-01-01T00:00:00.000Z",
+      "updatedAt": "2022-02-25T21:48:51.577Z"
+    }
+  ],
+  "interviewfeedbacks": [
+    {
+      "id": 1,
+      "interviewsroundsId": 1,
+      "feedback": "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     }
