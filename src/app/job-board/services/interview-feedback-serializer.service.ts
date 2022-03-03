@@ -1,38 +1,41 @@
 import { Injectable } from '@angular/core';
 import { DateService } from 'src/app/core/services/date.service';
-import { UserModel } from 'src/app/users/models/user.model';
-
 import { InterviewAttendeeModel } from '../models/interview-attendee.model';
+import { InterviewFeedbackModel } from '../models/interview-feedback.model';
 import { InterviewRoundModel } from '../models/interview-round.model';
-import { InterviewAttendeeDTO } from '../types/interview.dto.type';
+import { InterviewFeedbackDTO } from '../types/interview-feedback.type';
 
 @Injectable({
   providedIn: 'root',
 })
-export class InterviewAttendeeSerializerService {
+export class InterviewFeedbackSerializerService {
   constructor(private _dateService: DateService) {}
 
   deserialize(
-    dto: InterviewAttendeeDTO,
+    dto: InterviewFeedbackDTO,
     relations: {
       interviewRound: InterviewRoundModel;
-      user: UserModel;
+      attendee: InterviewAttendeeModel;
     }
-  ): InterviewAttendeeModel {
-    return new InterviewAttendeeModel(
+  ): InterviewFeedbackModel {
+    return new InterviewFeedbackModel(
       dto.id,
       relations.interviewRound,
-      relations.user,
+      relations.attendee,
+      dto.rating,
+      dto.feedback,
       this._dateService.ISOToFullDate(dto.createdAt),
       this._dateService.ISOToFullDate(dto.updatedAt)
     );
   }
 
-  serialize(model: InterviewAttendeeModel): InterviewAttendeeDTO {
+  serialize(model: InterviewFeedbackModel): InterviewFeedbackDTO {
     return {
       id: model.id,
       interviewsroundsId: model.getInterviewRound().getId(),
-      usersId: model.getAttendee().getId(),
+      interviewattendeesId: model.getAttendee().getId(),
+      rating: model.getRating(),
+      feedback: model.getFeedback(),
       createdAt: this._dateService.dateToISOString(model.createdAt),
       updatedAt: this._dateService.dateToISOString(model.updatedAt),
     };

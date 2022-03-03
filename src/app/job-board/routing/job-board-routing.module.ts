@@ -13,6 +13,8 @@ import { JobApplicationEditResolver } from './job-application-edit.resolver';
 import { JobApplicationFormResolver } from './job-application-form.resolver';
 import { InterviewListComponent } from '../components/interview-list/interview-list.component';
 import { InterviewEditComponent } from '../components/interview-edit/interview-edit.component';
+import { InterviewEditResolver } from './interview-edit.resolver';
+import { InterviewFormResolver } from './interview-form.resolver';
 
 const moduleRoutes: Routes = [
   {
@@ -67,6 +69,10 @@ const moduleRoutes: Routes = [
       {
         path: 'interviews/:id',
         component: InterviewEditComponent,
+        resolve: {
+          entity: InterviewEditResolver,
+          formControlsData: InterviewFormResolver,
+        },
       },
     ],
   },

@@ -18,7 +18,7 @@ import { InterviewFormData } from '../../types/interview.form.type';
   styleUrls: ['./interview-edit.component.scss'],
 })
 export class InterviewEditComponent implements OnInit {
-  currentInterview: InterviewModel;
+  currentInterview: InterviewModel | null;
   entityState: EntityState = 'create';
   showJobIdDetails: boolean = false;
 
@@ -37,11 +37,22 @@ export class InterviewEditComponent implements OnInit {
   constructor(private _dataService: InterviewService) {}
 
   ngOnInit(): void {
-    // this.entityState = this._dataService.store.entityState;
-    // this.currentInterview = this._dataService.store.currentInterview;
+    this.sub.add(
+      this._dataService.stateCurrentInterview$.subscribe((currentInterview) => {
+        this.currentInterview = currentInterview;
+      })
+    );
+
+    this.sub.add(
+      this._dataService.stateEntityState$.subscribe((entityState) => {
+        this.entityState = entityState;
+      })
+    );
 
     this.formStatus$ = this._getGlobalFormStatus();
     this.formState$ = this._getGlobalFormState();
+
+    console.log(this.currentInterview);
   }
 
   private _getGlobalFormStatus() {

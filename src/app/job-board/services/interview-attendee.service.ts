@@ -4,11 +4,13 @@ import { UserModel } from 'src/app/users/models/user.model';
 import { UsersCollection } from 'src/app/users/models/users.collection';
 import { UsersService } from 'src/app/users/services/users.service';
 import { InterviewAttendeeModel } from '../models/interview-attendee.model';
+import { InterviewRoundModel } from '../models/interview-round.model';
 import { InterviewCollection } from '../models/interview.collection';
 import { InterviewModel } from '../models/interview.model';
 import { InterviewAttendeeDTO } from '../types/interview.dto.type';
 import { InterviewAttendeeHttpService } from './interview-attendee-http.service';
 import { InterviewAttendeeSerializerService } from './interview-attendee-serializer.service';
+import { InterviewRoundService } from './interview-round.service';
 import { InterviewService } from './interview.service';
 
 @Injectable({
@@ -17,7 +19,7 @@ import { InterviewService } from './interview.service';
 export class InterviewAttendeeService {
   constructor(
     private _httpService: InterviewAttendeeHttpService,
-    private _interviewService: InterviewService,
+    private _interviewRoundService: InterviewRoundService,
     private _usersService: UsersService,
     private _serializationService: InterviewAttendeeSerializerService
   ) {}
@@ -49,51 +51,54 @@ export class InterviewAttendeeService {
   //   );
   // }
 
-  findById(id: number): Observable<InterviewAttendeeModel> {
-    // if (this._shouldCurrentCached(id)) {
-    //   return of(this._currentCached());
-    // }
+  // findById(id: number): Observable<InterviewAttendeeModel> {
+  //   // if (this._shouldCurrentCached(id)) {
+  //   //   return of(this._currentCached());
+  //   // }
 
-    const record$: Observable<InterviewAttendeeDTO> =
-      this._httpService.findById(id);
+  //   const record$: Observable<InterviewAttendeeDTO> =
+  //     this._httpService.findById(id);
 
-    const interview$: Observable<InterviewModel> = record$.pipe(
-      switchMap((record) => {
-        return this._interviewService.findById(record.interviewsId);
-      })
-    );
+  //   const interviewRound$: Observable<InterviewRoundModel> = record$.pipe(
+  //     switchMap((record) => {
+  //       return this._interviewRoundService.findById(record.interviewsroundsId);
+  //     })
+  //   );
 
-    const user$: Observable<UserModel> = record$.pipe(
-      switchMap((record) => {
-        return this._usersService.findById(record.attendeesId);
-      })
-    );
+  //   const user$: Observable<UserModel> = record$.pipe(
+  //     switchMap((record) => {
+  //       return this._usersService.findById(record.usersId);
+  //     })
+  //   );
 
-    return forkJoin([record$, interview$, user$]).pipe(
-      map(([record, interview, user]) => {
-        return this._serializationService.deserialize(record, {
-          interview,
-          user,
-        });
-      })
-    );
-  }
+  //   return forkJoin([record$, interviewRound$, user$]).pipe(
+  //     map(([record, interviewRound, user]) => {
+  //       return this._serializationService.deserialize(record, {
+  //         interviewRound,
+  //         user,
+  //       });
+  //     })
+  //   );
+  // }
 
-  findByInterview(
-    interview: InterviewModel
+  findByInterviewRound(
+    interviewRound: InterviewRoundModel
   ): Observable<InterviewAttendeeModel[]> {
     const records$: Observable<InterviewAttendeeDTO[]> =
-      this._httpService.findByParam('interviewsId', String(interview.getId()));
+      this._httpService.findByParam(
+        'interviewsroundsId',
+        String(interviewRound.getId())
+      );
 
     const users$: Observable<UsersCollection> = this._usersService.findAll();
 
     return forkJoin([records$, users$]).pipe(
       map(([records, users]) => {
         const interviews = records.map((record) => {
-          const user = users.findItemById(record.attendeesId);
+          const user = users.findItemById(record.usersId);
 
           return this._serializationService.deserialize(record, {
-            interview,
+            interviewRound,
             user,
           });
         });

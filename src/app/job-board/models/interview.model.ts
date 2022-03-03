@@ -4,26 +4,20 @@ import { JobApplicationModel } from './job-application.model';
 export class InterviewModel {
   id: number;
   jobApplication: JobApplicationModel;
-  status: PicklistItemModel;
-  rating: number;
-  scheduledAt: Date;
+  stage: PicklistItemModel;
   createdAt: Date;
   updatedAt: Date;
 
   constructor(
     id: number,
     jobApplication: JobApplicationModel,
-    status: PicklistItemModel,
-    rating: number,
-    scheduledAt: Date,
+    stage: PicklistItemModel,
     createdAt: Date,
     updatedAt: Date
   ) {
     this.id = id;
     this.jobApplication = jobApplication;
-    this.status = status;
-    this.rating = rating;
-    this.scheduledAt = scheduledAt;
+    this.stage = stage;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -36,16 +30,8 @@ export class InterviewModel {
     return this.jobApplication;
   }
 
-  getStatus(): PicklistItemModel {
-    return this.status;
-  }
-
-  getRating(): number {
-    return this.rating;
-  }
-
-  getScheduleAt(): Date {
-    return this.scheduledAt;
+  getStage(): PicklistItemModel {
+    return this.stage;
   }
 
   getCreatedAt(): Date {

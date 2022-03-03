@@ -16,13 +16,14 @@ import { InterviewModel } from 'src/app/job-board/models/interview.model';
       [model]="form.model"
       [settings]="form.settings"
       [showSpinner]="showSpinner"
+      [divider]="false"
     ></ahr-dynamic-form>
   `,
   providers: [DynamicFormService],
 })
 export class InterviewStatusFormComponent implements OnInit {
   @Input()
-  currentInterview: InterviewModel;
+  currentInterview: InterviewModel | null;
 
   @Input()
   entityState: EntityState;
@@ -131,7 +132,7 @@ export class InterviewStatusFormComponent implements OnInit {
     const { form } = this;
     const config = this.formControlConfigs;
 
-    form.setup({ key: 'iwMainInfo', title: 'Status of Interview' }, config);
+    form.setup({ key: 'iwMainInfo' }, config);
 
     this._dynamicForm.load(form);
   }
@@ -139,12 +140,13 @@ export class InterviewStatusFormComponent implements OnInit {
   private _initFormValuesEntityUpdate() {
     const { currentInterview } = this;
 
-    this._dynamicForm.setControlsValue({
-      id: currentInterview.id,
-      jobsapplicationsId: currentInterview.getJobApplication(),
-      status: currentInterview.getStatus(),
-      rating: currentInterview.getRating(),
-      createdAt: currentInterview.getCreatedAt(),
-    });
+    if (currentInterview) {
+      this._dynamicForm.setControlsValue({
+        id: currentInterview.id,
+        jobsapplicationsId: currentInterview.getJobApplication(),
+        status: currentInterview.getStatus(),
+        createdAt: currentInterview.getCreatedAt(),
+      });
+    }
   }
 }

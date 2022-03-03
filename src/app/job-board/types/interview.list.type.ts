@@ -9,7 +9,6 @@ export interface InterviewOnTableList {
   candidate: CandidateModel;
   jobId: JobIdModel;
   status: PicklistItemModel;
-  rating: number;
   scheduledAt: Date;
   createdAt: Date;
   updatedAt: Date;

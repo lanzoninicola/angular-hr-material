@@ -1,24 +1,29 @@
-import { UserModel } from 'src/app/users/models/user.model';
-
+import { InterviewAttendeeModel } from './interview-attendee.model';
 import { InterviewRoundModel } from './interview-round.model';
 
-export class InterviewAttendeeModel {
+export class InterviewFeedbackModel {
   id: number;
   interviewRound: InterviewRoundModel;
-  attendee: UserModel;
+  attendee: InterviewAttendeeModel;
+  rating: number;
+  feedback: string;
   createdAt: Date;
   updatedAt: Date;
 
   constructor(
     id: number,
     interviewRound: InterviewRoundModel,
-    attendee: UserModel,
+    attendee: InterviewAttendeeModel,
+    rating: number,
+    feedback: string,
     createdAt: Date,
     updatedAt: Date
   ) {
     this.id = id;
     this.interviewRound = interviewRound;
     this.attendee = attendee;
+    this.rating = rating;
+    this.feedback = feedback;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
@@ -31,8 +36,16 @@ export class InterviewAttendeeModel {
     return this.interviewRound;
   }
 
-  getAttendee(): UserModel {
+  getAttendee(): InterviewAttendeeModel {
     return this.attendee;
+  }
+
+  getRating(): number {
+    return this.rating;
+  }
+
+  getFeedback(): string {
+    return this.feedback;
   }
 
   getCreatedAt(): Date {

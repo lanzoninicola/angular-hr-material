@@ -22,8 +22,6 @@ export class InterviewSerializerService {
       dto.id,
       relations.jobApplication,
       relations.picklistItem,
-      dto.rating,
-      this._dateService.ISOToFullDate(dto.scheduledAt),
       this._dateService.ISOToFullDate(dto.createdAt),
       this._dateService.ISOToFullDate(dto.updatedAt)
     );
@@ -33,9 +31,7 @@ export class InterviewSerializerService {
     return {
       id: model.id,
       jobsapplicationsId: model.getJobApplication().id,
-      status: model.getStatus().id,
-      rating: model.getRating(),
-      scheduledAt: this._dateService.dateToISOString(model.getScheduleAt()),
+      stage: model.getStage().id,
       createdAt: this._dateService.dateToISOString(model.getCreatedAt()),
       updatedAt: this._dateService.dateToISOString(model.getUpdatedAt()),
     };

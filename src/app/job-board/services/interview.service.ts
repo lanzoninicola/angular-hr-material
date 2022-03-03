@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, switchMap } from 'rxjs';
+import { EntityState } from 'src/app/core/types/entityState.type';
 import { PicklistItemModel } from 'src/app/settings/models/picklist-item.model';
 import { PicklistModel } from 'src/app/settings/models/picklist.model';
 import { PicklistService } from 'src/app/settings/services/picklist/picklist.service';
@@ -17,6 +18,9 @@ import { JobApplicationsService } from './job-applications.service';
   providedIn: 'root',
 })
 export class InterviewService {
+  stateCurrentInterview$ = new BehaviorSubject<InterviewModel | null>(null);
+  stateEntityState$ = new BehaviorSubject<EntityState>('idle');
+
   constructor(
     private _httpService: InterviewHttpService,
     private _jobApplicationService: JobApplicationsService,
@@ -31,7 +35,7 @@ export class InterviewService {
       this._jobApplicationService.findAll();
 
     const picklist$: Observable<PicklistModel> =
-      this._picklistService.findByType('jobinterview-status');
+      this._picklistService.findByType('interview-stage');
 
     return forkJoin([records$, jobApplications$, picklist$]).pipe(
       map(([records, jobApplications, picklist]) => {
@@ -39,7 +43,7 @@ export class InterviewService {
           const jobApplication = jobApplications.findItemById(
             record.jobsapplicationsId
           );
-          const picklistItem = picklist.findItemById(record.status);
+          const picklistItem = picklist.findItemById(record.stage);
 
           return this._serializationService.deserialize(record, {
             jobApplication,
@@ -67,7 +71,7 @@ export class InterviewService {
 
     const picklist$: Observable<PicklistItemModel> = record$.pipe(
       switchMap((record) => {
-        return this._picklistService.findById(record.status);
+        return this._picklistService.findById(record.stage);
       })
     );
 
@@ -90,12 +94,12 @@ export class InterviewService {
     );
 
     const picklist$: Observable<PicklistModel> =
-      this._picklistService.findByType('jobinterview-status');
+      this._picklistService.findByType('interview-stage');
 
     return forkJoin([records$, picklist$]).pipe(
       map(([records, picklist]) => {
         const interviews = records.map((record) => {
-          const picklistItem = picklist.findItemById(record.status);
+          const picklistItem = picklist.findItemById(record.stage);
 
           return this._serializationService.deserialize(record, {
             jobApplication,
@@ -126,9 +130,7 @@ export class InterviewService {
     return new InterviewModel(
       formData.id,
       formData.jobsapplicationsId,
-      formData.status,
-      formData.rating,
-      formData.scheduledAt,
+      formData.stage,
       formData.createdAt,
       formData.updatedAt
     );

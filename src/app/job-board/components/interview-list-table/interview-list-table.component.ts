@@ -82,16 +82,4 @@ const INTERVIEWS_TABLE_COLUMNS: TableColumnConfig[] = [
       'min-width': '80px',
     },
   },
-  {
-    key: 'rating',
-    title: 'Rating',
-    sortable: false,
-    headerStyle: {
-      'min-width': '80px',
-      'text-align': 'center',
-    },
-    cellStyle: {
-      'text-align': 'center',
-    },
-  },
 ];
