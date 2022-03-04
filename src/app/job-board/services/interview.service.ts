@@ -112,6 +112,35 @@ export class InterviewService {
     );
   }
 
+  findAllOpen(): Observable<InterviewCollection> {
+    const records$: Observable<InterviewDTO[]> =
+      this._httpService.findByParamValues('stage', ['14', '140']);
+
+    const jobApplications$: Observable<JobsApplicationsCollection> =
+      this._jobApplicationService.findAll();
+
+    const picklist$: Observable<PicklistModel> =
+      this._picklistService.findByType('interview-stage');
+
+    return forkJoin([records$, jobApplications$, picklist$]).pipe(
+      map(([records, jobApplications, picklist]) => {
+        const interviews = records.map((record) => {
+          const jobApplication = jobApplications.findItemById(
+            record.jobsapplicationsId
+          );
+          const picklistItem = picklist.findItemById(record.stage);
+
+          return this._serializationService.deserialize(record, {
+            jobApplication,
+            picklistItem,
+          });
+        });
+
+        return new InterviewCollection(interviews);
+      })
+    );
+  }
+
   save(model: InterviewModel) {
     const dto = this._serializationService.serialize(model);
     return this._httpService.save(dto);

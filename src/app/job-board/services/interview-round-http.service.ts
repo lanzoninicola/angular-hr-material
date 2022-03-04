@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { HttpRequestOptionsService } from 'src/app/core/services/http-request-options.service';
 import { environment } from 'src/environments/environment';
-import { InterviewRoundDTO } from '../types/interview-round.type';
+import { InterviewRoundDTO } from '../types/interview-round.dto.type';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +37,23 @@ export class InterviewRoundHttpService {
 
   findByParam(param: string, value: string) {
     const url = `${this.baseURL}?${param}=${value}`;
+
+    return this.http.get<InterviewRoundDTO[]>(
+      url,
+      this._httpOptions.isBackendRequest()
+    );
+  }
+
+  findByParamValues(param: string, values: string[]) {
+    let queryParams = '';
+
+    queryParams = values.reduce((acc, value) => {
+      return acc + `&${param}=${value}`;
+    }, '');
+
+    queryParams = queryParams.replace(queryParams[0], '?');
+
+    const url = `${this.baseURL}${queryParams}`;
 
     return this.http.get<InterviewRoundDTO[]>(
       url,

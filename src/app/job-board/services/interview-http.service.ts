@@ -17,35 +17,58 @@ export class InterviewHttpService {
     private _httpOptions: HttpRequestOptionsService
   ) {}
 
-  findAll(
-    options = {
-      withRelations: true,
-    }
-  ): Observable<InterviewDTO[]> {
+  findAll(): Observable<InterviewDTO[]> {
     const url = `${this.baseURL}`;
 
     return this.http.get<InterviewDTO[]>(
-      options.withRelations ? this._getURLwithRelations(url) : url,
+      url,
       this._httpOptions.isBackendRequest()
     );
   }
 
-  findById(
-    id: number,
-    options = {
-      withRelations: true,
-    }
-  ): Observable<InterviewDTO> {
+  findById(id: number): Observable<InterviewDTO> {
     const url = `${this.baseURL}/${id}`;
 
     return this.http.get<InterviewDTO>(
-      options.withRelations ? this._getURLwithRelations(url) : url,
+      url,
       this._httpOptions.isBackendRequest()
     );
   }
 
   findByParam(param: string, value: string) {
     const url = `${this.baseURL}?${param}=${value}`;
+
+    return this.http.get<InterviewDTO[]>(
+      url,
+      this._httpOptions.isBackendRequest()
+    );
+  }
+
+  findByParamValues(param: string, values: string[]) {
+    let queryParams = '';
+
+    queryParams = values.reduce((acc, value) => {
+      return acc + `&${param}=${value}`;
+    }, '');
+
+    queryParams = queryParams.replace(queryParams[0], '?');
+
+    const url = `${this.baseURL}${queryParams}`;
+
+    return this.http.get<InterviewDTO[]>(
+      url,
+      this._httpOptions.isBackendRequest()
+    );
+  }
+
+  findByParams(params: { [key: string]: string }) {
+    let queryParams = '';
+
+    Object.keys(params).forEach((param) => {
+      queryParams = queryParams + `?${param}=${params[param]}`;
+    });
+
+    const url = `${this.baseURL}${queryParams}`;
 
     return this.http.get<InterviewDTO[]>(
       url,
@@ -75,29 +98,5 @@ export class InterviewHttpService {
       null,
       this._httpOptions.isFormSubmission()
     );
-  }
-
-  /**
-   *
-   * @description
-   * Returns the full URL with the query parameters of the relations to be expanded
-   *
-   */
-  private _getURLwithRelations(baseURL: string) {
-    return `${baseURL}?${this._relationsQueryString()}`;
-  }
-
-  /**
-   * @description
-   * Returns a string of the query parameters of the relations to be expanded
-   */
-  private _relationsQueryString() {
-    let fullUrlQuery = '';
-
-    this.parentRelations.forEach((model) => {
-      fullUrlQuery = fullUrlQuery + `&_expand=${model}`;
-    });
-
-    return fullUrlQuery;
   }
 }

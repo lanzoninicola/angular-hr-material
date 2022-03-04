@@ -3,7 +3,7 @@ import { DateService } from 'src/app/core/services/date.service';
 
 import { InterviewRoundModel } from '../models/interview-round.model';
 import { InterviewModel } from '../models/interview.model';
-import { InterviewRoundDTO } from '../types/interview-round.type';
+import { InterviewRoundDTO } from '../types/interview-round.dto.type';
 
 @Injectable({
   providedIn: 'root',

@@ -1,17 +1,14 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable, switchMap } from 'rxjs';
-import { UserModel } from 'src/app/users/models/user.model';
+import { forkJoin, map, Observable } from 'rxjs';
 import { UsersCollection } from 'src/app/users/models/users.collection';
 import { UsersService } from 'src/app/users/services/users.service';
+
 import { InterviewAttendeeModel } from '../models/interview-attendee.model';
 import { InterviewRoundModel } from '../models/interview-round.model';
-import { InterviewCollection } from '../models/interview.collection';
-import { InterviewModel } from '../models/interview.model';
 import { InterviewAttendeeDTO } from '../types/interview.dto.type';
 import { InterviewAttendeeHttpService } from './interview-attendee-http.service';
 import { InterviewAttendeeSerializerService } from './interview-attendee-serializer.service';
 import { InterviewRoundService } from './interview-round.service';
-import { InterviewService } from './interview.service';
 
 @Injectable({
   providedIn: 'root',

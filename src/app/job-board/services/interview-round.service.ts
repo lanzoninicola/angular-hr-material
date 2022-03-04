@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable } from 'rxjs';
-import { PicklistService } from 'src/app/settings/services/picklist/picklist.service';
+import { forkJoin, map, Observable, switchMap } from 'rxjs';
 
 import { InterviewRoundModel } from '../models/interview-round.model';
+import { InterviewCollection } from '../models/interview.collection';
 import { InterviewModel } from '../models/interview.model';
-import { InterviewRoundDTO } from '../types/interview-round.type';
+import { JobApplicationModel } from '../models/job-application.model';
+import { InterviewRoundDTO } from '../types/interview-round.dto.type';
+import { InterviewRoundOnListTable } from '../types/interview.list.type';
 import { InterviewRoundHttpService } from './interview-round-http.service';
 import { InterviewRoundSerializerService } from './interview-round-serializer.service';
+import { InterviewService } from './interview.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +18,22 @@ export class InterviewRoundService {
   constructor(
     private _httpService: InterviewRoundHttpService,
     private _serializationService: InterviewRoundSerializerService,
-    private _picklistService: PicklistService
+    private _interviewService: InterviewService
   ) {}
+
+  // findAll(): Observable<InterviewRoundModel[]> {
+  //   const rounds$: Observable<InterviewRoundDTO[]> = this._httpService.findAll();
+
+  //   return forkJoin([rounds$]).pipe(
+  //     map(([rounds]) => {
+  //       const interviewsRounds = rounds.map((round) => {
+  //         return this._serializationService.deserialize(round);
+  //       });
+
+  //       return interviewsRounds;
+  //     })
+  //   );
+  // }
 
   findByInterview(
     interview: InterviewModel
@@ -35,5 +52,96 @@ export class InterviewRoundService {
         return interviewsRounds;
       })
     );
+  }
+
+  findByJobApplication(
+    jobApplication: JobApplicationModel
+  ): Observable<InterviewRoundModel[]> {
+    const interviews$ =
+      this._interviewService.findByJobApplication(jobApplication);
+
+    const rounds$: Observable<InterviewRoundDTO[]> = interviews$.pipe(
+      switchMap((interviews) => {
+        const roundsIds = interviews.getItems().map((interview) => {
+          return String(interview.getId());
+        });
+
+        return this._httpService.findByParamValues('interviewsId', roundsIds);
+      })
+    );
+
+    return forkJoin([interviews$, rounds$]).pipe(
+      map(([interviews, rounds]) => {
+        const interviewsRounds = rounds.map((round) => {
+          return this._serializationService.deserialize(round, {
+            interview: interviews.findItemById(round.interviewsId),
+          });
+        });
+
+        return interviewsRounds;
+      })
+    );
+  }
+
+  findAllOpen(): Observable<InterviewRoundModel[]> {
+    const interviews$: Observable<InterviewCollection> =
+      this._interviewService.findAllOpen();
+
+    const rounds$: Observable<InterviewRoundDTO[]> = interviews$.pipe(
+      switchMap((interviews) => {
+        const roundsIds = interviews.getItems().map((interview) => {
+          return String(interview.getId());
+        });
+
+        return this._httpService.findByParamValues('interviewsId', roundsIds);
+      })
+    );
+
+    return forkJoin([interviews$, rounds$]).pipe(
+      map(([interviews, rounds]) => {
+        const interviewsRounds = rounds.map((round) => {
+          return this._serializationService.deserialize(round, {
+            interview: interviews.findItemById(round.interviewsId),
+          });
+        });
+
+        return interviewsRounds;
+      })
+    );
+  }
+
+  getListOfAllInterviewRounds() {
+    return this.findAllOpen().pipe(
+      map<InterviewRoundModel[], InterviewRoundOnListTable[]>((interviews) => {
+        return this.transform(interviews);
+      })
+    );
+  }
+
+  getListOfInterviewRoundsByJobApplication(application: JobApplicationModel) {
+    return this.findByJobApplication(application).pipe(
+      map<InterviewRoundModel[], InterviewRoundOnListTable[]>((interviews) => {
+        return this.transform(interviews);
+      })
+    );
+  }
+
+  transform(
+    interviewRounds: InterviewRoundModel[]
+  ): InterviewRoundOnListTable[] {
+    return interviewRounds.map((round) => {
+      return {
+        interviewId: round.getInterview().getId(),
+        roundId: round.getId(),
+        jobApplication: round.getInterview().getJobApplication(),
+        candidate: round.getInterview().getJobApplication().getCandidate(),
+        jobId: round.getInterview().getJobApplication().getJobsId(),
+        roundName: round.getName(),
+        stage: round.getInterview().getStage(),
+        scheduledAt: round.getScheduledAt(),
+        createdAt: round.getCreatedAt(),
+        updatedAt: round.getUpdatedAt(),
+      };
+    });
   }
 }
