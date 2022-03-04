@@ -26,7 +26,7 @@ export class InterviewStatusFormComponent implements OnInit {
   currentInterview: InterviewModel | null;
 
   @Input()
-  entityState: EntityState;
+  entityState: EntityState | null;
 
   @Input()
   showSpinner: boolean = false;
@@ -63,12 +63,12 @@ export class InterviewStatusFormComponent implements OnInit {
       },
       {
         type: 'select',
-        key: 'status',
-        label: 'Interview Status',
+        key: 'stage',
+        label: 'Interview Stage',
         placeholder: '',
-        whatToSelect: 'Status',
+        whatToSelect: 'stage',
         options: this._route.data.pipe(
-          map((data) => data['formControlsData']['interviewStatus'])
+          map((data) => data['formControlsData']['interviewStages'])
         ),
         syncValidators: [Validators.required],
         showOptionDescription: true,

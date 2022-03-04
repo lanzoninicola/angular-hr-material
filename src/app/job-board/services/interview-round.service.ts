@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable, switchMap } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable, switchMap } from 'rxjs';
 
 import { InterviewRoundModel } from '../models/interview-round.model';
 import { InterviewCollection } from '../models/interview.collection';
@@ -15,6 +15,10 @@ import { InterviewService } from './interview.service';
   providedIn: 'root',
 })
 export class InterviewRoundService {
+  stateCurrentInterviewRounds$ = new BehaviorSubject<InterviewRoundModel[]>([]);
+  stateInterviewRoundSelected$ =
+    new BehaviorSubject<InterviewRoundModel | null>(null);
+
   constructor(
     private _httpService: InterviewRoundHttpService,
     private _serializationService: InterviewRoundSerializerService,

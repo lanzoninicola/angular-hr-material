@@ -4,6 +4,7 @@ import { ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { catchError, EMPTY, Observable, tap } from 'rxjs';
 
 import { InterviewModel } from '../models/interview.model';
+import { InterviewRoundService } from '../services/interview-round.service';
 import { InterviewService } from '../services/interview.service';
 
 @Injectable({
@@ -13,7 +14,7 @@ export class InterviewEditResolver implements Resolve<InterviewModel> {
   entityIdParam: number;
 
   constructor(
-    private _dataService: InterviewService,
+    private _interview: InterviewService,
     private _location: Location
   ) {}
 
@@ -24,11 +25,11 @@ export class InterviewEditResolver implements Resolve<InterviewModel> {
       this._goBack();
     }
 
-    return this._dataService.findById(this.entityIdParam).pipe(
+    return this._interview.findById(this.entityIdParam).pipe(
       catchError(this._goBack()),
       tap((entity) => {
-        this._dataService.stateCurrentInterview$.next(entity);
-        this._dataService.stateEntityState$.next('update');
+        this._interview.stateCurrentInterview$.next(entity);
+        this._interview.stateEntityState$.next('update');
       })
     );
   }

@@ -2,13 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
+  forkJoin,
   map,
   Observable,
+  of,
   Subscription,
+  switchMap,
+  tap,
 } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
+import { InterviewRoundModel } from '../../models/interview-round.model';
 import { InterviewModel } from '../../models/interview.model';
+import { InterviewRoundService } from '../../services/interview-round.service';
 import { InterviewService } from '../../services/interview.service';
 import { InterviewFormData } from '../../types/interview.form.type';
 
@@ -18,8 +24,8 @@ import { InterviewFormData } from '../../types/interview.form.type';
   styleUrls: ['./interview-edit.component.scss'],
 })
 export class InterviewEditComponent implements OnInit {
-  currentInterview: InterviewModel | null;
-  entityState: EntityState = 'create';
+  currentInterview$ = new BehaviorSubject<InterviewModel | null>(null);
+  entityState$ = new BehaviorSubject<EntityState>('create');
   showJobIdDetails: boolean = false;
 
   formState$: Observable<FormState>;
@@ -34,23 +40,37 @@ export class InterviewEditComponent implements OnInit {
 
   private sub = new Subscription();
 
-  constructor(private _dataService: InterviewService) {}
+  constructor(
+    private _interview: InterviewService,
+    private _interviewRounds: InterviewRoundService
+  ) {}
 
   ngOnInit(): void {
-    this.sub.add(
-      this._dataService.stateCurrentInterview$.subscribe((currentInterview) => {
-        this.currentInterview = currentInterview;
-      })
-    );
+    this._loadInterviewRounds();
 
-    this.sub.add(
-      this._dataService.stateEntityState$.subscribe((entityState) => {
-        this.entityState = entityState;
-      })
-    );
+    this.currentInterview$ = this._interview.stateCurrentInterview$;
+    this.entityState$ = this._interview.stateEntityState$;
 
     this.formStatus$ = this._getGlobalFormStatus();
     this.formState$ = this._getGlobalFormState();
+  }
+
+  private _loadInterviewRounds() {
+    this.sub.add(
+      this._interview.stateCurrentInterview$
+        .pipe(
+          switchMap((interview) => {
+            return interview
+              ? this._interviewRounds.findByInterview(interview)
+              : of([]);
+          })
+        )
+        .subscribe((interviewRounds) => {
+          this._interviewRounds.stateCurrentInterviewRounds$.next(
+            interviewRounds
+          );
+        })
+    );
   }
 
   private _getGlobalFormStatus() {

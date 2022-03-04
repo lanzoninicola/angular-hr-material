@@ -15,11 +15,11 @@ export class InterviewFormResolver
   constructor(private _picklistService: PicklistService) {}
 
   resolve(): Observable<InterviewFormControlsData> {
-    const statuses$ = this._picklistService.findByType('interview-stage');
+    const stages$ = this._picklistService.findByType('interview-stage');
 
-    return forkJoin([statuses$]).pipe(
-      map(([statuses]) => {
-        const interviewStatusOptions = statuses
+    return forkJoin([stages$]).pipe(
+      map(([stages]) => {
+        const interviewStagesOptions = stages
           .getItems()
           .map((item: PicklistItemModel) => {
             return {
@@ -29,7 +29,7 @@ export class InterviewFormResolver
           });
 
         return {
-          interviewStatus: interviewStatusOptions,
+          interviewStages: interviewStagesOptions,
         };
       })
     );

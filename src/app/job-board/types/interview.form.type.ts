@@ -16,5 +16,5 @@ export interface InterviewFormData {
 }
 
 export interface InterviewFormControlsData {
-  interviewStatus: SelectOptionConfig[];
+  interviewStages: SelectOptionConfig[];
 }

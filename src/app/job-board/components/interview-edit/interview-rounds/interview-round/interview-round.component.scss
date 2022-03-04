@@ -1,0 +1,46 @@
+@import "variables.scss";
+
+mat-card {
+  &:hover {
+    cursor: pointer;
+  }
+
+  .card-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+
+    span:nth-child(1) {
+      font-weight: 600;
+      font-size: 120%;
+      margin-bottom: 0.5rem;
+    }
+
+    span:nth-child(2) {
+      color: $grey;
+      font-size: 85%;
+    }
+  }
+
+  mat-card-actions {
+    .mark-completed {
+      display: flex;
+      justify-content: center;
+      transition: all 0.2s ease-out;
+    }
+
+    .round-completed {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      transition: all 0.2s ease-in;
+    }
+
+    .round-feedback {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-evenly;
+      transition: all 0.2s ease-in;
+    }
+  }
+}
