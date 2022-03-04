@@ -3,7 +3,7 @@ export interface InterviewRoundDTO {
   interviewsId: number;
   name: string;
   rating: number;
-  passed: boolean;
+  passed: boolean | null;
   scheduledAt: string;
   createdAt: string;
   updatedAt: string;

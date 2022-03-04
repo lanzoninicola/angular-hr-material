@@ -144,7 +144,7 @@ export class InterviewStatusFormComponent implements OnInit {
       this._dynamicForm.setControlsValue({
         id: currentInterview.id,
         jobsapplicationsId: currentInterview.getJobApplication(),
-        status: currentInterview.getStatus(),
+        stage: currentInterview.getStage(),
         createdAt: currentInterview.getCreatedAt(),
       });
     }

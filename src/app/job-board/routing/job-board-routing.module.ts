@@ -11,7 +11,7 @@ import { JobApplicationListComponent } from '../components/job-application-list/
 import { JobApplicationEditComponent } from '../components/job-application-edit/job-application-edit.component';
 import { JobApplicationEditResolver } from './job-application-edit.resolver';
 import { JobApplicationFormResolver } from './job-application-form.resolver';
-import { InterviewListComponent } from '../components/interview-list/interview-list.component';
+import { InterviewRoundsListComponent } from '../components/interview-rounds-list/interview-rounds-list.component';
 import { InterviewEditComponent } from '../components/interview-edit/interview-edit.component';
 import { InterviewEditResolver } from './interview-edit.resolver';
 import { InterviewFormResolver } from './interview-form.resolver';
@@ -63,7 +63,7 @@ const moduleRoutes: Routes = [
       },
       {
         path: 'interviews/list',
-        component: InterviewListComponent,
+        component: InterviewRoundsListComponent,
       },
 
       {

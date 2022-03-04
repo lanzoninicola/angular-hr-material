@@ -7,7 +7,7 @@ export class InterviewRoundModel {
   interview: InterviewModel;
   name: string;
   rating: number;
-  passed: boolean;
+  passed: boolean | null;
   scheduledAt: Date;
   createdAt: Date;
   updatedAt: Date;
@@ -17,7 +17,7 @@ export class InterviewRoundModel {
     interview: InterviewModel,
     name: string,
     rating: number,
-    passed: boolean,
+    passed: boolean | null,
     scheduledAt: Date,
     createdAt: Date,
     updatedAt: Date
@@ -48,7 +48,7 @@ export class InterviewRoundModel {
     return this.rating;
   }
 
-  getPassed(): boolean {
+  getPassed(): boolean | null {
     return this.passed;
   }
 

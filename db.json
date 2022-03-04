@@ -281,28 +281,21 @@
       "order": 1
     },
     {
-      "id": 14,
+      "id": 140,
       "type": "interview-stage",
       "key": "in-progress",
       "value": "In progress",
       "order": 2
     },
     {
-      "id": 14,
+      "id": 141,
       "type": "interview-stage",
       "key": "done",
       "value": "Closed",
       "order": 3
     },
     {
-      "id": 140,
-      "type": "interview-stage",
-      "key": "interviewer-declined",
-      "value": "Interviewer declined",
-      "order": 4
-    },
-    {
-      "id": 15,
+      "id": 142,
       "type": "interview-stage",
       "key": "interviewer-declined",
       "value": "Interviewer declined",
@@ -751,7 +744,7 @@
     {
       "id": 2,
       "jobsapplicationsId": 2,
-      "stage": 14,
+      "stage": 140,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     }
@@ -760,7 +753,7 @@
     {
       "id": 1,
       "interviewsId": 1,
-      "round": 1,
+      "name": "HR Screening",
       "rating": 5,
       "passed": true,
       "scheduledAt": "2022-04-19T08:00:00.000Z",
@@ -770,9 +763,9 @@
     {
       "id": 2,
       "interviewsId": 1,
-      "round": 2,
+      "name": "Technical Round",
       "rating": 1,
-      "passed": true,
+      "passed": null,
       "scheduledAt": "2022-04-28T08:00:00.000Z",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
@@ -780,9 +773,9 @@
     {
       "id": 3,
       "interviewsId": 2,
-      "round": 1,
+      "name": "Technical Round",
       "rating": 4,
-      "passed": true,
+      "passed": null,
       "scheduledAt": "2022-04-28T08:00:00.000Z",
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
@@ -792,21 +785,21 @@
     {
       "id": 1,
       "interviewsroundsId": 1,
-      "attendeeId": 4,
+      "usersId": 4,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     },
     {
       "id": 2,
       "interviewsroundsId": 1,
-      "attendeeId": 7,
+      "usersId": 7,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     },
     {
       "id": 3,
       "interviewsroundsId": 2,
-      "attendeeId": 71,
+      "usersId": 71,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     }
@@ -815,7 +808,9 @@
     {
       "id": 1,
       "interviewsroundsId": 1,
+      "interviewattendeesId": 1,
       "feedback": "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
+      "rating": 5,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
     }

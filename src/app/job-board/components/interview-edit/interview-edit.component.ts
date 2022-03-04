@@ -51,8 +51,6 @@ export class InterviewEditComponent implements OnInit {
 
     this.formStatus$ = this._getGlobalFormStatus();
     this.formState$ = this._getGlobalFormState();
-
-    console.log(this.currentInterview);
   }
 
   private _getGlobalFormStatus() {

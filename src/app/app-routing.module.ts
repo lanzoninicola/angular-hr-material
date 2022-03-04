@@ -37,6 +37,13 @@ const routes: Routes = [
         return m.JobBoardModule;
       }),
   },
+  {
+    path: 'settings',
+    loadChildren: () =>
+      import('./settings/settings.module').then((m) => {
+        return m.SettingsModule;
+      }),
+  },
 ];
 
 @NgModule({

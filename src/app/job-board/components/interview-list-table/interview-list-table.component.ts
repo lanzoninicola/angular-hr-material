@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TableColumnConfig } from 'src/app/table-data/types/table.types';
 
-import { InterviewOnTableList } from '../../types/interview.list.type';
+import { InterviewRoundOnListTable } from '../../types/interview.list.type';
 import { CandidateIdBadgeComponent } from '../candidate-id-badge/candidate-id-badge.component';
 import { JobidBadgeComponent } from '../jobid-badge/jobid-badge.component';
 
@@ -20,20 +20,16 @@ import { JobidBadgeComponent } from '../jobid-badge/jobid-badge.component';
 })
 export class InterviewListTableComponent implements OnInit {
   @Input()
-  tableDataSource$: Observable<InterviewOnTableList[]>;
+  tableDataSource$: Observable<InterviewRoundOnListTable[]>;
 
   columns = INTERVIEWS_TABLE_COLUMNS;
 
   constructor(private router: Router) {}
 
-  ngOnInit() {
-    this.tableDataSource$.subscribe((data) => {
-      console.log(data);
-    });
-  }
+  ngOnInit() {}
 
-  onRowClicked(entityRow: any) {
-    this.router.navigate(['job-board', 'interviews', entityRow.id]);
+  onRowClicked(entityRow: InterviewRoundOnListTable) {
+    this.router.navigate(['job-board', 'interviews', entityRow.interviewId]);
   }
 }
 
@@ -74,8 +70,16 @@ const INTERVIEWS_TABLE_COLUMNS: TableColumnConfig[] = [
     },
   },
   {
-    key: 'status',
-    title: 'Status',
+    key: 'roundName',
+    title: 'Round',
+    sortable: false,
+    headerStyle: {
+      'min-width': '80px',
+    },
+  },
+  {
+    key: 'stage',
+    title: 'Stage',
     objectProp: 'value',
     sortable: false,
     headerStyle: {
