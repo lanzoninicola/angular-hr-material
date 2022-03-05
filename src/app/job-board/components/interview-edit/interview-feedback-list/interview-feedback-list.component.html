@@ -1,0 +1,57 @@
+<div class="feedback">
+  <button mat-flat-button color="primary" (click)="addFeedback()">
+    Add Feedback
+  </button>
+  <div *ngIf="showEditForm">
+    <ahr-interview-feedback-edit></ahr-interview-feedback-edit>
+  </div>
+  <div class="container-feedbacks">
+    <div
+      class="feedback-items"
+      *ngFor="let feedback of feedbacks; let i = index"
+    >
+      <div class="feedback-item">
+        <div class="feedback-data">
+          <div class="feedback-dates">
+            <span
+              ><strong>Date </strong><br />{{
+                feedback.createdAt | date: "dd/MM/yyyy"
+              }}</span
+            >
+            <span
+              ><strong>Last Update </strong><br />{{
+                feedback.updatedAt | date: "dd/MM/yyyy HH:mm"
+              }}</span
+            >
+          </div>
+          <div class="feedback-details">
+            <span
+              ><strong>Description</strong><br />{{
+                feedback.description
+              }}</span
+            >
+          </div>
+        </div>
+
+        <div class="feedback-actions">
+          <button
+            mat-mini-fab
+            color="primary"
+            aria-label="Example icon button with a filter list icon"
+            (click)="editFeedback(i)"
+          >
+            <mat-icon>edit</mat-icon>
+          </button>
+          <button
+            mat-mini-fab
+            color="primary"
+            aria-label="Example icon button with a filter list icon"
+            (click)="deleteFeedback(i)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

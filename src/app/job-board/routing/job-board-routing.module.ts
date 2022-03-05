@@ -15,6 +15,7 @@ import { InterviewRoundsListComponent } from '../components/interview-rounds-lis
 import { InterviewEditComponent } from '../components/interview-edit/interview-edit.component';
 import { InterviewEditResolver } from './interview-edit.resolver';
 import { InterviewFormResolver } from './interview-form.resolver';
+import { InterviewRoundsResolver } from './interview-rounds.resolve';
 
 const moduleRoutes: Routes = [
   {

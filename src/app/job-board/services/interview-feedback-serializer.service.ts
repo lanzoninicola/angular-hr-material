@@ -23,7 +23,7 @@ export class InterviewFeedbackSerializerService {
       relations.interviewRound,
       relations.attendee,
       dto.rating,
-      dto.feedback,
+      dto.description,
       this._dateService.ISOToFullDate(dto.createdAt),
       this._dateService.ISOToFullDate(dto.updatedAt)
     );
@@ -35,7 +35,7 @@ export class InterviewFeedbackSerializerService {
       interviewsroundsId: model.getInterviewRound().getId(),
       interviewattendeesId: model.getAttendee().getId(),
       rating: model.getRating(),
-      feedback: model.getFeedback(),
+      description: model.getDescription(),
       createdAt: this._dateService.dateToISOString(model.createdAt),
       updatedAt: this._dateService.dateToISOString(model.updatedAt),
     };

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -12,6 +13,13 @@ import { SharedModule } from '../shared/shared.module';
 import { TableDataModule } from '../table-data/table-data.module';
 import { CandidateIdBadgeComponent } from './components/candidate-id-badge/candidate-id-badge.component';
 import { InterviewEditComponent } from './components/interview-edit/interview-edit.component';
+import { InterviewFeedbackEditFormComponent } from './components/interview-edit/interview-feedback-edit/interview-feedback-edit-form/interview-feedback-edit-form.component';
+import { InterviewFeedbackEditComponent } from './components/interview-edit/interview-feedback-edit/interview-feedback-edit.component';
+import { InterviewFeedbackListComponent } from './components/interview-edit/interview-feedback-list/interview-feedback-list.component';
+import { InterviewQuestionsComponent } from './components/interview-edit/interview-questions/interview-questions.component';
+import { InterviewRoundDetailsComponent } from './components/interview-edit/interview-rounds/interview-round-details/interview-round-details.component';
+import { InterviewRoundComponent } from './components/interview-edit/interview-rounds/interview-round/interview-round.component';
+import { InterviewRoundsComponent } from './components/interview-edit/interview-rounds/interview-rounds.component';
 import { InterviewStatusFormComponent } from './components/interview-edit/interview-status-form/interview-status-form.component';
 import { InterviewListTableComponent } from './components/interview-list-table/interview-list-table.component';
 import { InterviewRoundsListComponent } from './components/interview-rounds-list/interview-rounds-list.component';
@@ -58,19 +66,27 @@ import { JobBoardRoutingModule } from './routing/job-board-routing.module';
     InterviewEditComponent,
     InterviewListTableComponent,
     InterviewStatusFormComponent,
+    InterviewQuestionsComponent,
+    InterviewRoundsComponent,
+    InterviewRoundComponent,
+    InterviewRoundDetailsComponent,
+    InterviewFeedbackListComponent,
+    InterviewFeedbackEditComponent,
+    InterviewFeedbackEditFormComponent,
   ],
   imports: [
     CoreModule,
     SharedModule,
-    JobBoardRoutingModule,
     MatButtonModule,
-    TableDataModule,
-    DynamicFormModule,
     MatTabsModule,
-    CandidatesModule,
     MatIconModule,
     MatDividerModule,
     ReactiveFormsModule,
+    MatCardModule,
+    JobBoardRoutingModule,
+    TableDataModule,
+    DynamicFormModule,
+    CandidatesModule,
   ],
 })
 export class JobBoardModule {}

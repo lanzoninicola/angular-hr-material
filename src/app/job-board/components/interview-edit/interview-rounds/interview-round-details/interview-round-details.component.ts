@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
       <mat-tab-group animationDuration="0ms">
         <mat-tab label="Feedbacks">
           <div class="tab-content-wrapper">
-            <ahr-interview-feedbacks></ahr-interview-feedbacks>
+            <ahr-interview-feedback-list></ahr-interview-feedback-list>
           </div>
         </mat-tab>
         <mat-tab label="Technical Interview">

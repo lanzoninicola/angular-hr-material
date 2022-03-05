@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
-import { forkJoin, map, Observable } from 'rxjs';
+import { BehaviorSubject, forkJoin, map, Observable } from 'rxjs';
+import { EntityState } from 'src/app/core/types/entityState.type';
 import { InterviewAttendeeModel } from '../models/interview-attendee.model';
 import { InterviewFeedbackModel } from '../models/interview-feedback.model';
 import { InterviewRoundModel } from '../models/interview-round.model';
+import { InterviewFeedbackFormData } from '../types/interview-feedback.form.type';
 import { InterviewFeedbackDTO } from '../types/interview-feedback.type';
 import { InterviewAttendeeService } from './interview-attendee.service';
 import { InterviewFeedbackHttpService } from './interview-feedback-http.service';
@@ -12,6 +14,11 @@ import { InterviewFeedbackSerializerService } from './interview-feedback-seriali
   providedIn: 'root',
 })
 export class InterviewFeedbackService {
+  stateFeedbacks$ = new BehaviorSubject<InterviewFeedbackModel[]>([]);
+  stateEntityState$ = new BehaviorSubject<EntityState>('idle');
+  stateShowEditForm$ = new BehaviorSubject<boolean>(false);
+  stateFeedbackEditable$ = new BehaviorSubject<number | null>(null);
+
   constructor(
     private _httpService: InterviewFeedbackHttpService,
     private _serializationService: InterviewFeedbackSerializerService,
@@ -45,6 +52,34 @@ export class InterviewFeedbackService {
 
         return feedbacksModels;
       })
+    );
+  }
+
+  save(model: InterviewFeedbackModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService.save(dto);
+  }
+
+  update(model: InterviewFeedbackModel) {
+    const dto = this._serializationService.serialize(model);
+    return this._httpService.update(dto);
+  }
+
+  delete(id: number) {
+    return this._httpService.delete(id);
+  }
+
+  getEntityModelFromFormData(
+    formData: InterviewFeedbackFormData
+  ): InterviewFeedbackModel {
+    return new InterviewFeedbackModel(
+      formData.id,
+      formData.interviewsroundsId,
+      formData.interviewattendeesId,
+      formData.rating,
+      formData.description,
+      formData.createdAt,
+      formData.updatedAt
     );
   }
 }
