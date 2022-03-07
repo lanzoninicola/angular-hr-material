@@ -20,6 +20,8 @@ import { LogoComponent } from './components/logo/logo.component';
 import { SearchControlComponent } from './components/search-control/search-control.component';
 import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
 import { ProfileBadgeComponent } from './components/profile-badge/profile-badge.component';
+import { RatingSliderComponent } from './components/rating-slider/rating-slider.component';
+import { MatSliderModule } from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { ProfileBadgeComponent } from './components/profile-badge/profile-badge.
     IconComponent,
     ChipComponent,
     ProfileBadgeComponent,
+    RatingSliderComponent,
   ],
   imports: [
     CommonModule,
@@ -46,6 +49,7 @@ import { ProfileBadgeComponent } from './components/profile-badge/profile-badge.
     MatInputModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatSliderModule,
   ],
   exports: [
     CommonModule,
@@ -60,6 +64,7 @@ import { ProfileBadgeComponent } from './components/profile-badge/profile-badge.
     IconComponent,
     ChipComponent,
     ProfileBadgeComponent,
+    RatingSliderComponent,
   ],
 })
 export class SharedModule {}
