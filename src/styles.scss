@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700);
+@import url(https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700);
 @import "./assets/styles/variables.scss";
 
 :root {
@@ -13,7 +13,7 @@
 }
 
 * {
-  font-family: Poppins, "sans-serif";
+  font-family: Inter, "sans-serif";
 }
 
 h1,
@@ -22,7 +22,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: Poppins, "sans-serif";
+  font-family: Inter, "sans-serif";
 }
 
 html,
@@ -40,7 +40,7 @@ textarea {
 }
 
 mat-form-field {
-  font-family: Poppins, "sans-serif";
+  font-family: Inter, "sans-serif";
 }
 
 .container-list {
