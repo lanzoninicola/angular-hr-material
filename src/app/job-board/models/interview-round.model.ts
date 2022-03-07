@@ -6,7 +6,7 @@ export class InterviewRoundModel {
   id: number;
   interview: InterviewModel;
   name: string;
-  rating: number;
+  score: number;
   passed: boolean | null;
   scheduledAt: Date;
   createdAt: Date;
@@ -16,7 +16,7 @@ export class InterviewRoundModel {
     id: number,
     interview: InterviewModel,
     name: string,
-    rating: number,
+    score: number,
     passed: boolean | null,
     scheduledAt: Date,
     createdAt: Date,
@@ -25,7 +25,7 @@ export class InterviewRoundModel {
     this.id = id;
     this.interview = interview;
     this.name = name;
-    this.rating = rating;
+    this.score = score;
     this.passed = passed;
     this.scheduledAt = scheduledAt;
     this.createdAt = createdAt;
@@ -44,8 +44,8 @@ export class InterviewRoundModel {
     return this.name;
   }
 
-  getRating(): number {
-    return this.rating;
+  getScore(): number {
+    return this.score;
   }
 
   getPassed(): boolean | null {

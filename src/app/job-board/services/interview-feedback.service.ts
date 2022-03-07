@@ -18,6 +18,7 @@ export class InterviewFeedbackService {
   stateEntityState$ = new BehaviorSubject<EntityState>('idle');
   stateShowEditForm$ = new BehaviorSubject<boolean>(false);
   stateFeedbackEditable$ = new BehaviorSubject<number | null>(null);
+  stateInterviewScoreOnFeedback$ = new BehaviorSubject<number>(0);
 
   constructor(
     private _httpService: InterviewFeedbackHttpService,

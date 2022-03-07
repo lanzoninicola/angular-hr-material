@@ -5,7 +5,7 @@ export class InterviewFeedbackModel {
   id: number;
   interviewRound: InterviewRoundModel;
   attendee: InterviewAttendeeModel;
-  rating: number;
+  score: number;
   description: string;
   createdAt: Date;
   updatedAt: Date;
@@ -14,7 +14,7 @@ export class InterviewFeedbackModel {
     id: number,
     interviewRound: InterviewRoundModel,
     attendee: InterviewAttendeeModel,
-    rating: number,
+    score: number,
     description: string,
     createdAt: Date,
     updatedAt: Date
@@ -22,7 +22,7 @@ export class InterviewFeedbackModel {
     this.id = id;
     this.interviewRound = interviewRound;
     this.attendee = attendee;
-    this.rating = rating;
+    this.score = score;
     this.description = description;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
@@ -40,8 +40,8 @@ export class InterviewFeedbackModel {
     return this.attendee;
   }
 
-  getRating(): number {
-    return this.rating;
+  getScore(): number {
+    return this.score;
   }
 
   getDescription(): string {

@@ -19,12 +19,12 @@ export class InterviewFeedbackEditComponent implements OnInit {
   entityState: EntityState;
 
   feedbacks: InterviewFeedbackModel[] = [];
+  currentFeedbackIdx: number | null;
 
   formState: FormState = 'idle';
   formData: InterviewFeedbackFormData;
   formStatus: string = 'invalid';
-
-  currentFeedbackIdx: number | null;
+  sliderStatus: string = 'invalid';
 
   sub = new Subscription();
 
@@ -43,50 +43,13 @@ export class InterviewFeedbackEditComponent implements OnInit {
 
   saveFeedback() {
     const { entityState } = this;
-    const { stateFeedbacks$, stateShowEditForm$, stateEntityState$ } =
-      this._dataService;
-
-    const feedbackModel = this._dataService.getEntityModelFromFormData(
-      this.formData
-    );
-
-    console.log(feedbackModel, this.formData);
 
     if (entityState === 'create') {
-      this._dataService
-        .save(feedbackModel)
-        .pipe(
-          tap(() => {
-            const nextFeedbacks = [...this.feedbacks];
-            nextFeedbacks.splice(0, 0, feedbackModel);
-
-            stateFeedbacks$.next(nextFeedbacks);
-            stateShowEditForm$.next(false);
-            stateEntityState$.next('idle');
-          })
-        )
-        .subscribe();
+      this._createFeedback();
     }
 
     if (entityState === 'update') {
-      this._dataService
-        .update(feedbackModel)
-        .pipe(
-          tap(() => {
-            const nextFeedbacks = this.feedbacks.map((feedback) => {
-              if (feedback.id === feedbackModel.id) {
-                return feedbackModel;
-              }
-
-              return feedback;
-            });
-
-            stateFeedbacks$.next(nextFeedbacks);
-            stateShowEditForm$.next(false);
-            stateEntityState$.next('idle');
-          })
-        )
-        .subscribe();
+      this._updateFeedback();
     }
   }
 
@@ -107,6 +70,10 @@ export class InterviewFeedbackEditComponent implements OnInit {
 
   onStatusChanges(formStatus: string) {
     this.formStatus = formStatus;
+  }
+
+  onSliderStatusChanges(sliderStatus: string) {
+    this.sliderStatus = sliderStatus;
   }
 
   private _subscribeState() {
@@ -142,5 +109,56 @@ export class InterviewFeedbackEditComponent implements OnInit {
         (feedbackIdx) => (this.currentFeedbackIdx = feedbackIdx)
       )
     );
+  }
+
+  private _createFeedback() {
+    const { stateFeedbacks$, stateShowEditForm$, stateEntityState$ } =
+      this._dataService;
+
+    const feedbackModel = this._dataService.getEntityModelFromFormData(
+      this.formData
+    );
+
+    this._dataService
+      .save(feedbackModel)
+      .pipe(
+        tap(() => {
+          const nextFeedbacks = [...this.feedbacks];
+          nextFeedbacks.splice(0, 0, feedbackModel);
+
+          stateFeedbacks$.next(nextFeedbacks);
+          stateShowEditForm$.next(false);
+          stateEntityState$.next('idle');
+        })
+      )
+      .subscribe();
+  }
+
+  private _updateFeedback() {
+    const { stateFeedbacks$, stateShowEditForm$, stateEntityState$ } =
+      this._dataService;
+
+    const feedbackModel = this._dataService.getEntityModelFromFormData(
+      this.formData
+    );
+
+    this._dataService
+      .update(feedbackModel)
+      .pipe(
+        tap(() => {
+          const nextFeedbacks = this.feedbacks.map((feedback) => {
+            if (feedback.id === feedbackModel.id) {
+              return feedbackModel;
+            }
+
+            return feedback;
+          });
+
+          stateFeedbacks$.next(nextFeedbacks);
+          stateShowEditForm$.next(false);
+          stateEntityState$.next('idle');
+        })
+      )
+      .subscribe();
   }
 }

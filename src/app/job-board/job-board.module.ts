@@ -4,6 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
 
 import { CandidatesModule } from '../candidates/candidates.module';
@@ -83,6 +84,7 @@ import { JobBoardRoutingModule } from './routing/job-board-routing.module';
     MatDividerModule,
     ReactiveFormsModule,
     MatCardModule,
+    MatSliderModule,
     JobBoardRoutingModule,
     TableDataModule,
     DynamicFormModule,

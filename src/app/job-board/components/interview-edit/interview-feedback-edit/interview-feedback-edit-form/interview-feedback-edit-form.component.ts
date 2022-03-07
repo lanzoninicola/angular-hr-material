@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { map, of, Subscription, switchMap, tap } from 'rxjs';
+import { BehaviorSubject, map, of, Subscription, switchMap, tap } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { DynamicFormService } from 'src/app/dynamic-form/services/dynamic-form.service';
 import { FormModelBuilder } from 'src/app/dynamic-form/services/form-model-builder';
@@ -23,23 +23,40 @@ import { InterviewFeedbackFormData } from 'src/app/job-board/types/interview-fee
 @Component({
   selector: 'ahr-interview-feedback-edit-form',
   template: `
-    <ahr-dynamic-form
-      [model]="formFeedback.model"
-      [settings]="formFeedback.settings"
-      [showSpinner]="showSpinner"
-      [divider]="false"
-    ></ahr-dynamic-form>
+    <div class="feedback-form">
+      <ahr-dynamic-form
+        [model]="formFeedback.model"
+        [settings]="formFeedback.settings"
+        [showSpinner]="showSpinner"
+        [divider]="false"
+      ></ahr-dynamic-form>
+    </div>
+
+    <div class="interview-rating">
+      <ahr-rating-slider
+        [ratingLabel]="'Rate the interview:'"
+        (ratingChanges)="onRatingChange($event)"
+        (statusChanges)="onInterviewRatingStatusChange($event)"
+      ></ahr-rating-slider>
+      <div class="interview-score">
+        <span>Interview score: </span>
+        <span>{{ currentInterviewScore }}</span>
+      </div>
+    </div>
   `,
+  styleUrls: ['./interview-feedback-edit-form.component.scss'],
   providers: [DynamicFormService],
 })
 export class InterviewFeedbackEditFormComponent implements OnInit, OnDestroy {
-  currentRound: InterviewRoundModel | null;
-
   @Input()
   entityState: EntityState;
 
   @Input()
   showSpinner: boolean = false;
+
+  currentRound: InterviewRoundModel | null;
+  currentFeedback: InterviewFeedbackModel | null;
+  currentInterviewScore: number = 0;
 
   formFeedback: FormModelBuilder;
   get formControlsConfig(): FormControlConfig[] {
@@ -119,7 +136,8 @@ export class InterviewFeedbackEditFormComponent implements OnInit, OnDestroy {
   @Output('statusChanges')
   statusChangesEvent: EventEmitter<string> = new EventEmitter<string>();
 
-  currentFeedback: InterviewFeedbackModel | null;
+  @Output('sliderStatusChanges')
+  sliderStatusChangesEvent: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(
     private _dynamicForm: DynamicFormService,
@@ -138,6 +156,19 @@ export class InterviewFeedbackEditFormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.sub.unsubscribe();
+  }
+
+  onRatingChange(score: number | null) {
+    if (score === null) {
+      score = 0;
+    }
+
+    this.currentInterviewScore = score;
+    this._dataService.stateInterviewScoreOnFeedback$.next(score);
+  }
+
+  onInterviewRatingStatusChange(status: string) {
+    this.sliderStatusChangesEvent.emit(status);
   }
 
   private _setupForm() {
@@ -183,6 +214,10 @@ export class InterviewFeedbackEditFormComponent implements OnInit, OnDestroy {
       createdAt: currentFeedback?.getCreatedAt(),
       updatedAt: currentFeedback?.getUpdatedAt(),
     });
+
+    const interviewScore = currentFeedback?.getScore() || 0;
+
+    this._dataService.stateInterviewScoreOnFeedback$.next(interviewScore);
   }
 
   private _handleFormEvents() {

@@ -6,6 +6,7 @@
         (formStateChanges)="onStateChanges($event)"
         (valueChanges)="onValueChanges($event)"
         (statusChanges)="onStatusChanges($event)"
+        (sliderStatusChanges)="onSliderStatusChanges($event)"
       ></ahr-interview-feedback-edit-form>
     </div>
     <div class="feedback-edit-footer">
@@ -15,6 +16,7 @@
         (click)="saveFeedback()"
         [disabled]="
           formStatus === 'invalid' ||
+          sliderStatus === 'invalid' ||
           formState === 'submitted' ||
           formState === 'idle'
         "
