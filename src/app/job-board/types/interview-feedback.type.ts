@@ -3,7 +3,7 @@ export interface InterviewFeedbackDTO {
   interviewsroundsId: number;
   interviewattendeesId: number;
   description: string;
-  rating: number;
+  score: number;
   createdAt: string;
   updatedAt: string;
 }
