@@ -809,7 +809,7 @@
       "id": 1,
       "interviewsroundsId": 1,
       "interviewattendeesId": 1,
-      "feedback": "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
+      "description": "lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quidem.",
       "rating": 5,
       "createdAt": "2020-01-01T00:00:00.000Z",
       "updatedAt": "2022-02-25T21:48:51.577Z"
