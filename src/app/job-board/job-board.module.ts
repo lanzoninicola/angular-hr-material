@@ -17,7 +17,8 @@ import { InterviewEditComponent } from './components/interview-edit/interview-ed
 import { InterviewFeedbackEditFormComponent } from './components/interview-edit/interview-feedback-edit/interview-feedback-edit-form/interview-feedback-edit-form.component';
 import { InterviewFeedbackEditComponent } from './components/interview-edit/interview-feedback-edit/interview-feedback-edit.component';
 import { InterviewFeedbackListComponent } from './components/interview-edit/interview-feedback-list/interview-feedback-list.component';
-import { InterviewQuestionsComponent } from './components/interview-edit/interview-questions/interview-questions.component';
+import { InterviewQuestionItemComponent } from './components/interview-edit/interview-question-item/interview-question-item.component';
+import { InterviewQuestionListComponent } from './components/interview-edit/interview-question-list/interview-question-list.component';
 import { InterviewRoundDetailsComponent } from './components/interview-edit/interview-rounds/interview-round-details/interview-round-details.component';
 import { InterviewRoundComponent } from './components/interview-edit/interview-rounds/interview-round/interview-round.component';
 import { InterviewRoundsComponent } from './components/interview-edit/interview-rounds/interview-rounds.component';
@@ -67,13 +68,15 @@ import { JobBoardRoutingModule } from './routing/job-board-routing.module';
     InterviewEditComponent,
     InterviewListTableComponent,
     InterviewStatusFormComponent,
-    InterviewQuestionsComponent,
     InterviewRoundsComponent,
     InterviewRoundComponent,
     InterviewRoundDetailsComponent,
     InterviewFeedbackListComponent,
     InterviewFeedbackEditComponent,
     InterviewFeedbackEditFormComponent,
+    InterviewQuestionListComponent,
+
+    InterviewQuestionItemComponent,
   ],
   imports: [
     CoreModule,

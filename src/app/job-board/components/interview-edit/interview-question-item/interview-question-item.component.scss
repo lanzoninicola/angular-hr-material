@@ -1,0 +1,21 @@
+@import "variables.scss";
+
+.question-item {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  background-color: $white;
+  max-width: 850px;
+
+  .question-data {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+  }
+}
+
+.question-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}

@@ -12,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
         </mat-tab>
         <mat-tab label="Technical Interview">
           <div class="tab-content-wrapper">
-            <ahr-interview-questions></ahr-interview-questions>
+            <ahr-interview-question-list></ahr-interview-question-list>
           </div>
         </mat-tab>
       </mat-tab-group>
