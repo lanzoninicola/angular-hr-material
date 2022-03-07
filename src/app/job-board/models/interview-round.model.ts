@@ -1,5 +1,3 @@
-import { InterviewAttendeeModel } from './interview-attendee.model';
-import { InterviewFeedbackModel } from './interview-feedback.model';
 import { InterviewModel } from './interview.model';
 
 export class InterviewRoundModel {

@@ -2,17 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
   combineLatest,
-  forkJoin,
   map,
   Observable,
   of,
   Subscription,
   switchMap,
-  tap,
 } from 'rxjs';
 import { EntityState } from 'src/app/core/types/entityState.type';
 import { FormState } from 'src/app/dynamic-form/types/form-state.types';
-import { InterviewRoundModel } from '../../models/interview-round.model';
+
 import { InterviewModel } from '../../models/interview.model';
 import { InterviewRoundService } from '../../services/interview-round.service';
 import { InterviewService } from '../../services/interview.service';
