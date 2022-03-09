@@ -22,6 +22,8 @@ import { SectionToolbarComponent } from './components/section-toolbar/section-to
 import { ProfileBadgeComponent } from './components/profile-badge/profile-badge.component';
 import { RatingSliderComponent } from './components/rating-slider/rating-slider.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { LoginButtonComponent } from './components/login-button/login-button.component';
+import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { MatSliderModule } from '@angular/material/slider';
     ChipComponent,
     ProfileBadgeComponent,
     RatingSliderComponent,
+    LoginButtonComponent,
+    LogoutButtonComponent,
   ],
   imports: [
     CommonModule,

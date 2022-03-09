@@ -50,13 +50,19 @@ export class InterviewRoundsComponent implements OnInit {
   constructor(private _dataService: InterviewRoundService) {}
 
   ngOnInit(): void {
-    this.currentInterviewRounds$ =
-      this._dataService.stateCurrentInterviewRounds$;
+    console.log(this.currentInterviewRounds$.value);
+
+    this._loadAllRounds();
 
     this.roundSelected$ = this._dataService.stateInterviewRoundSelected$;
   }
 
   onSelectRound(round: InterviewRoundModel | null) {
     this._dataService.stateInterviewRoundSelected$.next(round);
+  }
+
+  private _loadAllRounds() {
+    this.currentInterviewRounds$ =
+      this._dataService.stateCurrentInterviewRounds$;
   }
 }

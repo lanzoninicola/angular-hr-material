@@ -15,7 +15,8 @@ import { InterviewRoundsListComponent } from '../components/interview-rounds-lis
 import { InterviewEditComponent } from '../components/interview-edit/interview-edit.component';
 import { InterviewEditResolver } from './interview-edit.resolver';
 import { InterviewFormResolver } from './interview-form.resolver';
-import { InterviewRoundsResolver } from './interview-rounds.resolve';
+import { InterviewRoundsComponent } from '../components/interview-edit/interview-rounds/interview-rounds.component';
+import { InterviewRoundResolver } from './interview-round.resolver';
 
 const moduleRoutes: Routes = [
   {
@@ -76,6 +77,13 @@ const moduleRoutes: Routes = [
         },
       },
     ],
+  },
+  {
+    path: 'interview-round/:id',
+    component: InterviewEditComponent,
+    resolve: {
+      entity: InterviewRoundResolver,
+    },
   },
 ];
 

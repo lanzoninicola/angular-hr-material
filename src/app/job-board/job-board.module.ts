@@ -75,7 +75,6 @@ import { JobBoardRoutingModule } from './routing/job-board-routing.module';
     InterviewFeedbackEditComponent,
     InterviewFeedbackEditFormComponent,
     InterviewQuestionListComponent,
-
     InterviewQuestionItemComponent,
   ],
   imports: [

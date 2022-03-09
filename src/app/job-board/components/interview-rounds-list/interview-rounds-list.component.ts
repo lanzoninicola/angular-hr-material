@@ -1,12 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { map, Observable } from 'rxjs';
-import { InterviewRoundModel } from '../../models/interview-round.model';
-
-import { InterviewCollection } from '../../models/interview.collection';
+import { Observable } from 'rxjs';
 
 import { JobApplicationModel } from '../../models/job-application.model';
 import { InterviewRoundService } from '../../services/interview-round.service';
-import { InterviewService } from '../../services/interview.service';
 import { InterviewRoundOnListTable } from '../../types/interview.list.type';
 
 // TODO: candidate and jobId are inside the jobApplication object but
