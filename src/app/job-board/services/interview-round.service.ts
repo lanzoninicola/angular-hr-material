@@ -39,6 +39,25 @@ export class InterviewRoundService {
   //   );
   // }
 
+  findById(id: number): Observable<InterviewRoundModel> {
+    const round$: Observable<InterviewRoundDTO> =
+      this._httpService.findById(id);
+
+    const interview$: Observable<InterviewModel> = round$.pipe(
+      switchMap((round) => {
+        return this._interviewService.findById(round.interviewsId);
+      })
+    );
+
+    return forkJoin([round$, interview$]).pipe(
+      map(([round, interview]) => {
+        return this._serializationService.deserialize(round, {
+          interview,
+        });
+      })
+    );
+  }
+
   findByInterview(
     interview: InterviewModel
   ): Observable<InterviewRoundModel[]> {
