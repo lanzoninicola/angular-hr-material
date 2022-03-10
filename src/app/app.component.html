@@ -1,23 +1,2 @@
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    fixedInViewport
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
-    <div class="sidenav-content">
-      <ahr-logo></ahr-logo>
-      <div class="sidenav-menu">
-        <span>Menu</span>
-        <hr />
-        <ahr-nav-list></ahr-nav-list>
-      </div>
-    </div>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <ahr-loading-spinner *ngIf="loading"></ahr-loading-spinner>
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<ahr-login *ngIf="!(isAuthenticated$ | async)"></ahr-login>
+<ahr-home *ngIf="isAuthenticated$ | async"></ahr-home>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
-import { searchable } from 'src/app/mixins/searchable.mixin';
+import { searchable } from 'src/app/shared/mixins/searchable.mixin';
 
 @Injectable({
   providedIn: 'root',
