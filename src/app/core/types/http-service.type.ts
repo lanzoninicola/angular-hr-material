@@ -6,7 +6,7 @@ import { BranchDTO } from 'src/app/pages/settings/models/branch.model';
 import { DepartmentDTO } from 'src/app/pages/settings/models/department.model';
 import { JobRoleDTO } from 'src/app/pages/settings/models/job-role.model';
 import { BoardTemplateDTO } from 'src/app/pages/settings/types/board-template.types';
-import { UserDTO } from 'src/app/pages/users/types/user.type';
+import { UserDTO } from 'src/app/pages/users/types/user.dto.type';
 
 import { Type } from 'typescript';
 

@@ -921,9 +921,9 @@
       "firstname": "Leanne",
       "lastname": "Graham23",
       "email": "leanne.graham@gmail.com",
-      "recruitingRole": "interviewer",
-      "department": "IT Infrastructure",
-      "companyRoleLevel": "Specialist",
+      "recruitingRole": 12,
+      "department": 5,
+      "businessUnit": null,
       "isAdmin": true
     },
     {
@@ -931,9 +931,9 @@
       "firstname": "Ervin",
       "lastname": "Howell",
       "email": "ervin.howell@gmail.com",
-      "recruitingRole": "interviewer",
-      "department": "IT Infrastructure",
-      "companyRoleLevel": "Specialist",
+      "recruitingRole": 12,
+      "department": 5,
+      "businessUnit": null,
       "isAdmin": true
     },
     {
@@ -941,9 +941,9 @@
       "firstname": "Clementine",
       "lastname": "Bauch",
       "email": "clementine.bauch@gmail.com",
-      "recruitingRole": "hiring-manager",
-      "department": "Human Resources",
-      "companyRoleLevel": "Manager",
+      "recruitingRole": 1,
+      "department": 1,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
@@ -951,9 +951,9 @@
       "firstname": "Patricia",
       "lastname": "Lebsack",
       "email": "patricia.lebsack@gmail.com",
-      "recruitingRole": "recruiter",
-      "department": "Human Resources",
-      "companyRoleLevel": "Specialist",
+      "recruitingRole": 13,
+      "department": 1,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
@@ -961,9 +961,9 @@
       "firstname": "Chelsey",
       "lastname": "Dietrich",
       "email": "chelsey.dietrich@gmail.com",
-      "recruitingRole": "recruiter",
-      "department": "Human Resources",
-      "companyRoleLevel": "Specialist",
+      "recruitingRole": 13,
+      "department": 1,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
@@ -971,9 +971,9 @@
       "firstname": "Mrs. Dennis",
       "lastname": "Russel",
       "email": "dennis.russel@gmail.com",
-      "recruitingRole": "recruiter",
-      "department": "Human Resources",
-      "companyRoleLevel": "Specialist",
+      "recruitingRole": 13,
+      "department": 1,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
@@ -981,10 +981,9 @@
       "firstname": "Kurtis",
       "lastname": "Weissnat",
       "email": "kurstis.weissnat@gmail.com",
-      "recruitingRole": "interviewer",
-      "department": "Front-end Developers",
-      "companyRoleLevel": "Manager",
-      "businessUnit": "Alpha Product",
+      "recruitingRole": 12,
+      "department": 2,
+      "businessUnit": 4,
       "isAdmin": false
     },
     {
@@ -992,10 +991,9 @@
       "firstname": "Nicholas",
       "lastname": "Runolfsdottir",
       "email": "nicholas.runolfsdottir@gmail.com",
-      "recruitingRole": "interviewer",
-      "department": "Front-end Developers",
-      "companyRoleLevel": "Team Lead",
-      "businessUnit": "Beta Product",
+      "recruitingRole": 12,
+      "department": 2,
+      "businessUnit": 41,
       "isAdmin": false
     },
     {
@@ -1003,10 +1001,9 @@
       "firstname": "Glenna",
       "lastname": "Reichert",
       "email": "glenna.reichert@gmail.com",
-      "recruitingRole": "interviewer",
-      "department": "Front-end Developers",
-      "companyRoleLevel": "Team Lead",
-      "businessUnit": "Delta Product",
+      "recruitingRole": 12,
+      "department": 2,
+      "businessUnit": 42,
       "isAdmin": false
     },
     {
@@ -1014,9 +1011,9 @@
       "firstname": "Nicholas",
       "lastname": "Runolfsdottir",
       "email": "nicholas.runolfsdottir@gmail.com",
-      "recruitingRole": "interviewer",
-      "department": "Back-end Developers",
-      "companyRoleLevel": "Team Lead",
+      "recruitingRole": 12,
+      "department": 3,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
@@ -1024,9 +1021,9 @@
       "firstname": "Glenna",
       "lastname": "Reichert",
       "email": "glenna.reichert@gmail.com",
-      "recruitingRole": "interviewer",
-      "department": "Database Developers",
-      "companyRoleLevel": "Team Lead",
+      "recruitingRole": 12,
+      "department": 4,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
@@ -1034,9 +1031,9 @@
       "firstname": "Clementina",
       "lastname": "DuBuque",
       "email": "clementine.dubuque@gmail.com",
-      "recruitingRole": "interviewer",
-      "department": "IT Infrastructure",
-      "companyRoleLevel": "Team Lead",
+      "recruitingRole": 12,
+      "department": 5,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
@@ -1044,9 +1041,9 @@
       "firstname": "Nicholas",
       "lastname": "Runolfsdottir",
       "email": "nicholas.runolfsdottir@gmail.com",
-      "recruitingRole": "interviewer",
+      "recruitingRole": 12,
       "department": null,
-      "companyRoleLevel": null,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
@@ -1054,40 +1051,20 @@
       "firstname": "Glenna",
       "lastname": "Reichert",
       "email": "glenna.reichert@gmail.com",
-      "recruitingRole": "interviewer",
+      "recruitingRole": 12,
       "department": null,
-      "companyRoleLevel": null,
+      "businessUnit": null,
       "isAdmin": false
     },
     {
       "firstname": "Nicola",
       "lastname": "Lanzoni",
       "email": "lanzoni.nicola@gmail.com",
-      "department": "Human Resources",
-      "companyRoleLevel": "Manager",
-      "recruitingRole": "interviewer",
+      "department": 1,
+      "businessUnit": null,
+      "recruitingRole": 12,
       "isAdmin": false,
       "id": 73
-    },
-    {
-      "firstname": "Nicola",
-      "lastname": "Lanzoni",
-      "email": "lanzoni.nicola@gmail.com",
-      "department": "Back-end Developers",
-      "companyRoleLevel": "Team Lead",
-      "recruitingRole": "manager",
-      "isAdmin": false,
-      "id": 74
-    },
-    {
-      "firstname": "Dioni",
-      "lastname": "Malacarne",
-      "email": "malcarnemara@gmail.com",
-      "department": null,
-      "companyRoleLevel": null,
-      "recruitingRole": null,
-      "id": 76,
-      "isAdmin": false
     }
   ]
 }

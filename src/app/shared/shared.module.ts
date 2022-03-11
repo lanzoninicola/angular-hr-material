@@ -7,6 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 
 import { ChipComponent } from './components/chip/chip.component';
@@ -17,11 +18,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { IconComponent } from './components/icon/icon.component';
 import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 import { LogoComponent } from './components/logo/logo.component';
-import { SearchControlComponent } from './components/search-control/search-control.component';
-import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
 import { ProfileBadgeComponent } from './components/profile-badge/profile-badge.component';
 import { RatingSliderComponent } from './components/rating-slider/rating-slider.component';
-import { MatSliderModule } from '@angular/material/slider';
+import { SearchControlComponent } from './components/search-control/search-control.component';
+import { SectionToolbarComponent } from './components/section-toolbar/section-toolbar.component';
+import { UserBadgeComponent } from './components/user-badge/user-badge.component';
+import { RouterLoadingSpinnerComponent } from './components/router-loading-spinner/router-loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { MatSliderModule } from '@angular/material/slider';
     ChipComponent,
     ProfileBadgeComponent,
     RatingSliderComponent,
+    UserBadgeComponent,
+    RouterLoadingSpinnerComponent,
   ],
   imports: [
     CommonModule,
@@ -65,6 +69,8 @@ import { MatSliderModule } from '@angular/material/slider';
     ChipComponent,
     ProfileBadgeComponent,
     RatingSliderComponent,
+    UserBadgeComponent,
+    RouterLoadingSpinnerComponent,
   ],
 })
 export class SharedModule {}

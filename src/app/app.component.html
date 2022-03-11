@@ -1,2 +1,36 @@
-<ahr-login *ngIf="!(isAuthenticated$ | async)"></ahr-login>
-<ahr-home *ngIf="isAuthenticated$ | async"></ahr-home>
+<ng-container *ngIf="authz.isAuthenticated$ | async; else loadingUntil">
+  <mat-sidenav-container class="sidenav-container">
+    <mat-sidenav
+      #drawer
+      class="sidenav"
+      fixedInViewport
+      [attr.role]="
+        (breakpointService.isHandset$ | async) ? 'dialog' : 'navigation'
+      "
+      [mode]="(breakpointService.isHandset$ | async) ? 'over' : 'side'"
+      [opened]="(breakpointService.isHandset$ | async) === false"
+    >
+      <div class="sidenav-content">
+        <ahr-logo></ahr-logo>
+        <div class="sidenav-menu">
+          <span>Menu</span>
+          <hr />
+          <ahr-nav-list></ahr-nav-list>
+        </div>
+        <div class="user">
+          <ahr-user-badge></ahr-user-badge>
+          <ahr-logout-button></ahr-logout-button>
+        </div>
+      </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <ahr-router-loading-spinner></ahr-router-loading-spinner>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</ng-container>
+
+<ng-template #loadingUntil>
+  <ahr-loading-spinner></ahr-loading-spinner>
+</ng-template>
