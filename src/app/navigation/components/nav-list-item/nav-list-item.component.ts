@@ -14,7 +14,7 @@ type NavItemIcon =
     <a
       mat-list-item
       class="nav-list-item"
-      routerLink="{{ route }}"
+      [routerLink]="routerLink"
       routerLinkActive="active"
     >
       <mat-icon aria-label="dashboard">{{ icon }}</mat-icon>
@@ -28,12 +28,44 @@ export class NavListItemComponent implements OnInit {
   title: string = 'Dashboard';
 
   @Input()
-  route: string = '#';
+  outletName: string = '';
+
+  @Input()
+  route: string[] | string;
 
   @Input()
   icon: string = '';
 
+  routerLink: any[] | string;
+
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (Array.isArray(this.route)) {
+      this.routerLink = this._buildRouterLinkWithOutlet();
+    } else {
+      this.routerLink = this._buildRouterLink();
+    }
+  }
+
+  private _buildRouterLink() {
+    return this.route;
+  }
+
+  private _buildRouterLinkWithOutlet() {
+    const { outletName, route } = this;
+
+    if (!outletName) {
+      throw 'NavListItemComponent - You have passed an array to route prop. Outlet name is required';
+    }
+
+    return [
+      '',
+      {
+        outlets: {
+          [outletName]: route,
+        },
+      },
+    ];
+  }
 }
